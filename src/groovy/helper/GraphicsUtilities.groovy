@@ -428,8 +428,8 @@ public class GraphicsUtilities
 		float ratioWH = (float) width / (float) height;
 		float ratioHW = (float) height / (float) width;
 		BufferedImage thumb = image;
-		do
-		{
+		
+		while (newSize != (isWidthGreater ? width : height)){
 			if (isWidthGreater)
 			{
 				width /= 2;
@@ -455,7 +455,8 @@ public class GraphicsUtilities
 			g2.drawImage(thumb, 0, 0, temp.getWidth(), temp.getHeight(), null);
 			g2.dispose();
 			thumb = temp;
-		} while (newSize != (isWidthGreater ? width : height));
+		}
+		
 		return thumb;
 	}
 
@@ -499,8 +500,8 @@ public class GraphicsUtilities
 						"newWidth and newHeight must" + " be greater than 0");
 			}
 		BufferedImage thumb = image;
-		do
-		{
+		
+		while (width != newWidth || height != newHeight){
 			if (width > newWidth)
 			{
 				width /= 2;
@@ -524,7 +525,8 @@ public class GraphicsUtilities
 			g2.drawImage(thumb, 0, 0, temp.getWidth(), temp.getHeight(), null);
 			g2.dispose();
 			thumb = temp;
-		} while (width != newWidth || height != newHeight);
+		}
+		
 		return thumb;
 	}
 

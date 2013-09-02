@@ -117,9 +117,9 @@ public class FileHelper
 			catch(IOException e){} 
 		} 
 	}
-	private static void copy(InputStream in, OutputStream out) throws IOException 
+	private static void copy(InputStream istream, OutputStream out) throws IOException 
 	{ 
-		byte[] buffer = new byte[0xFFFF]; 
-		for(int len; (len = in.read(buffer)) != -1;) out.write(buffer, 0, len); 
+		byte[] buffer = [0xFFFF]
+		for(int len; (len = istream.read(buffer)) != -1;) out.write(buffer, 0, len); 
 	} 
 }

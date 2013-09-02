@@ -435,36 +435,37 @@ public class GraphicsUtilities2 {
 
         int previousWidth = width;
         int previousHeight = height;
+		
+		while (newSize != (isWidthGreater ? width : height)){
+			if (isWidthGreater) {
+				width /= 2;
+				if (width < newSize) {
+					width = newSize;
+				}
+				height = (int) (width / ratioWH);
+			} else {
+				height /= 2;
+				if (height < newSize) {
+					height = newSize;
+				}
+				width = (int) (height / ratioHW);
+			}
 
-        do {
-            if (isWidthGreater) {
-                width /= 2;
-                if (width < newSize) {
-                    width = newSize;
-                }
-                height = (int) (width / ratioWH);
-            } else {
-                height /= 2;
-                if (height < newSize) {
-                    height = newSize;
-                }
-                width = (int) (height / ratioHW);
-            }
+			if (temp == null || isTranslucent) {
+				temp = createCompatibleImage(image, width, height);
+				g2 = temp.createGraphics();
+				g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+								RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			}
+			g2.drawImage(thumb, 0, 0, width, height,
+					0, 0, previousWidth, previousHeight, null);
 
-            if (temp == null || isTranslucent) {
-                temp = createCompatibleImage(image, width, height);
-                g2 = temp.createGraphics();
-                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            }
-            g2.drawImage(thumb, 0, 0, width, height,
-                    0, 0, previousWidth, previousHeight, null);
+			previousWidth = width;
+			previousHeight = height;
 
-            previousWidth = width;
-            previousHeight = height;
+			thumb = temp;
+		}
 
-            thumb = temp;
-        } while (newSize != (isWidthGreater ? width : height));
 
         g2.dispose();
 
@@ -524,36 +525,37 @@ public class GraphicsUtilities2 {
 
         int previousWidth = width;
         int previousHeight = height;
+		
+		while (width != newWidth || height != newHeight){
+			if (width > newWidth) {
+				width /= 2;
+				if (width < newWidth) {
+					width = newWidth;
+				}
+			}
 
-        do {
-            if (width > newWidth) {
-                width /= 2;
-                if (width < newWidth) {
-                    width = newWidth;
-                }
-            }
+			if (height > newHeight) {
+				height /= 2;
+				if (height < newHeight) {
+					height = newHeight;
+				}
+			}
 
-            if (height > newHeight) {
-                height /= 2;
-                if (height < newHeight) {
-                    height = newHeight;
-                }
-            }
+			if (temp == null || isTranslucent) {
+				temp = createCompatibleImage(image, width, height);
+				g2 = temp.createGraphics();
+				g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+								RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			}
+			g2.drawImage(thumb, 0, 0, width, height,
+						 0, 0, previousWidth, previousHeight, null);
 
-            if (temp == null || isTranslucent) {
-                temp = createCompatibleImage(image, width, height);
-                g2 = temp.createGraphics();
-                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            }
-            g2.drawImage(thumb, 0, 0, width, height,
-                         0, 0, previousWidth, previousHeight, null);
+			previousWidth = width;
+			previousHeight = height;
 
-            previousWidth = width;
-            previousHeight = height;
+			thumb = temp;
+		}
 
-            thumb = temp;
-        } while (width != newWidth || height != newHeight);
 
         g2.dispose();
 

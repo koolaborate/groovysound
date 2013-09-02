@@ -81,7 +81,7 @@ public class StringUtils
 	public static boolean isValidPhoneNumber(String number)
 	{
 		ArrayList<Character> allowedNumbers = new ArrayList<Character>();
-		char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', ' ', '/', '-'};
+		char[] numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', ' ', '/', '-'];
 		for(char c: numbers) allowedNumbers.add(c);
 		
 		char[] testArray = number.toCharArray();
@@ -105,7 +105,7 @@ public class StringUtils
 	{
 		String ret = s.substring(0, 1);
 		ArrayList<String> nums = new ArrayList<String>();
-		String[] numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		String[] numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 		for(String n: numbers) nums.add(n);
 		
 		// if the read character is a number, return '#'
