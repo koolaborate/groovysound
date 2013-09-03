@@ -26,52 +26,49 @@ import java.util.ArrayList;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class StringUtils
-{
+public class StringUtils {
 	/**
 	 * Returns whether a String is <code>Null</code> or equals "".
 	 * 
 	 * @param s the String to be tested
 	 * @return <code>true</code> in case the String is <code>Null</code> or empty, <code>false</code> otherwise
 	 */
-	public static boolean isNullOrEmpty(String s)
-	{
+	public static boolean isNullOrEmpty(String s) {
 		return(s == null || s.trim().equals(""));
 	}
 
-	
+
 	/**
 	 * Returns whether or not the given eMail address is valid.
 	 * 
 	 * @param mailAddress the eMail address to test
 	 * @return <code>true</code> if the address is valid, <code>false</code> otherwise
 	 */
-	public static boolean isValidMailAddress(String mailAddress)
-	{
+	public static boolean isValidMailAddress(String mailAddress) {
 		boolean ret = true;
-		
+
 		int i = mailAddress.indexOf("@");
 		int j = mailAddress.indexOf(".", i);
-		
+
 		if (i == 0) // amount of characters before the @
 		{
 			ret = false;
 		}
-		
+
 		if (j == -1) // there may be no point before the @ symbol
 		{
 			ret = false;
 		}
-		
+
 		if (j == -1 || j == (mailAddress.length()-1)) // the point may not be the last character
 		{
 			ret = false;
 		}
-		
-		return ret; 
+
+		return ret;
 	}
-	
-	
+
+
 	/**
 	 * Returns whether or not the given phone number is valid.
 	 * 
@@ -81,9 +78,11 @@ public class StringUtils
 	public static boolean isValidPhoneNumber(String number)
 	{
 		ArrayList<Character> allowedNumbers = new ArrayList<Character>();
-		char[] numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', ' ', '/', '-'];
+		char[] numbers = [
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', ' ', '/', '-'
+		];
 		for(char c: numbers) allowedNumbers.add(c);
-		
+
 		char[] testArray = number.toCharArray();
 		// test every character
 		for(char c: testArray)
@@ -93,8 +92,8 @@ public class StringUtils
 		}
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Returns the first character of a String (as a String).
 	 * 
@@ -105,12 +104,14 @@ public class StringUtils
 	{
 		String ret = s.substring(0, 1);
 		ArrayList<String> nums = new ArrayList<String>();
-		String[] numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+		String[] numbers = [
+			"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+		]
 		for(String n: numbers) nums.add(n);
-		
+
 		// if the read character is a number, return '#'
 		if(nums.contains(ret)) return "#";
-		
+
 		return ret;
 	}
 }
