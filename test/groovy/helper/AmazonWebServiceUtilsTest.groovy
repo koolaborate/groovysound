@@ -1,5 +1,0 @@
-package helper
-
-class AmazonWebServiceUtilsTest {
-
-}

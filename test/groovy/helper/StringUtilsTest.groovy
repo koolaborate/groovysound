@@ -1,5 +1,0 @@
-package helper
-
-class StringUtilsTest {
-
-}
