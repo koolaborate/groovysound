@@ -1,7 +1,7 @@
 package ui.playlistview;
 
 import helper.GraphicsUtilities;
-import helper.StringUtils;
+
 import java.awt.AlphaComposite;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,11 +14,15 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+
+import org.apache.commons.lang3.StringUtils;
 import org.jdesktop.swingx.graphics.ReflectionRenderer;
+
 import ui.bigcoverview.BigCoverFrame;
 import ui.hoverbar.Hoverbar;
 import ui.hoverbar.HoverbarElement;
@@ -281,7 +285,7 @@ public class CoverPanel extends JPanel
 	public void refreshCover()
 	{
 		// if the cover file path is empty, use the default empty image
-		if(StringUtils.isNullOrEmpty(coverPath))
+		if(StringUtils.isEmpty(coverPath))
 		{
 			coverPath = defaultCover;
 		}

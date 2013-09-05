@@ -4,7 +4,7 @@ import helper.GraphicsUtilities;
 import helper.GraphicsUtilities2;
 import helper.ImageHelper;
 import helper.LocaleMessage;
-import helper.StringUtils;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,7 +41,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
+import org.apache.commons.lang3.StringUtils;
 import org.jdesktop.swingx.graphics.ReflectionRenderer;
+
 import types.Album;
 import ui.common.VariableLineBorder;
 import ui.dialogs.VistaDialog;
@@ -493,7 +497,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener
 		{
 			String yearText = year.getText().trim();
 			// an empty year is handled as year 0
-			if(StringUtils.isNullOrEmpty(yearText)) yearText = "0"; 
+			if(StringUtils.isEmpty(yearText)) yearText = "0"; 
 			int yearInt = Integer.parseInt(yearText);
 			year.setText(Integer.toString(yearInt));
 			ret = true;

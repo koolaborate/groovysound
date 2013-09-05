@@ -1,7 +1,7 @@
 package searchwindow;
 
 import helper.LocaleMessage;
-import helper.StringUtils;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -17,11 +17,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.lang3.StringUtils;
+
 import types.CurrentSongInfo;
 import ui.albuminfo.AlbumInfoFrame;
 import ui.artistinfo.ArtistInfoFrame;
@@ -132,7 +136,7 @@ public class SearchEntry extends JPanel
 				playlistSubNavPanel.removeAll();
 				// add a button 'Artist information' to the subnavigation if the artist
 				// name is given
-				if(!StringUtils.isNullOrEmpty(artistName))
+				if(!StringUtils.isEmpty(artistName))
 				{
 					SubNavButton artistInfo = new SubNavButton();
 					artistInfo.setText(LocaleMessage.getString("nav.artistinfo"));

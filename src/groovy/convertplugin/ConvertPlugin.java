@@ -1,6 +1,5 @@
 package convertplugin;
 
-import helper.StringUtils;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -18,8 +17,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Locale;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+
+import org.apache.commons.lang3.StringUtils;
+
 import mainplugin.MainPlugin;
 import plug.engine.PlugEngine;
 import plug.engine.Pluggable;
@@ -165,7 +168,7 @@ public class ConvertPlugin extends Plugin
 					public void mouseClicked(MouseEvent e)
 					{
 						String srcFolder = m.getMainwindow().getCurrentFolderPath();
-						if(!StringUtils.isNullOrEmpty(srcFolder))
+						if(!StringUtils.isEmpty(srcFolder))
 						{
 							// open a directory choose dialog for selecting the destination folder
 							final JFileChooser chooser = new JFileChooser(m.getMainwindow().getSettings().getLastFolder());

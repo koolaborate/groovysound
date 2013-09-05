@@ -2,7 +2,7 @@ package ui.albumview;
 
 import helper.FileHelper;
 import helper.LocaleMessage;
-import helper.StringUtils;
+
 import java.awt.AlphaComposite;
 import java.awt.Component;
 import java.awt.Composite;
@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -30,7 +31,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
 import controller.PlaybackController;
 import controller.PlaybackController.STATE;
 import types.Album;
@@ -204,7 +208,7 @@ public class AlbumPreviewPanel extends JPanel
 						for(Song s : songs) FileHelper.removeFile(album.getFolderPath() + File.separator + s.getFileName());	
 						// delete the folder
 						log.debug("Deleting folder...");
-						if(!StringUtils.isNullOrEmpty(album.getFolderPath())) FileHelper.removeFile(album.getFolderPath());
+						if(!StringUtils.isEmpty(album.getFolderPath())) FileHelper.removeFile(album.getFolderPath());
 						log.debug("done.");
 					}
 					
@@ -307,7 +311,7 @@ public class AlbumPreviewPanel extends JPanel
 		playlistSubNavPanel.removeAll();
 		
 		// add a button 'Artist information' to the subnavigation if the artist name is given
-		if(!StringUtils.isNullOrEmpty(artistName))
+		if(!StringUtils.isEmpty(artistName))
 		{
 			SubNavButton artistInfo = window.getDecorator().getArtistInfoSubNavButton();
 			artistInfo.setText(LocaleMessage.getString("nav.artistinfo"));

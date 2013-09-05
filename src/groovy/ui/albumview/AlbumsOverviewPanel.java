@@ -2,12 +2,15 @@ package ui.albumview;
 
 import helper.LocaleMessage;
 import helper.StringUtils;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import types.Album;
 import types.CurrentSongInfo;
 import ui.mainwindow.CenterPanel;

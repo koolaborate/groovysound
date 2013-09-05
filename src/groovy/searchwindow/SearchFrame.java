@@ -1,7 +1,7 @@
 package searchwindow;
 
 import helper.LocaleMessage;
-import helper.StringUtils;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -24,6 +25,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import org.apache.commons.lang3.StringUtils;
+
 import db.Database;
 import ui.mainwindow.MainWindow;
 
@@ -182,7 +186,7 @@ public class SearchFrame extends JFrame
 	 */
 	private void startSearch()
 	{
-		if(StringUtils.isNullOrEmpty(search.getText())) return;
+		if(StringUtils.isEmpty(search.getText())) return;
 		
 		resultPanel.removeAll();
 		

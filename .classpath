@@ -29,5 +29,6 @@
 	<classpathentry kind="lib" path="lib/swingx-0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_share.jar"/>
 	<classpathentry kind="lib" path="lib/VistaHelp11.jar"/>
+	<classpathentry kind="var" path="MVN/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

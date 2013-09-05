@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.LogManager;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
@@ -13,7 +15,6 @@ import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.Tag;
-import helper.StringUtils;
 
 /***********************************************************************************
  * CurrentSongInfo                                                                 *
@@ -79,7 +80,7 @@ public class CurrentSongInfo
 	 */
 	public void readSongInfo() throws IOException, TagException
 	{
-		if(StringUtils.isNullOrEmpty(this.songPath)) return;
+		if(StringUtils.isEmpty(this.songPath)) return;
 		
 		File sourceFile = new File(this.songPath);
 		AudioFile f;
@@ -125,7 +126,7 @@ public class CurrentSongInfo
 	 */
 	private void checkCoverImageExists()
 	{
-		if(StringUtils.isNullOrEmpty(this.albumPath)) return;
+		if(StringUtils.isEmpty(this.albumPath)) return;
 		
 		File album = new File(this.albumPath);
 		{
@@ -160,7 +161,7 @@ public class CurrentSongInfo
 			if(id3v2 != null)
 			{
 				ret  = id3v2.getSongTitle();
-				if(!StringUtils.isNullOrEmpty(ret)) return ret;
+				if(!StringUtils.isEmpty(ret)) return ret;
 			}
 		}
 		else if(mp3file.hasID3v1Tag()) // mp3file.getID3v1Tag() != null
@@ -169,7 +170,7 @@ public class CurrentSongInfo
 			if(id3v1 != null)
 			{
 				ret  = id3v1.getTitle();
-				if(!StringUtils.isNullOrEmpty(ret)) return ret;
+				if(!StringUtils.isEmpty(ret)) return ret;
 			}
 		}
 		

@@ -27,17 +27,17 @@ import java.util.ArrayList;
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
 public class StringUtils {
-	/**
-	 * Returns whether a String is <code>Null</code> or equals "".
-	 * 
-	 * @param s the String to be tested
-	 * @return <code>true</code> in case the String is <code>Null</code> or empty, <code>false</code> otherwise
-	 */
-	public static boolean isNullOrEmpty(String s) {
-		return(s == null || s.trim().equals(""));
+	
+	private static StringUtils instance;
+	
+	public static synchronized StringUtils getInstance(){
+		if(null == instance){
+			instance = new StringUtils();
+		}
+		
+		return instance;
 	}
-
-
+	
 	/**
 	 * Returns whether or not the given eMail address is valid.
 	 * 
