@@ -43,16 +43,18 @@ import com.amazonaws.a2s.model.ItemSearchResponse;
 public class AmazonWebServiceUtils {
 	final static String accessKeyID = "";
 	final static String accessKey   = "";
-	
-	protected AmazonWebServiceUtils(){}
-	
+
+	protected AmazonWebServiceUtils(){
+
+	}
+
 	private static AmazonWebServiceUtils amazonWebServiceUtils;
-	
+
 	def static synchronized AmazonWebServiceUtils getInstance(){
 		if(null == amazonWebServiceUtils){
 			amazonWebServiceUtils = new AmazonWebServiceUtils()
 		}
-		
+
 		return amazonWebServiceUtils
 	}
 
@@ -122,11 +124,7 @@ public class AmazonWebServiceUtils {
 		if (StringUtils.isBlank(artist) || StringUtils.isBlank(album)) return bufferedImage
 
 		// build the search request that looks for images of music.
-		ItemSearchRequest request = new ItemSearchRequest();
-		request.setSearchIndex("Music");
-		request.setResponseGroup(Arrays.asList("Images"));
-		request.setArtist(artist);
-		request.setTitle(album);
+		ItemSearchRequest request = buildItemSearchRequest(artist, album);
 
 		// create a new amazon client using the access key. sign up for an
 		// amazon web services account here:
@@ -146,8 +144,24 @@ public class AmazonWebServiceUtils {
 
 		return bufferedImage;
 	}
-	
+
+	protected ItemSearchRequest buildItemSearchRequest(String artist, String album) {
+		ItemSearchRequest request = new ItemSearchRequest();
+		request.setSearchIndex("Music");
+		request.setResponseGroup(Arrays.asList("Images"));
+		request.setArtist(artist);
+		request.setTitle(album)
+		return request
+	}
+
 	protected def AmazonA2SClient getAmazonA2SClient(){
+		return getAmazonA2SClient(accessKeyID, accessKey);
+	}
+
+	protected def AmazonA2SClient getAmazonA2SClient(String accessKeyID, String accessKey){
 		return new AmazonA2SClient(accessKeyID, accessKey);
 	}
 }
+
+
+
