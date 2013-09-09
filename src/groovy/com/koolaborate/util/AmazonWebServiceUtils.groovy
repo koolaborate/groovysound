@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import com.amazonaws.a2s.AmazonA2SClient;
 import com.amazonaws.a2s.AmazonA2SException;
@@ -43,6 +44,8 @@ import com.amazonaws.a2s.model.ItemSearchResponse;
 public class AmazonWebServiceUtils {
 	final static String accessKeyID = "";
 	final static String accessKey   = "";
+	
+	static final Logger logger = Logger.getLogger(AmazonWebServiceUtils.class)
 
 	protected AmazonWebServiceUtils(){
 
@@ -101,10 +104,10 @@ public class AmazonWebServiceUtils {
 		ImageIcon icon = null;
 
 		try {
-			icon = url == null ? null : new ImageIcon(new URL(url));
+			icon = url == null ? null : new ImageIcon(new URL(url))
 		}
 		catch(MalformedURLException e) {
-			// do nothing - don't care.
+			logger.error("Malformed url: " + e.getMessage(), e)
 		}
 		return icon;
 	}
