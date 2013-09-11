@@ -479,7 +479,7 @@ public class PlaybackController implements BasicPlayerListener{
 					int songId = window.getPlaylist()
 							.getCurrentlySelectedSongID();
 					if(songId != -1) window.getDatabase().deleteSong(songId);
-					FileHelper.removeFile(filename);
+					FileHelper.getInstance().removeFile(filename);
 					window.getPlaylist().refreshSongList();
 					window.getPlaylist().repaint();
 				}

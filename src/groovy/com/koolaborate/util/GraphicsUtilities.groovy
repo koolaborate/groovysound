@@ -78,15 +78,27 @@ import javax.imageio.ImageIO;
  * 
  * @author Romain Guy
  */
-public class GraphicsUtilities
-{
-	public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
+public class GraphicsUtilities {
+	private static GraphicsUtilities graphicsUtilitiesInstance
+	
+	public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0)
 
-	private static final GraphicsConfiguration CONFIGURATION = GraphicsEnvironment
+	private static final GraphicsConfiguration CONFIGURATION = 
+		GraphicsEnvironment
 			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-			.getDefaultConfiguration();
+				.getDefaultConfiguration()
 
 	private GraphicsUtilities(){}
+	
+	def static synchronized GraphicsUtilities getInstance(){
+		if(null == graphicsUtilitiesInstance){
+			graphicsUtilitiesInstance = new GraphicsUtilities()
+		}
+		
+		return graphicsUtilitiesInstance
+	}
+	
+	
 
 	/**
 	 * 
@@ -101,13 +113,12 @@ public class GraphicsUtilities
 	 *            image is obtained
 	 * @return a new BufferedImage, compatible with the color model of image
 	 */
-	public static BufferedImage createColorModelCompatibleImage(
-			BufferedImage image)
-	{
+	def static BufferedImage createColorModelCompatibleImage(
+			BufferedImage image) {
 		ColorModel cm = image.getColorModel();
 		return new BufferedImage(cm, cm.createCompatibleWritableRaster(image
-				.getWidth(), image.getHeight()), cm.isAlphaPremultiplied(),
-				null);
+		.getWidth(), image.getHeight()), cm.isAlphaPremultiplied(),
+		null);
 	}
 
 	/**
@@ -128,8 +139,7 @@ public class GraphicsUtilities
 	 * @return a new compatible BufferedImage with the same dimension and
 	 *         transparency as image
 	 */
-	public static BufferedImage createCompatibleImage(BufferedImage image)
-	{
+	def static BufferedImage createCompatibleImage(BufferedImage image) {
 		return createCompatibleImage(image, image.getWidth(), image.getHeight());
 	}
 
@@ -153,11 +163,10 @@ public class GraphicsUtilities
 	 * @return a new compatible BufferedImage with the same transparency as
 	 *         image and the specified dimension
 	 */
-	public static BufferedImage createCompatibleImage(BufferedImage image,
-			int width, int height)
-	{
+	def static BufferedImage createCompatibleImage(BufferedImage image,
+			int width, int height) {
 		return CONFIGURATION.createCompatibleImage(width, height, image
-				.getTransparency());
+		.getTransparency());
 	}
 
 	/**
@@ -176,8 +185,7 @@ public class GraphicsUtilities
 	 * @return a new opaque compatible BufferedImage of the specified width and
 	 *         height
 	 */
-	public static BufferedImage createCompatibleImage(int width, int height)
-	{
+	def static BufferedImage createCompatibleImage(int width, int height) {
 		return CONFIGURATION.createCompatibleImage(width, height);
 	}
 
@@ -198,11 +206,10 @@ public class GraphicsUtilities
 	 * @return a new translucent compatible BufferedImage of the specified width
 	 *         and height
 	 */
-	public static BufferedImage createTranslucentCompatibleImage(int width,
-			int height)
-	{
+	def static BufferedImage createTranslucentCompatibleImage(int width,
+			int height) {
 		return CONFIGURATION.createCompatibleImage(width, height,
-				Transparency.TRANSLUCENT);
+		Transparency.TRANSLUCENT);
 	}
 
 	/**
@@ -222,9 +229,8 @@ public class GraphicsUtilities
 	 *         and height
 	 * @throws java.io.IOException if the image cannot be read or loaded
 	 */
-	public static BufferedImage loadCompatibleImage(URL resource)
-			throws IOException
-	{
+	def static BufferedImage loadCompatibleImage(URL resource)
+	throws IOException {
 		BufferedImage image = ImageIO.read(resource);
 		return toCompatibleImage(image);
 	}
@@ -246,10 +252,8 @@ public class GraphicsUtilities
 	 * @return a new compatible copy, with the same width and height and
 	 *         transparency and content, of image
 	 */
-	public static BufferedImage toCompatibleImage(BufferedImage image)
-	{
-		if (image.getColorModel().equals(CONFIGURATION.getColorModel()))
-		{
+	def static BufferedImage toCompatibleImage(BufferedImage image) {
+		if (image.getColorModel().equals(CONFIGURATION.getColorModel())) {
 			return image;
 		}
 		BufferedImage compatibleImage = CONFIGURATION.createCompatibleImage(
@@ -285,41 +289,34 @@ public class GraphicsUtilities
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if newSize <= 0
 	 */
-	public static BufferedImage createThumbnailFast(BufferedImage image,
-			int newSize)
-	{
+	def static BufferedImage createThumbnailFast(BufferedImage image,
+			int newSize) {
 		float ratio;
 		int width = image.getWidth();
 		int height = image.getHeight();
-		if (width > height)
-		{
-			if (newSize > width)
-			{
+		if (width > height) {
+			if (newSize > width) {
 				return image;
 			}
 			else
-				if (newSize <= 0)
-				{
-					throw new IllegalArgumentException("newSize must"
-							+ " be greater than 0");
-				}
+			if (newSize <= 0) {
+				throw new IllegalArgumentException("newSize must"
+				+ " be greater than 0");
+			}
 			ratio = (float) width / (float) height;
 			width = newSize;
 			height = (int) (newSize / ratio);
 		}
-		else
-		{
-			if (newSize > height)
-			{
+		else {
+			if (newSize > height) {
 				throw new IllegalArgumentException("newSize must be lower than"
-						+ " the image height");
+				+ " the image height");
 			}
 			else
-				if (newSize <= 0)
-				{
-					throw new IllegalArgumentException("newSize must"
-							+ " be greater than 0");
-				}
+			if (newSize <= 0) {
+				throw new IllegalArgumentException("newSize must"
+				+ " be greater than 0");
+			}
 			ratio = (float) height / (float) width;
 			height = newSize;
 			width = (int) (newSize / ratio);
@@ -357,19 +354,16 @@ public class GraphicsUtilities
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if one of the dimensions is <= 0
 	 */
-	public static BufferedImage createThumbnailFast(BufferedImage image,
-			int newWidth, int newHeight)
-	{
-		if (newWidth > image.getWidth() || newHeight > image.getHeight())
-		{
+	def static BufferedImage createThumbnailFast(BufferedImage image,
+			int newWidth, int newHeight) {
+		if (newWidth > image.getWidth() || newHeight > image.getHeight()) {
 			return image;
 		}
 		else
-			if (newWidth <= 0 || newHeight <= 0)
-			{
-				throw new IllegalArgumentException(
-						"newWidth and newHeight must" + " be greater than 0");
-			}
+		if (newWidth <= 0 || newHeight <= 0) {
+			throw new IllegalArgumentException(
+			"newWidth and newHeight must" + " be greater than 0");
+		}
 		BufferedImage temp = createCompatibleImage(image, newWidth, newHeight);
 		Graphics2D g2 = temp.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -403,47 +397,38 @@ public class GraphicsUtilities
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if newSize <= 0
 	 */
-	public static BufferedImage createThumbnail(BufferedImage image, int newSize)
-	{
+	def static BufferedImage createThumbnail(BufferedImage image, int newSize) {
 		int width = image.getWidth();
 		int height = image.getHeight();
 		boolean isWidthGreater = width > height;
-		if (isWidthGreater)
-		{
-			if (newSize > width)
-			{
+		if (isWidthGreater) {
+			if (newSize > width) {
 				return image;
 			}
 		}
 		else
-			if (newSize > height)
-			{
-				return image;
-			}
-		if (newSize <= 0)
-		{
+		if (newSize > height) {
+			return image;
+		}
+		if (newSize <= 0) {
 			throw new IllegalArgumentException("newSize must"
-					+ " be greater than 0");
+			+ " be greater than 0");
 		}
 		float ratioWH = (float) width / (float) height;
 		float ratioHW = (float) height / (float) width;
 		BufferedImage thumb = image;
-		
+
 		while (newSize != (isWidthGreater ? width : height)){
-			if (isWidthGreater)
-			{
+			if (isWidthGreater) {
 				width /= 2;
-				if (width < newSize)
-				{
+				if (width < newSize) {
 					width = newSize;
 				}
 				height = (int) (width / ratioWH);
 			}
-			else
-			{
+			else {
 				height /= 2;
-				if (height < newSize)
-				{
+				if (height < newSize) {
 					height = newSize;
 				}
 				width = (int) (height / ratioHW);
@@ -456,7 +441,7 @@ public class GraphicsUtilities
 			g2.dispose();
 			thumb = temp;
 		}
-		
+
 		return thumb;
 	}
 
@@ -484,37 +469,30 @@ public class GraphicsUtilities
 	 * @throws IllegalArgumentException if code>newHeight is larger than the
 	 *             height of image or if one the dimensions is not > 0
 	 */
-	public static BufferedImage createThumbnail(BufferedImage image,
-			int newWidth, int newHeight)
-	{
+	def static BufferedImage createThumbnail(BufferedImage image,
+			int newWidth, int newHeight) {
 		int width = image.getWidth();
 		int height = image.getHeight();
-		if (newWidth > width || newHeight > height)
-		{
+		if (newWidth > width || newHeight > height) {
 			return image;
 		}
 		else
-			if (newWidth <= 0 || newHeight <= 0)
-			{
-				throw new IllegalArgumentException(
-						"newWidth and newHeight must" + " be greater than 0");
-			}
+		if (newWidth <= 0 || newHeight <= 0) {
+			throw new IllegalArgumentException(
+			"newWidth and newHeight must" + " be greater than 0");
+		}
 		BufferedImage thumb = image;
-		
+
 		while (width != newWidth || height != newHeight){
-			if (width > newWidth)
-			{
+			if (width > newWidth) {
 				width /= 2;
-				if (width < newWidth)
-				{
+				if (width < newWidth) {
 					width = newWidth;
 				}
 			}
-			if (height > newHeight)
-			{
+			if (height > newHeight) {
 				height /= 2;
-				if (height < newHeight)
-				{
+				if (height < newHeight) {
 					height = newHeight;
 				}
 			}
@@ -526,7 +504,7 @@ public class GraphicsUtilities
 			g2.dispose();
 			thumb = temp;
 		}
-		
+
 		return thumb;
 	}
 
@@ -550,27 +528,20 @@ public class GraphicsUtilities
 	 * @throws IllegalArgumentException is pixels is non-null and of length <
 	 *             w*h
 	 */
-	public static int[] getPixels(BufferedImage img, int x, int y, int w,
-			int h, int[] pixels)
-	{
-		if (w == 0 || h == 0)
-		{
+	def static int[] getPixels(BufferedImage img, int x, int y, int w, int h, int[] pixels) {
+		if (w == 0 || h == 0) {
 			return new int[0];
 		}
-		if (pixels == null)
-		{
+		if (pixels == null) {
 			pixels = new int[w * h];
 		}
 		else
-			if (pixels.length < w * h)
-			{
-				throw new IllegalArgumentException(
-						"pixels array must have a length" + " >= w*h");
-			}
+		if (pixels.length < w * h) {
+			throw new IllegalArgumentException("pixels array must have a length" + " >= w*h");
+		}
 		int imageType = img.getType();
 		if (imageType == BufferedImage.TYPE_INT_ARGB
-				|| imageType == BufferedImage.TYPE_INT_RGB)
-		{
+		|| imageType == BufferedImage.TYPE_INT_RGB) {
 			Raster raster = img.getRaster();
 			return (int[]) raster.getDataElements(x, y, w, h, pixels);
 		}
@@ -596,28 +567,22 @@ public class GraphicsUtilities
 	 * @throws IllegalArgumentException is pixels is non-null and of length <
 	 *             w*h
 	 */
-	public static void setPixels(BufferedImage img, int x, int y, int w, int h,
-			int[] pixels)
-	{
-		if (pixels == null || w == 0 || h == 0)
-		{
+	def void setPixels(BufferedImage img, int x, int y, int w, int h, int[] pixels) {
+		if (pixels == null || w == 0 || h == 0) {
 			return;
 		}
 		else
-			if (pixels.length < w * h)
-			{
-				throw new IllegalArgumentException(
-						"pixels array must have a length" + " >= w*h");
-			}
+		if (pixels.length < w * h) {
+			throw new IllegalArgumentException(
+			"pixels array must have a length" + " >= w*h");
+		}
 		int imageType = img.getType();
 		if (imageType == BufferedImage.TYPE_INT_ARGB
-				|| imageType == BufferedImage.TYPE_INT_RGB)
-		{
+		|| imageType == BufferedImage.TYPE_INT_RGB) {
 			WritableRaster raster = img.getRaster();
 			raster.setDataElements(x, y, w, h, pixels);
 		}
-		else
-		{
+		else {
 			// Unmanages the image
 			img.setRGB(x, y, w, h, pixels, 0, w);
 		}

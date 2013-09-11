@@ -76,7 +76,7 @@ public class Settings
 			// if the file could not be found, it has to be created
 			try
 			{
-				FileHelper.createFile(SETTINGS_PATH);
+				FileHelper.getInstance().createFile(SETTINGS_PATH);
 			}
 			catch(IOException e2)
 			{

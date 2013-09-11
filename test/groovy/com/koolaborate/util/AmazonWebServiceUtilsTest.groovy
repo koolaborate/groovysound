@@ -6,6 +6,7 @@ import com.amazonaws.a2s.model.Item
 import com.amazonaws.a2s.model.ItemSearchRequest;
 import com.amazonaws.a2s.model.ItemSearchResponse;
 import com.amazonaws.a2s.model.Items;
+import com.koolaborate.test.ConstantsTest;
 
 import static org.junit.Assert.*
 import static org.mockito.Mockito.*
@@ -16,9 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 class AmazonWebServiceUtilsTest {
-	static final String REMOTE_PIC = "http://upload.wikimedia.org/wikipedia/commons/4/4e/Scottish_Terrier_Blue.JPG"
-	static final String LOCAL_PIC = "testresource/groovy/pics/Scottish_Terrier_Sire.jpg"
-	
 	AmazonWebServiceUtils amazonWebServiceUtils
 	
 	@Before
@@ -27,15 +25,21 @@ class AmazonWebServiceUtilsTest {
 	}
 	
 	@Test
+	void shouldGetAlbumArtImageIcon(){
+		def imageIcon = amazonWebServiceUtils.getAlbumArtImageIcon(null, null)
+		assert null == imageIcon
+	}
+	
+	@Test
 	void shouldCreateImageIcon(){
 		def createImageIcon = amazonWebServiceUtils.createImageIcon(null)
 		assert null == createImageIcon
 		
-		def urlStr = new File(LOCAL_PIC).toURI().toURL()
+		def urlStr = new File(ConstantsTest.LOCAL_PIC).toURI().toURL()
 		createImageIcon = amazonWebServiceUtils.createImageIcon(urlStr.toString())
 		assert null != createImageIcon
 		
-		createImageIcon = amazonWebServiceUtils.createImageIcon(REMOTE_PIC)
+		createImageIcon = amazonWebServiceUtils.createImageIcon(ConstantsTest.REMOTE_PIC)
 		assert null != createImageIcon
 	}
 	
@@ -74,7 +78,7 @@ class AmazonWebServiceUtilsStub extends AmazonWebServiceUtils{
 		Item item = new Item()
 		Image largeImage = new Image()
 		
-		largeImage.setURL(AmazonWebServiceUtilsTest.REMOTE_PIC)
+		largeImage.setURL(ConstantsTest.REMOTE_PIC)
 		item.setLargeImage(largeImage)
 		itemList.add(item)
 		items.setItem(itemList)

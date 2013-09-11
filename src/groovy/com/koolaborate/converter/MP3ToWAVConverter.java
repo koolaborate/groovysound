@@ -99,7 +99,7 @@ public class MP3ToWAVConverter
 		{
 			try
 			{
-				FileHelper.createFile(dstDir);
+				FileHelper.getInstance().createFile(dstDir);
 			}
 			catch (IOException e)
 			{

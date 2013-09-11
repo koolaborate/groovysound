@@ -70,27 +70,29 @@ public class AmazonWebServiceUtils {
 	 * @throws Exception in case no image could be retrieved or no connection could be established
 	 */
 	def ImageIcon getAlbumArtImageIcon(String artist, String album) throws Exception {
+		if (StringUtils.isBlank(artist) || StringUtils.isBlank(album)) return null
+		
 		// build the search request that looks for images of music.
-		ItemSearchRequest request = new ItemSearchRequest();
-		request.setSearchIndex("Music");
-		request.setResponseGroup(Arrays.asList("Images"));
-		request.setArtist(artist);
-		request.setTitle(album);
+		ItemSearchRequest request = new ItemSearchRequest()
+		request.setSearchIndex("Music")
+		request.setResponseGroup(Arrays.asList("Images"))
+		request.setArtist(artist)
+		request.setTitle(album)
 
 		// create a new amazon client using the access key. sign up for an
 		// amazon web services account here:
 		// https://aws-portal.amazon.com/gp/aws/developer/registration/index.html
-		AmazonA2SClient client = new AmazonA2SClient(accessKeyID, accessKey);
+		AmazonA2SClient client = getAmazonA2SClient()
 
 		// create a search response from the search request.
-		ItemSearchResponse response = client.itemSearch(request);
+		ItemSearchResponse response = client.itemSearch(request)
 
 		// get the URL to the amazon image (if one was returned).
-		String url = response.getItems().get(0).getItem().get(0).getLargeImage().getURL();
+		String url = response.getItems().get(0).getItem().get(0).getLargeImage().getURL()
 
 		// create an ImageIcon from the returned URL. if the URL is null, then
 		// the icon returned will also be null.
-		return createImageIcon(url);
+		return createImageIcon(url)
 	}
 
 

@@ -144,7 +144,7 @@ public class Playlist extends JPanel{
 						albumId = db.getAlbumIdForSong(getCurrentlySelectedSongID());
 						String path = getCurrentlySelectedSongPath();
 						if(!StringUtils.isEmpty(path))
-							FileHelper.removeFile(path);
+							FileHelper.getInstance().removeFile(path);
 					}
 
 					// delete the song from the database

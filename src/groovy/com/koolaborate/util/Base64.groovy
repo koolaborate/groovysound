@@ -33,15 +33,24 @@ import sun.misc.BASE64Encoder;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Base64
-{
-	public static String encodeBytes(byte[] bytes)
-	{
-		return new BASE64Encoder().encode(bytes); 
+public class Base64 {
+	private static Base64 base64Instance
+	private Base64(){}
+	
+	public static synchronized Base64 getInstance(){
+		if(null == base64Instance){
+			base64Instance = new Base64()
+		}
+		return base64Instance
+	}
+	 
+	public String encodeBytes(byte[] bytes) {
+		if (null == bytes) return null
+		return new BASE64Encoder().encode(bytes);
 	}
 
-	public static byte[] decodeBase64(String base64) throws IOException
-	{
-		return new BASE64Decoder().decodeBuffer(base64);
+	public byte[] decodeBase64(String base64) throws IOException {
+		if (null == base64) return null
+		return new BASE64Decoder().decodeBuffer(base64)
 	}
 }
