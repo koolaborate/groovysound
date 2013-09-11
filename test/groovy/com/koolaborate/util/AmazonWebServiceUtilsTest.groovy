@@ -16,11 +16,27 @@ import org.junit.Before;
 import org.junit.Test;
 
 class AmazonWebServiceUtilsTest {
+	static final String REMOTE_PIC = "http://upload.wikimedia.org/wikipedia/commons/4/4e/Scottish_Terrier_Blue.JPG"
+	static final String LOCAL_PIC = "testresource/groovy/pics/Scottish_Terrier_Sire.jpg"
+	
 	AmazonWebServiceUtils amazonWebServiceUtils
 	
 	@Before
 	void setup(){
 		amazonWebServiceUtils = new AmazonWebServiceUtilsStub()
+	}
+	
+	@Test
+	void shouldCreateImageIcon(){
+		def createImageIcon = amazonWebServiceUtils.createImageIcon(null)
+		assert null == createImageIcon
+		
+		def urlStr = new File(LOCAL_PIC).toURI().toURL()
+		createImageIcon = amazonWebServiceUtils.createImageIcon(urlStr.toString())
+		assert null != createImageIcon
+		
+		createImageIcon = amazonWebServiceUtils.createImageIcon(REMOTE_PIC)
+		assert null != createImageIcon
 	}
 	
 	@Test
@@ -45,6 +61,8 @@ class AmazonWebServiceUtilsTest {
 
 
 class AmazonWebServiceUtilsStub extends AmazonWebServiceUtils{
+
+	
 	@Override
 	protected def AmazonA2SClient getAmazonA2SClient(){
 		AmazonA2SClient mockClient = mock(AmazonA2SClient.class)
@@ -56,7 +74,7 @@ class AmazonWebServiceUtilsStub extends AmazonWebServiceUtils{
 		Item item = new Item()
 		Image largeImage = new Image()
 		
-		largeImage.setURL("http://upload.wikimedia.org/wikipedia/commons/4/4e/Scottish_Terrier_Blue.JPG")
+		largeImage.setURL(AmazonWebServiceUtilsTest.REMOTE_PIC)
 		item.setLargeImage(largeImage)
 		itemList.add(item)
 		items.setItem(itemList)

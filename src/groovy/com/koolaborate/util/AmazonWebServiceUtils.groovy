@@ -100,16 +100,19 @@ public class AmazonWebServiceUtils {
 	 * @param url the URL of the image
 	 * @return the ImageIcon of this ressource
 	 */
-	def ImageIcon createImageIcon(String url) {
-		ImageIcon icon = null;
+	def ImageIcon createImageIcon(String urlStr) {
+		ImageIcon icon = null
 
+		if (null == urlStr) return icon
 		try {
-			icon = url == null ? null : new ImageIcon(new URL(url))
+			def url = new URL(urlStr)
+			icon = urlStr == null ? null : new ImageIcon(url)
 		}
 		catch(MalformedURLException e) {
 			logger.error("Malformed url: " + e.getMessage(), e)
+			e.printStackTrace()
 		}
-		return icon;
+		return icon
 	}
 
 
