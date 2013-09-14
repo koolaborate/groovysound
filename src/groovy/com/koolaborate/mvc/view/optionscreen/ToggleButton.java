@@ -41,6 +41,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class ToggleButton extends JComponent
 {
+	private static final long serialVersionUID = -4875410253033961529L;
 	private Color textcolor;
 	private String text;
 	private BufferedImage icon;

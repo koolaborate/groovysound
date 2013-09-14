@@ -51,6 +51,7 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class Playlist extends JPanel{
+	private static final long serialVersionUID = 3339053811389657638L;
 	private ArrayList<PlaylistEntry> entries;
 	private PlaylistEntry selectedEntry;
 

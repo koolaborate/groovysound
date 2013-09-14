@@ -30,6 +30,7 @@ import javax.swing.JLabel;
  ***********************************************************************************/
 public class Separator extends JComponent implements Cloneable 
 {
+	private static final long serialVersionUID = -1799382510955618434L;
 	private JLabel content;
 	
 	/**

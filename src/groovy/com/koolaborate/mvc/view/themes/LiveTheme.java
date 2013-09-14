@@ -162,6 +162,8 @@ public class LiveTheme implements Theme
 		d.setLogoForegroundColor(Color.BLACK);
 		
 		JPanel headerPanel = new JPanel(){
+			private static final long serialVersionUID = 7528472092152524884L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -234,6 +236,8 @@ public class LiveTheme implements Theme
 		
 		// The side panels ----------------------------------------------------------------------------------------
 		final JPanel sidePanel = new JPanel(){
+			private static final long serialVersionUID = -6032301026895384249L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -298,6 +302,8 @@ public class LiveTheme implements Theme
 		
 		// the main panel ----------------------------------------------------------------
 		final JPanel mainPanel = new JPanel(){
+			private static final long serialVersionUID = -3124275953814833551L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -327,6 +333,8 @@ public class LiveTheme implements Theme
 		// the navigation bar ------------------------------------------------------------
 		d.setNavbarForegroundColor(new Color(0x04446e)); // dark blue
 		JPanel navigationBackgroundPanel = new JPanel(){
+			private static final long serialVersionUID = -7060946726740450596L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -369,6 +377,8 @@ public class LiveTheme implements Theme
 		d.setSettingsButton(b3);
 		
 		JLabel subNavSeparator = new JLabel(){
+			private static final long serialVersionUID = -7206842802324724181L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -394,6 +404,8 @@ public class LiveTheme implements Theme
 		
 		// The bottom panel ---------------------------------------------------------------------------------------
 		JPanel bottomPanel = new JPanel(){
+			private static final long serialVersionUID = -4447050663278366307L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -430,6 +442,8 @@ public class LiveTheme implements Theme
 		
 		// The player controls panel ------------------------------------------------------------------------------
 		JPanel p = new JPanel(){
+			private static final long serialVersionUID = 3736755119613955895L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -490,6 +504,8 @@ public class LiveTheme implements Theme
 	private static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc)
 	{
 		NavButton b = new NavButton(){
+			private static final long serialVersionUID = -8194658561074752611L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -652,6 +668,8 @@ public class LiveTheme implements Theme
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
 			
 			final PlayButton playButt = new PlayButton(fakeButton, fakeButton, fakeButton){
+				private static final long serialVersionUID = -7391841123059754329L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -844,6 +862,8 @@ public class LiveTheme implements Theme
 		{
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
 			final NextButton nextButt = new NextButton(fakeButton, fakeButton){
+				private static final long serialVersionUID = -7785850754354299703L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -1035,6 +1055,8 @@ public class LiveTheme implements Theme
 		{
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
 			final PreviousButton prevButt = new PreviousButton(fakeButton, fakeButton){
+				private static final long serialVersionUID = -7427078555078319365L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -1226,6 +1248,8 @@ public class LiveTheme implements Theme
 		{
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
 			final StopButton stopButt = new StopButton(fakeButton, fakeButton){
+			private static final long serialVersionUID = 7330627770679161196L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -1383,6 +1407,8 @@ public class LiveTheme implements Theme
 	private static SubNavButton createNewSubNavButton(String imgLoc)
 	{
 		SubNavButton b = new SubNavButton(){
+			private static final long serialVersionUID = -7130355613190689539L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

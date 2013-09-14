@@ -83,9 +83,9 @@ public class GraphicsUtilities {
 	public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0)
 
 	private static final GraphicsConfiguration CONFIGURATION =
-	GraphicsEnvironment
-	.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-	.getDefaultConfiguration()
+		GraphicsEnvironment
+			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDefaultConfiguration()
 
 	private GraphicsUtilities(){
 
@@ -140,7 +140,7 @@ public class GraphicsUtilities {
 	 * @return a new compatible BufferedImage with the same dimension and
 	 *         transparency as image
 	 */
-	def static BufferedImage createCompatibleImage(BufferedImage image) {
+	def BufferedImage createCompatibleImage(BufferedImage image) {
 		return createCompatibleImage(image, image.getWidth(), image.getHeight());
 	}
 
@@ -186,7 +186,7 @@ public class GraphicsUtilities {
 	 * @return a new opaque compatible BufferedImage of the specified width and
 	 *         height
 	 */
-	def static BufferedImage createCompatibleImage(int width, int height) {
+	def BufferedImage createCompatibleImage(int width, int height) {
 		return CONFIGURATION.createCompatibleImage(width, height);
 	}
 
@@ -207,10 +207,8 @@ public class GraphicsUtilities {
 	 * @return a new translucent compatible BufferedImage of the specified width
 	 *         and height
 	 */
-	def static BufferedImage createTranslucentCompatibleImage(int width,
-			int height) {
-		return CONFIGURATION.createCompatibleImage(width, height,
-		Transparency.TRANSLUCENT);
+	def BufferedImage createTranslucentCompatibleImage(int width, int height) {
+		return CONFIGURATION.createCompatibleImage(width, height, Transparency.TRANSLUCENT)
 	}
 
 	/**
@@ -230,8 +228,9 @@ public class GraphicsUtilities {
 	 *         and height
 	 * @throws java.io.IOException if the image cannot be read or loaded
 	 */
-	def static BufferedImage loadCompatibleImage(URL resource)
-	throws IOException {
+	def BufferedImage loadCompatibleImage(URL resource) throws IOException {
+		if(null == resource) return null
+		
 		BufferedImage image = ImageIO.read(resource);
 		return toCompatibleImage(image);
 	}
@@ -253,12 +252,14 @@ public class GraphicsUtilities {
 	 * @return a new compatible copy, with the same width and height and
 	 *         transparency and content, of image
 	 */
-	def static BufferedImage toCompatibleImage(BufferedImage image) {
+	def BufferedImage toCompatibleImage(BufferedImage image) {
+		if (null == image) return null
+		
 		if (image.getColorModel().equals(CONFIGURATION.getColorModel())) {
 			return image;
 		}
-		BufferedImage compatibleImage = CONFIGURATION.createCompatibleImage(
-				image.getWidth(), image.getHeight(), image.getTransparency());
+		
+		BufferedImage compatibleImage = CONFIGURATION.createCompatibleImage(image.getWidth(), image.getHeight(), image.getTransparency());
 		Graphics g = compatibleImage.getGraphics();
 		g.drawImage(image, 0, 0, null);
 		g.dispose();
@@ -290,8 +291,9 @@ public class GraphicsUtilities {
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if newSize <= 0
 	 */
-	def static BufferedImage createThumbnailFast(BufferedImage image,
-			int newSize) {
+	def BufferedImage createThumbnailFast(BufferedImage image, int newSize) {
+		if(null == image) return null
+		
 		float ratio;
 		int width = image.getWidth();
 		int height = image.getHeight();
@@ -355,8 +357,9 @@ public class GraphicsUtilities {
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if one of the dimensions is <= 0
 	 */
-	def BufferedImage createThumbnailFast(BufferedImage image,
-			int newWidth, int newHeight) {
+	def BufferedImage createThumbnailFast(BufferedImage image, int newWidth, int newHeight) {
+		if(null == image) return image
+		
 		if (newWidth > image.getWidth() || newHeight > image.getHeight()) {
 			return image;
 		}

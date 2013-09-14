@@ -35,6 +35,7 @@ import javax.swing.JLabel;
  ***********************************************************************************/
 public class SeparatorLabel extends JLabel
 {
+	private static final long serialVersionUID = -360654062567845706L;
 	private String letter;
 	private Color foreground; // = new Color(0x04446e);
 	private int spaceToBorder = 10;

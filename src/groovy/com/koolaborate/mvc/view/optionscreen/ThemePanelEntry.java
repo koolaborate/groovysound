@@ -41,6 +41,7 @@ import com.koolaborate.mvc.view.decorations.Decorator;
  ***********************************************************************************/
 public class ThemePanelEntry extends JPanel
 {
+	private static final long serialVersionUID = -9111468339290769406L;
 	private String className;
 	private boolean selected = false;
 	

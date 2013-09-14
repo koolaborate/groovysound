@@ -50,6 +50,7 @@ import static com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
  ***********************************************************************************/
 public class CenterPanel extends JPanel
 {
+	private static final long serialVersionUID = -1865306352685281295L;
 	private NavigationPanel navigationPanel;
 	private PlaybackController playerControls;
 	private PlaylistPanel playlistPanel;

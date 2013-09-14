@@ -85,7 +85,7 @@ public class ImageHelper
 			BufferedImage cover = ImageIO.read(bigCover);
 			BufferedImage stitch = ImageIO.read(getClass().getResource("/images/stitch.png"));
 			
-			preview = GraphicsUtilities.createCompatibleImage(80, 68);
+			preview = GraphicsUtilities.getInstance().createCompatibleImage(80, 68);
 			Graphics2D g2d = preview.createGraphics();
 			g2d.clearRect(0, 0, preview.getWidth(), preview.getHeight());
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -120,7 +120,7 @@ public class ImageHelper
 			BufferedImage cover = image;
 			BufferedImage stitch = ImageIO.read(getClass().getResource("/images/stitch.png"));
 			
-			preview = GraphicsUtilities.createCompatibleImage(80, 68);
+			preview = GraphicsUtilities.getInstance().createCompatibleImage(80, 68);
 			Graphics2D g2d = preview.createGraphics();
 			g2d.clearRect(0, 0, preview.getWidth(), preview.getHeight());
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);

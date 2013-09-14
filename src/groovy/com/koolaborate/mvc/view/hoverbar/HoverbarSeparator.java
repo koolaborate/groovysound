@@ -32,6 +32,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class HoverbarSeparator extends JComponent 
 {
+	private static final long serialVersionUID = -3427651944716569302L;
 	private int width, height;
 	private Color c = new Color(75, 89, 105); // Color.BLACK
 	

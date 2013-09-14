@@ -659,7 +659,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 
 			BufferedImage externalImage = null;
 			try {
-				externalImage = GraphicsUtilities.loadCompatibleImage(imgFile.toURI().toURL());
+				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL());
 			} catch(MalformedURLException ex) {
 				ex.printStackTrace();
 			} catch(IOException ex) {

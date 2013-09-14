@@ -36,6 +36,7 @@ import javax.swing.SwingUtilities;
  ***********************************************************************************/
 public class TimeElapsedPanel extends JPanel
 {
+	private static final long serialVersionUID = -2079874923276877017L;
 	private JSlider timeElapsedSlider;
 //	private JLabel elapsedTimeLabel, totalTimeLabel;
 //	private int songSeconds = 0;

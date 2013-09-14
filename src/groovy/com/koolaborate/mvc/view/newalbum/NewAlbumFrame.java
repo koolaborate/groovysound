@@ -67,9 +67,10 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class NewAlbumFrame extends JFrame{
+	private static final long serialVersionUID = 3396798307868339914L;
 	private JButton okButt, cancelButt, searchButt;
 	private JTextField folderPath, albumTitle, albumArtist, albumYear;
-	private JComboBox songList;
+	private JComboBox<String> songList;
 	private JXBusyLabel busyLabel;
 	private JPanel albumInfoPanel, centerPanel;
 	private MainWindow window;
@@ -110,6 +111,8 @@ public class NewAlbumFrame extends JFrame{
 		setLayout(new BorderLayout());
 
 		JPanel bgPanel = new JPanel(){
+			private static final long serialVersionUID = 8524251742666962990L;
+
 			@Override
 			protected void paintComponent(Graphics g){
 				Color color1 = new Color(237, 242, 249);
@@ -313,7 +316,7 @@ public class NewAlbumFrame extends JFrame{
 		albumInfoPanel.add(songlistLabel, cLabel);
 
 		// song list combo box
-		songList = new JComboBox();
+		songList = new JComboBox<String>();
 		cTextfield.gridx = 1;
 		cTextfield.gridy = 3;
 		albumInfoPanel.add(songList, cTextfield);

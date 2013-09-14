@@ -73,6 +73,7 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class SearchNewCoverFrame extends JDialog
 {
+	private static final long serialVersionUID = 373203873411483423L;
 	private JButton cancelButt, searchButt;
 	private JPanel centerPanel, searchPanel1, searchPanel2, searchPanel3;
 	private JXBusyLabel busyLabel1, busyLabel2, busyLabel3;
@@ -128,6 +129,8 @@ public class SearchNewCoverFrame extends JDialog
 		setLayout(new BorderLayout());
 		
 		JPanel bgPanel = new JPanel(){
+			private static final long serialVersionUID = -9202419971141659927L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

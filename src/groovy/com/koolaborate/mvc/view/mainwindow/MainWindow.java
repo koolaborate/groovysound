@@ -97,6 +97,8 @@ import ui.VistaHelp;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class MainWindow extends JFrame implements DropTargetListener{
+	private static final long serialVersionUID = 170657189613362120L;
+
 	// images
 	private static BufferedImage logoImg, logoTextImg, minimizeImg, closeImg,
 			helpImg, minimizeOverImg, closeOverImg, helpOverImg, maximizeImg,
@@ -230,7 +232,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 			String packageName = "ui.themes.";
 			Class c = Class.forName(packageName + themeName);
 			if(c != null) {
-				Constructor constructor = c.getConstructor(Decorator.class);
+				Constructor<Decorator> constructor = c.getConstructor(Decorator.class);
 				Theme t = (Theme) constructor.newInstance(decorator);
 				log.debug("Theme '" + t.getName() + "' successfully loaded.");
 				t.setThemeSettings();
@@ -699,7 +701,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 
 			BufferedImage externalImage = null;
 			try {
-				externalImage = GraphicsUtilities.loadCompatibleImage(imgFile.toURI().toURL());
+				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL());
 			} catch(MalformedURLException ex) {
 				ex.printStackTrace();
 			} catch(IOException ex) {

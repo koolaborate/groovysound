@@ -38,6 +38,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class HoverbarElement extends JComponent
 {
+	private static final long serialVersionUID = 6010793052206803430L;
 	private Thread action;
 	private BufferedImage img;
 	private boolean mouseOver = false;

@@ -62,6 +62,8 @@ import com.koolaborate.mvc.view.themes.ThemeHelper;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class ThemesPanel extends JPanel{
+	private static final long serialVersionUID = -6563398784358082301L;
+
 	private static String themesFilePath = System.getProperty("user.dir")
 			+ File.separator + "themes.xml";
 
@@ -163,7 +165,7 @@ public class ThemesPanel extends JPanel{
 								// read the name and description as well as the
 								// preview
 								// image from the theme instance
-								Constructor constructor = c.getConstructor(Decorator.class);
+								Constructor<Decorator> constructor = c.getConstructor(Decorator.class);
 								Theme t = (Theme) constructor.newInstance(tempDec);
 
 								ThemePanelEntry entry = new ThemePanelEntry(

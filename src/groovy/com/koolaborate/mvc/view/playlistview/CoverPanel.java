@@ -55,6 +55,7 @@ import com.koolaborate.util.GraphicsUtilities;
  ***********************************************************************************/
 public class CoverPanel extends JPanel
 {
+	private static final long serialVersionUID = 2615441197194463263L;
 	private String defaultCover = "/images/empty.png";
 	private String coverPath = defaultCover;
 	private String albumTitle, artistName, albumFolder;
@@ -322,7 +323,7 @@ public class CoverPanel extends JPanel
 	@Override
 	protected void paintComponent(Graphics g)
 	{
-		BufferedImage jewelcase = GraphicsUtilities.createCompatibleImage(262, 233);
+		BufferedImage jewelcase = GraphicsUtilities.getInstance().createCompatibleImage(262, 233);
 		Graphics2D g2d = jewelcase.createGraphics();
 		g2d.clearRect(0, 0, getWidth(), getHeight());
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

@@ -152,6 +152,8 @@ public class MetalTheme implements Theme
 		d.setLogoForegroundColor(Color.BLACK);
 		
 		JPanel headerPanel = new JPanel(){
+			private static final long serialVersionUID = 6980744576157405413L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -172,6 +174,8 @@ public class MetalTheme implements Theme
 		
 		// The side panels ----------------------------------------------------------------------------------------
 		final JPanel sidePanel = new JPanel(){
+			private static final long serialVersionUID = -6682651278505821385L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -201,6 +205,8 @@ public class MetalTheme implements Theme
 		d.setLeftSidePanel(sidePanel);
 		
 		final JPanel sidePanel2 = new JPanel(){
+			private static final long serialVersionUID = 8451146314106538654L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -232,6 +238,8 @@ public class MetalTheme implements Theme
 		// The navigation bar --------------------------------------------------------------------------------------
 		d.setNavbarForegroundColor(Color.BLACK);
 		JPanel navigationBackgroundPanel = new JPanel(){
+			private static final long serialVersionUID = 1688867772017187616L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -273,6 +281,8 @@ public class MetalTheme implements Theme
 		
 		// The bottom panel ---------------------------------------------------------------------------------------
 		JPanel bottomPanel = new JPanel(){
+			private static final long serialVersionUID = 1868630368770200438L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -293,6 +303,8 @@ public class MetalTheme implements Theme
 		
 		// The player controls panel ------------------------------------------------------------------------------
 		JPanel p = new JPanel(){
+			private static final long serialVersionUID = 5700019947808087945L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -334,6 +346,11 @@ public class MetalTheme implements Theme
 	private static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc)
 	{
 		NavButton b = new NavButton(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1662580153245273197L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -559,6 +576,11 @@ public class MetalTheme implements Theme
 		{
 			BufferedImage dummy = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
 			final PlayButton playButt = new PlayButton(dummy, dummy, dummy){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 6576719861952482089L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -747,6 +769,11 @@ public class MetalTheme implements Theme
 		{
 			BufferedImage dummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 			final NextButton nextButt = new NextButton(dummy, dummy){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 6761062214573251877L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -934,6 +961,11 @@ public class MetalTheme implements Theme
 		{
 			BufferedImage dummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 			final PreviousButton prevButt = new PreviousButton(dummy, dummy){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -1551939669987569210L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -1121,6 +1153,11 @@ public class MetalTheme implements Theme
 		{
 			BufferedImage dummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 			final StopButton stopButt = new StopButton(dummy, dummy){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -2759409234899678963L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{

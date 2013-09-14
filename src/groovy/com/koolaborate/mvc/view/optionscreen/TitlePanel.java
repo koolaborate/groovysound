@@ -35,6 +35,8 @@ import javax.swing.border.EmptyBorder;
  ***********************************************************************************/
 public class TitlePanel extends JPanel
 {
+	private static final long serialVersionUID = -3361496455045512196L;
+
 	/**
 	 * Constructor.
 	 * 

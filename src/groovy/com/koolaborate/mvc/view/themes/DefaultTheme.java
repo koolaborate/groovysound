@@ -108,6 +108,8 @@ public class DefaultTheme
 		final Color color2 = new Color(255, 255, 255);//color1.darker();
 		
 		JPanel mainBackgroundPanel = new JPanel(){
+			private static final long serialVersionUID = 6985991099772225024L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -141,6 +143,8 @@ public class DefaultTheme
 		final Color grey = new Color(97, 107, 133);
 		
 		final JPanel navigationBackgroundPanel = new JPanel(){
+			private static final long serialVersionUID = 1967036586082905213L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -193,6 +197,8 @@ public class DefaultTheme
 	public static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc)
 	{
 		NavButton b = new NavButton(){
+			private static final long serialVersionUID = 9098403506001666242L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -276,6 +282,8 @@ public class DefaultTheme
 	public static SubNavButton createNewSubNavButton(String imgLoc)
 	{
 		SubNavButton b = new SubNavButton(){
+			private static final long serialVersionUID = -59535576596018849L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -347,6 +355,8 @@ public class DefaultTheme
 		subNavSeparator.setMinimumSize(new Dimension(3, 36));
 		subNavSeparator.setMaximumSize(new Dimension(3, 36));
 		JLabel separatorContent = new JLabel(){
+			private static final long serialVersionUID = 4760269657761120248L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -367,6 +377,8 @@ public class DefaultTheme
 	public static JLabel createSubNavSeparatorLabel()
 	{
 		JLabel separatorContent = new JLabel(){
+			private static final long serialVersionUID = -2965608741010625105L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -392,6 +404,8 @@ public class DefaultTheme
 		final Color c2 = new Color(66, 76, 116);
 		
 		JPanel header = new JPanel(){
+			private static final long serialVersionUID = -8451008914571645033L;
+
 			@Override
 			protected void paintComponent(Graphics g) 
 			{
@@ -418,6 +432,8 @@ public class DefaultTheme
 		final Color c2 = new Color(66, 76, 116);
 		
 		JPanel bottomPanel = new JPanel(){
+			private static final long serialVersionUID = 6406964132573136649L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -441,6 +457,8 @@ public class DefaultTheme
 		final Color c2 = Color.GRAY;
 		
 		JPanel bg = new JPanel(){
+			private static final long serialVersionUID = 8619467384514992560L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -466,6 +484,8 @@ public class DefaultTheme
 			StopButton stopButt, JSlider volumeSlider, JLabel softLabel, JLabel loudLabel)
 	{
 		JPanel playbackControlsPanel = new JPanel(){
+			private static final long serialVersionUID = 9140550009361861137L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -545,6 +565,8 @@ public class DefaultTheme
 			final PlayButton playButt = new PlayButton(ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_active.png")),
 					ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_inactive.png")),
 					ImageIO.read(DefaultTheme.class.getResource("/images/pausebutton.png"))){
+						private static final long serialVersionUID = 7523674211790241350L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -610,6 +632,8 @@ public class DefaultTheme
 		{
 			final NextButton nextButt = new NextButton(ImageIO.read(DefaultTheme.class.getResource("/images/nextbutton_active.png")),
 					ImageIO.read(DefaultTheme.class.getResource("/images/nextbutton_inactive.png"))){
+						private static final long serialVersionUID = 2471068278887035929L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -692,6 +716,8 @@ public class DefaultTheme
 		{
 			final PreviousButton prevButt = new PreviousButton(ImageIO.read(DefaultTheme.class.getResource("/images/prevbutton_active.png")),
 					ImageIO.read(DefaultTheme.class.getResource("/images/prevbutton_inactive.png"))){
+						private static final long serialVersionUID = -6491422973648419664L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -775,6 +801,8 @@ public class DefaultTheme
 		{
 			final StopButton stopButt = new StopButton(ImageIO.read(DefaultTheme.class.getResource("/images/stopbutton_active.png")),
 					ImageIO.read(DefaultTheme.class.getResource("/images/stopbutton_inactive.png"))){
+					private static final long serialVersionUID = -6107597720059198702L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{
@@ -869,6 +897,8 @@ public class DefaultTheme
 	public static JPanel createPlayerControlsPanel()
 	{
 		JPanel p = new JPanel(){
+			private static final long serialVersionUID = -4531199334427828803L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

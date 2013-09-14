@@ -36,6 +36,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class PreviousButton extends JComponent
 {
+	private static final long serialVersionUID = 5214155548576126075L;
 	private BufferedImage activeImg;
 	private BufferedImage inActiveImg;
 	private boolean active = false;

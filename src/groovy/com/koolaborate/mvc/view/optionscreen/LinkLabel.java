@@ -36,6 +36,7 @@ import javax.swing.SwingConstants;
  ***********************************************************************************/
 public class LinkLabel extends JLabel
 {
+	private static final long serialVersionUID = -5855578803801940641L;
 	/** the action thread which is executed when being clicked */
 	private Thread action;
 	private Color inactiveColor, activeColor;

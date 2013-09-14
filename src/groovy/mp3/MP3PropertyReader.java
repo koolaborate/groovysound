@@ -66,7 +66,6 @@ public class MP3PropertyReader
 	 * 
 	 * @param filename the name of the song file to be displayed
 	 */
-	@SuppressWarnings("unchecked")
 	@Deprecated
 	public void showMP3Info(String filename)
 	{
@@ -228,7 +227,6 @@ public class MP3PropertyReader
 	 * @param songPath the path to the song file
 	 * @return the duration of the song in milliseconds
 	 */
-	@SuppressWarnings("unchecked")
 	public long getSongLength(String songPath)
 	{
 		long ret = (long)0;

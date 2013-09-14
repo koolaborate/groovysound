@@ -35,6 +35,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class PlayButton extends JComponent
 {
+	private static final long serialVersionUID = 1458008503153571145L;
 	private BufferedImage activeImg;
 	private BufferedImage inActiveImg;
 	private BufferedImage pauseImg;

@@ -52,6 +52,7 @@ import plug.engine.ui.swing.firefoxstyle.UpdateDialog;
  ***********************************************************************************/
 public class OptionScreen extends JPanel
 {
+	private static final long serialVersionUID = 5938891358222523024L;
 	private Settings s;
 	private JButton searchNow;
 	

@@ -57,6 +57,7 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class SearchFrame extends JFrame
 {
+	private static final long serialVersionUID = -6496420334431430661L;
 	private Database db;
 	private Color color1 = new Color(237, 242, 249);
 	private Color color2 = new Color(255, 255, 255);
@@ -98,6 +99,8 @@ public class SearchFrame extends JFrame
 	{
 		// a gradient background panel
 		JPanel bg = new JPanel(){
+			private static final long serialVersionUID = -7634430239968324001L;
+
 			protected void paintComponent(Graphics g) 
 			{
 				Graphics2D g2d = (Graphics2D) g;

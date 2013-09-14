@@ -583,7 +583,6 @@ public class PlaybackController implements BasicPlayerListener{
 	 * @param properties
 	 *            audio stream properties.
 	 */
-	@SuppressWarnings("unchecked")
 	public void opened(Object stream, Map properties){
 		// Pay attention to properties. It's useful to get duration,
 		// bitrate, channels, even tag such as ID3v2.
@@ -606,7 +605,6 @@ public class PlaybackController implements BasicPlayerListener{
 	 * @param properties
 	 *            audio stream parameters.
 	 */
-	@SuppressWarnings("unchecked")
 	public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties){
 		// Pay attention to properties. It depends on underlying JavaSound SPI
 		// MP3SPI provides mp3.equalizer.

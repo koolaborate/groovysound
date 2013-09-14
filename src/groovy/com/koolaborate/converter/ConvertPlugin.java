@@ -109,6 +109,8 @@ public class ConvertPlugin extends Plugin
 			
 				// create a sub navigation button for the playlist view which enables the user to convert the album to WAV
 				SubNavButton convertButton = new SubNavButton(){
+					private static final long serialVersionUID = 7801726647815258817L;
+
 					@Override
 					protected void paintComponent(Graphics g)
 					{

@@ -59,6 +59,7 @@ import plug.engine.Pluggable;
  ***********************************************************************************/
 public class FindPluginBrowser extends JDialog
 {
+	private static final long serialVersionUID = 5480618581055245142L;
 	private static String XML_FILE_PATH = "http://www.impressive-artworx.de/tools/vibrantplayer/plugins/pluginlist.xml";
 	
 	/**

@@ -39,6 +39,7 @@ import com.koolaborate.util.StringUtils;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class AlbumsOverviewPanel extends JPanel{
+	private static final long serialVersionUID = -806840065427231675L;
 	private List<Album> albums;
 	private int height;
 
@@ -95,7 +96,8 @@ public class AlbumsOverviewPanel extends JPanel{
 
 		int albumsPerLine = 0;
 		int currentAlbumsInLine = 0;
-		int i = 0, rowcount = 0, labelcount = 0, labelheight = 0;
+		int i = 0; 
+		int rowcount = 0, labelcount = 0, labelheight = 0;
 		int albumheight = 0, albumwidth = 0;
 
 		String lastLetter = ""; // the last upper case start letter of the

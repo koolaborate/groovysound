@@ -38,6 +38,7 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class ThemePreviewPanel extends JPanel
 {
+	private static final long serialVersionUID = -3091117485725551187L;
 	private JLabel imgLabel;
 	
 	/**

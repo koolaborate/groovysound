@@ -58,7 +58,6 @@ public class PluginCellRenderer extends AbstractCellEditor implements TableCellR
 		final Pluggable plugin = ((PluggableWrapper) value).getPluggable();
 		final int height = isSelected ? 150 : 55; 
 
-		@SuppressWarnings("serial") //$NON-NLS-1$
 		JPanel panel = new JPanel(true) {			
 			@Override
 			protected void paintComponent(Graphics g) {

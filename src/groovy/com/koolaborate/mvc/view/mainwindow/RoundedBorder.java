@@ -34,6 +34,7 @@ import javax.swing.border.AbstractBorder;
  ***********************************************************************************/
 public class RoundedBorder extends AbstractBorder
 {
+	private static final long serialVersionUID = 8257416430750649811L;
 	private Color color;
 	private int radius;
 

@@ -52,6 +52,10 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class AboutDialog extends JDialog
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7090138410467143385L;
 	private JLabel imageLabel;
 	private JLabel titleLabel;
 	private JLabel versionLabel;
@@ -99,6 +103,8 @@ public class AboutDialog extends JDialog
 		
 		// build a two-stops gradient backgroundpanel
 		JPanel background = new JPanel(){
+			private static final long serialVersionUID = -7174635128295673280L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

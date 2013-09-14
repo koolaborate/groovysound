@@ -38,6 +38,7 @@ import com.koolaborate.mvc.view.mainwindow.MainWindow;
  ***********************************************************************************/
 public class PlaylistPanel extends JPanel
 {
+	private static final long serialVersionUID = 6888678933375145271L;
 	private Playlist playlist;
 	private File albumFolder;
 	private MainWindow window;

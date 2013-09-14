@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
  ***********************************************************************************/
 public class SubNavButton extends JComponent
 {
+	private static final long serialVersionUID = 2476824458682313176L;
 	private BufferedImage ico; 
 	private String text;
 	private boolean mouseOver = false;

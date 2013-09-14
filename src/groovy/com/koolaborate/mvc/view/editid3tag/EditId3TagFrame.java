@@ -65,6 +65,8 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class EditId3TagFrame extends JFrame{
+	private static final long serialVersionUID = -6903485062891137484L;
+
 	private MainWindow window;
 
 	// song tag information
@@ -126,6 +128,8 @@ public class EditId3TagFrame extends JFrame{
 		setLayout(new BorderLayout());
 
 		JPanel bgPanel = new JPanel(){
+			private static final long serialVersionUID = 8368982593527325135L;
+
 			@Override
 			protected void paintComponent(Graphics g){
 				Color color1 = new Color(237, 242, 249);
@@ -500,8 +504,7 @@ public class EditId3TagFrame extends JFrame{
 	 *            <code>null</code>
 	 * @return the content of the first element of the list or an empty String
 	 */
-	@SuppressWarnings("unchecked")
-	private String getFromID3v1Tag(List tagList){
+	private String getFromID3v1Tag(List<String> tagList){
 		if(tagList == null || tagList.size() < 1) return "";
 		return ((String) tagList.get(0)).trim();
 	}

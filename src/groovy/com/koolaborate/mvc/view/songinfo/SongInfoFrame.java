@@ -72,6 +72,8 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class SongInfoFrame extends JFrame
 {
+	private static final long serialVersionUID = 3125867978600491626L;
+
 	private static Logger log = Logger.getLogger(SongInfoFrame.class.getName());
 	
 	private MainWindow window;
@@ -160,6 +162,8 @@ public class SongInfoFrame extends JFrame
 		setLayout(new BorderLayout());
 		
 		JPanel bgPanel = new JPanel(){
+			private static final long serialVersionUID = 3680372109216548569L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -241,6 +245,8 @@ public class SongInfoFrame extends JFrame
 	private JPanel createFileInfoPanel()
 	{
 		JPanel p = new JPanel(new GridBagLayout()){
+			private static final long serialVersionUID = -7042471450383036909L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -336,6 +342,8 @@ public class SongInfoFrame extends JFrame
 	private JPanel createHeaderInfoPanel()
 	{
 		JPanel p = new JPanel(new GridBagLayout()){
+			private static final long serialVersionUID = -4878739647942395043L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -448,6 +456,8 @@ public class SongInfoFrame extends JFrame
 	private JPanel createID3InfoPanel()
 	{
 		JPanel p = new JPanel(new GridBagLayout()){
+			private static final long serialVersionUID = 1131728110538127378L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

@@ -63,6 +63,11 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class BigCoverFrame extends JDialog
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5732683280761662053L;
+
 	private MainWindow window;
 	
 	private JPanel backGround;
@@ -103,6 +108,11 @@ public class BigCoverFrame extends JDialog
 	private void initGUI()
 	{
 		backGround = new JPanel(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4774362950346490954L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -155,6 +165,8 @@ public class BigCoverFrame extends JDialog
 		
 		// add the controls
 		JPanel p = new JPanel(){
+			private static final long serialVersionUID = -6337627237279791688L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

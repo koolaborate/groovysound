@@ -45,6 +45,7 @@ import javax.swing.SwingUtilities;
  ***********************************************************************************/
 public class PlaylistEntry extends JPanel
 {
+	private static final long serialVersionUID = -4772418916345558526L;
 	private boolean mouseOver = false;
 	private Color border, activeBg;
 	private float activeAlpha = 1.0f;

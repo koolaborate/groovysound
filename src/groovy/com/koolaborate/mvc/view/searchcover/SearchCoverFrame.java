@@ -71,6 +71,7 @@ public class SearchCoverFrame extends JDialog
 	//TODO this class is pretty much identical to the one of find new cover using album information screen...
 	//combine them to one class!
 	
+	private static final long serialVersionUID = 4308469264735406302L;
 	private JButton cancelButt, searchButt;
 	private JPanel centerPanel, searchPanel1, searchPanel2, searchPanel3;
 	private JXBusyLabel busyLabel1, busyLabel2, busyLabel3;
@@ -127,6 +128,8 @@ public class SearchCoverFrame extends JDialog
 		setLayout(new BorderLayout());
 		
 		JPanel bgPanel = new JPanel(){
+			private static final long serialVersionUID = 3255388876280461681L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -523,7 +526,7 @@ public class SearchCoverFrame extends JDialog
 					}
 					if(i2 != null)
 					{
-						BufferedImage i2Small = GraphicsUtilities.getInstance().getInstance().createThumbnail(i2, 150, 150);
+						BufferedImage i2Small = GraphicsUtilities.getInstance().createThumbnail(i2, 150, 150);
 						final JLabel googleCover = new JLabel(new ImageIcon(i2Small));
 						googleCover.setName("i2");
 						googleCover.setBorder(b);

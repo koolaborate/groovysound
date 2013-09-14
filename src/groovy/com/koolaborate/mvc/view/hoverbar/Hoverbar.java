@@ -38,6 +38,8 @@ import javax.swing.border.EmptyBorder;
  ***********************************************************************************/
 public class Hoverbar extends JComponent 
 {
+	private static final long serialVersionUID = 3300560477607711488L;
+
 	private float alpha = 0.9f;
 	
 	private int width = 20;

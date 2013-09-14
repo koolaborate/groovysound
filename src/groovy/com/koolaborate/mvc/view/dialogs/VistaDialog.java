@@ -78,6 +78,7 @@ import java.util.List;
  ***********************************************************************************/
 public class VistaDialog extends JDialog implements ActionListener 
 {
+	private static final long serialVersionUID = 6583717671869072058L;
 	/** constants for the various message types */
 	public final static int INFORMATION_MESSAGE  = 0;
 	public final static int CONFIRMATION_MESSAGE = 1;
@@ -303,6 +304,8 @@ public class VistaDialog extends JDialog implements ActionListener
 			messages.setEditable(false);
 			messages.setSize(maxWidth - icoWidth - 50, 40);
 			titleText = new JTextArea(){
+				private static final long serialVersionUID = 5449511673665258442L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{

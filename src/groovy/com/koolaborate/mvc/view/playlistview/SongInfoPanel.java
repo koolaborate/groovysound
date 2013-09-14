@@ -36,6 +36,7 @@ import com.koolaborate.model.CurrentSongInfo;
  ***********************************************************************************/
 public class SongInfoPanel extends JPanel
 {
+	private static final long serialVersionUID = 3097822843691742573L;
 	private JLabel songLabel, artistLabel; 
 	private CurrentSongInfo songInfo;
 	

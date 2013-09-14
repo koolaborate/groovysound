@@ -63,6 +63,7 @@ import com.koolaborate.mvc.view.playlistview.PlaylistPanel;
  ***********************************************************************************/
 public class TinyView extends JWindow
 {
+	private static final long serialVersionUID = -7974766401641309809L;
 	private JButton closeButton;
 	private CoverPanel cover;
 	private Playlist playlist;
@@ -125,6 +126,8 @@ public class TinyView extends JWindow
 		//TODO leads to weired behaviour of the tiny window... leave out at first
 		
 		bg = new JPanel(){
+			private static final long serialVersionUID = -7885355487013240664L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{
@@ -194,6 +197,8 @@ public class TinyView extends JWindow
 		
 		// add the player control buttons
 		controlPanel = new JPanel(){
+			private static final long serialVersionUID = -6420108314717562265L;
+
 			@Override
 			protected void paintComponent(Graphics g)
 			{

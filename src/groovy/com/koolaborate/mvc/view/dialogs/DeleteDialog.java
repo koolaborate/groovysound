@@ -56,6 +56,7 @@ import java.awt.event.ActionListener;
  ***********************************************************************************/
 public class DeleteDialog extends JDialog implements ActionListener 
 {
+	private static final long serialVersionUID = -6068666222344090944L;
 	public final static String YES_OPTION = "yes";
 	public final static String NO_OPTION  = "no";
 	public final static String NO_ACTION  = "dispose";
@@ -173,6 +174,8 @@ public class DeleteDialog extends JDialog implements ActionListener
 			messages.setSize(maxWidth - delIco.getIconWidth() - 50, 40);
 			
 			titleText = new JTextArea(){
+				private static final long serialVersionUID = 7523079066946770867L;
+
 				@Override
 				protected void paintComponent(Graphics g)
 				{

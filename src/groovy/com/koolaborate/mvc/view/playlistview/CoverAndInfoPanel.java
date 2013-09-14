@@ -31,6 +31,7 @@ import javax.swing.JPanel;
  ***********************************************************************************/
 public class CoverAndInfoPanel extends JPanel
 {
+	private static final long serialVersionUID = -9201729498791490290L;
 	private CoverPanel coverPanel;
 	private SongInfoPanel songInfoPanel;
 	private TimeElapsedPanel timeElapsedPanel;

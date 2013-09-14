@@ -35,6 +35,7 @@ import javax.swing.border.Border;
  ***********************************************************************************/
 public class Sidepanel extends JPanel
 {
+	private static final long serialVersionUID = -3089113951383589257L;
 	private boolean leftBorder = true;
 	
 	/**

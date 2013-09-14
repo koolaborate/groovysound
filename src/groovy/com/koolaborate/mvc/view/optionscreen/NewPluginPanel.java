@@ -52,6 +52,7 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class NewPluginPanel extends JPanel
 {
+	private static final long serialVersionUID = 822729186528974783L;
 	private JButton installPlugin;
 	private JLabel pluginName, description, iconLabel;
 	private String pluginPath;

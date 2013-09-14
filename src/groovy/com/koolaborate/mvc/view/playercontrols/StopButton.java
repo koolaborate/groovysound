@@ -36,6 +36,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class StopButton extends JComponent
 {
+	private static final long serialVersionUID = -4045163729147010140L;
 	private BufferedImage activeImg;
 	private BufferedImage inActiveImg;
 	private boolean active = false;

@@ -66,6 +66,7 @@ import plug.engine.ui.swing.firefoxstyle.UpdateDialog;
  ***********************************************************************************/
 public class PluginAndThemeBrowser extends JDialog
 {
+	private static final long serialVersionUID = 3020990619723531782L;
 	private final JTable table;
 	private final DefaultTableModel model;
 	
@@ -104,6 +105,8 @@ public class PluginAndThemeBrowser extends JDialog
 		
 		// create the plugin list
 		model = new DefaultTableModel(){
+			private static final long serialVersionUID = -383831680154515950L;
+
 			@Override
 			public java.lang.Class<?> getColumnClass(int columnIndex){
 				return PluggableWrapper.class;
@@ -111,6 +114,7 @@ public class PluginAndThemeBrowser extends JDialog
 		};
 		fillModel();
 		table = new JTable(model){
+			private static final long serialVersionUID = -3484204370997614489L;
 			@Override
 			public boolean editCellAt(int row, int column, EventObject e){
 				this.selectRow(row);
@@ -304,6 +308,7 @@ public class PluginAndThemeBrowser extends JDialog
 	private JPanel buildHeaderPanel()
 	{
 		JPanel panel = new JPanel(){
+			private static final long serialVersionUID = 2411793553668898755L;
 			@Override
 			public void paintComponent(Graphics g)
 			{

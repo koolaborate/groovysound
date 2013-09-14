@@ -35,6 +35,7 @@ import javax.swing.border.EmptyBorder;
  ***********************************************************************************/
 public class VariableLineBorder extends EmptyBorder
 {
+	private static final long serialVersionUID = 602883418224872088L;
 	private Color c;
 	private int thickness;
 	private boolean paintTop, paintLeft, paintBottom, paintRight;

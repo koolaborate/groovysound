@@ -36,7 +36,8 @@ import javax.swing.SwingUtilities;
  ***********************************************************************************/
 public class GhostDragGlassPane extends JComponent 
 {
-    private BufferedImage image;
+	private static final long serialVersionUID = 5509743453860849064L;
+	private BufferedImage image;
     private Point location;
     private BufferedImage shadow;
     

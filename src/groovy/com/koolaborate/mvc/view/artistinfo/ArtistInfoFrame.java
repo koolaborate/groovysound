@@ -85,6 +85,7 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class ArtistInfoFrame extends JFrame implements DropTargetListener
 {
+	private static final long serialVersionUID = 3351665800950796092L;
 	private String artistname;
 	private JScrollPane scroll;
 	private JEditorPane htmlPane;
@@ -506,7 +507,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	{
 		this.bigImage = bigImage;
 		BufferedImage image = GraphicsUtilities.getInstance().createThumbnail(bigImage, 300); 
-		BufferedImage imgWithBorder = GraphicsUtilities.createCompatibleImage(image.getWidth() + 40, image.getHeight() + 20);
+		BufferedImage imgWithBorder = GraphicsUtilities.getInstance().createCompatibleImage(image.getWidth() + 40, image.getHeight() + 20);
 		Graphics2D g2 = imgWithBorder.createGraphics();
 		g2.setColor(Color.WHITE);
 		g2.fillRect(0, 0, imgWithBorder.getWidth(), imgWithBorder.getHeight());
@@ -636,7 +637,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 			BufferedImage externalImage = null;
 			try
 			{
-				externalImage = GraphicsUtilities.loadCompatibleImage(imgFile.toURI().toURL());
+				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL());
 			} 
 			catch (MalformedURLException ex)
 			{

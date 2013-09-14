@@ -32,6 +32,7 @@ import javax.swing.JComponent;
  ***********************************************************************************/
 public class NavButton extends JComponent
 {
+	private static final long serialVersionUID = -3709284104725338580L;
 	private BufferedImage activeImg;
 	private BufferedImage inActiveImg;
 	private boolean mouseOver = false;

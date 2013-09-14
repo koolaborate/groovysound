@@ -52,6 +52,8 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class NavigationPanel extends JPanel
 {
+	private static final long serialVersionUID = -152859065478817033L;
+
 	private NavButton albumsButton, playlistButton, settingsButton;
 	
 	private MainWindow mainWindow;
@@ -240,7 +242,7 @@ public class NavigationPanel extends JPanel
 				LocaleMessage.getString("nav.sort_none")};
 		
 		// TODO this is where the concurrent modification happens...
-		JComboBox sortModeBox = new JComboBox(choices);
+		JComboBox<String> sortModeBox = new JComboBox<String>(choices);
 		sortModeBox.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e)
 			{

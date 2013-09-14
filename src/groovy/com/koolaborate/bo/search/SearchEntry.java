@@ -64,6 +64,7 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class SearchEntry extends JPanel
 {
+	private static final long serialVersionUID = -3415668077276831303L;
 	private boolean mouseOver = false;
 	private Color border = new Color(216, 240, 250);
 	private Color activeBg = new Color(243, 249, 253);
