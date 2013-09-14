@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -76,7 +77,8 @@ public class Settings
 			// if the file could not be found, it has to be created
 			try
 			{
-				FileHelper.getInstance().createFile(SETTINGS_PATH);
+				File file = new File(SETTINGS_PATH)
+				file.createNewFile()
 			}
 			catch(IOException e2)
 			{

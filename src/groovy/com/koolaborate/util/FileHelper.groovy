@@ -50,19 +50,6 @@ public class FileHelper {
 	 */
 
 
-	/**
-	 * Creates a new file with the given path.
-	 * 
-	 * @param path the path of the file that shall be created
-	 * @throws IOException if the file could not be created
-	 */
-	// TODO remove
-	@Deprecated
-	public void createFile(String path) throws IOException {
-		File f = new File(path);
-		f.createNewFile();
-	}
-
 
 	/**
 	 * Removes the given file.
