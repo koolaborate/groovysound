@@ -505,7 +505,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	public void setArtistImage(BufferedImage bigImage)
 	{
 		this.bigImage = bigImage;
-		BufferedImage image = GraphicsUtilities.createThumbnail(bigImage, 300); 
+		BufferedImage image = GraphicsUtilities.getInstance().createThumbnail(bigImage, 300); 
 		BufferedImage imgWithBorder = GraphicsUtilities.createCompatibleImage(image.getWidth() + 40, image.getHeight() + 20);
 		Graphics2D g2 = imgWithBorder.createGraphics();
 		g2.setColor(Color.WHITE);
@@ -647,7 +647,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 				ex.printStackTrace();
 			}
 			// create the thumbnail image using SwingX GraphicsUtilities class
-			externalImage = GraphicsUtilities.createThumbnailFast(externalImage, width, height);
+			externalImage = GraphicsUtilities.getInstance().createThumbnailFast(externalImage, width, height);
 			
 			g2.drawImage(externalImage, 0, 0, null);
 			g2.dispose();

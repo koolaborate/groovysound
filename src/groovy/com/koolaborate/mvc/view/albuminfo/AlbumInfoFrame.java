@@ -666,8 +666,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 				ex.printStackTrace();
 			}
 			// create the thumbnail image using SwingX GraphicsUtilities class
-			externalImage = GraphicsUtilities.createThumbnailFast(
-					externalImage, width, height);
+			externalImage = GraphicsUtilities.getInstance().createThumbnailFast(externalImage, width, height);
 
 			g2.drawImage(externalImage, 0, 0, null);
 			g2.dispose();

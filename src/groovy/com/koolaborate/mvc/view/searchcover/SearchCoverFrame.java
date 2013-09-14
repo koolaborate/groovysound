@@ -484,7 +484,7 @@ public class SearchCoverFrame extends JDialog
 				busyLabel1.setBusy(false);
 				if(i1 != null)
 				{
-					BufferedImage i1Small = GraphicsUtilities.createThumbnail(i1, 150, 150);
+					BufferedImage i1Small = GraphicsUtilities.getInstance().createThumbnail(i1, 150, 150);
 					final JLabel amazonCover = new JLabel(new ImageIcon(i1Small));
 					amazonCover.setName("i1");
 					amazonCover.setBorder(b);
@@ -523,7 +523,7 @@ public class SearchCoverFrame extends JDialog
 					}
 					if(i2 != null)
 					{
-						BufferedImage i2Small = GraphicsUtilities.createThumbnail(i2, 150, 150);
+						BufferedImage i2Small = GraphicsUtilities.getInstance().getInstance().createThumbnail(i2, 150, 150);
 						final JLabel googleCover = new JLabel(new ImageIcon(i2Small));
 						googleCover.setName("i2");
 						googleCover.setBorder(b);
@@ -552,7 +552,7 @@ public class SearchCoverFrame extends JDialog
 					}
 					if(i3 != null)
 					{
-						BufferedImage i3Small = GraphicsUtilities.createThumbnail(i3, 150, 150);
+						BufferedImage i3Small = GraphicsUtilities.getInstance().createThumbnail(i3, 150, 150);
 						final JLabel googleCover2 = new JLabel(new ImageIcon(i3Small));
 						googleCover2.setName("i3");
 						googleCover2.setBorder(b);

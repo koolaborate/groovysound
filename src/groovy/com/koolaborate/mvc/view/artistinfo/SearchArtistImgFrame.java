@@ -495,7 +495,7 @@ public class SearchArtistImgFrame extends JDialog
 					}
 					if(i1 != null)
 					{
-						BufferedImage i2Small = GraphicsUtilities.createThumbnail(i1, 150, 150);
+						BufferedImage i2Small = GraphicsUtilities.getInstance().createThumbnail(i1, 150, 150);
 						final JLabel googleArtist1 = new JLabel(new ImageIcon(i2Small));
 						googleArtist1.setName("i1");
 						googleArtist1.setBorder(b);
@@ -524,7 +524,7 @@ public class SearchArtistImgFrame extends JDialog
 					}
 					if(i2 != null)
 					{
-						BufferedImage i2Small = GraphicsUtilities.createThumbnail(i2, 150, 150);
+						BufferedImage i2Small = GraphicsUtilities.getInstance().createThumbnail(i2, 150, 150);
 						final JLabel googleArtist2 = new JLabel(new ImageIcon(i2Small));
 						googleArtist2.setName("i2");
 						googleArtist2.setBorder(b);
@@ -553,7 +553,7 @@ public class SearchArtistImgFrame extends JDialog
 					}
 					if(i3 != null)
 					{
-						BufferedImage i3Small = GraphicsUtilities.createThumbnail(i3, 150, 150);
+						BufferedImage i3Small = GraphicsUtilities.getInstance().createThumbnail(i3, 150, 150);
 						final JLabel googleArtist3 = new JLabel(new ImageIcon(i3Small));
 						googleArtist3.setName("i3");
 						googleArtist3.setBorder(b);

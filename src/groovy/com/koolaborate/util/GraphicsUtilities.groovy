@@ -32,20 +32,19 @@ package com.koolaborate.util;
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
-import java.io.IOException;
-import java.net.URL;
-import javax.imageio.ImageIO;
+import java.awt.Color
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.GraphicsConfiguration
+import java.awt.GraphicsEnvironment
+import java.awt.RenderingHints
+import java.awt.Transparency
+import java.awt.image.BufferedImage
+import java.awt.image.ColorModel
+import java.awt.image.Raster
+import java.awt.image.WritableRaster
+
+import javax.imageio.ImageIO
 
 /**
  * GraphicsUtilities contains a set of tools to perform common graphics
@@ -80,25 +79,27 @@ import javax.imageio.ImageIO;
  */
 public class GraphicsUtilities {
 	private static GraphicsUtilities graphicsUtilitiesInstance
-	
+
 	public static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0)
 
-	private static final GraphicsConfiguration CONFIGURATION = 
-		GraphicsEnvironment
-			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-				.getDefaultConfiguration()
+	private static final GraphicsConfiguration CONFIGURATION =
+	GraphicsEnvironment
+	.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+	.getDefaultConfiguration()
 
-	private GraphicsUtilities(){}
-	
+	private GraphicsUtilities(){
+
+	}
+
 	def static synchronized GraphicsUtilities getInstance(){
 		if(null == graphicsUtilitiesInstance){
 			graphicsUtilitiesInstance = new GraphicsUtilities()
 		}
-		
+
 		return graphicsUtilitiesInstance
 	}
-	
-	
+
+
 
 	/**
 	 * 
@@ -113,12 +114,12 @@ public class GraphicsUtilities {
 	 *            image is obtained
 	 * @return a new BufferedImage, compatible with the color model of image
 	 */
-	def static BufferedImage createColorModelCompatibleImage(
-			BufferedImage image) {
-		ColorModel cm = image.getColorModel();
-		return new BufferedImage(cm, cm.createCompatibleWritableRaster(image
-		.getWidth(), image.getHeight()), cm.isAlphaPremultiplied(),
-		null);
+	def static BufferedImage createColorModelCompatibleImage(BufferedImage image) {
+		ColorModel colorModel = image.getColorModel();
+
+		def writableRaster = colorModel.createCompatibleWritableRaster(image.getWidth(), image.getHeight())
+
+		return new BufferedImage(colorModel, writableRaster, colorModel.isAlphaPremultiplied(), null);
 	}
 
 	/**
@@ -354,7 +355,7 @@ public class GraphicsUtilities {
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if one of the dimensions is <= 0
 	 */
-	def static BufferedImage createThumbnailFast(BufferedImage image,
+	def BufferedImage createThumbnailFast(BufferedImage image,
 			int newWidth, int newHeight) {
 		if (newWidth > image.getWidth() || newHeight > image.getHeight()) {
 			return image;
@@ -373,6 +374,8 @@ public class GraphicsUtilities {
 		return temp;
 	}
 
+	// TODO REFACTOR, duplicated functionality
+			
 	/***************************************************************************
 	 * 
 	 * 
@@ -397,7 +400,9 @@ public class GraphicsUtilities {
 	 * @return a new compatible BufferedImage containing a thumbnail of image
 	 * @throws IllegalArgumentException if newSize <= 0
 	 */
-	def static BufferedImage createThumbnail(BufferedImage image, int newSize) {
+	def BufferedImage createThumbnail(BufferedImage image, int newSize) {
+		if(null == image) return image
+		
 		int width = image.getWidth();
 		int height = image.getHeight();
 		boolean isWidthGreater = width > height;
@@ -469,18 +474,18 @@ public class GraphicsUtilities {
 	 * @throws IllegalArgumentException if code>newHeight is larger than the
 	 *             height of image or if one the dimensions is not > 0
 	 */
-	def static BufferedImage createThumbnail(BufferedImage image,
-			int newWidth, int newHeight) {
+	def BufferedImage createThumbnail(BufferedImage image, int newWidth, int newHeight) {
+		if(null == image) return image
+		
 		int width = image.getWidth();
 		int height = image.getHeight();
 		if (newWidth > width || newHeight > height) {
 			return image;
 		}
-		else
-		if (newWidth <= 0 || newHeight <= 0) {
-			throw new IllegalArgumentException(
-			"newWidth and newHeight must" + " be greater than 0");
+		else if (newWidth <= 0 || newHeight <= 0) {
+			throw new IllegalArgumentException("newWidth and newHeight must" + " be greater than 0");
 		}
+		
 		BufferedImage thumb = image;
 
 		while (width != newWidth || height != newHeight){
@@ -498,8 +503,7 @@ public class GraphicsUtilities {
 			}
 			BufferedImage temp = createCompatibleImage(image, width, height);
 			Graphics2D g2 = temp.createGraphics();
-			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			g2.drawImage(thumb, 0, 0, temp.getWidth(), temp.getHeight(), null);
 			g2.dispose();
 			thumb = temp;
@@ -528,20 +532,18 @@ public class GraphicsUtilities {
 	 * @throws IllegalArgumentException is pixels is non-null and of length <
 	 *             w*h
 	 */
-	def static int[] getPixels(BufferedImage img, int x, int y, int w, int h, int[] pixels) {
+	def int[] getPixels(BufferedImage img, int x, int y, int w, int h, int[] pixels) {
 		if (w == 0 || h == 0) {
 			return new int[0];
 		}
 		if (pixels == null) {
 			pixels = new int[w * h];
 		}
-		else
-		if (pixels.length < w * h) {
+		else if (pixels.length < w * h) {
 			throw new IllegalArgumentException("pixels array must have a length" + " >= w*h");
 		}
 		int imageType = img.getType();
-		if (imageType == BufferedImage.TYPE_INT_ARGB
-		|| imageType == BufferedImage.TYPE_INT_RGB) {
+		if (imageType == BufferedImage.TYPE_INT_ARGB || imageType == BufferedImage.TYPE_INT_RGB) {
 			Raster raster = img.getRaster();
 			return (int[]) raster.getDataElements(x, y, w, h, pixels);
 		}
@@ -569,22 +571,24 @@ public class GraphicsUtilities {
 	 */
 	def void setPixels(BufferedImage img, int x, int y, int w, int h, int[] pixels) {
 		if (pixels == null || w == 0 || h == 0) {
-			return;
+			return
+		} else if (pixels.length < w * h) {
+			throw new IllegalArgumentException("pixels array must have a length" + " >= w*h")
 		}
-		else
-		if (pixels.length < w * h) {
-			throw new IllegalArgumentException(
-			"pixels array must have a length" + " >= w*h");
-		}
-		int imageType = img.getType();
-		if (imageType == BufferedImage.TYPE_INT_ARGB
-		|| imageType == BufferedImage.TYPE_INT_RGB) {
-			WritableRaster raster = img.getRaster();
-			raster.setDataElements(x, y, w, h, pixels);
-		}
-		else {
+
+		int imageType = img.getType()
+		if (imageType == BufferedImage.TYPE_INT_ARGB || imageType == BufferedImage.TYPE_INT_RGB) {
+			WritableRaster raster = img.getRaster()
+			raster.setDataElements(x, y, w, h, pixels)
+		} else {
 			// Unmanages the image
-			img.setRGB(x, y, w, h, pixels, 0, w);
+			img.setRGB(x, y, w, h, pixels, 0, w)
 		}
 	}
 }
+
+
+
+
+
+

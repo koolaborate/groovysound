@@ -175,8 +175,7 @@ public class TrayIconHandler{
 				}
 
 				BufferedImage ico = ImageIO.read(imgFile);
-				BufferedImage icoSmall = GraphicsUtilities.createThumbnailFast(
-						ico, 16, 16);
+				BufferedImage icoSmall = GraphicsUtilities.getInstance().createThumbnailFast(ico, 16, 16);
 				BufferedImage icoSmallBorder = new BufferedImage(icoWidth,
 						icoHeight, BufferedImage.TYPE_INT_ARGB);
 				Graphics g = icoSmallBorder.getGraphics();
