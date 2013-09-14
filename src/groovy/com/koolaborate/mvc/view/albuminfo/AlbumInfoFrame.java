@@ -119,7 +119,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 * Initializes the GUI elements.
 	 */
 	private void initGUI(){
-		setTitle(LocaleMessage.getString("album.info") + " " + album.getTitle());
+		setTitle(LocaleMessage.getInstance().getString("album.info") + " " + album.getTitle());
 		setSize(500, 220);
 		setMinimumSize(new Dimension(400, 190));
 		setLocationRelativeTo(null);
@@ -141,8 +141,8 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		// the button panel
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2));
 
-		editButton = new JButton(LocaleMessage.getString("common.edit"));
-		editButton.setToolTipText(LocaleMessage.getString("common.edit_tooltip"));
+		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"));
+		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"));
 		editButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				setEditModeEnabled(true);
@@ -150,7 +150,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		});
 		saveButton = new JButton(
 				UIManager.getString("FileChooser.saveButtonText"));
-		saveButton.setToolTipText(LocaleMessage.getString("common.save_tooltip"));
+		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
 		saveButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				setEditModeEnabled(false);
@@ -160,14 +160,14 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		saveButton.setEnabled(false);
 		closeButton = new JButton(
 				UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		closeButton.setToolTipText(LocaleMessage.getString("common.close_tooltip"));
+		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
 		closeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				if(changesMade || imageChanged) {
 					VistaDialog dialog = VistaDialog.showConfirmationDialog(
-							LocaleMessage.getString("common.discard_title"),
-							LocaleMessage.getString("common.discard_label"),
-							LocaleMessage.getString("common.discard_text"));
+							LocaleMessage.getInstance().getString("common.discard_title"),
+							LocaleMessage.getInstance().getString("common.discard_label"),
+							LocaleMessage.getInstance().getString("common.discard_text"));
 					if(dialog.yesSelected) dispose();
 				} else {
 					dispose();
@@ -235,14 +235,14 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridheight = 1;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(0, 10, 4, 10);
-		changeImage = new JButton(LocaleMessage.getString("common.changeimg"));
+		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg"));
 		changeImage.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				new SearchNewCoverFrame(getThisInstance(), album,
 						artist.getText().trim(), title.getText().trim());
 			}
 		});
-		changeImage.setToolTipText(LocaleMessage.getString("common.changeimg_tooltip"));
+		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
 		changeImage.setVisible(false);
 		editPanel.add(changeImage, gbc);
 
@@ -251,7 +251,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridy = 0;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleLabel = new JLabel(LocaleMessage.getString("common.title")
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title")
 				+ ":");
 		editPanel.add(titleLabel, gbc);
 
@@ -270,7 +270,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 0, 0, 10);
 		JLabel artistLabel = new JLabel(
-				LocaleMessage.getString("common.artist") + ":");
+				LocaleMessage.getInstance().getString("common.artist") + ":");
 		editPanel.add(artistLabel, gbc);
 
 		gbc.gridx = 2;
@@ -288,7 +288,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.weighty = 1.0f;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel yearLabel = new JLabel(LocaleMessage.getString("common.year")
+		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year")
 				+ ":");
 		editPanel.add(yearLabel, gbc);
 
@@ -346,14 +346,14 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridheight = 1;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(0, 10, 4, 10);
-		changeImage = new JButton(LocaleMessage.getString("common.changeimg"));
+		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg"));
 		changeImage.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				new SearchNewCoverFrame(getThisInstance(), album,
 						artist.getText().trim(), title.getText().trim());
 			}
 		});
-		changeImage.setToolTipText(LocaleMessage.getString("common.changeimg_tooltip"));
+		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
 		changeImage.setVisible(false);
 		showPanel.add(changeImage, gbc);
 
@@ -362,7 +362,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridy = 0;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleLabel = new JLabel(LocaleMessage.getString("common.title")
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title")
 				+ ":");
 		showPanel.add(titleLabel, gbc);
 
@@ -381,7 +381,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 0, 0, 10);
 		JLabel artistLabel = new JLabel(
-				LocaleMessage.getString("common.artist") + ":");
+				LocaleMessage.getInstance().getString("common.artist") + ":");
 		showPanel.add(artistLabel, gbc);
 
 		gbc.gridx = 2;
@@ -399,7 +399,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.weighty = 1.0f;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel yearLabel = new JLabel(LocaleMessage.getString("common.year")
+		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year")
 				+ ":");
 		showPanel.add(yearLabel, gbc);
 
@@ -496,9 +496,9 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 			year.setText(Integer.toString(yearInt));
 			ret = true;
 		} catch(NumberFormatException e) {
-			VistaDialog.showDialog(LocaleMessage.getString("error.6"),
-					LocaleMessage.getString("error.7"),
-					LocaleMessage.getString("error.8"),
+			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.6"),
+					LocaleMessage.getInstance().getString("error.7"),
+					LocaleMessage.getInstance().getString("error.8"),
 					VistaDialog.ERROR_MESSAGE);
 			ret = false;
 		}
@@ -653,8 +653,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 				width = (int) ((float) origWidth * factor);
 			}
 
-			image = GraphicsUtilities2.createCompatibleTranslucentImage(width,
-					height);
+			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height);
 			Graphics2D g2 = image.createGraphics();
 
 			BufferedImage externalImage = null;

@@ -398,9 +398,9 @@ public class PlaybackController implements BasicPlayerListener{
 					log.debug(e1.getMessage());
 				}
 			} else {
-				VistaDialog.showDialog(LocaleMessage.getString("error.1"),
-						LocaleMessage.getString("error.22"),
-						LocaleMessage.getString("error.23"),
+				VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.1"),
+						LocaleMessage.getInstance().getString("error.22"),
+						LocaleMessage.getInstance().getString("error.23"),
 						VistaDialog.WARNING_MESSAGE);
 				playListPanel.getPlaylist().setCurrentEntryUnplayable();
 				playListPanel.getPlaylist().setNoIconAtCurrentEntry();
@@ -425,11 +425,11 @@ public class PlaybackController implements BasicPlayerListener{
 			File folder = new File(path);
 			if(!folder.exists()) {
 				VistaDialog delAlbum = VistaDialog.showConfirmationDialog(
-						LocaleMessage.getString("error.15"),
-						LocaleMessage.getString("error.16"),
-						LocaleMessage.getString("error.17") + " '" + " " + path
-								+ " ' " + LocaleMessage.getString("error.20")
-								+ "\n\n" + LocaleMessage.getString("error.18"));
+						LocaleMessage.getInstance().getString("error.15"),
+						LocaleMessage.getInstance().getString("error.16"),
+						LocaleMessage.getInstance().getString("error.17") + " '" + " " + path
+								+ " ' " + LocaleMessage.getInstance().getString("error.20")
+								+ "\n\n" + LocaleMessage.getInstance().getString("error.18"));
 				if(delAlbum.yesSelected) {
 					int albumId = window.getPlaylist()
 							.getCurrentlySelectedSongAlbumId();
@@ -470,11 +470,11 @@ public class PlaybackController implements BasicPlayerListener{
 			// if the folder exists, only the song is missing
 			else {
 				VistaDialog delSong = VistaDialog.showConfirmationDialog(
-						LocaleMessage.getString("error.13"),
-						LocaleMessage.getString("error.12"),
-						LocaleMessage.getString("error.19") + " '" + filename
-								+ "' " + LocaleMessage.getString("error.20")
-								+ LocaleMessage.getString("error.21"));
+						LocaleMessage.getInstance().getString("error.13"),
+						LocaleMessage.getInstance().getString("error.12"),
+						LocaleMessage.getInstance().getString("error.19") + " '" + filename
+								+ "' " + LocaleMessage.getInstance().getString("error.20")
+								+ LocaleMessage.getInstance().getString("error.21"));
 				if(delSong.yesSelected) {
 					int songId = window.getPlaylist()
 							.getCurrentlySelectedSongID();

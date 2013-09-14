@@ -108,7 +108,7 @@ public class EditId3TagFrame extends JFrame{
 				.getImage());
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle(LocaleMessage.getString("id3.edit_tags"));
+		setTitle(LocaleMessage.getInstance().getString("id3.edit_tags"));
 
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
@@ -171,7 +171,7 @@ public class EditId3TagFrame extends JFrame{
 		gbcTextField.insets = new Insets(10, 10, 0, 10);
 
 		// title
-		JLabel tLabel = new JLabel(LocaleMessage.getString("common.title")
+		JLabel tLabel = new JLabel(LocaleMessage.getInstance().getString("common.title")
 				+ ":");
 		gbcLabel.gridx = 0;
 		gbcLabel.gridy = 0;
@@ -195,7 +195,7 @@ public class EditId3TagFrame extends JFrame{
 		bgPanel.add(titleText, gbcTextField);
 
 		// artist
-		JLabel aLabel = new JLabel(LocaleMessage.getString("common.artist")
+		JLabel aLabel = new JLabel(LocaleMessage.getInstance().getString("common.artist")
 				+ ":");
 		gbcLabel.gridy = 1;
 		bgPanel.add(aLabel, gbcLabel);
@@ -216,7 +216,7 @@ public class EditId3TagFrame extends JFrame{
 		bgPanel.add(artistText, gbcTextField);
 
 		// album
-		JLabel alLabel = new JLabel(LocaleMessage.getString("common.album")
+		JLabel alLabel = new JLabel(LocaleMessage.getInstance().getString("common.album")
 				+ ":");
 		gbcLabel.gridy = 2;
 		bgPanel.add(alLabel, gbcLabel);
@@ -237,7 +237,7 @@ public class EditId3TagFrame extends JFrame{
 		bgPanel.add(albumText, gbcTextField);
 
 		// track#
-		JLabel trLabel = new JLabel(LocaleMessage.getString("common.trackno")
+		JLabel trLabel = new JLabel(LocaleMessage.getInstance().getString("common.trackno")
 				+ ":");
 		gbcLabel.gridy = 3;
 		bgPanel.add(trLabel, gbcLabel);
@@ -258,7 +258,7 @@ public class EditId3TagFrame extends JFrame{
 		bgPanel.add(tracknoText, gbcTextField);
 
 		// year
-		JLabel yLabel = new JLabel(LocaleMessage.getString("common.year") + ":");
+		JLabel yLabel = new JLabel(LocaleMessage.getInstance().getString("common.year") + ":");
 		gbcLabel.gridy = 4;
 		bgPanel.add(yLabel, gbcLabel);
 
@@ -278,7 +278,7 @@ public class EditId3TagFrame extends JFrame{
 		bgPanel.add(yearText, gbcTextField);
 
 		// genre
-		JLabel gLabel = new JLabel(LocaleMessage.getString("common.genre")
+		JLabel gLabel = new JLabel(LocaleMessage.getInstance().getString("common.genre")
 				+ ":");
 		gbcLabel.gridy = 5;
 		bgPanel.add(gLabel, gbcLabel);
@@ -333,7 +333,7 @@ public class EditId3TagFrame extends JFrame{
 
 		JButton saveButt = new JButton(
 				UIManager.getString("FileChooser.saveButtonText"));
-		saveButt.setToolTipText(LocaleMessage.getString("common.save_tooltip"));
+		saveButt.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
 		saveButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				saveChanges();
@@ -341,9 +341,8 @@ public class EditId3TagFrame extends JFrame{
 			}
 		});
 
-		JButton closeButt = new JButton(LocaleMessage.getString("common.abort"));
-		closeButt.setToolTipText(LocaleMessage
-				.getString("common.abort_tooltip"));
+		JButton closeButt = new JButton(LocaleMessage.getInstance().getString("common.abort"));
+		closeButt.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"));
 		closeButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				dispose();
@@ -377,7 +376,7 @@ public class EditId3TagFrame extends JFrame{
 		setComponentEnabled(cGenre, false);
 
 		if(multipleSongs) {
-			String different = LocaleMessage.getString("common.different");
+			String different = LocaleMessage.getInstance().getString("common.different");
 			String currentArtist = "", currentAlbum = "", currentGenre = "", currentYear = "";
 
 			for(String songFileName: songFileNames) {

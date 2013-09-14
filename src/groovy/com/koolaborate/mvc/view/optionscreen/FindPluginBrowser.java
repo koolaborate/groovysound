@@ -67,7 +67,7 @@ public class FindPluginBrowser extends JDialog
 	 */
 	public FindPluginBrowser()
 	{
-		setTitle(LocaleMessage.getString("plugins.find_plugins"));
+		setTitle(LocaleMessage.getInstance().getString("plugins.find_plugins"));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setSize(400, 300);

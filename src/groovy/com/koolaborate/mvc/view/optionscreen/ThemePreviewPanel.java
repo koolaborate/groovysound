@@ -49,7 +49,7 @@ public class ThemePreviewPanel extends JPanel
 		setOpaque(false);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		JLabel titleLabel = new JLabel(LocaleMessage.getString("options.preview")); 
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("options.preview")); 
 		titleLabel.setPreferredSize(new Dimension(230, 12));
 		add(titleLabel);
 		

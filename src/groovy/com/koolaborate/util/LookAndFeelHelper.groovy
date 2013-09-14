@@ -2,7 +2,10 @@ package com.koolaborate.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.UIManager;
+
+import org.apache.commons.lang3.StringUtils;
 
 /***********************************************************************************
  * LookAndFeelHelper                                                               *
@@ -30,6 +33,17 @@ import javax.swing.UIManager;
  ***********************************************************************************/
 public class LookAndFeelHelper
 {
+	private LookAndFeelHelper(){}
+	private static LookAndFeelHelper helperInstance
+	
+	public static synchronized LookAndFeelHelper getInstance(){
+		if(null == helperInstance){
+			helperInstance = new LookAndFeelHelper()
+		}
+		
+		return helperInstance
+	}
+	
 	// available look and feels
 	public static final String PLAF_METAL     = "javax.swing.plaf.metal.MetalLookAndFeel";
 	public static final String PLAF_WINDOWS   = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
@@ -42,8 +56,10 @@ public class LookAndFeelHelper
      * @param lnfName the name of the look and feel
      * @return the class name of the given look and feel
      */
-    public static String getClassNameForLnF(String lnfName)
+    public String getClassNameForLnF(String lnfName)
     {
+		if(null == lnfName || StringUtils.isBlank(lnfName)) return null
+		
     	String ret = null;
     	UIManager.LookAndFeelInfo[] ls = UIManager.getInstalledLookAndFeels();
     	for(UIManager.LookAndFeelInfo l : ls)
@@ -63,7 +79,7 @@ public class LookAndFeelHelper
      * 
      * @return a list containing all look and feel names
      */
-    public static List<String> getAllLookAndFeelNames()
+    public List<String> getAllLookAndFeelNames()
     {
     	// build complete lnf list
 		List<String> lnfs = new ArrayList<String>();
@@ -81,7 +97,7 @@ public class LookAndFeelHelper
      * 
      * @return the name of the currently set look and feel
      */
-    public static String getCurrentLookName()
+    public String getCurrentLookName()
     {
     	return UIManager.getLookAndFeel().getName();
     }
@@ -90,8 +106,8 @@ public class LookAndFeelHelper
     /**
      * Sets the system standard look and feel.
      */
-    public static void setStandardLookAndFeel()
+    public void setStandardLookAndFeel()
     {
-    	OSHelper.setDefaultLookAndFeel();
+    	OSHelper.getInstance().setDefaultLookAndFeel()
     }
 }

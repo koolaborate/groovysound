@@ -38,7 +38,7 @@ import org.jdesktop.swingx.JXBusyLabel;
 import com.koolaborate.mvc.view.common.VariableLineBorder;
 import com.koolaborate.mvc.view.mainwindow.MainWindow;
 import com.koolaborate.util.GraphicsUtilities;
-import com.koolaborate.util.HTMLparser;
+import com.koolaborate.util.HtmlParser;
 import com.koolaborate.util.LocaleMessage;
 
 /***********************************************************************************
@@ -123,7 +123,7 @@ public class SearchCoverFrame extends JDialog
 			e.printStackTrace();
 		}
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle(LocaleMessage.getString("searchcover.title"));
+		setTitle(LocaleMessage.getInstance().getString("searchcover.title"));
 		
 		setLayout(new BorderLayout());
 		
@@ -234,7 +234,7 @@ public class SearchCoverFrame extends JDialog
 		p.add(imgLabel, c);
 		
 		// search cover text
-		JLabel coverText = new JLabel(LocaleMessage.getString("searchcover.description"));
+		JLabel coverText = new JLabel(LocaleMessage.getInstance().getString("searchcover.description"));
 		coverText.setOpaque(false);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0f;
@@ -246,8 +246,8 @@ public class SearchCoverFrame extends JDialog
 		p.add(coverText, c);
 		
 		// cover search button
-		searchButt = new JButton(LocaleMessage.getString("searchcover.beginsearch"));
-		searchButt.setToolTipText(LocaleMessage.getString("searchcover.beginsearch_tooltip"));
+		searchButt = new JButton(LocaleMessage.getInstance().getString("searchcover.beginsearch"));
+		searchButt.setToolTipText(LocaleMessage.getInstance().getString("searchcover.beginsearch_tooltip"));
 		searchButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -341,7 +341,7 @@ public class SearchCoverFrame extends JDialog
 		JPanel ownPanel = new JPanel(new GridBagLayout());
 		ownPanel.setOpaque(false);
 		
-		JLabel pathLabel = new JLabel(LocaleMessage.getString("searchcover.ownpath"));
+		JLabel pathLabel = new JLabel(LocaleMessage.getInstance().getString("searchcover.ownpath"));
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -351,7 +351,7 @@ public class SearchCoverFrame extends JDialog
 		gbc.insets = new Insets(10, 10, 0, 0);
 		ownPanel.add(pathLabel, gbc);
 		
-		JLabel path = new JLabel(LocaleMessage.getString("searchcover.path"));
+		JLabel path = new JLabel(LocaleMessage.getInstance().getString("searchcover.path"));
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -372,7 +372,7 @@ public class SearchCoverFrame extends JDialog
 		ownPanel.add(pathText, gbc);
 		
 		JButton searchButt = new JButton("...");
-		searchButt.setToolTipText(LocaleMessage.getString("common.searchfile"));
+		searchButt.setToolTipText(LocaleMessage.getInstance().getString("common.searchfile"));
 		searchButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -393,7 +393,7 @@ public class SearchCoverFrame extends JDialog
 			      } 
 			      @Override public String getDescription() 
 			      { 
-			    	  return LocaleMessage.getString("common.imagefiles"); 
+			    	  return LocaleMessage.getInstance().getString("common.imagefiles"); 
 			      } 
 			    });
 			    
@@ -446,8 +446,8 @@ public class SearchCoverFrame extends JDialog
 	private JPanel createButtonPanel()
 	{
 		JPanel p = new JPanel();
-		cancelButt = new JButton(LocaleMessage.getString("common.abort"));
-		cancelButt.setToolTipText(LocaleMessage.getString("common.abort_tooltip"));
+		cancelButt = new JButton(LocaleMessage.getInstance().getString("common.abort"));
+		cancelButt.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"));
 		cancelButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -467,7 +467,7 @@ public class SearchCoverFrame extends JDialog
 	 */
 	private void searchCovers()
 	{
-		final String tooltip = LocaleMessage.getString("searchcover.choosecover"); 
+		final String tooltip = LocaleMessage.getInstance().getString("searchcover.choosecover"); 
 		final LineBorder b = new LineBorder(Color.BLACK);
 		
 		Thread t1 = new Thread(new Runnable(){
@@ -510,7 +510,7 @@ public class SearchCoverFrame extends JDialog
 			public void run()
 			{
 				// then look for the google image search
-				URL[] urls = HTMLparser.getCoverImagePathsFromGoogle(artist, album);
+				URL[] urls = HtmlParser.getInstance().getCoverImagePathsFromGoogle(artist, album);
 				busyLabel2.setBusy(false);
 				busyLabel3.setBusy(false);
 				if(urls[0] != null)

@@ -695,8 +695,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 				width = (int) ((float) origWidth * factor);
 			}
 
-			image = GraphicsUtilities2.createCompatibleTranslucentImage(width,
-					height);
+			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height);
 			Graphics2D g2 = image.createGraphics();
 
 			BufferedImage externalImage = null;
@@ -832,9 +831,9 @@ public class MainWindow extends JFrame implements DropTargetListener{
 				centerPanel.getAlbumsPanel().refreshSelectedAlbum(a);
 			}
 		} catch(IOException e) {
-			VistaDialog.showDialog(LocaleMessage.getString("error.1"),
-					LocaleMessage.getString("error.26"),
-					LocaleMessage.getString("error.27") + ":\n"
+			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.1"),
+					LocaleMessage.getInstance().getString("error.26"),
+					LocaleMessage.getInstance().getString("error.27") + ":\n"
 							+ e.getMessage(), VistaDialog.ERROR_MESSAGE);
 		}
 	}

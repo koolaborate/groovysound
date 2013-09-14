@@ -21,8 +21,18 @@ import java.io.IOException;
 * 
 * Note - you must include the url type -- either "http://" or "file://".
 */
-public class BrowserControl
-{
+public class BrowserControl{
+	private BrowserControl(){}
+	private static BrowserControl browserControlInstance
+	
+	public static synchronized BrowserControl getInstance(){
+		if(null == browserControlInstance){
+			browserControlInstance = new BrowserControl()
+		}
+		
+		return browserControlInstance
+	}
+	
     /**
      * Display a file in the system browser.  If you want to display a
      * file, you must include the absolute path name.
@@ -30,7 +40,7 @@ public class BrowserControl
      * @param url the file's url (the url must start with either "http://" or
      * "file://").
      */
-    public static void displayURL(String url)
+    public void displayURL(String url)
     {
         boolean windows = isWindowsPlatform();
         String cmd = null;
@@ -67,8 +77,8 @@ public class BrowserControl
                 }
                 catch(InterruptedException x)
                 {
-                    System.err.println("Error bringing up browser, cmd='" +
-                                       cmd + "'");
+					x.printStackTrace()
+                    System.err.println("Error bringing up browser, cmd='" + cmd + "'");
                     System.err.println("Caught: " + x);
                 }
             }
@@ -86,7 +96,7 @@ public class BrowserControl
      *
      * @return true if this application is running under a Windows OS
      */
-    public static boolean isWindowsPlatform()
+    public boolean isWindowsPlatform()
     {
         String os = System.getProperty("os.name");
         if (os != null && os.startsWith(WIN_ID))

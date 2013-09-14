@@ -29,6 +29,17 @@ import javax.swing.UIManager.LookAndFeelInfo;
  ***********************************************************************************/
 public class OSHelper
 {
+	private OSHelper(){}
+	private static OSHelper osHelperInstance
+	
+	public static synchronized OSHelper getInstance(){
+		if(null == osHelperInstance){
+			osHelperInstance = new OSHelper()
+		}
+		
+		return osHelperInstance
+	}
+	
 	/** whether it is a Windows(R) operating system or not */
 	public static final boolean WINDOWS_OS = System.getProperty("os.name").toLowerCase().startsWith("windows");
 
@@ -36,7 +47,7 @@ public class OSHelper
 	/**
 	 * Sets the look and feel that is the standard for the operating system
 	 */
-	public static void setDefaultLookAndFeel()
+	public void setDefaultLookAndFeel()
 	{
 		// set the system look and feel (lnf)
 	    try 
@@ -55,7 +66,7 @@ public class OSHelper
 	 * 
 	 * @param lnfName the name of the look and feel
 	 */
-	public static void setLookAndFeel(String lnfName)
+	public void setLookAndFeel(String lnfName)
 	{
 		// set the given look and feel (lnf)
 	    try 
@@ -76,7 +87,7 @@ public class OSHelper
 	 * 
 	 * @return <code>true</code> if Vista style is enabled, <code>false</code> otherwise
 	 */
-	public static boolean isVistaStyleEnabled()
+	public boolean isVistaStyleEnabled()
 	{
 		if(WINDOWS_OS && UIManager.getLookAndFeel().getName().toLowerCase().equals("windows"))
 		{
@@ -91,7 +102,7 @@ public class OSHelper
 	 * 
 	 * @return the Java version
 	 */
-	public static float getJavaVersion()
+	public float getJavaVersion()
 	{
 		float ret = 1.0f;
 		String sysString = System.getProperty("java.version");
@@ -111,7 +122,7 @@ public class OSHelper
 	 * 
 	 * @return the default Look and Feel name
 	 */
-	public static String getDefaultLnFName()
+	public String getDefaultLnFName()
 	{
 		String className = UIManager.getSystemLookAndFeelClassName();
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();

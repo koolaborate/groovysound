@@ -29,6 +29,15 @@ import java.util.ResourceBundle;
  ***********************************************************************************/
 public class LocaleMessage 
 {
+	private LocaleMessage(){}
+	private static LocaleMessage messageInstance
+	
+	public static synchronized LocaleMessage getInstance(){
+		if(null == messageInstance) messageInstance = new LocaleMessage()
+		
+		return messageInstance
+	}
+	
 	private static final String BUNDLE_NAME = "resources.maintexts";
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 	
@@ -38,7 +47,7 @@ public class LocaleMessage
 	 * @param key the key to be searched for
 	 * @return a String containing the text in the current Locale
 	 */
-	public static String getString(String key) 
+	public String getString(String key) 
 	{
 		try 
 		{

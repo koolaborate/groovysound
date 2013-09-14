@@ -163,7 +163,7 @@ public class AlbumPreviewPanel extends JPanel{
 		JPopupMenu popmen = new JPopupMenu();
 
 		JMenuItem playItem = new JMenuItem(
-				LocaleMessage.getString("album.play"));
+				LocaleMessage.getInstance().getString("album.play"));
 		playItem.setIcon(new ImageIcon(getClass().getResource(
 				"/images/playlist_play.png")));
 		playItem.addActionListener(new ActionListener(){
@@ -174,7 +174,7 @@ public class AlbumPreviewPanel extends JPanel{
 		popmen.add(playItem);
 
 		JMenuItem infoItem = new JMenuItem(
-				LocaleMessage.getString("album.information"));
+				LocaleMessage.getInstance().getString("album.information"));
 		infoItem.setIcon(new ImageIcon(getClass().getResource(
 				"/images/about.png")));
 		infoItem.addActionListener(new ActionListener(){
@@ -187,7 +187,7 @@ public class AlbumPreviewPanel extends JPanel{
 		popmen.addSeparator();
 
 		JMenuItem delItem = new JMenuItem(
-				LocaleMessage.getString("album.delete"));
+				LocaleMessage.getInstance().getString("album.delete"));
 		delItem.setIcon(new ImageIcon(getClass().getResource(
 				"/images/deletesmall.png")));
 		delItem.addActionListener(new ActionListener(){
@@ -300,11 +300,11 @@ public class AlbumPreviewPanel extends JPanel{
 			if(c instanceof SubNavButton) {
 				SubNavButton b = (SubNavButton) c;
 				if(!b.getText().equals(
-						LocaleMessage.getString("nav.artistinfo"))
+						LocaleMessage.getInstance().getString("nav.artistinfo"))
 						&& !b.getText().equals(
-								LocaleMessage.getString("nav.albuminfo"))
+								LocaleMessage.getInstance().getString("nav.albuminfo"))
 						&& !b.getText().equals(
-								LocaleMessage.getString("nav.editid3"))) {
+								LocaleMessage.getInstance().getString("nav.editid3"))) {
 					safeButtons.add(b);
 				}
 			}
@@ -316,7 +316,7 @@ public class AlbumPreviewPanel extends JPanel{
 		// name is given
 		if(!StringUtils.isEmpty(artistName)) {
 			SubNavButton artistInfo = window.getDecorator().getArtistInfoSubNavButton();
-			artistInfo.setText(LocaleMessage.getString("nav.artistinfo"));
+			artistInfo.setText(LocaleMessage.getInstance().getString("nav.artistinfo"));
 			artistInfo.setMouseListener(new MouseAdapter(){
 				@Override
 				public void mouseClicked(MouseEvent e){
@@ -328,7 +328,7 @@ public class AlbumPreviewPanel extends JPanel{
 
 		// general album information (with the ability to edit)
 		SubNavButton albumInfo = window.getDecorator().getAlbumInfoSubNavButton();
-		albumInfo.setText(LocaleMessage.getString("nav.albuminfo"));
+		albumInfo.setText(LocaleMessage.getInstance().getString("nav.albuminfo"));
 		albumInfo.setMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e){
@@ -339,7 +339,7 @@ public class AlbumPreviewPanel extends JPanel{
 
 		// edit id3 tags of the songs
 		SubNavButton editId3Tags = window.getDecorator().getEditId3TagsSubNavButton();
-		editId3Tags.setText(LocaleMessage.getString("nav.editid3"));
+		editId3Tags.setText(LocaleMessage.getInstance().getString("nav.editid3"));
 		editId3Tags.setMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e){

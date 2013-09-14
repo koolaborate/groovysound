@@ -139,7 +139,7 @@ public class SearchEntry extends JPanel
 				if(!StringUtils.isEmpty(artistName))
 				{
 					SubNavButton artistInfo = new SubNavButton();
-					artistInfo.setText(LocaleMessage.getString("nav.artistinfo"));
+					artistInfo.setText(LocaleMessage.getInstance().getString("nav.artistinfo"));
 					BufferedImage artistInfoIco = null;
 					try
 					{
@@ -162,7 +162,7 @@ public class SearchEntry extends JPanel
 				
 				// general album information (with the ability to edit)
 				SubNavButton albumInfo = new SubNavButton();
-				albumInfo.setText(LocaleMessage.getString("nav.albuminfo"));
+				albumInfo.setText(LocaleMessage.getInstance().getString("nav.albuminfo"));
 				BufferedImage albumInfoIco = null;
 				try
 				{
@@ -184,7 +184,7 @@ public class SearchEntry extends JPanel
 				
 				// edit id3 tags of the songs
 				SubNavButton editId3Tags = new SubNavButton();
-				editId3Tags.setText(LocaleMessage.getString("nav.editid3"));
+				editId3Tags.setText(LocaleMessage.getInstance().getString("nav.editid3"));
 				BufferedImage id3TagIco = null;
 				try
 				{

@@ -53,7 +53,7 @@ import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane;
 import com.koolaborate.mvc.view.mainwindow.MainWindow;
 import com.koolaborate.util.GraphicsUtilities;
 import com.koolaborate.util.GraphicsUtilities2;
-import com.koolaborate.util.HTMLparser;
+import com.koolaborate.util.HtmlParser;
 import com.koolaborate.util.LocaleMessage;
 
 /***********************************************************************************
@@ -134,7 +134,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 */
 	private void initGUI()
 	{
-		setTitle(LocaleMessage.getString("common.info_about") + " " + artistname);
+		setTitle(LocaleMessage.getInstance().getString("common.info_about") + " " + artistname);
 		setSizeAccordingToScreen(80);
 		setIconImage(new ImageIcon(getClass().getResource("/images/artist.png")).getImage());
 		
@@ -179,8 +179,8 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(0, 10, 4, 10);
-		changeImage = new JButton(LocaleMessage.getString("common.changeimg")); 
-		changeImage.setToolTipText(LocaleMessage.getString("common.changeimg_tooltip"));
+		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg")); 
+		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
 		changeImage.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -228,9 +228,9 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		// the button panel
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2));
 		
-		editButton = new JButton(LocaleMessage.getString("common.edit"));
+		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"));
 		editButton.setActionCommand("edit");
-		editButton.setToolTipText(LocaleMessage.getString("common.edit_tooltip"));
+		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"));
 		editButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -254,7 +254,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 			}
 		});
 		saveButton = new JButton(UIManager.getString("FileChooser.saveButtonText"));
-		saveButton.setToolTipText(LocaleMessage.getString("common.save_tooltip"));
+		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
 		saveButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -264,14 +264,14 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		});
 		saveButton.setEnabled(false);
 		closeButton = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		closeButton.setToolTipText(LocaleMessage.getString("common.close_tooltip"));
+		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
 		closeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
 				if(changesMade || imageChanged)
 				{
-					VistaDialog dialog = VistaDialog.showConfirmationDialog(LocaleMessage.getString("common.discard_title"), 
-							LocaleMessage.getString("common.discard_label"), LocaleMessage.getString("common.discard_text"));
+					VistaDialog dialog = VistaDialog.showConfirmationDialog(LocaleMessage.getInstance().getString("common.discard_title"), 
+							LocaleMessage.getInstance().getString("common.discard_label"), LocaleMessage.getInstance().getString("common.discard_text"));
 					if(dialog.yesSelected) dispose();
 				}
 				else
@@ -379,7 +379,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 					// artist image
 					try
 					{
-						URL imgUrl = HTMLparser.getArtistImageFromGoogle(artistname);
+						URL imgUrl = HtmlParser.getInstance().getArtistImageFromGoogle(artistname);
 						if(imgUrl != null)
 						{
 							BufferedImage bigImage = ImageIO.read(imgUrl);
@@ -414,7 +414,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 */
 	private void searchWikipediaForInfo()
 	{
-		htmlPane.setText(HTMLparser.getArtistInfoFromWikipedia(artistname));
+		htmlPane.setText(HtmlParser.getInstance().getArtistInfoFromWikipedia(artistname));
 	}
 	
 	
@@ -434,14 +434,14 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		
 		if(b)
 		{
-			editButton.setText(LocaleMessage.getString("common.refresh"));
-			editButton.setToolTipText(LocaleMessage.getString("artist.refresh_info"));
+			editButton.setText(LocaleMessage.getInstance().getString("common.refresh"));
+			editButton.setToolTipText(LocaleMessage.getInstance().getString("artist.refresh_info"));
 			editButton.setActionCommand("refresh");
 		}
 		else
 		{
-			editButton.setText(LocaleMessage.getString("common.edit"));
-			editButton.setToolTipText(LocaleMessage.getString("artist.change_to_edit"));
+			editButton.setText(LocaleMessage.getInstance().getString("common.edit"));
+			editButton.setToolTipText(LocaleMessage.getInstance().getString("artist.change_to_edit"));
 			editButton.setActionCommand("edit");
 		}
 		
@@ -454,7 +454,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 */
 	private void showSearchingWindow()
 	{
-		String text = LocaleMessage.getString("common.search_for") + " " + artistname + "...";
+		String text = LocaleMessage.getInstance().getString("common.search_for") + " " + artistname + "...";
 		final JXBusyLabel busy = new JXBusyLabel();
 		busy.setText(text);
 		busy.setBorder(new EmptyBorder(20, 10, 20, 10));
@@ -631,7 +631,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 				width = (int)((float)origWidth * factor);
 			}
 			
-			image = GraphicsUtilities2.createCompatibleTranslucentImage(width, height);
+			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height);
 			Graphics2D g2 = image.createGraphics();
 			
 			BufferedImage externalImage = null;
@@ -711,6 +711,27 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		image = null;
 	}
 
-	/** unused */
-	public void dropActionChanged(DropTargetDragEvent dtde){}
+
+	@Override
+	public void dropActionChanged(DropTargetDragEvent arg0){
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

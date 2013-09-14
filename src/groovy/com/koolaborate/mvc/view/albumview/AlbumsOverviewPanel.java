@@ -87,7 +87,7 @@ public class AlbumsOverviewPanel extends JPanel{
 		// show an advice if there is no album yet
 		if(albums == null || albums.size() == 0) {
 			JLabel adviceLabel = new JLabel("<HTML><i>"
-					+ LocaleMessage.getString("newalbum.empty_info")
+					+ LocaleMessage.getInstance().getString("newalbum.empty_info")
 					+ "</i></HTML>");
 			add(adviceLabel);
 

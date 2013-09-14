@@ -91,7 +91,7 @@ public class PluginAndThemeBrowser extends JDialog
 	{
 		super();
 		this.window = window;
-		setTitle(LocaleMessage.getString("options.plugins"));
+		setTitle(LocaleMessage.getInstance().getString("options.plugins"));
 		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
@@ -153,8 +153,8 @@ public class PluginAndThemeBrowser extends JDialog
 		buttonPanel.setBorder(new VariableLineBorder(0, 10, 10, 10, Color.GRAY, 0, false, 
 				false, false, false));
 		
-		JButton updateButton = new JButton(LocaleMessage.getString("options.updatenow_tooltip"));
-		updateButton.setToolTipText(LocaleMessage.getString("options.updatenow_tooltip"));
+		JButton updateButton = new JButton(LocaleMessage.getInstance().getString("options.updatenow_tooltip"));
+		updateButton.setToolTipText(LocaleMessage.getInstance().getString("options.updatenow_tooltip"));
 		updateButton.setOpaque(false);
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,8 +163,8 @@ public class PluginAndThemeBrowser extends JDialog
 		});
 		buttonPanel.add(updateButton);
 		
-		final JButton addButton = new JButton(LocaleMessage.getString("options.search_plugins"));
-		addButton.setToolTipText(LocaleMessage.getString("options.search_plugins"));
+		final JButton addButton = new JButton(LocaleMessage.getInstance().getString("options.search_plugins"));
+		addButton.setToolTipText(LocaleMessage.getInstance().getString("options.search_plugins"));
 		addButton.setOpaque(false);
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,7 +188,7 @@ public class PluginAndThemeBrowser extends JDialog
 				false, false, false));
 		
 		JButton commitButton = new JButton(UIManager.getString("FileChooser.saveButtonText")); 
-		commitButton.setToolTipText(LocaleMessage.getString("common.save_tooltip"));
+		commitButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
 		commitButton.setOpaque(false);
 		commitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -197,17 +197,17 @@ public class PluginAndThemeBrowser extends JDialog
 				{
 					themesPanel.applyChangesToXMLFile();
 					// restart of the application necessary
-					VistaDialog.showDialog(LocaleMessage.getString("common.restart_title"), 
-							LocaleMessage.getString("common.restart_necessary"), 
-							LocaleMessage.getString("common.restart_text"), 
+					VistaDialog.showDialog(LocaleMessage.getInstance().getString("common.restart_title"), 
+							LocaleMessage.getInstance().getString("common.restart_necessary"), 
+							LocaleMessage.getInstance().getString("common.restart_text"), 
 							VistaDialog.INFORMATION_MESSAGE);
 				}
 			}			
 		});
 		bottomPanel.add(commitButton);
 		
-		final JButton abortButton = new JButton(LocaleMessage.getString("common.abort"));
-		abortButton.setToolTipText(LocaleMessage.getString("common.abort_tooltip"));
+		final JButton abortButton = new JButton(LocaleMessage.getInstance().getString("common.abort"));
+		abortButton.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"));
 		abortButton.setOpaque(false);
 		abortButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -355,7 +355,7 @@ public class PluginAndThemeBrowser extends JDialog
 		}
 		
 		Dimension buttonSize = new Dimension(80, 50);
-		b1 = new ToggleButton(LocaleMessage.getString("options.plugin"), i1);
+		b1 = new ToggleButton(LocaleMessage.getInstance().getString("options.plugin"), i1);
 		b1.setPreferredSize(buttonSize);
 		b1.addMouseListener(new MouseAdapter(){
 			@Override
@@ -367,7 +367,7 @@ public class PluginAndThemeBrowser extends JDialog
 		});
 		panel.add(b1);
 		
-		b2 = new ToggleButton(LocaleMessage.getString("options.themes"), i2);
+		b2 = new ToggleButton(LocaleMessage.getInstance().getString("options.themes"), i2);
 		b2.setPreferredSize(buttonSize);
 		b2.addMouseListener(new MouseAdapter(){
 			@Override

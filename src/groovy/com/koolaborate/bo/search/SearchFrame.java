@@ -76,7 +76,7 @@ public class SearchFrame extends JFrame
 		this.window = w;
 		this.db = w.getDatabase();
 		
-		setTitle(LocaleMessage.getString("search.title"));
+		setTitle(LocaleMessage.getInstance().getString("search.title"));
 		setIconImage(new ImageIcon(getClass().getResource("/images/search.png")).getImage());
 		
 		SwingUtilities.invokeLater(new Runnable(){
@@ -121,7 +121,7 @@ public class SearchFrame extends JFrame
 		bg.setLayout(new GridBagLayout());
 		
 		// a description text
-		JLabel searchLabel = new JLabel(LocaleMessage.getString("search.phrase"));
+		JLabel searchLabel = new JLabel(LocaleMessage.getInstance().getString("search.phrase"));
 		
 		// a search text field
 		search = new JTextField();
@@ -134,8 +134,8 @@ public class SearchFrame extends JFrame
 		});
 		
 		// a "go" button
-		go = new JButton(LocaleMessage.getString("search.go_button"));
-		go.setToolTipText(LocaleMessage.getString("search.go_tooltip"));
+		go = new JButton(LocaleMessage.getInstance().getString("search.go_button"));
+		go.setToolTipText(LocaleMessage.getInstance().getString("search.go_tooltip"));
 		go.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{

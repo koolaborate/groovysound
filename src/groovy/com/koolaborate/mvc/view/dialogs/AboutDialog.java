@@ -76,7 +76,7 @@ public class AboutDialog extends JDialog
 	{
 		settings = window.getSettings();
 		
-		this.setTitle(LocaleMessage.getString("common.about") + " VibrantPlayer");
+		this.setTitle(LocaleMessage.getInstance().getString("common.about") + " VibrantPlayer");
 		this.setIconImage(new ImageIcon(getClass().getResource("/images/about.png")).getImage());
 		
 		SwingUtilities.invokeLater(new Runnable(){
@@ -162,12 +162,12 @@ public class AboutDialog extends JDialog
 		
 		// build the button panel
 		JPanel buttonPanel = new JPanel();
-		JButton webButt = new JButton(LocaleMessage.getString("about.webpage"));
-		webButt.setToolTipText(LocaleMessage.getString("about.webpage_tooltip"));
+		JButton webButt = new JButton(LocaleMessage.getInstance().getString("about.webpage"));
+		webButt.setToolTipText(LocaleMessage.getInstance().getString("about.webpage_tooltip"));
 		webButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				BrowserControl.displayURL("http://www.impressive-artworx.de/albumplayer.php");
+				BrowserControl.getInstance().displayURL("http://www.impressive-artworx.de/albumplayer.php");
 			}
 		});
 		okButt = new JButton();

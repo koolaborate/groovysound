@@ -36,5 +36,6 @@
 	<classpathentry kind="var" path="MVN/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
 	<classpathentry kind="var" path="MVN/org/springframework/spring-test/3.2.1.RELEASE/spring-test-3.2.1.RELEASE.jar"/>
 	<classpathentry kind="var" path="MVN/org/springframework/spring-core/3.2.1.RELEASE/spring-core-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="var" path="MVN/com/thoughtworks/xstream/xstream/1.4.4/xstream-1.4.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

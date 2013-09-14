@@ -106,7 +106,7 @@ public class NewAlbumFrame extends JFrame{
 			e.printStackTrace();
 		}
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle(LocaleMessage.getString("newalbum.add_new_album"));
+		setTitle(LocaleMessage.getInstance().getString("newalbum.add_new_album"));
 
 		setLayout(new BorderLayout());
 
@@ -171,7 +171,7 @@ public class NewAlbumFrame extends JFrame{
 
 		// search folder text
 		JLabel folderText = new JLabel(
-				LocaleMessage.getString("newalbum.select_path"));
+				LocaleMessage.getInstance().getString("newalbum.select_path"));
 		folderText.setOpaque(false);
 		c.gridx = 1;
 		c.gridy = 0;
@@ -192,7 +192,7 @@ public class NewAlbumFrame extends JFrame{
 
 		// folder search button
 		searchButt = new JButton("...");
-		searchButt.setToolTipText(LocaleMessage.getString("common.searchfolder"));
+		searchButt.setToolTipText(LocaleMessage.getInstance().getString("common.searchfolder"));
 		searchButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				final JFileChooser chooser = new JFileChooser(
@@ -243,8 +243,8 @@ public class NewAlbumFrame extends JFrame{
 		busyLabel = new JXBusyLabel();
 		busyLabel.setBorder(new EmptyBorder(6, 10, 0, 10));
 		busyLabel.setOpaque(false);
-		busyLabel.setText(LocaleMessage.getString("newalbum.searching"));
-		busyLabel.setToolTipText(LocaleMessage.getString("newalbum.searching_tooltip"));
+		busyLabel.setText(LocaleMessage.getInstance().getString("newalbum.searching"));
+		busyLabel.setToolTipText(LocaleMessage.getInstance().getString("newalbum.searching_tooltip"));
 		busyLabel.setBusy(false);
 		busyLabel.setVisible(false);
 
@@ -268,7 +268,7 @@ public class NewAlbumFrame extends JFrame{
 
 		// title label
 		JLabel titleLabel = new JLabel(
-				LocaleMessage.getString("newalbum.album_title"));
+				LocaleMessage.getInstance().getString("newalbum.album_title"));
 		titleLabel.setOpaque(false);
 		cLabel.gridx = 0;
 		cLabel.gridy = 0;
@@ -282,7 +282,7 @@ public class NewAlbumFrame extends JFrame{
 
 		// artist label
 		JLabel artistLabel = new JLabel(
-				LocaleMessage.getString("newalbum.artist"));
+				LocaleMessage.getInstance().getString("newalbum.artist"));
 		artistLabel.setOpaque(false);
 		cLabel.gridx = 0;
 		cLabel.gridy = 1;
@@ -295,7 +295,7 @@ public class NewAlbumFrame extends JFrame{
 		albumInfoPanel.add(albumArtist, cTextfield);
 
 		// year label
-		JLabel yearLabel = new JLabel(LocaleMessage.getString("newalbum.year"));
+		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("newalbum.year"));
 		yearLabel.setOpaque(false);
 		cLabel.gridx = 0;
 		cLabel.gridy = 2;
@@ -309,7 +309,7 @@ public class NewAlbumFrame extends JFrame{
 
 		// song list label
 		JLabel songlistLabel = new JLabel(
-				LocaleMessage.getString("newalbum.songlist"));
+				LocaleMessage.getInstance().getString("newalbum.songlist"));
 		songlistLabel.setOpaque(false);
 		cLabel.gridx = 0;
 		cLabel.gridy = 3;
@@ -332,8 +332,8 @@ public class NewAlbumFrame extends JFrame{
 	private JPanel createButtonPanel(){
 		JPanel p = new JPanel();
 
-		okButt = new JButton(LocaleMessage.getString("newalbum.okbutton"));
-		okButt.setToolTipText(LocaleMessage.getString("newalbum.okbutton_tooltip"));
+		okButt = new JButton(LocaleMessage.getInstance().getString("newalbum.okbutton"));
+		okButt.setToolTipText(LocaleMessage.getInstance().getString("newalbum.okbutton_tooltip"));
 		okButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				if(saveAlbumAndSongsIntoDB()) {
@@ -350,8 +350,8 @@ public class NewAlbumFrame extends JFrame{
 		});
 		okButt.setEnabled(false);
 
-		cancelButt = new JButton(LocaleMessage.getString("common.abort"));
-		cancelButt.setToolTipText(LocaleMessage.getString("common.abort_tooltip"));
+		cancelButt = new JButton(LocaleMessage.getInstance().getString("common.abort"));
+		cancelButt.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"));
 		cancelButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				dispose();
@@ -426,17 +426,17 @@ public class NewAlbumFrame extends JFrame{
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
 				busyLabel.setBusy(false);
-				busyLabel.setText(LocaleMessage.getString("newalbum.searching_done"));
-				busyLabel.setToolTipText(LocaleMessage.getString("newalbum.searching_done_tooltip"));
+				busyLabel.setText(LocaleMessage.getInstance().getString("newalbum.searching_done"));
+				busyLabel.setToolTipText(LocaleMessage.getInstance().getString("newalbum.searching_done_tooltip"));
 				centerPanel.add(albumInfoPanel, BorderLayout.CENTER);
 				if(songs.size() > 0)
 					okButt.setEnabled(true);
 				// if no songs were fond in the directory
 				else {
 					VistaDialog.showDialog(
-							LocaleMessage.getString("newalbum.nosongs_dialog_title"),
-							LocaleMessage.getString("newalbum.nosongs_title"),
-							LocaleMessage.getString("newalbum.nosongs_text"),
+							LocaleMessage.getInstance().getString("newalbum.nosongs_dialog_title"),
+							LocaleMessage.getInstance().getString("newalbum.nosongs_title"),
+							LocaleMessage.getInstance().getString("newalbum.nosongs_text"),
 							VistaDialog.WARNING_MESSAGE);
 				}
 			}
@@ -455,18 +455,18 @@ public class NewAlbumFrame extends JFrame{
 
 		// ensure that artist and title are given
 		if(StringUtils.isEmpty(artist) || StringUtils.isEmpty(title)) {
-			VistaDialog.showDialog(LocaleMessage.getString("error.6"),
-					LocaleMessage.getString("error.24"),
-					LocaleMessage.getString("error.25"),
+			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.6"),
+					LocaleMessage.getInstance().getString("error.24"),
+					LocaleMessage.getInstance().getString("error.25"),
 					VistaDialog.WARNING_MESSAGE);
 			return false;
 		}
 
 		// check if the album is already in the database
 		if(window.getDatabase().checkAlbumAlreadyInDB(artist, title)) {
-			VistaDialog.showDialog(LocaleMessage.getString("error.9"),
-					LocaleMessage.getString("error.10"),
-					LocaleMessage.getString("error.11"),
+			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.9"),
+					LocaleMessage.getInstance().getString("error.10"),
+					LocaleMessage.getInstance().getString("error.11"),
 					VistaDialog.INFORMATION_MESSAGE);
 			return false;
 		}
@@ -478,9 +478,9 @@ public class NewAlbumFrame extends JFrame{
 		try {
 			year = Integer.parseInt(yearString);
 		} catch(NumberFormatException e) {
-			VistaDialog.showDialog(LocaleMessage.getString("error.6"),
-					LocaleMessage.getString("error.7"),
-					LocaleMessage.getString("error.8"),
+			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.6"),
+					LocaleMessage.getInstance().getString("error.7"),
+					LocaleMessage.getInstance().getString("error.8"),
 					VistaDialog.INFORMATION_MESSAGE);
 			return false;
 		}

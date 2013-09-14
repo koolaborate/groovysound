@@ -108,13 +108,13 @@ public class DeleteDialog extends JDialog implements ActionListener
 		dialog = new DeleteDialog(frame);
 		
 		// set the title
-		dialog.setTitle(LocaleMessage.getString("question.delete_album_title")); 
+		dialog.setTitle(LocaleMessage.getInstance().getString("question.delete_album_title")); 
 		
 		// set the textual description of the message
-		dialog.titleText.setText(LocaleMessage.getString("question.delete_album_label"));
+		dialog.titleText.setText(LocaleMessage.getInstance().getString("question.delete_album_label"));
 		
 		// set the message
-		dialog.messages.setText(LocaleMessage.getString("question.delete_album"));
+		dialog.messages.setText(LocaleMessage.getInstance().getString("question.delete_album"));
 		dialog.messages.setCaretPosition(0);
 		
 		// show the dialog window
@@ -132,13 +132,13 @@ public class DeleteDialog extends JDialog implements ActionListener
     	dialog = new DeleteDialog(frame);
     	
     	// set the title
-    	dialog.setTitle(LocaleMessage.getString("question.delete_song_title"));
+    	dialog.setTitle(LocaleMessage.getInstance().getString("question.delete_song_title"));
     	
     	// set the textual description of the message
-    	dialog.titleText.setText(LocaleMessage.getString("question.delete_song_label"));
+    	dialog.titleText.setText(LocaleMessage.getInstance().getString("question.delete_song_label"));
     	
     	// set the message
-    	dialog.messages.setText(LocaleMessage.getString("question.delete_song"));
+    	dialog.messages.setText(LocaleMessage.getInstance().getString("question.delete_song"));
     	dialog.messages.setCaretPosition(0);
     	
     	// show the dialog window
@@ -207,7 +207,7 @@ public class DeleteDialog extends JDialog implements ActionListener
 			messages.setBackground(background);
 			messages.setBorder(BorderFactory.createEmptyBorder(10, 50, 0, 10));
 			main.add(messages, BorderLayout.CENTER);
-			JCheckBox delFilesAlso = new JCheckBox(LocaleMessage.getString("question.delete_files")); 
+			JCheckBox delFilesAlso = new JCheckBox(LocaleMessage.getInstance().getString("question.delete_files")); 
 			delFilesAlso.setFont(messageTextFont);
 			delFilesAlso.setBorder(BorderFactory.createEmptyBorder(0, 50, 10, 10));
 			delFilesAlso.setSelected(false);

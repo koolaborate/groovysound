@@ -90,7 +90,7 @@ public class Playlist extends JPanel{
 		JPopupMenu popmen = new JPopupMenu();
 
 		JMenuItem playItem = new JMenuItem(
-				LocaleMessage.getString("playlist.play_song"));
+				LocaleMessage.getInstance().getString("playlist.play_song"));
 		playItem.setIcon(new ImageIcon(
 				Playlist.class.getResource("/images/playlist_play.png")));
 		playItem.addActionListener(new ActionListener(){
@@ -101,7 +101,7 @@ public class Playlist extends JPanel{
 		popmen.add(playItem);
 
 		JMenuItem infoItem = new JMenuItem(
-				LocaleMessage.getString("playlist.informations"));
+				LocaleMessage.getInstance().getString("playlist.informations"));
 		infoItem.setIcon(new ImageIcon(
 				Playlist.class.getResource("/images/about.png")));
 		infoItem.addActionListener(new ActionListener(){
@@ -112,7 +112,7 @@ public class Playlist extends JPanel{
 		popmen.add(infoItem);
 
 		JMenuItem id3Item = new JMenuItem(
-				LocaleMessage.getString("id3.edit_tags"));
+				LocaleMessage.getInstance().getString("id3.edit_tags"));
 		id3Item.setIcon(new ImageIcon(
 				Playlist.class.getResource("/images/tag_small.png")));
 		id3Item.addActionListener(new ActionListener(){
@@ -130,7 +130,7 @@ public class Playlist extends JPanel{
 		popmen.addSeparator();
 
 		JMenuItem delItem = new JMenuItem(
-				LocaleMessage.getString("playlist.del_song"));
+				LocaleMessage.getInstance().getString("playlist.del_song"));
 		delItem.setIcon(new ImageIcon(
 				Playlist.class.getResource("/images/deletesmall.png")));
 		delItem.addActionListener(new ActionListener(){

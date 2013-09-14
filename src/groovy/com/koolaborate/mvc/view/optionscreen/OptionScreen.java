@@ -68,10 +68,10 @@ public class OptionScreen extends JPanel
 		setOpaque(false);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		TitlePanel title1 = new TitlePanel(LocaleMessage.getString("options.graphics"), new ImageIcon(getClass().getResource("/images/settings_graphics.png")));
+		TitlePanel title1 = new TitlePanel(LocaleMessage.getInstance().getString("options.graphics"), new ImageIcon(getClass().getResource("/images/settings_graphics.png")));
 		add(title1);
 		
-		JCheckBox useGraphixAcc = new JCheckBox(LocaleMessage.getString("options.enable_d3d"));
+		JCheckBox useGraphixAcc = new JCheckBox(LocaleMessage.getInstance().getString("options.enable_d3d"));
 		useGraphixAcc.setSelected(s.isHardwareAccellerated());
 		useGraphixAcc.setOpaque(false);
 		useGraphixAcc.setBorder(new EmptyBorder(0, 68, 0, 0));
@@ -86,7 +86,7 @@ public class OptionScreen extends JPanel
 		});
 		add(useGraphixAcc);
 		
-		TitlePanel title2 = new TitlePanel(LocaleMessage.getString("options.sound"), new ImageIcon(getClass().getResource("/images/settings_sound.png")));
+		TitlePanel title2 = new TitlePanel(LocaleMessage.getInstance().getString("options.sound"), new ImageIcon(getClass().getResource("/images/settings_sound.png")));
 		add(title2);
 		
 		JPanel sound = new JPanel(new GridBagLayout());
@@ -102,7 +102,7 @@ public class OptionScreen extends JPanel
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(0, 68, 0, 0);
 		
-		JLabel loudness = new JLabel(LocaleMessage.getString("options.volume") + ":");
+		JLabel loudness = new JLabel(LocaleMessage.getInstance().getString("options.volume") + ":");
 		sound.add(loudness, gbc);
 		
 		gbc.insets = new Insets(0, 10, 0, 0);
@@ -141,7 +141,7 @@ public class OptionScreen extends JPanel
 		gbc.insets = new Insets(0, 68, 0, 0);
 		gbc.fill = GridBagConstraints.NONE;
 		
-		JLabel balance = new JLabel(LocaleMessage.getString("options.balance") + ":");
+		JLabel balance = new JLabel(LocaleMessage.getInstance().getString("options.balance") + ":");
 		sound.add(balance, gbc);
 		
 		gbc.insets = new Insets(0, 10, 0, 0);
@@ -176,7 +176,7 @@ public class OptionScreen extends JPanel
 		
 		add(sound);
 		
-		TitlePanel title3 = new TitlePanel(LocaleMessage.getString("options.plugins"), new ImageIcon(getClass().getResource("/images/settings_plugins.png")));
+		TitlePanel title3 = new TitlePanel(LocaleMessage.getInstance().getString("options.plugins"), new ImageIcon(getClass().getResource("/images/settings_plugins.png")));
 		add(title3);
 		
 		JPanel plugins = new JPanel(new GridBagLayout());
@@ -195,7 +195,7 @@ public class OptionScreen extends JPanel
 		gbc2.insets = new Insets(0, 68, 0, 0);
 		
 		// show installed themes and plugins
-		LinkLabel showPlugins = new LinkLabel(LocaleMessage.getString("options.show_plugins"));
+		LinkLabel showPlugins = new LinkLabel(LocaleMessage.getInstance().getString("options.show_plugins"));
 		showPlugins.setActionThread(new Thread(new Runnable(){
 			public void run()
 			{
@@ -206,7 +206,7 @@ public class OptionScreen extends JPanel
 		
 		gbc2.gridy = 1;
 		
-		LinkLabel findPlugins = new LinkLabel(LocaleMessage.getString("options.search_plugins"));
+		LinkLabel findPlugins = new LinkLabel(LocaleMessage.getInstance().getString("options.search_plugins"));
 		findPlugins.setActionThread(new Thread(new Runnable(){
 			public void run()
 			{
@@ -240,7 +240,7 @@ public class OptionScreen extends JPanel
 		gbc2.insets = new Insets(4, 68, 0, 0);
 		
 		// check for updates during application startup?
-		JCheckBox atStart = new JCheckBox(LocaleMessage.getString("options.autoupdate"));
+		JCheckBox atStart = new JCheckBox(LocaleMessage.getInstance().getString("options.autoupdate"));
 		atStart.setSelected(s.isCheckForUpdatesAtStart());
 		atStart.setOpaque(false);
 		atStart.setVerticalAlignment(SwingConstants.TOP);
@@ -260,8 +260,8 @@ public class OptionScreen extends JPanel
 		gbc2.fill = GridBagConstraints.NONE;
 		
 		// search for updates for the plugins
-		searchNow = new JButton(LocaleMessage.getString("options.updatenow"));
-		searchNow.setToolTipText(LocaleMessage.getString("options.updatenow_tooltip"));
+		searchNow = new JButton(LocaleMessage.getInstance().getString("options.updatenow"));
+		searchNow.setToolTipText(LocaleMessage.getInstance().getString("options.updatenow_tooltip"));
 		searchNow.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{

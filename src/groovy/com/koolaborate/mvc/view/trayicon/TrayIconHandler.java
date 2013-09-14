@@ -92,19 +92,19 @@ public class TrayIconHandler{
 
 				PopupMenu popup = new PopupMenu();
 				MenuItem playItem = new MenuItem(
-						LocaleMessage.getString("control.play"));
+						LocaleMessage.getInstance().getString("control.play"));
 				playItem.setActionCommand("play");
 				MenuItem stopItem = new MenuItem(
-						LocaleMessage.getString("control.stop"));
+						LocaleMessage.getInstance().getString("control.stop"));
 				stopItem.setActionCommand("stop");
 				MenuItem nextItem = new MenuItem(
-						LocaleMessage.getString("control.next"));
+						LocaleMessage.getInstance().getString("control.next"));
 				nextItem.setActionCommand("next");
 				MenuItem prevItem = new MenuItem(
-						LocaleMessage.getString("control.previous"));
+						LocaleMessage.getInstance().getString("control.previous"));
 				prevItem.setActionCommand("previous");
 				MenuItem exitItem = new MenuItem(
-						LocaleMessage.getString("control.exit"));
+						LocaleMessage.getInstance().getString("control.exit"));
 				exitItem.setActionCommand("exit");
 
 				playItem.addActionListener(listener);

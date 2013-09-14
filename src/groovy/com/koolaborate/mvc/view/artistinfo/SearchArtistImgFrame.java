@@ -39,7 +39,7 @@ import org.jdesktop.swingx.JXBusyLabel;
 import com.koolaborate.mvc.view.dialogs.VistaDialog;
 import com.koolaborate.mvc.view.mainwindow.MainWindow;
 import com.koolaborate.util.GraphicsUtilities;
-import com.koolaborate.util.HTMLparser;
+import com.koolaborate.util.HtmlParser;
 import com.koolaborate.util.LocaleMessage;
 
 /***********************************************************************************
@@ -119,7 +119,7 @@ public class SearchArtistImgFrame extends JDialog
 			e.printStackTrace();
 		}
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle(LocaleMessage.getString("searchartist.title"));
+		setTitle(LocaleMessage.getInstance().getString("searchartist.title"));
 		
 		setLayout(new BorderLayout());
 		
@@ -233,7 +233,7 @@ public class SearchArtistImgFrame extends JDialog
 		p.add(imgLabel, c);
 		
 		// search cover text
-		JLabel coverText = new JLabel(LocaleMessage.getString("searchartist.description"));
+		JLabel coverText = new JLabel(LocaleMessage.getInstance().getString("searchartist.description"));
 		coverText.setOpaque(false);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0f;
@@ -245,7 +245,7 @@ public class SearchArtistImgFrame extends JDialog
 		p.add(coverText, c);
 		
 		// cover search button
-		searchButt = new JButton(LocaleMessage.getString("searchcover.beginsearch"));
+		searchButt = new JButton(LocaleMessage.getInstance().getString("searchcover.beginsearch"));
 		searchButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -342,7 +342,7 @@ public class SearchArtistImgFrame extends JDialog
 		JPanel ownPanel = new JPanel(new GridBagLayout());
 		ownPanel.setOpaque(false);
 		
-		JLabel pathLabel = new JLabel(LocaleMessage.getString("searchartist.ownpath"));
+		JLabel pathLabel = new JLabel(LocaleMessage.getInstance().getString("searchartist.ownpath"));
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -352,7 +352,7 @@ public class SearchArtistImgFrame extends JDialog
 		gbc.insets = new Insets(10, 10, 0, 0);
 		ownPanel.add(pathLabel, gbc);
 		
-		JLabel path = new JLabel(LocaleMessage.getString("searchcover.path"));
+		JLabel path = new JLabel(LocaleMessage.getInstance().getString("searchcover.path"));
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -419,8 +419,8 @@ public class SearchArtistImgFrame extends JDialog
 			    	}
 			    	catch(Exception e)
 			    	{
-			    		VistaDialog.showDialog(LocaleMessage.getString("error.1"), LocaleMessage.getString("error.2"), 
-			    				LocaleMessage.getString("searchartist.fileerror"), VistaDialog.ERROR_MESSAGE);
+			    		VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.1"), LocaleMessage.getInstance().getString("error.2"), 
+			    				LocaleMessage.getInstance().getString("searchartist.fileerror"), VistaDialog.ERROR_MESSAGE);
 			    	}
 			    	dispose();
 			    } 
@@ -473,14 +473,14 @@ public class SearchArtistImgFrame extends JDialog
 	 */
 	private void searchCovers()
 	{
-		final String tooltip = LocaleMessage.getString("common.selectimg");
+		final String tooltip = LocaleMessage.getInstance().getString("common.selectimg");
 		final LineBorder b = new LineBorder(Color.BLACK);
 		
 		new Thread(new Runnable(){
 			public void run()
 			{
 				// then look for the google image search
-				URL[] urls = HTMLparser.getArtistImagePathsFromGoogle(artist);
+				URL[] urls = HtmlParser.getInstance().getArtistImagePathsFromGoogle(artist);
 				busyLabel1.setBusy(false);
 				busyLabel2.setBusy(false);
 				busyLabel3.setBusy(false);

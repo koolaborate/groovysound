@@ -120,9 +120,9 @@ public class SongInfoFrame extends JFrame
 		}
 		else
 		{
-			VistaDialog.showDialog(LocaleMessage.getString("error.12"), 
-					LocaleMessage.getString("error.13"), "'" + songFilePath + "' " + 
-					LocaleMessage.getString("error.14"), VistaDialog.ERROR_MESSAGE);
+			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.12"), 
+					LocaleMessage.getInstance().getString("error.13"), "'" + songFilePath + "' " + 
+					LocaleMessage.getInstance().getString("error.14"), VistaDialog.ERROR_MESSAGE);
 							
 			//TODO confirmation dialog: do you want to update songlist/album
 			// if directory is missing: remove album
@@ -139,7 +139,7 @@ public class SongInfoFrame extends JFrame
 			e.printStackTrace();
 		}
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle(LocaleMessage.getString("songinfo.title"));
+		setTitle(LocaleMessage.getInstance().getString("songinfo.title"));
 		
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run()
@@ -201,7 +201,7 @@ public class SongInfoFrame extends JFrame
 		bgPanel.add(imgLabel, gbc);
 		
 		// title text
-		JLabel titleLabel = new JLabel(LocaleMessage.getString("songinfo.songinfo"));
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("songinfo.songinfo"));
 		titleLabel.setFont(new Font("Calibri", Font.BOLD, 16));
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0f;
@@ -287,7 +287,7 @@ public class SongInfoFrame extends JFrame
 		gbc1.gridwidth = 2;
 		
 		// box title
-		JLabel boxTitle = new JLabel("<HTML><b>" + LocaleMessage.getString("songinfo.fileinfo") + "</b></HTML>");
+		JLabel boxTitle = new JLabel("<HTML><b>" + LocaleMessage.getInstance().getString("songinfo.fileinfo") + "</b></HTML>");
 		p.add(boxTitle, gbc1);
 		
 		// the file name
@@ -295,7 +295,7 @@ public class SongInfoFrame extends JFrame
 		gbc1.anchor = GridBagConstraints.LINE_START;
 		gbc1.gridwidth = 1;
 		gbc1.gridy = 1;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.filename") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.filename") + ":"), gbc1);
 		
 		gbc2.anchor = GridBagConstraints.LINE_START;
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
@@ -309,7 +309,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the file path
 		gbc1.gridy = 2;
-		p.add(new JLabel(LocaleMessage.getString("searchcover.path")), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("searchcover.path")), gbc1);
 		
 		gbc2.gridy = 2;
 		filePathLabel = new JLabel();
@@ -317,7 +317,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the file size
 		gbc1.gridy = 3;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.size") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.size") + ":"), gbc1);
 		
 		gbc2.gridy = 3;
 		fileSizeLabel = new JLabel();
@@ -326,7 +326,7 @@ public class SongInfoFrame extends JFrame
 		// the file date
 		gbc1.gridy = 4;
 		gbc1.insets = new Insets(0, 10, 10, 0);
-		p.add(new JLabel(LocaleMessage.getString("songinfo.date") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.date") + ":"), gbc1);
 		
 		gbc2.insets = new Insets(0, 10, 10, 10);
 		gbc2.gridy = 4;
@@ -385,7 +385,7 @@ public class SongInfoFrame extends JFrame
 		gbc1.gridwidth = 2;
 		
 		// box title
-		JLabel boxTitle = new JLabel("<HTML><b>" + LocaleMessage.getString("songinfo.headerinfo") + "</b></HTML>");
+		JLabel boxTitle = new JLabel("<HTML><b>" + LocaleMessage.getInstance().getString("songinfo.headerinfo") + "</b></HTML>");
 		p.add(boxTitle, gbc1);
 		
 		// the bit rate
@@ -393,7 +393,7 @@ public class SongInfoFrame extends JFrame
 		gbc1.anchor = GridBagConstraints.LINE_START;
 		gbc1.gridwidth = 1;
 		gbc1.gridy = 1;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.bitrate") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.bitrate") + ":"), gbc1);
 		
 		gbc2.anchor = GridBagConstraints.LINE_START;
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
@@ -407,7 +407,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the channels
 		gbc1.gridy = 2;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.channels") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.channels") + ":"), gbc1);
 		
 		gbc2.gridy = 2;
 		channelsLabel = new JLabel();
@@ -415,7 +415,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the encoding
 		gbc1.gridy = 3;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.encoding") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.encoding") + ":"), gbc1);
 		
 		gbc2.gridy = 3;
 		encodingLabel = new JLabel();
@@ -423,7 +423,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the format
 		gbc1.gridy = 4;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.format") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.format") + ":"), gbc1);
 		
 		gbc2.gridy = 4;
 		formatLabel = new JLabel();
@@ -431,7 +431,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the sample rate
 		gbc1.gridy = 5;
-		p.add(new JLabel(LocaleMessage.getString("songinfo.frequency") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.frequency") + ":"), gbc1);
 		
 		gbc2.gridy = 5;
 		samplerateLabel = new JLabel();
@@ -440,7 +440,7 @@ public class SongInfoFrame extends JFrame
 		// the song's duration
 		gbc1.gridy = 6;
 		gbc1.insets = new Insets(0, 10, 10, 0);
-		p.add(new JLabel(LocaleMessage.getString("songinfo.duration") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("songinfo.duration") + ":"), gbc1);
 		
 		gbc2.insets = new Insets(0, 10, 10, 10);
 		gbc2.gridy = 6;
@@ -499,7 +499,7 @@ public class SongInfoFrame extends JFrame
 		gbc1.gridwidth = 2;
 		
 		// box title
-		JLabel boxTitle = new JLabel("<HTML><b>" + LocaleMessage.getString("songinfo.id3info") + "</b></HTML>");
+		JLabel boxTitle = new JLabel("<HTML><b>" + LocaleMessage.getInstance().getString("songinfo.id3info") + "</b></HTML>");
 		p.add(boxTitle, gbc1);
 		
 		// the title
@@ -507,7 +507,7 @@ public class SongInfoFrame extends JFrame
 		gbc1.anchor = GridBagConstraints.LINE_START;
 		gbc1.gridwidth = 1;
 		gbc1.gridy = 1;
-		p.add(new JLabel(LocaleMessage.getString("common.title") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("common.title") + ":"), gbc1);
 		
 		gbc2.anchor = GridBagConstraints.LINE_START;
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
@@ -521,7 +521,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the artist
 		gbc1.gridy = 2;
-		p.add(new JLabel(LocaleMessage.getString("common.artist") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("common.artist") + ":"), gbc1);
 		
 		gbc2.gridy = 2;
 		artistLabel = new JLabel();
@@ -529,7 +529,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the album
 		gbc1.gridy = 3;
-		p.add(new JLabel(LocaleMessage.getString("common.album") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("common.album") + ":"), gbc1);
 		
 		gbc2.gridy = 3;
 		albumLabel = new JLabel();
@@ -537,7 +537,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the track#
 		gbc1.gridy = 4;
-		p.add(new JLabel(LocaleMessage.getString("common.trackno") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("common.trackno") + ":"), gbc1);
 		
 		gbc2.gridy = 4;
 		tracknoLabel = new JLabel();
@@ -545,7 +545,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the year
 		gbc1.gridy = 5;
-		p.add(new JLabel(LocaleMessage.getString("common.year") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("common.year") + ":"), gbc1);
 		
 		gbc2.gridy = 5;
 		yearLabel = new JLabel();
@@ -553,7 +553,7 @@ public class SongInfoFrame extends JFrame
 		
 		// the genre
 		gbc1.gridy = 6;
-		p.add(new JLabel(LocaleMessage.getString("common.genre") + ":"), gbc1);
+		p.add(new JLabel(LocaleMessage.getInstance().getString("common.genre") + ":"), gbc1);
 		
 		gbc2.gridy = 6;
 		genreLabel = new JLabel();
@@ -563,8 +563,8 @@ public class SongInfoFrame extends JFrame
 		gbc1.gridx = 0;
 		gbc1.gridy = 7;
 		gbc1.gridwidth = 2;
-		JButton editButton = new JButton(LocaleMessage.getString("common.edit"));
-		editButton.setToolTipText(LocaleMessage.getString("common.edit_tooltip"));
+		JButton editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"));
+		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"));
 		editButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -589,7 +589,7 @@ public class SongInfoFrame extends JFrame
 		JPanel p = new JPanel();
 		
 		JButton closeButt = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		closeButt.setToolTipText(LocaleMessage.getString("common.close_tooltip"));
+		closeButt.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
 		closeButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{

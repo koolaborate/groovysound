@@ -99,7 +99,7 @@ public class NewPluginPanel extends JPanel
 		buttonPanel.setOpaque(false);
 		buttonPanel.setLayout(new FlowLayout());
 		
-		installPlugin = new JButton(LocaleMessage.getString("plugins.install"));
+		installPlugin = new JButton(LocaleMessage.getInstance().getString("plugins.install"));
 		installPlugin.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -114,9 +114,9 @@ public class NewPluginPanel extends JPanel
 				catch (Exception e1)
 				{
 					// show a message that the installation failed
-					VistaDialog.showDialog(LocaleMessage.getString("error.1"), 
-							LocaleMessage.getString("error.28"),
-							LocaleMessage.getString("error.29"), VistaDialog.ERROR_MESSAGE);
+					VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.1"), 
+							LocaleMessage.getInstance().getString("error.28"),
+							LocaleMessage.getInstance().getString("error.29"), VistaDialog.ERROR_MESSAGE);
 				}
 				parentWindow.dispose();
 			}

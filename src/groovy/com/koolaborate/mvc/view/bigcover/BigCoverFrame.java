@@ -87,7 +87,7 @@ public class BigCoverFrame extends JDialog
 	{
 		this.window = window;
 		
-		setTitle(LocaleMessage.getString("cover.detailview"));
+		setTitle(LocaleMessage.getInstance().getString("cover.detailview"));
 		setSize(640, 480);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -208,11 +208,11 @@ public class BigCoverFrame extends JDialog
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.add(Box.createVerticalStrut(8));
 		
-		JLabel settingsLab = new JLabel("<html><b>" + LocaleMessage.getString("cover.view_settings") + "</b></html>");
+		JLabel settingsLab = new JLabel("<html><b>" + LocaleMessage.getInstance().getString("cover.view_settings") + "</b></html>");
 		p.add(settingsLab);
 		p.add(Box.createVerticalStrut(12));
 		
-		JCheckBox check1 = new JCheckBox(LocaleMessage.getString("cover.blurred"));
+		JCheckBox check1 = new JCheckBox(LocaleMessage.getInstance().getString("cover.blurred"));
 		check1.setOpaque(false);
 		check1.setSelected(true);
 		check1.addChangeListener(new ChangeListener(){
@@ -224,7 +224,7 @@ public class BigCoverFrame extends JDialog
 			}
 		});
 		
-		JCheckBox check2 = new JCheckBox(LocaleMessage.getString("cover.light_effect"));
+		JCheckBox check2 = new JCheckBox(LocaleMessage.getInstance().getString("cover.light_effect"));
 		check2.setSelected(true);
 		check2.setOpaque(false);
 		check2.addChangeListener(new ChangeListener(){
@@ -236,7 +236,7 @@ public class BigCoverFrame extends JDialog
 			}
 		});
 		
-		final String coverString = LocaleMessage.getString("cover.cover");
+		final String coverString = LocaleMessage.getInstance().getString("cover.cover");
 		final JLabel size = new JLabel(coverString + ": " + startSize + " px");
 		
 		JSlider coverSize = new JSlider();
@@ -254,23 +254,23 @@ public class BigCoverFrame extends JDialog
 			}
 		});
 		
-		final JButton color1Butt = new JButton(LocaleMessage.getString("cover.color") + " 1"); 
+		final JButton color1Butt = new JButton(LocaleMessage.getInstance().getString("cover.color") + " 1"); 
 		color1Butt.setBackground(color1);
 		color1Butt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
-				color1 = JColorChooser.showDialog(null, LocaleMessage.getString("cover.color") + " 1", color1); 
+				color1 = JColorChooser.showDialog(null, LocaleMessage.getInstance().getString("cover.color") + " 1", color1); 
 				color1Butt.setBackground(color1);
 				backGround.repaint();
 			}
 		});
 		
-		final JButton color2Butt = new JButton(LocaleMessage.getString("cover.color") + " 2"); 
+		final JButton color2Butt = new JButton(LocaleMessage.getInstance().getString("cover.color") + " 2"); 
 		color2Butt.setBackground(color2);
 		color2Butt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{
-				color2 = JColorChooser.showDialog(null, LocaleMessage.getString("cover.color") + " 2", color2); 
+				color2 = JColorChooser.showDialog(null, LocaleMessage.getInstance().getString("cover.color") + " 2", color2); 
 				color2Butt.setBackground(color2);
 				backGround.repaint();
 			}
@@ -294,7 +294,7 @@ public class BigCoverFrame extends JDialog
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		JButton closeButt = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		closeButt.setToolTipText(LocaleMessage.getString("common.close_tooltip"));
+		closeButt.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
 		closeButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{

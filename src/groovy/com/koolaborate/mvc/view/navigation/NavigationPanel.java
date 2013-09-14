@@ -84,7 +84,7 @@ public class NavigationPanel extends JPanel
 		this.playlistButton = d.getPlaylistViewButton();
 		this.settingsButton = d.getSettingsViewButton();
 		
-		albumsButton.setToolTipText(LocaleMessage.getString("nav.showalbums"));
+		albumsButton.setToolTipText(LocaleMessage.getInstance().getString("nav.showalbums"));
 		albumsButton.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -97,7 +97,7 @@ public class NavigationPanel extends JPanel
 		});
 		albumsButton.setActive(true);
 		
-		playlistButton.setToolTipText(LocaleMessage.getString("nav.playlist"));
+		playlistButton.setToolTipText(LocaleMessage.getInstance().getString("nav.playlist"));
 		playlistButton.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -109,7 +109,7 @@ public class NavigationPanel extends JPanel
 			}
 		});
 		
-		settingsButton.setToolTipText(LocaleMessage.getString("nav.options"));
+		settingsButton.setToolTipText(LocaleMessage.getInstance().getString("nav.options"));
 		settingsButton.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -159,7 +159,7 @@ public class NavigationPanel extends JPanel
 		commonFuntionsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 		
 		SubNavButton searchButt = d.getSearchSubNavButton();
-		searchButt.setText(LocaleMessage.getString("search.search"));
+		searchButt.setText(LocaleMessage.getInstance().getString("search.search"));
 		searchButt.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -170,7 +170,7 @@ public class NavigationPanel extends JPanel
 		commonFuntionsPanel.add(searchButt);
 		
 		SubNavButton aboutButt = d.getAboutSubNavButton();
-		aboutButt.setText(LocaleMessage.getString("common.about") + "...");
+		aboutButt.setText(LocaleMessage.getInstance().getString("common.about") + "...");
 		aboutButt.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -227,7 +227,7 @@ public class NavigationPanel extends JPanel
 		albumsSubNavPanel.setOpaque(false);
 		
 		SubNavButton addAlbum = mainWindow.getDecorator().getAddAlbumSubNavButton();
-		addAlbum.setText(LocaleMessage.getString("newalbum.add_album"));
+		addAlbum.setText(LocaleMessage.getInstance().getString("newalbum.add_album"));
 		addAlbum.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e)
@@ -237,9 +237,9 @@ public class NavigationPanel extends JPanel
 		});
 		albumsSubNavPanel.add(addAlbum);
 		
-		final String[] choices = {LocaleMessage.getString("nav.sort_album"), 
-				LocaleMessage.getString("nav.sort_artist"), 
-				LocaleMessage.getString("nav.sort_none")};
+		final String[] choices = {LocaleMessage.getInstance().getString("nav.sort_album"), 
+				LocaleMessage.getInstance().getString("nav.sort_artist"), 
+				LocaleMessage.getInstance().getString("nav.sort_none")};
 		
 		// TODO this is where the concurrent modification happens...
 		JComboBox<String> sortModeBox = new JComboBox<String>(choices);
@@ -267,7 +267,7 @@ public class NavigationPanel extends JPanel
 				}
 			}
 		});
-		JLabel sortLabel = new JLabel(LocaleMessage.getString("nav.sorting") + ":");
+		JLabel sortLabel = new JLabel(LocaleMessage.getInstance().getString("nav.sorting") + ":");
 		sortLabel.setForeground(mainWindow.getDecorator().getNavbarForegroundColor());
 		sortLabel.setBorder(new EmptyBorder(0, 10, 0, 4));
 		
