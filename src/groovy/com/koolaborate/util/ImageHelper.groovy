@@ -75,6 +75,8 @@ public class ImageHelper
 	 */
 	public BufferedImage createSmallCover(File bigCover)
 	{
+		if(null == bigCover) return null
+		
 		if(!bigCover.exists()) return null;
 		
 		BufferedImage preview = null;
@@ -113,7 +115,9 @@ public class ImageHelper
 	 */
 	public BufferedImage createSmallCover(BufferedImage image)
 	{
-		BufferedImage preview = null;
+		BufferedImage preview = null
+		if(null == image) return preview
+		
 		try
 		{
 			BufferedImage cdCase = ImageIO.read(getClass().getResource("/images/emptycover.jpg"));
