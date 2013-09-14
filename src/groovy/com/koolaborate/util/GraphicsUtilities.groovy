@@ -114,7 +114,9 @@ public class GraphicsUtilities {
 	 *            image is obtained
 	 * @return a new BufferedImage, compatible with the color model of image
 	 */
-	def static BufferedImage createColorModelCompatibleImage(BufferedImage image) {
+	def BufferedImage createColorModelCompatibleImage(BufferedImage image) {
+		if(null == image) return null
+		
 		ColorModel colorModel = image.getColorModel();
 
 		def writableRaster = colorModel.createCompatibleWritableRaster(image.getWidth(), image.getHeight())
@@ -164,10 +166,9 @@ public class GraphicsUtilities {
 	 * @return a new compatible BufferedImage with the same transparency as
 	 *         image and the specified dimension
 	 */
-	def static BufferedImage createCompatibleImage(BufferedImage image,
-			int width, int height) {
-		return CONFIGURATION.createCompatibleImage(width, height, image
-		.getTransparency());
+	def BufferedImage createCompatibleImage(BufferedImage image, int width, int height) {
+		if(null == image) return null
+		return CONFIGURATION.createCompatibleImage(width, height, image.getTransparency());
 	}
 
 	/**

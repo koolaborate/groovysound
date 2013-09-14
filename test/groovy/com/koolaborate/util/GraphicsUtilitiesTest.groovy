@@ -27,6 +27,31 @@ class GraphicsUtilitiesTest{
 	}
 	
 	@Test
+	void shouldTestCreateColorModelCompatibleImage(){
+		BufferedImage compatImage = gu.createColorModelCompatibleImage(null)
+		assert null == compatImage
+		
+		BufferedImage bufferedImage = new BufferedImage(100, 100, BufferedImage.TYPE_3BYTE_BGR) 
+		compatImage = gu.createColorModelCompatibleImage(bufferedImage)
+		assert null != compatImage
+		assert bufferedImage.getColorModel() == compatImage.getColorModel()
+	}
+	
+	@Test
+	void shouldCreateCompatibleImage(){
+		BufferedImage compatImage = gu.createCompatibleImage(null, 5, 5)
+		assert null == compatImage
+		
+		BufferedImage bufferedImage = new BufferedImage(100, 100, BufferedImage.TYPE_3BYTE_BGR)
+		compatImage = gu.createCompatibleImage(bufferedImage, 5, 5)
+		assert null != compatImage
+		assert 5 == compatImage.width
+		assert 5 == compatImage.height
+		assert bufferedImage.getTransparency() == compatImage.getTransparency()
+		
+	}
+	
+	@Test
 	void shouldTestCreateTranslucentCompatibleImage(){
 		try{
 			gu.createTranslucentCompatibleImage(0, 0)
@@ -36,6 +61,15 @@ class GraphicsUtilitiesTest{
 		def bufferedImage = gu.createTranslucentCompatibleImage(1, 1)
 		assert null != bufferedImage
 		assert Transparency.TRANSLUCENT == bufferedImage.getTransparency()
+		
+		try{
+			gu.createCompatibleImage(0, 0)
+			fail()
+		}catch(IllegalArgumentException e){}
+		
+		bufferedImage = gu.createCompatibleImage(10, 10)
+		assert 10 == bufferedImage.width
+		assert 10 == bufferedImage.height
 	}
 	
 	@Test
