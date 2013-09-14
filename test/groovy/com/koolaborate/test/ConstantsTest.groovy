@@ -6,4 +6,7 @@ class ConstantsTest{
 	
 	public static final String LOCAL_SRC_FILE = "testresource/groovy/temp/fileHelperSrcTest.txt"
 	public static final String LOCAL_DEST_FILE = "testresource/groovy/temp/fileHelperDestTest.txt"
+	
+	public static final String MP3_SRC_FOLDER = "testresource/groovy/temp/com/koolaborate/converter/mp3/src"
+	public static final String MP3_DEST_FOLDER = "testresource/groovy/temp/com/koolaborate/converter/mp3/dest"
 }

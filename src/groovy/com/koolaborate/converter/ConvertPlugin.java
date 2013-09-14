@@ -183,8 +183,9 @@ public class ConvertPlugin extends Plugin
 								{
 									File dstFolder = chooser.getSelectedFile();
 									m.getMainwindow().getSettings().setLastFolder(dstFolder.getParent());
-									MP3ToWAVConverter converter = new MP3ToWAVConverter(srcFolder, dstFolder.getAbsolutePath());
-									converter.convertFiles();
+									Convertable converter = new MP3ToWAVConverter();
+									converter.init(srcFolder, dstFolder.getAbsolutePath());
+									converter.convert();
 								}
 							}
 						}
