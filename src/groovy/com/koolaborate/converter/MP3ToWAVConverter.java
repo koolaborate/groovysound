@@ -21,7 +21,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.koolaborate.mvc.view.dialogs.VistaDialog;
-import com.koolaborate.util.FileHelper;
 
 /***********************************************************************************
  * MP3ToWAVConverter                                                               *
