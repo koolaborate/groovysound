@@ -53,8 +53,7 @@ import com.koolaborate.mvc.view.dialogs.VistaDialog;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class MP3ToWAVConverter implements Convertable
-{
+public class MP3ToWAVConverter implements Convertable{
 	private String language
 	private File[] mp3s;
 	private File destinationFolder;
