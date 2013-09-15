@@ -1,7 +1,7 @@
 package com.koolaborate.error
 
 class ErrorMessage{
-	ErrorType errorType
+	MessageType errorType
 	String description
 	Throwable exception
 }

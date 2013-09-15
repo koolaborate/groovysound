@@ -1,28 +1,18 @@
-package com.koolaborate.converter;
+package com.koolaborate.converter
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.awt.BorderLayout
+import java.awt.Color
 
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JDialog
+import javax.swing.JLabel
+import javax.swing.JProgressBar
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils
 
-import com.koolaborate.mvc.view.dialogs.VistaDialog;
+import com.koolaborate.error.ErrorMessage
+import com.koolaborate.error.MessageType;
+import com.koolaborate.mvc.view.dialogs.VistaDialog
+import com.koolaborate.transaction.TransactionMessage;
 
 /***********************************************************************************
  * MP3ToWAVConverter                                                               *
@@ -55,14 +45,14 @@ import com.koolaborate.mvc.view.dialogs.VistaDialog;
  ***********************************************************************************/
 public class MP3ToWAVConverter implements Convertable{
 	private String language
-	private File[] mp3s;
-	private File destinationFolder;
-	private int amountFiles = 0;
-	private int convertedFiles = 0;
+	private File[] mp3s
+	private File destinationFolder
+	private int amountFiles = 0
+	private int convertedFiles = 0
 	
-	private JDialog dialog;
-	private JLabel currentFile;
-	private JProgressBar progressBar;
+	private JDialog dialog
+	private JLabel currentFile
+	private JProgressBar progressBar
 	
 	
 	/**
@@ -73,54 +63,144 @@ public class MP3ToWAVConverter implements Convertable{
 	 */
 	public MP3ToWAVConverter(){}
 	
+	def TransactionMessage init_REFACTOR(String sourceFolderLocation, String destinationFolderLocation){
+		if(null == sourceFolderLocation || null == destinationFolderLocation) throw new IllegalArgumentException()
+		if(StringUtils.isBlank(sourceFolderLocation) || StringUtils.isBlank(destinationFolderLocation)) throw new IllegalArgumentException()
+		
+		language = Locale.getDefault().getLanguage().toLowerCase()
+		
+		File srcFolder = new File(sourceFolderLocation)
+		// check if the source folder is
+		TransactionMessage transactionMessage = new TransactionMessage()  // use model instead
+		def errorMessage = handleError(srcFolder, sourceFolderLocation)
+		if(null != errorMessage) {
+			transactionMessage.errorMessage = errorMessage
+			return transactionMessage
+		}
+		
+		// ensure that the destination folder exists
+		destinationFolder = new File(destinationFolderLocation)
+		if(!destinationFolder.exists())
+		{
+			try{
+				destinationFolder.createNewFile()
+			} catch (IOException e) {
+				String errTitle = "Folder does not exist"
+				String error = "The destination folder does not exist"
+				String message = "The destination folder you selected ('{dstfolder}') does not exist and could not be created.\nConversion stopped."
+				if(language.equals("de"))
+				{
+					errTitle = "Verzeichnis nicht vorhanden"
+					error = "Das Zielverzeichnis existiert nicht"
+					message = "Das angegebene Zielverzeichnis ('{dstfolder}') existiert nicht und konnte nicht erstellt werden.\nDie Umwandlung wird abgebrochen."
+				}
+				message = message.replace("{dstfolder}", destinationFolderLocation)
+				
+//				VistaDialog.showDialog(errTitle, error, message, VistaDialog.ERROR_MESSAGE)
+				e.printStackTrace()
+			}
+		}
+		
+		// get all the mp3 files from the source folder
+		mp3s = getMp3s(srcFolder)
+		
+		return transactionMessage
+	}
+	
+	def ErrorMessage handleError(File srcFolder, String sourceFolderLocation){
+		ErrorMessage errorMessage = null
+		
+		if(!srcFolder.exists() || !srcFolder.isDirectory()){
+			errorMessage = new ErrorMessage()
+			errorMessage.errorType = MessageType.ERROR
+			
+			String errTitle = "Folder does not exist"
+			String error = "The source folder does not exist"
+			String message = "The source folder you selected ('{srcfolder}') does not exist.\nConversion stopped."
+			if(language.equals("de")) {
+				errTitle = "Verzeichnis nicht vorhanden"
+				error = "Das Quellverzeichnis existiert nicht"
+				message = "Das angegebene Quellverzeichnis ('{srcfolder}') existiert nicht.\nDie Umwandlung wird abgebrochen."
+			}
+			message = message.replace("{srcfolder}", sourceFolderLocation)
+//			VistaDialog.showDialog(errTitle, error, message, VistaDialog.ERROR_MESSAGE)
+			
+			errorMessage.description = message
+		}
+		
+		return errorMessage
+	}
+	
+	def File[] getMp3s(File srcFolder){
+		def mp3s
+		
+		mp3s = srcFolder.listFiles(new FileFilter(){
+			public boolean accept(File pathname)
+			{
+				if(pathname.getName().toLowerCase().endsWith(".mp3")) return true
+				else return false
+			}
+		})
+		
+		return mp3s
+	}
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	def void init(String sourceFolderLocation, String destinationFolderLocation){
 		if(null == sourceFolderLocation || null == destinationFolderLocation) throw new IllegalArgumentException()
 		if(StringUtils.isBlank(sourceFolderLocation) || StringUtils.isBlank(destinationFolderLocation)) throw new IllegalArgumentException()
 		
-		language = Locale.getDefault().getLanguage().toLowerCase();
+		language = Locale.getDefault().getLanguage().toLowerCase()
 		
-		File srcFolder = new File(sourceFolderLocation);
+		File srcFolder = new File(sourceFolderLocation)
 		// check if the source folder is
 		if(!srcFolder.exists() || !srcFolder.isDirectory())
 		{
-			String errTitle = "Folder does not exist";
-			String error = "The source folder does not exist";
-			String message = "The source folder you selected ('{srcfolder}') does not exist.\nConversion stopped.";
+			String errTitle = "Folder does not exist"
+			String error = "The source folder does not exist"
+			String message = "The source folder you selected ('{srcfolder}') does not exist.\nConversion stopped."
 			if(language.equals("de")) {
-				errTitle = "Verzeichnis nicht vorhanden";
-				error = "Das Quellverzeichnis existiert nicht";
-				message = "Das angegebene Quellverzeichnis ('{srcfolder}') existiert nicht.\nDie Umwandlung wird abgebrochen.";
+				errTitle = "Verzeichnis nicht vorhanden"
+				error = "Das Quellverzeichnis existiert nicht"
+				message = "Das angegebene Quellverzeichnis ('{srcfolder}') existiert nicht.\nDie Umwandlung wird abgebrochen."
 			}
-			message = message.replace("{srcfolder}", sourceFolderLocation);
-			VistaDialog.showDialog(errTitle, error, message, VistaDialog.ERROR_MESSAGE);
-			return;
+			message = message.replace("{srcfolder}", sourceFolderLocation)
+			
+			
+			// TODO REFACTOR push to the view layer
+			VistaDialog.showDialog(errTitle, error, message, VistaDialog.ERROR_MESSAGE)
+			return
 		}
 		
 		// ensure that the destination folder exists
-		destinationFolder = new File(destinationFolderLocation);
+		destinationFolder = new File(destinationFolderLocation)
 		if(!destinationFolder.exists())
 		{
-			try
-			{
-				destinationFolder.createNewFile();
+			try{
+				destinationFolder.createNewFile()
 			}
 			catch (IOException e)
 			{
-				String errTitle = "Folder does not exist";
-				String error = "The destination folder does not exist";
-				String message = "The destination folder you selected ('{dstfolder}') does not exist and could not be created.\nConversion stopped.";
+				String errTitle = "Folder does not exist"
+				String error = "The destination folder does not exist"
+				String message = "The destination folder you selected ('{dstfolder}') does not exist and could not be created.\nConversion stopped."
 				if(language.equals("de"))
 				{
-					errTitle = "Verzeichnis nicht vorhanden";
-					error = "Das Zielverzeichnis existiert nicht";
-					message = "Das angegebene Zielverzeichnis ('{dstfolder}') existiert nicht und konnte nicht erstellt werden.\nDie Umwandlung wird abgebrochen.";
+					errTitle = "Verzeichnis nicht vorhanden"
+					error = "Das Zielverzeichnis existiert nicht"
+					message = "Das angegebene Zielverzeichnis ('{dstfolder}') existiert nicht und konnte nicht erstellt werden.\nDie Umwandlung wird abgebrochen."
 				}
-				message = message.replace("{dstfolder}", destinationFolderLocation);
+				message = message.replace("{dstfolder}", destinationFolderLocation)
 				
-				VistaDialog.showDialog(errTitle, error, message, VistaDialog.ERROR_MESSAGE);
-				e.printStackTrace();
-				return;
+				VistaDialog.showDialog(errTitle, error, message, VistaDialog.ERROR_MESSAGE)
+				e.printStackTrace()
+				return
 			}
 		}
 		
@@ -128,21 +208,21 @@ public class MP3ToWAVConverter implements Convertable{
 		mp3s = srcFolder.listFiles(new FileFilter(){
 			public boolean accept(File pathname)
 			{
-				if(pathname.getName().toLowerCase().endsWith(".mp3")) return true;
-				else return false;
+				if(pathname.getName().toLowerCase().endsWith(".mp3")) return true
+				else return false
 			}
-		});
-		amountFiles = mp3s.length;
-		dialog = new JDialog();
-		dialog.setLayout(new BorderLayout());
-		String progress = "Progress...";
-		if(language.equals("de")) progress = "Fortschritt...";
-		dialog.getContentPane().setBackground(Color.WHITE);
-		dialog.setModal(false);
-		dialog.setTitle(progress);
-		dialog.setSize(300, 100);
-		dialog.setResizable(false);
-		dialog.setLocationRelativeTo(null);
+		})
+		amountFiles = mp3s.length
+		dialog = new JDialog()
+		dialog.setLayout(new BorderLayout())
+		String progress = "Progress..."
+		if("de".equals(language)) progress = "Fortschritt..."
+		dialog.getContentPane().setBackground(Color.WHITE)
+		dialog.setModal(false)
+		dialog.setTitle(progress)
+		dialog.setSize(300, 100)
+		dialog.setResizable(false)
+		dialog.setLocationRelativeTo(null)
 	}
 
 	
@@ -152,7 +232,7 @@ public class MP3ToWAVConverter implements Convertable{
 	@Override
 	def void convert() {
 		Runnable runnable = new Mp3ToWavConverterThread()
-		new Thread(runnable).start();
+		new Thread(runnable).start()
 	}
 	
 	

@@ -2,11 +2,11 @@ package com.koolaborate.error
 
 import com.koolaborate.model.ValueBacked;
 
-enum ErrorType implements ValueBacked{
-	WARNING("WARNING"), ERROR("ERROR")
+enum MessageType implements ValueBacked{
+	WARNING("WARNING"), ERROR("ERROR"), INFO("INFO")
 	
 	String value
-	private ErrorType(String value){ this.value = value}
+	private MessageType(String value){ this.value = value}
 
 	@Override
 	public String getValue(){

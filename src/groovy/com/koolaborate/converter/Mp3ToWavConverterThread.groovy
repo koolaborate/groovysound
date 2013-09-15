@@ -41,12 +41,98 @@ class Mp3ToWavConverterThread implements Runnable{
 		handleErrors(mp3ToWavConverter, errors)
 	}
 	
+	File[] mp3s
+	def void runConversionInFolders_REFACTOR(MP3ToWAVConverter mp3ToWavConverter, String destinationFolderPath, List<String> errors){
+		for(File mp3 : mp3s){
+			try{
+				convertMp3ToWav(mp3, destinationFolderPath)
+			} catch (Exception e) {
+				String err = "Error converting '{mp3Path}'.\nProblem: "
+				if("de".equals(mp3ToWavConverter.language)){
+					err = "Fehler beim Konvertieren von '{mp3Path}'.\nProblembeschreibung: "
+				}
+				err = err.replace("{mp3Path}", mp3.getAbsolutePath())
+				errors.add(err + e.getMessage())
+			}
+
+			mp3ToWavConverter.convertedFiles++
+		}
+	}
+	
+	def String getWavFilename(String destinationFolderPath, String mp3Name){
+		StringBuffer sb = new StringBuffer()
+		sb.append(destinationFolderPath)
+		  .append( mp3Name.substring(0, mp3Name.length()-".mp3".length()))
+		  .append(".wav")
+		
+		return sb.toString()
+	}
+	
+	def void convertMp3ToWav(File mp3, String destinationFolderPath){
+		String mp3Path = mp3.getAbsolutePath()
+		final String mp3Name = mp3.getName()
+		String wavFileName = getWavFilename(destinationFolderPath, mp3Name)
+		
+		System.out.println("--- Start converting " + mp3Path + " ---")
+		File outFile = new File(wavFileName)
+		AudioFileFormat aff = getAudioFileFormat(mp3)
+		
+		System.out.println("Audio Type : " + aff.getType())
+		AudioInputStream instream = AudioSystem.getAudioInputStream(mp3)
+		
+		convertMp3ToWav(instream, outFile, mp3Path)
+	}
+	
+	def void convertMp3ToWav(AudioInputStream instream, File outFile, String mp3Path) throws Exception{
+		AudioInputStream din = null
+		if(instream != null){
+			AudioFormat baseFormat = instream.getFormat()
+			System.out.println("Source Format : " + baseFormat.toString())
+			AudioFormat decodedFormat = getAudioFormat(baseFormat)
+			System.out.println("Target Format : " + decodedFormat.toString())
+			din = AudioSystem.getAudioInputStream(decodedFormat, instream)
+
+			AudioFileFormat.Type targetType = AudioFileFormat.Type.WAVE
+			AudioSystem.write(din, targetType, outFile)
+
+			instream.close()
+			System.out.println("--- Stop converting" + mp3Path + " ---")
+		}
+	}
+	
+	protected AudioFileFormat getAudioFileFormat(File mp3){
+		return AudioSystem.getAudioFileFormat(mp3)
+	}
+	
+	protected AudioFormat getAudioFormat(AudioFormat baseFormat){
+		AudioFormat decodedFormat = new AudioFormat(
+			AudioFormat.Encoding.PCM_SIGNED,
+			baseFormat.getSampleRate(),
+			16,
+			baseFormat.getChannels(),
+			baseFormat.getChannels() * 2,
+			baseFormat.getSampleRate(),
+			false)
+		
+		return decodedFormat
+	}
+	
+	
+	
+	
+	
+	
+	
+	// TODO REFACTOR 
+	
 	def void runConversionInFolders(MP3ToWAVConverter mp3ToWavConverter, String dstFolderPath, List<String> errors){
 		for(File mp3 : mp3ToWavConverter.mp3s){
 			String mp3Path = mp3.getAbsolutePath()
 			final String mp3Name = mp3.getName()
 			String wavFileName = dstFolderPath + mp3Name.substring(0, mp3Name.length()-".mp3".length()) // cut the '.mp3' file extension
 			wavFileName += ".wav"
+			
+			// TODO REFACTOR push to the view layer
 			SwingUtilities.invokeLater(new Runnable(){
 				public void run(){
 					mp3ToWavConverter.currentFile.setText(mp3Name)
@@ -54,8 +140,7 @@ class Mp3ToWavConverterThread implements Runnable{
 				}
 			})
 
-			try
-			{
+			try{
 				System.out.println("--- Start converting " + mp3Path + " ---")
 				File outFile = new File(wavFileName)
 				AudioFileFormat aff = AudioSystem.getAudioFileFormat(mp3)
@@ -95,6 +180,7 @@ class Mp3ToWavConverterThread implements Runnable{
 				errors.add(err + e.getMessage())
 			}
 
+			// TODO REFACTOR push to the view layer
 			mp3ToWavConverter.convertedFiles++
 			SwingUtilities.invokeLater(new Runnable(){
 				public void run()
@@ -111,6 +197,7 @@ class Mp3ToWavConverterThread implements Runnable{
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run()
 			{
+				// TODO REMOVE
 				mp3ToWavConverter.currentFile = new JLabel("")
 				mp3ToWavConverter.currentFile.setBorder(new EmptyBorder(10, 10, 10, 10))
 				mp3ToWavConverter.dialog.add(mp3ToWavConverter.currentFile, BorderLayout.CENTER)

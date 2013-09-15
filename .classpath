@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="test/groovy"/>
 	<classpathentry kind="src" path="resource/groovy"/>
 	<classpathentry kind="src" path="testresource/groovy"/>
+	<classpathentry kind="src" path="viewtest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
