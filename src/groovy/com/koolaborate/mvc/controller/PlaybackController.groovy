@@ -247,9 +247,9 @@ public class PlaybackController implements BasicPlayerListener{
 	private void adjustVolumeAndBalance(){
 		try {
 			// Set volume (0 to 1.0).
-			control.setGain(s.getVolume());
+			control.setGain(s.volume);
 			// Set pan (balance) (-1.0 to 1.0).
-			control.setPan(s.getBalance());
+			control.setPan(s.balance);
 		} catch(BasicPlayerException e) {
 			log.warn("Unable to adjust volume and balance: " + e.getMessage());
 		}
@@ -373,8 +373,8 @@ public class PlaybackController implements BasicPlayerListener{
 					// skip the header
 					f_in.skip(start);
 
-					AudioInputStream in = AudioSystem.getAudioInputStream(f_in);
-					control.open(in);
+					AudioInputStream instream = AudioSystem.getAudioInputStream(f_in);
+					control.open(instream);
 					control.play();
 
 					// HOTFIX: adjust the volume once again since it did not

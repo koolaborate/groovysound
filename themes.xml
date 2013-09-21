@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Themes>
+   <Theme>
+      <Classname>DefaultTheme</Classname>
+   </Theme>
+   <Theme>
+      <Classname>MetalTheme</Classname>
+   </Theme>
+   <Theme>
+      <Classname>LiveTheme</Classname>
+   </Theme>
+</Themes>

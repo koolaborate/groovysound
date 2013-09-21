@@ -1,17 +1,17 @@
-package com.koolaborate.model;
+package com.koolaborate.model
 
-import java.awt.Point;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.MissingResourceException;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.awt.Point
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.nio.file.Files
+import java.util.MissingResourceException
+import java.util.Properties
+import java.util.ResourceBundle
 
-import com.koolaborate.mvc.view.dialogs.VistaDialog;
-import com.koolaborate.util.FileHelper;
+import com.koolaborate.mvc.view.dialogs.VistaDialog
+import com.koolaborate.util.FileHelper
 
 /***********************************************************************************
  * Settings                                                                        *
@@ -44,88 +44,75 @@ import com.koolaborate.util.FileHelper;
 public class Settings
 {
 	/** file path to the settings file */
-	private static String SETTINGS_PATH = System.getProperty("user.dir") + 
-		File.separator + "settings.ini";
+	private static String SETTINGS_PATH = System.getProperty("user.dir") +  File.separator + "settings.ini"
 	
 	// the settings that are being tracked
-	private int mainWindowX, mainWindowY = -1;
-	private String lastFolder = System.getProperty("user.dir");
-	private float volume = 0.5f;
-	private float balance = 0.0f;
+	int mainWindowX, mainWindowY = -1
+	String lastFolder = System.getProperty("user.dir")
+	float volume = 0.5f
+	float balance = 0.0f
 	
 	// set 1.0 to default
-	private String version = "1.0";
+	String version = "1.0"
 
-	private boolean hardwareAccellerated;
-	private boolean checkForUpdatesAtStart;
+	boolean hardwareAccellerated
+	boolean checkForUpdatesAtStart
 	
 	/**
 	 * Loads the settings from the specified file.
 	 * @see SETTINGS_PATH
 	 */
-	public void loadSettings()
-	{
-		Properties getprops = new Properties();
-		try
-		{
-			FileInputStream fis = new FileInputStream(SETTINGS_PATH);
-			getprops.load(fis);
-			fis.close();
-		} 
-		catch(IOException e)
-		{
+	public void loadSettings(){
+		Properties getprops = new Properties()
+		try{
+			FileInputStream fis = new FileInputStream(SETTINGS_PATH)
+			getprops.load(fis)
+			fis.close()
+		} catch(IOException e){
 			// if the file could not be found, it has to be created
-			try
-			{
+			try{
 				File file = new File(SETTINGS_PATH)
 				file.createNewFile()
-			}
-			catch(IOException e2)
-			{
-				ResourceBundle lang = null;
-				try 
-			    { 
-			    	lang = ResourceBundle.getBundle("resources.maintexts"); 
-			    } 
-			    catch(MissingResourceException e3) 
-			    { 
-			    	e3.printStackTrace(); 
+			} catch(IOException e2) {
+				ResourceBundle lang = null
+				try{ 
+			    	lang = ResourceBundle.getBundle("resources.maintexts") 
+			    } catch(MissingResourceException e3){ 
+			    	e3.printStackTrace() 
 			    } 
 				
 				// this is a severe error! the settings file could not be created, this means that the user cannot write any files
 				// or store anything in the current directory
-				VistaDialog.showDialog(lang.getString("error.3"), lang.getString("error.4"), 
-						lang.getString("error.5"), VistaDialog.ERROR_MESSAGE);
+				VistaDialog.showDialog(lang.getString("error.3"), lang.getString("error.4"), lang.getString("error.5"), VistaDialog.ERROR_MESSAGE)
 				
 				// additionally, print error to console
-				e2.printStackTrace();
+				e2.printStackTrace()
 				
 				// give up
-				System.exit(-1);
+				System.exit(-1)
 			}
 			// save the settings for the first time
-			save();
-			return;
+			save()
+			return
 		}
 		
 		// read the properties
-		mainWindowX = Integer.parseInt(getprops.getProperty("mainwindow_x", "-1"));
-		mainWindowY = Integer.parseInt(getprops.getProperty("mainwindow_y", "-1"));
-		lastFolder  = getprops.getProperty("lastfolder", System.getProperty("user.dir"));
-		volume = Float.parseFloat(getprops.getProperty("volume", "0.5"));
-		balance = Float.parseFloat(getprops.getProperty("balance", "0.0"));
-		version = getprops.getProperty("version", "1.0");
-		hardwareAccellerated = Boolean.parseBoolean(getprops.getProperty("opengl", "false"));
-		checkForUpdatesAtStart = Boolean.parseBoolean(getprops.getProperty("checkupdates", "true"));
+		mainWindowX = Integer.parseInt(getprops.getProperty("mainwindow_x", "-1"))
+		mainWindowY = Integer.parseInt(getprops.getProperty("mainwindow_y", "-1"))
+		lastFolder  = getprops.getProperty("lastfolder", System.getProperty("user.dir"))
+		volume = Float.parseFloat(getprops.getProperty("volume", "0.5"))
+		balance = Float.parseFloat(getprops.getProperty("balance", "0.0"))
+		version = getprops.getProperty("version", "1.0")
+		hardwareAccellerated = Boolean.parseBoolean(getprops.getProperty("opengl", "false"))
+		checkForUpdatesAtStart = Boolean.parseBoolean(getprops.getProperty("checkupdates", "true"))
 	}
 
 	/**
 	 * @return the current location of the main window
 	 */
-	public Point getMainWindowLocation()
-	{
-		if(mainWindowX > 0 && mainWindowY > 0) return new Point(mainWindowX, mainWindowY);
-		return null;
+	public Point getMainWindowLocation(){
+		if(mainWindowX > 0 && mainWindowY > 0) return new Point(mainWindowX, mainWindowY)
+		return null
 	}
 	
 	/**
@@ -133,101 +120,58 @@ public class Settings
 	 * 
 	 * @param p the point that indivates the top left point of the window
 	 */
-	public void setMainWindowLocation(Point p)
-	{
-		this.mainWindowX = p.x;
-		this.mainWindowY = p.y;
+	public void setMainWindowLocation(Point p){
+		this.mainWindowX = p.x
+		this.mainWindowY = p.y
 	}
 
 	/**
 	 * Saves the settings to the specified file.
 	 * @see SETTINGS_PATH
 	 */
-	public void save()
-	{
+	public void save(){
 		// save the settings to the file
-	    try
-	    {
-	       Properties saveProps = new Properties();
-	       FileOutputStream propOutFile = new FileOutputStream(SETTINGS_PATH);
-	       saveProps.setProperty("mainwindow_x", Integer.toString(mainWindowX));
-	       saveProps.setProperty("mainwindow_y", Integer.toString(mainWindowY));
-	       saveProps.setProperty("lastfolder", lastFolder);
-	       saveProps.setProperty("balance", Float.toString(balance));
-	       saveProps.setProperty("volume", Float.toString(volume));
-	       saveProps.setProperty("version", version);
-	       saveProps.setProperty("opengl", Boolean.toString(hardwareAccellerated));
-	       saveProps.setProperty("checkupdates", Boolean.toString(checkForUpdatesAtStart));
+	    try{
+	       Properties saveProps = new Properties()
+	       FileOutputStream propOutFile = new FileOutputStream(SETTINGS_PATH)
+	       saveProps.setProperty("mainwindow_x", Integer.toString(mainWindowX))
+	       saveProps.setProperty("mainwindow_y", Integer.toString(mainWindowY))
+	       saveProps.setProperty("lastfolder", lastFolder)
+	       saveProps.setProperty("balance", Float.toString(balance))
+	       saveProps.setProperty("volume", Float.toString(volume))
+	       saveProps.setProperty("version", version)
+	       saveProps.setProperty("opengl", Boolean.toString(hardwareAccellerated))
+	       saveProps.setProperty("checkupdates", Boolean.toString(checkForUpdatesAtStart))
 	       
 	       // store the properties in the file
-	       saveProps.store(propOutFile, "VibrantPlayer ini file");
-	       propOutFile.close();
-	    }
-	    catch(IOException e)
-	    {
-	    	e.printStackTrace();
+	       saveProps.store(propOutFile, "VibrantPlayer ini file")
+	       propOutFile.close()
+	    } catch(IOException e){
+	    	e.printStackTrace()
 	    }
 	}
 
 	// getter and setter
 	
-	public float getBalance()
-	{
-		return this.balance;
-	}
 
-	public float getVolume()
-	{
-		return this.volume;
-	}
-
-	public void setVolume(float volume)
-	{
-		this.volume = volume;
-	}
-
-	public void setBalance(float balance)
-	{
-		this.balance = balance;
-	}
-
-	public String getLastFolder()
-	{
-		return lastFolder;
-	}
-
-	public void setLastFolder(String lastFolder)
-	{
-		this.lastFolder = lastFolder;
-	}
-
-	public String getVersion()
-	{
-		return version;
-	}
-
-	public void setVersion(String version)
-	{
-		this.version = version;
-	}
 
 	public boolean isHardwareAccellerated()
 	{
-		return hardwareAccellerated;
+		return hardwareAccellerated
 	}
 
 	public void setHardwareAccellerated(boolean hardwareAccellerated)
 	{
-		this.hardwareAccellerated = hardwareAccellerated;
+		this.hardwareAccellerated = hardwareAccellerated
 	}
 
 	public boolean isCheckForUpdatesAtStart()
 	{
-		return checkForUpdatesAtStart;
+		return checkForUpdatesAtStart
 	}
 	
 	public void setCheckForUpdatesAtStart(boolean checkForUpdatesAtStart)
 	{
-		this.checkForUpdatesAtStart = checkForUpdatesAtStart;
+		this.checkForUpdatesAtStart = checkForUpdatesAtStart
 	}
 }
