@@ -68,17 +68,17 @@ public class SongInfoPanel extends JPanel
 	{
 		this.songInfo = _songInfo;
 		
-		if(songInfo.getSongTitle() != null)
+		if(songInfo.songTitle != null)
 		{
-			songLabel.setText(songInfo.getSongTitle());
+			songLabel.setText(songInfo.songTitle);
 		}
 		else
 		{
 			songLabel.setText(songInfo.getSongFileName());
 		}
-		if(songInfo.getArtist() != null)
+		if(songInfo.artist != null)
 		{
-			artistLabel.setText(songInfo.getArtist());
+			artistLabel.setText(songInfo.artist);
 		}
 		else
 		{

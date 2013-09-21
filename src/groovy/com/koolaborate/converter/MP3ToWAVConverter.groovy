@@ -44,15 +44,15 @@ import com.koolaborate.transaction.TransactionMessage;
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
 public class MP3ToWAVConverter implements Convertable{
-	private String language
-	private File[] mp3s
-	private File destinationFolder
-	private int amountFiles = 0
-	private int convertedFiles = 0
+	String language
+	File[] mp3s
+	File destinationFolder
+	int amountFiles = 0
+	int convertedFiles = 0
 	
-	private JDialog dialog
-	private JLabel currentFile
-	private JProgressBar progressBar
+	JDialog dialog
+	JLabel currentFile
+	JProgressBar progressBar
 	
 	
 	/**

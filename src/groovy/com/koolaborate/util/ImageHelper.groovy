@@ -39,50 +39,20 @@ public class ImageHelper
 	 */
 	public ImageHelper(){}
 
-//	/**
-//	 * Method creates a thumbnail view of the cover and saves it into the same folder as
-//	 * "folder_small.jpg".
-//	 * 
-//	 * @param bigCover the album cover file
-//	 * @throws IOException if the thumbnail image could not be written
-//	 */
-//	public void createSmallCover(File bigCover) throws IOException
-//	{
-//		if(!bigCover.exists()) return;
-//		
-//		BufferedImage cdCase = ImageIO.read(getClass().getResource("/images/emptycover.jpg"));
-//		BufferedImage cover = ImageIO.read(bigCover);
-//		BufferedImage stitch = ImageIO.read(getClass().getResource("/images/stitch.png"));
-//		
-//		BufferedImage preview = GraphicsUtilities.createCompatibleImage(80, 68);
-//		Graphics2D g2d = preview.createGraphics();
-//		g2d.clearRect(0, 0, preview.getWidth(), preview.getHeight());
-//		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//		g2d.setComposite(AlphaComposite.SrcOver);
-//		g2d.drawImage(cdCase, 0, 0, preview.getWidth(), preview.getHeight(), null);
-//		g2d.drawImage(cover, 7, 1, 75, 65, null);
-//		g2d.drawImage(stitch, 7, 1, 10, 65, null);
-//
-//		String destination = bigCover.getParent() + System.getProperty("file.separator") + "folder_small.jpg";
-//		ImageIO.write(preview, "jpg", new File(destination));
-//	}
-	
 	/**
 	 * Method creates a thumbnail view of the cover and returns it.
 	 * 
 	 * @param bigCover the album cover file
 	 * @return the small cover image
 	 */
-	public BufferedImage createSmallCover(File bigCover)
-	{
+	public BufferedImage createSmallCover(File bigCover){
 		if(null == bigCover) return null
 		
 		if(!bigCover.exists()) return null;
 		
 		BufferedImage preview = null;
 		
-		try
-		{
+		try {
 			BufferedImage cdCase = ImageIO.read(getClass().getResource("/images/emptycover.jpg"));
 			BufferedImage cover = ImageIO.read(bigCover);
 			BufferedImage stitch = ImageIO.read(getClass().getResource("/images/stitch.png"));
@@ -97,9 +67,7 @@ public class ImageHelper
 			g2d.drawImage(stitch, 7, 1, 10, 65, null);
 //		String destination = bigCover.getParent() + System.getProperty("file.separator") + "folder_small.jpg";
 //		ImageIO.write(preview, "jpg", new File(destination));
-		}
-		catch(IOException e)
-		{
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -118,8 +86,7 @@ public class ImageHelper
 		BufferedImage preview = null
 		if(null == image) return preview
 		
-		try
-		{
+		try {
 			BufferedImage cdCase = ImageIO.read(getClass().getResource("/images/emptycover.jpg"));
 			BufferedImage cover = image;
 			BufferedImage stitch = ImageIO.read(getClass().getResource("/images/stitch.png"));
@@ -132,9 +99,7 @@ public class ImageHelper
 			g2d.drawImage(cdCase, 0, 0, preview.getWidth(), preview.getHeight(), null);
 			g2d.drawImage(cover, 7, 1, 75, 65, null);
 			g2d.drawImage(stitch, 7, 1, 10, 65, null);
-		}
-		catch(IOException e)
-		{
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		return preview;

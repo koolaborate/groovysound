@@ -37,8 +37,8 @@ public class WindowShaper
 {
 	private static Logger log = Logger.getLogger(WindowShaper.class.getName());
 	
-	private Class<?> awtUtilities = null;
-	private Method method = null;
+	Class<?> awtUtilities = null;
+	Method method = null;
 	
 	/**
 	 * Constructor.

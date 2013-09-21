@@ -284,7 +284,7 @@ public class CenterPanel extends JPanel
 		if(alsoIfNotPlaylistView) update = true;
 		
 		// update of the cover image
-		coverPanel.setCoverPath(songInfo.getCoverPath());
+		coverPanel.setCoverPath(songInfo.coverPath);
 		if(update)
 		{
 			coverPanel.refreshCover();

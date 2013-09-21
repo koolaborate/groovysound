@@ -99,18 +99,19 @@ public class FileHelper {
 		}
 		catch(IOException e ) {
 			e.printStackTrace();
-		}
-		finally {
-			if(fis != null)
+		} finally {
+			if(fis != null){
 				try {
 					fis.close()
-				}
-				catch(IOException e){}
-			if(fos != null)
+				} catch(IOException e){}
+			}
+				
+			if(fos != null){
 				try {
 					fos.close()
-				}
-				catch(IOException e){}
+				} catch(IOException e){}
+			}
+				
 		}
 	}
 

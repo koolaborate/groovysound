@@ -130,7 +130,7 @@ public class Settings {
 	 * 
 	 * @param p the point that indivates the top left point of the window
 	 */
-	public void setMainWindowLocation(Point p){
+	def void setMainWindowLocation(Point p){
 		if(null == p) return
 		this.mainWindowX = p.x
 		this.mainWindowY = p.y

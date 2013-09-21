@@ -72,18 +72,18 @@ public class PlaybackController implements BasicPlayerListener{
 	static Logger log = Logger.getLogger(PlaybackController.class.getName());
 
 	/** the volume slider */
-	private JSlider volumeSlider;
+	JSlider volumeSlider;
 
 	// button elements
-	private PreviousButton prevButt;
-	private PlayButton playButt;
-	private StopButton stopButt;
-	private NextButton nextButt;
+	PreviousButton prevButt;
+	PlayButton playButt;
+	StopButton stopButt;
+	NextButton nextButt;
 
 	/** the player to playback sound files */
-	private BasicPlayer player;
+	BasicPlayer player;
 	/** control unit to set volume, balance etc. */
-	private BasicController control;
+	BasicController control;
 
 	public enum STATE{
 		PLAYING, PAUSED, ENDED
@@ -93,12 +93,12 @@ public class PlaybackController implements BasicPlayerListener{
 
 	String filename = "";
 
-	private Settings s;
+	Settings s;
 
-	private CurrentSongInfo songInfo;
-	private MainWindow window;
-	private PlaylistPanel playListPanel;
-	private CenterPanel centerPanel;
+	CurrentSongInfo songInfo;
+	MainWindow window;
+	PlaylistPanel playListPanel;
+	CenterPanel centerPanel;
 
 	/**
 	 * Constructor.
@@ -197,20 +197,19 @@ public class PlaybackController implements BasicPlayerListener{
 		volumeSlider.setMaximum(10);
 		int volumeInt = (int) (s.getVolume() * 10);
 		volumeSlider.setValue(volumeInt);
-		volumeSlider.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		volumeSlider.addChangeListener([
+			stateChanged: { e ->
 				JSlider source = (JSlider) e.getSource();
 				float vol = source.getValue() * 0.1f;
 				setPlayerVolume(vol);
 			}
-		});
+		] as ChangeListener);
 
-		loudLabel.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent arg0){
+		loudLabel.addMouseListener([
+			mouseClicked: { 
 				volumeSlider.setValue(volumeSlider.getMaximum());
 			}
-		});
+		] as MouseAdapter);
 	}
 
 	/**
@@ -307,8 +306,8 @@ public class PlaybackController implements BasicPlayerListener{
 			playButt.setPressed(true);
 
 			// read and display song info
-			songInfo.setSongPath(filename);
-			songInfo.setSongId(playListPanel.getCurrentlySelectedSongID());
+			songInfo.songPath = filename
+			songInfo.songId = playListPanel.getCurrentlySelectedSongID()
 			playListPanel.getPlaylist().setPlayIconAtCurrentEntry();
 
 			try {
@@ -677,21 +676,4 @@ public class PlaybackController implements BasicPlayerListener{
 		setPlayerVolume(newVol);
 	}
 
-	/**
-	 * @return the current state (either STATE.PLAYING, STATE.PAUSED or
-	 *         STATE.ENDED)
-	 */
-	public STATE getCurrentState(){
-		return currentState;
-	}
-
-	/**
-	 * Sets the current state.
-	 * 
-	 * @param state
-	 *            the state to be set
-	 */
-	public void setCurrentState(STATE state){
-		this.currentState = state;
-	}
 }

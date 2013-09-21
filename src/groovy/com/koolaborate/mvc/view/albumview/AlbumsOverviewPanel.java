@@ -40,20 +40,20 @@ import com.koolaborate.util.StringUtils;
  ***********************************************************************************/
 public class AlbumsOverviewPanel extends JPanel{
 	private static final long serialVersionUID = -806840065427231675L;
-	private List<Album> albums;
-	private int height;
+	List<Album> albums;
+	int height;
 
-	private int padding = 4;
-	private int spacing = 10;
+	int padding = 4;
+	int spacing = 10;
 
-	private Album selectedAlbum;
-	private AlbumPreviewPanel selectedAlbumPanel;
+	Album selectedAlbum;
+	AlbumPreviewPanel selectedAlbumPanel;
 
 	public enum SORT_MODE{
 		SORT_ALBUMTITLE, SORT_ARTIST, SORT_SHOW_ALL
 	}
 
-	private SORT_MODE currentSortMode = SORT_MODE.SORT_ALBUMTITLE;
+	SORT_MODE currentSortMode = SORT_MODE.SORT_ALBUMTITLE;
 
 	/**
 	 * Constructor.
@@ -164,18 +164,6 @@ public class AlbumsOverviewPanel extends JPanel{
 		height += rowcount * (albumheight + padding);
 		height -= (2 * padding); // upper and lower margin isn't necessary
 		height += (2 * spacing); // upper and lower border
-
-		// System.out.println("ANZAHL ZEILEN: " + rowcount);
-		// System.out.println(" - Panelgröße: " + albumheight);
-		// System.out.println(" - Panelgröße (gesamt): " + rowcount *
-		// (albumheight + padding));
-		// System.out.println("ANZAHL LABELS: " + labelcount);
-		// System.out.println(" - Labelgröße: " + labelheight);
-		// System.out.println(" - Labelgröße (gesamt): " + labelcount *
-		// (labelheight + padding));
-		// System.out.println("RÄNDER: " + 2 * spacing);
-		// System.out.println("------------------------------------------");
-		// System.out.println("Height: " + height);
 
 		setPreferredSize(new Dimension(availableWidth, height));
 	}

@@ -100,53 +100,53 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	private static final long serialVersionUID = 170657189613362120L
 
 	// images
-	private static BufferedImage logoImg, logoTextImg, minimizeImg, closeImg,
+	static BufferedImage logoImg, logoTextImg, minimizeImg, closeImg,
 			helpImg, minimizeOverImg, closeOverImg, helpOverImg, maximizeImg,
 			maximizeOverImg, maximize2Img, maximize2OverImg, tinyImg,
 			tinyOverImg
 
 	// GUI elements
-	private JPanel mainPanel, header
-	private CenterPanel centerPanel
-	private JButton maximize
+	JPanel mainPanel, header
+	CenterPanel centerPanel
+	JButton maximize
 
 	// the tiny view
-	private TinyView tinyWindow
-	private boolean tinyWindowShown = false
+	TinyView tinyWindow
+	boolean tinyWindowShown = false
 
-	private String currentFolder
-	private CurrentSongInfo songInfo
+	String currentFolder
+	CurrentSongInfo songInfo
 
-	private Database db
-	private Settings s
+	Database db
+	Settings s
 
 	public enum NAVIGATION{
 		ALBUMS, PLAYLIST, SETTINGS
 	}
 
-	private NAVIGATION currentNavigation = NAVIGATION.ALBUMS
+	NAVIGATION currentNavigation = NAVIGATION.ALBUMS
 
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	private GhostDragGlassPane glassPane
-	private File imgFile
-	private BufferedImage image
-	private int maxWidth = 80 // maximum width for the ghost image
-	private int maxHeight = 80 // maximum height for the ghost image
-	private boolean enableDnD = false
+	GhostDragGlassPane glassPane
+	File imgFile
+	BufferedImage image
+	int maxWidth = 80 // maximum width for the ghost image
+	int maxHeight = 80 // maximum height for the ghost image
+	boolean enableDnD = false
 
 	/** the help viewer */
-	private VistaHelp help
+	VistaHelp help
 
 	/** the decorator holds all JPanels that are used in the entire application */
-	private Decorator decorator
+	Decorator decorator
 
 	// for the rounded window shape
-	private WindowShaper winShaper = null
-	private boolean roundWindowSupported = false
-	private boolean enableWindowDrag = true
+	WindowShaper winShaper = null
+	boolean roundWindowSupported = false
+	boolean enableWindowDrag = true
 
 	// system tray support
-	private TrayIconHandler tray
+	TrayIconHandler tray
 
 	/** the log4j logger */
 	static Logger log = Logger.getLogger(MainWindow.class.getName())
@@ -187,12 +187,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		
 	
 		// use windowCloser in the param
-		addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent e){
-				exit()
-			}
-		})
+		addWindowListener(windowCloser)
 
 		setUndecorated(true) // remove the standard close, resize etc. buttons
 		setWindowShape(true)
@@ -219,12 +214,14 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		tray = new TrayIconHandler(this)
 		tray.showAlbumImage(null)
 
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
+		def guiInitializer = [
+			run: {
 				initGUI()
 				setVisible(true)
-			}
-		})
+			}	
+		] as Runnable
+		
+		SwingUtilities.invokeLater(guiInitializer)
 	}
 	
 	/**
@@ -326,12 +323,11 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		minimize.setRolloverIcon(new ImageIcon(minimizeOverImg))
 		minimize.setBorder(null)
 		minimize.setFocusPainted(false)
-		minimize.setContentAreaFilled(false)
-		minimize.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				setExtendedState(ICONIFIED)
-			}
-		})
+		minimize.setContentAreaFilled(false);
+		
+		def minimizeActionListener = getMinimizeActionListener()
+	
+		minimize.addActionListener(minimizeActionListener);
 		minimize.setPreferredSize(new Dimension(25, 17))
 		decoration.add(minimize)
 
@@ -340,7 +336,18 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		tinyButton.setRolloverIcon(new ImageIcon(tinyOverImg))
 		tinyButton.setBorder(null)
 		tinyButton.setFocusPainted(false)
-		tinyButton.setContentAreaFilled(false)
+		tinyButton.setContentAreaFilled(false);
+		
+		def tinyButtonActionListener = [
+			actionPerformed: {
+				this.setVisible(false)
+				this.tinyWindow = new TinyView(getThisInstance(),
+						db.getAlbumById(songInfo.albumId),
+						songInfo.songId)
+				tinyWindowShown = true
+			}
+		] as ActionListener
+		
 		tinyButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				setVisible(false)
@@ -452,6 +459,14 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		return header
 	}
 
+	def ActionListener getMinimizeActionListener(){
+		ActionListener minimizeActionListener = [
+			setExtendedState(ICONIFIED)
+		]
+		
+		return minimizeActionListener
+	}
+	
 	/**
 	 * Method to maximize the window. The window shape has to be made
 	 * rectangular without rounded corners.
@@ -901,8 +916,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	 * Initializes the help according to the current locale.
 	 */
 	private void initHelp(){
-		String helpdir = System.getProperty("user.dir") + File.separator
-				+ "help" + File.separator + "help_"
+		String helpdir = System.getProperty("user.dir") + File.separator + "help" + File.separator + "help_"
 		String lang = "en" // standard dir is help_en
 		String testlang = Locale.getDefault().getLanguage() // get the language
 																// code for the

@@ -71,7 +71,7 @@ public class OSHelper
 		// set the given look and feel (lnf)
 	    try 
 	    {
-	    	String className = LookAndFeelHelper.getClassNameForLnF(lnfName);
+	    	String className = LookAndFeelHelper.getInstance.getClassNameForLnF(lnfName);
 	    	UIManager.setLookAndFeel(className);
 	    }
 	    catch(Exception e)

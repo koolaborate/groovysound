@@ -301,17 +301,14 @@ public class GraphicsUtilities {
 		if (width > height) {
 			if (newSize > width) {
 				return image;
-			}
-			else
-			if (newSize <= 0) {
+			} else if (newSize <= 0) {
 				throw new IllegalArgumentException("newSize must"
 				+ " be greater than 0");
 			}
 			ratio = (float) width / (float) height;
 			width = newSize;
 			height = (int) (newSize / ratio);
-		}
-		else {
+		} else {
 			if (newSize > height) {
 				throw new IllegalArgumentException("newSize must be lower than"
 				+ " the image height");
@@ -327,8 +324,7 @@ public class GraphicsUtilities {
 		}
 		BufferedImage temp = createCompatibleImage(image, width, height);
 		Graphics2D g2 = temp.createGraphics();
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		g2.drawImage(image, 0, 0, temp.getWidth(), temp.getHeight(), null);
 		g2.dispose();
 		return temp;
@@ -363,9 +359,7 @@ public class GraphicsUtilities {
 		
 		if (newWidth > image.getWidth() || newHeight > image.getHeight()) {
 			return image;
-		}
-		else
-		if (newWidth <= 0 || newHeight <= 0) {
+		} else if (newWidth <= 0 || newHeight <= 0) {
 			throw new IllegalArgumentException(
 			"newWidth and newHeight must" + " be greater than 0");
 		}
@@ -414,14 +408,12 @@ public class GraphicsUtilities {
 			if (newSize > width) {
 				return image;
 			}
-		}
-		else
-		if (newSize > height) {
+		} else if (newSize > height) {
 			return image;
 		}
+		
 		if (newSize <= 0) {
-			throw new IllegalArgumentException("newSize must"
-			+ " be greater than 0");
+			throw new IllegalArgumentException("newSize must" + " be greater than 0");
 		}
 		float ratioWH = (float) width / (float) height;
 		float ratioHW = (float) height / (float) width;
@@ -444,8 +436,7 @@ public class GraphicsUtilities {
 			}
 			BufferedImage temp = createCompatibleImage(image, width, height);
 			Graphics2D g2 = temp.createGraphics();
-			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			g2.drawImage(thumb, 0, 0, temp.getWidth(), temp.getHeight(), null);
 			g2.dispose();
 			thumb = temp;
@@ -499,6 +490,7 @@ public class GraphicsUtilities {
 					width = newWidth;
 				}
 			}
+			
 			if (height > newHeight) {
 				height /= 2;
 				if (height < newHeight) {
@@ -542,8 +534,7 @@ public class GraphicsUtilities {
 		}
 		if (pixels == null) {
 			pixels = new int[w * h];
-		}
-		else if (pixels.length < w * h) {
+		} else if (pixels.length < w * h) {
 			throw new IllegalArgumentException("pixels array must have a length" + " >= w*h");
 		}
 		int imageType = img.getType();

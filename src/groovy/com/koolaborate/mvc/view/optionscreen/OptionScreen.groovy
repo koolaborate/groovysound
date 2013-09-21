@@ -53,16 +53,15 @@ import plug.engine.ui.swing.firefoxstyle.UpdateDialog;
 public class OptionScreen extends JPanel
 {
 	private static final long serialVersionUID = 5938891358222523024L;
-	private Settings s;
-	private JButton searchNow;
+	Settings s;
+	JButton searchNow;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @param window reference to the main window
 	 */
-	public OptionScreen(final MainWindow window)
-	{
+	public OptionScreen(final MainWindow window) {
 		this.s = window.getSettings();
 		
 		setOpaque(false);
@@ -77,13 +76,12 @@ public class OptionScreen extends JPanel
 		useGraphixAcc.setBorder(new EmptyBorder(0, 68, 0, 0));
 		useGraphixAcc.setAlignmentX(Component.LEFT_ALIGNMENT);
 		useGraphixAcc.setAlignmentY(Component.TOP_ALIGNMENT);
-		useGraphixAcc.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e)
-			{
+		useGraphixAcc.addChangeListener([
+			stateChanged:{ e ->
 				JCheckBox source = (JCheckBox) e.getSource();
 				window.getSettings().setHardwareAccellerated(source.isSelected());
 			}
-		});
+		] as ChangeListener);
 		add(useGraphixAcc);
 		
 		TitlePanel title2 = new TitlePanel(LocaleMessage.getInstance().getString("options.sound"), new ImageIcon(getClass().getResource("/images/settings_sound.png")));
@@ -116,14 +114,14 @@ public class OptionScreen extends JPanel
 		JSlider loudnessSlider = new JSlider(0, 10);
 		loudnessSlider.setOpaque(false);
 		loudnessSlider.setPreferredSize(new Dimension(100, 20));
-		loudnessSlider.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e)
-			{
+		loudnessSlider.addChangeListener([
+			stateChanged:{ e ->
 				JSlider source = (JSlider) e.getSource();
 				float newVol = source.getValue() / 10.0f;
 				window.getPlayerPanel().setVolumeAndUpdateSlider(newVol);
 			}
-		});
+		] as ChangeListener);
+	
 		loudnessSlider.setValue((int)(s.getVolume() * 10));
 		sound.add(loudnessSlider, gbc);
 		
@@ -196,12 +194,13 @@ public class OptionScreen extends JPanel
 		
 		// show installed themes and plugins
 		LinkLabel showPlugins = new LinkLabel(LocaleMessage.getInstance().getString("options.show_plugins"));
-		showPlugins.setActionThread(new Thread(new Runnable(){
-			public void run()
-			{
-				PluginAndThemeBrowser.showDialog(window);
-			}
-		}));
+		
+		def showPluginsActionThread = [
+			run: {PluginAndThemeBrowser.showDialog(window)}
+		] as Runnable
+		
+		Thread showPluginsThread = new Thread(showPluginsActionThread)
+		showPlugins.setActionThread(showPluginsThread);
 		plugins.add(showPlugins, gbc2);
 		
 		gbc2.gridy = 1;

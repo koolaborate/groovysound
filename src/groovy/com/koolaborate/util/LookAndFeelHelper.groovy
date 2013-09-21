@@ -97,8 +97,7 @@ public class LookAndFeelHelper
      * 
      * @return the name of the currently set look and feel
      */
-    public String getCurrentLookName()
-    {
+    public String getCurrentLookName() {
     	return UIManager.getLookAndFeel().getName();
     }
     
@@ -106,8 +105,7 @@ public class LookAndFeelHelper
     /**
      * Sets the system standard look and feel.
      */
-    public void setStandardLookAndFeel()
-    {
+    public void setStandardLookAndFeel() {
     	OSHelper.getInstance().setDefaultLookAndFeel()
     }
 }

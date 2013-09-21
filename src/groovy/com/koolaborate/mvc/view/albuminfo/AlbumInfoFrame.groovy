@@ -44,7 +44,7 @@ import com.koolaborate.model.Album;
 import com.koolaborate.mvc.view.common.VariableLineBorder;
 import com.koolaborate.mvc.view.dialogs.VistaDialog;
 import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
+import com.koolaborate.mvc.view.mainwindow.MainWindow
 import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
 import com.koolaborate.util.GraphicsUtilities;
 import com.koolaborate.util.GraphicsUtilities2;
@@ -76,25 +76,26 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	private static final long serialVersionUID = -3655016129532421572L;
-	private JPanel showPanel, editPanel;
-	private JLabel img;
-	private JButton editButton, saveButton, closeButton, changeImage;
-	private JTextField title, artist, year;
+	
+	JPanel showPanel, editPanel;
+	JLabel img;
+	JButton editButton, saveButton, closeButton, changeImage;
+	JTextField title, artist, year;
 
-	private boolean imageChanged = false;
-	private boolean changesMade = false;
+	boolean imageChanged = false;
+	boolean changesMade = false;
 
-	private Album album;
+	Album album;
 
-	private MainWindow mainWindow;
-	private BufferedImage coverPreviewImage, coverImageBig;
+	MainWindow mainWindow;
+	BufferedImage coverPreviewImage, coverImageBig;
 
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	private GhostDragGlassPane glassPane;
-	private File imgFile;
-	private BufferedImage image;
-	private int maxWidth = 80; // maximum width for the ghost image
-	private int maxHeight = 80; // maximum height for the ghost image
+	GhostDragGlassPane glassPane;
+	File imgFile;
+	BufferedImage image;
+	int maxWidth = 80; // maximum width for the ghost image
+	int maxHeight = 80; // maximum height for the ghost image
 
 	/**
 	 * Constructor.
@@ -108,11 +109,13 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		this.mainWindow = window;
 		this.album = mainWindow.getDatabase().getAlbumById(albumId);
 
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
-				initGUI();
+		def initThread = [
+			run: {
+				initGUI
 			}
-		});
+		] as Runnable
+		
+		SwingUtilities.invokeLater(initThread);
 	}
 
 	/**
@@ -143,26 +146,32 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 
 		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"));
 		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"));
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				setEditModeEnabled(true);
+		
+		def editButtonActionListener = [
+			actionPerformed: {
+				setEditModeEnabled(true)
 			}
-		});
+		]as ActionListener
+	
+		editButton.addActionListener(editButtonActionListener);
 		saveButton = new JButton(
 				UIManager.getString("FileChooser.saveButtonText"));
 		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
-		saveButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+		
+		def saveButtonActionListener = [
+			actionPerformed: {
 				setEditModeEnabled(false);
 				saveChanges();
 			}
-		});
+		] as ActionListener
+	
+		saveButton.addActionListener(saveButtonActionListener);
 		saveButton.setEnabled(false);
-		closeButton = new JButton(
-				UIManager.getString("InternalFrameTitlePane.closeButtonText"));
+		closeButton = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
 		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
-		closeButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+		
+		def closeButtonActionListener = [
+			actionPerformed: {
 				if(changesMade || imageChanged) {
 					VistaDialog dialog = VistaDialog.showConfirmationDialog(
 							LocaleMessage.getInstance().getString("common.discard_title"),
@@ -173,7 +182,9 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 					dispose();
 				}
 			}
-		});
+		] as ActionListener 
+	
+		closeButton.addActionListener(closeButtonActionListener);
 
 		buttonPanel.add(editButton);
 		buttonPanel.add(saveButton);
@@ -219,8 +230,8 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		// album image
 		if(coverPreviewImage == null) {
 			try {
-				coverPreviewImage = ImageIO.read(getClass().getResource(
-						"/images/emptycover.jpg"));
+				def resource = getClass().getResource("/images/emptycover.jpg")
+				coverPreviewImage = ImageIO.read(resource);
 			} catch(IOException e1) {
 				e1.printStackTrace();
 			}
@@ -235,13 +246,17 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridheight = 1;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(0, 10, 4, 10);
-		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg"));
-		changeImage.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				new SearchNewCoverFrame(getThisInstance(), album,
-						artist.getText().trim(), title.getText().trim());
+		
+		def changeImageName = LocaleMessage.getInstance().getString("common.changeimg")
+		changeImage = new JButton(changeImageName);
+		
+		def changeImageActionListener = [
+			actionPerformed: {
+				new SearchNewCoverFrame(getThisInstance(), album, artist.getText().trim(), title.getText().trim());
 			}
-		});
+		] as ActionListener
+	
+		changeImage.addActionListener(changeImageActionListener);
 		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
 		changeImage.setVisible(false);
 		editPanel.add(changeImage, gbc);
@@ -251,8 +266,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridy = 0;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title")
-				+ ":");
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title") + ":");
 		editPanel.add(titleLabel, gbc);
 
 		gbc.gridx = 2;
@@ -269,8 +283,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.weightx = 0.0f;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel artistLabel = new JLabel(
-				LocaleMessage.getInstance().getString("common.artist") + ":");
+		JLabel artistLabel = new JLabel(LocaleMessage.getInstance().getString("common.artist") + ":");
 		editPanel.add(artistLabel, gbc);
 
 		gbc.gridx = 2;
@@ -288,8 +301,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.weighty = 1.0f;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year")
-				+ ":");
+		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year") + ":");
 		editPanel.add(yearLabel, gbc);
 
 		gbc.gridx = 2;
@@ -347,12 +359,14 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(0, 10, 4, 10);
 		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg"));
-		changeImage.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				new SearchNewCoverFrame(getThisInstance(), album,
-						artist.getText().trim(), title.getText().trim());
+		
+		def changeImageActionListener = [
+			actionPerformed: {
+				new SearchNewCoverFrame(getThisInstance(), album, artist.getText().trim(), title.getText().trim());
 			}
-		});
+		] as ActionListener
+	
+		changeImage.addActionListener(changeImageActionListener);
 		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
 		changeImage.setVisible(false);
 		showPanel.add(changeImage, gbc);
@@ -362,8 +376,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		gbc.gridy = 0;
 		gbc.weightx = 0.0f;
 		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title")
-				+ ":");
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title") + ":");
 		showPanel.add(titleLabel, gbc);
 
 		gbc.gridx = 2;
@@ -430,17 +443,14 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 
 					// then create the big image in the destination folder
 					String filename = "folder.jpg";
-					String destination = album.getFolderPath() + File.separator
-							+ filename;
+					String destination = album.getFolderPath() + File.separator + filename;
 					// check if there is already a cover jpg file
 					File oldCover = new File(destination);
 					// just for now: rename the old jpg
 					if(oldCover.exists())
-						oldCover.renameTo(new File(album.getFolderPath()
-								+ File.separator + "folder_old.jpg"));
+						oldCover.renameTo(new File(album.getFolderPath() + File.separator + "folder_old.jpg"));
 					try {
-						ImageIO.write(coverImageBig, "jpg", new File(
-								destination));
+						ImageIO.write(coverImageBig, "jpg", new File(destination));
 					} catch(IOException e) {
 						e.printStackTrace();
 					}
@@ -448,19 +458,15 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 				mainWindow.getDatabase().updateAlbum(album);
 
 				// refresh the albums view
-				mainWindow.getCenterPanel().getAlbumsPanel().refreshSelectedAlbum(
-						album);
+				mainWindow.getCenterPanel().getAlbumsPanel().refreshSelectedAlbum(album);
 				if(mainWindow.getCurrentNavigation() == NAVIGATION.ALBUMS) {
 					mainWindow.getCenterPanel().refreshAlbumsView(
 							mainWindow.getCenterPanel().getAlbumsPanel().getSortMode());
 				}
 
 				// refresh the playlist view if it is the selected album
-				if(mainWindow.getCurrentFolderPath() != null
-						&& mainWindow.getCurrentFolderPath().equals(
-								album.getFolderPath())) {
-					mainWindow.getCenterPanel().updateCoverInCase(
-							mainWindow.getSongInfo(), true);
+				if(mainWindow.getCurrentFolderPath() != null && mainWindow.getCurrentFolderPath().equals(album.getFolderPath())) {
+					mainWindow.getCenterPanel().updateCoverInCase(mainWindow.getSongInfo(), true);
 				}
 
 				changesMade = false;
@@ -516,9 +522,8 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 *            <code>false</code> if the viewing mode shall be set
 	 */
 	private void setEditModeEnabled(final boolean b){
-		SwingUtilities.invokeLater(new Runnable(){
-			@Override
-			public void run(){
+		def editModeInitializer = [
+			run: {
 				if(b) {
 					remove(showPanel);
 					add(editPanel, BorderLayout.CENTER);
@@ -535,7 +540,9 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 				getContentPane().validate();
 				getContentPane().repaint();
 			}
-		});
+		] as Runnable
+	
+		SwingUtilities.invokeLater(editModeInitializer);
 	}
 
 	/**
@@ -559,15 +566,6 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		getContentPane().repaint();
 	}
 
-	/**
-	 * Sets the satus of the image to changed if <code>true</code>.
-	 * 
-	 * @param b
-	 *            whether or not to set the image status to changed
-	 */
-	public void setImageChanged(boolean b){
-		this.imageChanged = b;
-	}
 
 	/**
 	 * @return a reference to the instance of this class
@@ -721,10 +719,5 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	/** unused */
 	public void dropActionChanged(DropTargetDragEvent dtde){}
 
-	/**
-	 * @return the reference to the main window
-	 */
-	public MainWindow getMainWindow(){
-		return this.mainWindow;
-	}
+	
 }

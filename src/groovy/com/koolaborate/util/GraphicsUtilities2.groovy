@@ -81,6 +81,7 @@ import javax.imageio.ImageIO;
  * @author Romain Guy <romain.guy@mac.com>
  * @author rbair
  */
+
 public class GraphicsUtilities2 {
     private GraphicsUtilities2() {}
 	private static GraphicsUtilities2 graphicsUtilities2Instance;

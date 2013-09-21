@@ -76,16 +76,16 @@ import com.koolaborate.util.LocaleMessage;
 public class AlbumPreviewPanel extends JPanel{
 	private static final long serialVersionUID = -1492349214353820515L;
 
-	private BufferedImage preview;
-	private JLabel previewImgLabel, titleLabel, artistLabel;
-	private CenterPanel centerPanel;
-	private CurrentSongInfo songInfo;
-	private MainWindow window;
+	BufferedImage preview;
+	JLabel previewImgLabel, titleLabel, artistLabel;
+	CenterPanel centerPanel;
+	CurrentSongInfo songInfo;
+	MainWindow window;
 
-	private Album album;
-	private String albumFolder;
-	private int albumId;
-	private boolean active = false;
+	Album album;
+	String albumFolder;
+	int albumId;
+	boolean active = false;
 
 	/** the log4j logger */
 	static Logger log = Logger.getLogger(AlbumPreviewPanel.class.getName());
@@ -166,22 +166,28 @@ public class AlbumPreviewPanel extends JPanel{
 				LocaleMessage.getInstance().getString("album.play"));
 		playItem.setIcon(new ImageIcon(getClass().getResource(
 				"/images/playlist_play.png")));
-		playItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+			
+		def actionListener = [
+			actionPerformed: {
 				showPlaylistofSelectedAlbum();
 			}
-		});
+		] as ActionListener
+	
+		playItem.addActionListener(actionListener);
 		popmen.add(playItem);
 
 		JMenuItem infoItem = new JMenuItem(
 				LocaleMessage.getInstance().getString("album.information"));
 		infoItem.setIcon(new ImageIcon(getClass().getResource(
 				"/images/about.png")));
-		infoItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+			
+		def infoItemActionListener = [
+			actionPerformed: {
 				new AlbumInfoFrame(window, albumId);
 			}
-		});
+		] as ActionListener
+	
+		infoItem.addActionListener(infoItemActionListener);
 		popmen.add(infoItem);
 
 		popmen.addSeparator();
@@ -190,8 +196,8 @@ public class AlbumPreviewPanel extends JPanel{
 				LocaleMessage.getInstance().getString("album.delete"));
 		delItem.setIcon(new ImageIcon(getClass().getResource(
 				"/images/deletesmall.png")));
-		delItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+		def delItemActionListener = [
+			actionPerformed: {
 				DeleteDialog delDiag = DeleteDialog.showDeleteAlbumDialog();
 				if(delDiag.yesSelected) {
 					// del the files from disk (if desired)
@@ -256,7 +262,9 @@ public class AlbumPreviewPanel extends JPanel{
 					}
 				}
 			}
-		});
+		] as ActionListener
+		
+		delItem.addActionListener(delItemActionListener);
 		popmen.add(delItem);
 
 		popmen.show(c, x, y);
@@ -277,7 +285,7 @@ public class AlbumPreviewPanel extends JPanel{
 		playlist.setAlbumId(albumId);
 		playlist.refreshSongList();
 		songInfo.setAlbumPath(albumFolder);
-		songInfo.setAlbumId(album.getId());
+		songInfo.albumId = album.getId()
 		// refresh the cover image
 		CoverPanel cover = centerPanel.getCoverPanel();
 		cover.setAlbumTitle(album.getTitle());
@@ -389,8 +397,7 @@ public class AlbumPreviewPanel extends JPanel{
 	 */
 	public void setAlbum(Album a){
 		this.album = a;
-		setAlbumData(a.getId(), a.getFolderPath(), a.getTitle(), a.getArtist(),
-				a.getPreview());
+		setAlbumData(a.getId(), a.getFolderPath(), a.getTitle(), a.getArtist(), a.getPreview());
 	}
 
 	/**
@@ -416,16 +423,6 @@ public class AlbumPreviewPanel extends JPanel{
 		artistLabel.setText(albumArtist);
 		setToolTipText(albumArtist + " - " + albumTitle);
 		repaint();
-	}
-
-	/**
-	 * Set panel to active state.
-	 * 
-	 * @param active
-	 *            whether or not to set the panel into the active state
-	 */
-	public void setActive(boolean active){
-		this.active = active;
 	}
 
 	/**

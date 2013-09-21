@@ -1,8 +1,27 @@
 package com.koolaborate.mvc.view.mainwindow
 
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*
+
+import com.koolaborate.model.Settings;
+
 
 class MainWindowTest{
 	MainWindow mainWindow
+	
+	@Before
+	void setup(){
+		Settings settings = new Settings()
+		settings.loadSettings()
+		
+		mainWindow = new MainWindow(settings)
+	}
+	
+	@Test
+	void shouldTestInstantiation(){
+		assertNotNull mainWindow
+	}
 
 	static void main(args){
 //		MainWindowTest test = new MainWindowTest()

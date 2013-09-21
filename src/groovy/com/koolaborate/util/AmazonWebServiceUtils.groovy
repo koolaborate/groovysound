@@ -47,9 +47,7 @@ public class AmazonWebServiceUtils {
 	
 	static final Logger logger = Logger.getLogger(AmazonWebServiceUtils.class)
 
-	protected AmazonWebServiceUtils(){
-
-	}
+	protected AmazonWebServiceUtils(){}
 
 	private static AmazonWebServiceUtils amazonWebServiceUtils;
 

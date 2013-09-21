@@ -65,16 +65,16 @@ import com.koolaborate.util.LocaleMessage;
 public class SearchEntry extends JPanel
 {
 	private static final long serialVersionUID = -3415668077276831303L;
-	private boolean mouseOver = false;
-	private Color border = new Color(216, 240, 250);
-	private Color activeBg = new Color(243, 249, 253);
-	private Font normalFont = new Font("Calibri", Font.PLAIN, 12);
+	boolean mouseOver = false;
+	Color border = new Color(216, 240, 250);
+	Color activeBg = new Color(243, 249, 253);
+	Font normalFont = new Font("Calibri", Font.PLAIN, 12);
 	
-	private JLabel aristLabel, albumLabel, songLabel;
-	private MainWindow window;
-	private SearchFrame frame;
+	JLabel aristLabel, albumLabel, songLabel;
+	MainWindow window;
+	SearchFrame frame;
 	
-	private SearchResult res;
+	SearchResult res;
 	
 	
 	/**
@@ -84,8 +84,7 @@ public class SearchEntry extends JPanel
 	 * @param result the search result object
 	 * @param frame the search frame reference
 	 */
-	public SearchEntry(MainWindow w, SearchResult result, SearchFrame f)
-	{
+	public SearchEntry(MainWindow w, SearchResult result, SearchFrame f){
 		this.window = w;
 		this.res = result;
 		this.frame = f;
@@ -93,26 +92,25 @@ public class SearchEntry extends JPanel
 		setOpaque(false);
 		initGUI();
 		
-		addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				setMouseOver(true);
-				repaint();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0)
-			{
+		addMouseListener(mouseAdapter);
+	}
+	
+	protected MouseAdapter getMouseAdapter(){
+		
+		def mouseAdapter = [
+			mouseEntered: {
+				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR))
+				setMouseOver(true)
+				repaint()
+			},
+		
+			mouseExited: {
 				setCursor(Cursor.getDefaultCursor());
 				setMouseOver(false);
 				repaint();
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
+			},
+		
+			mouseClicked: {
 				// hide search window
 				frame.dispose();
 				
@@ -125,7 +123,7 @@ public class SearchEntry extends JPanel
 				playlist.refreshSongList();
 				CurrentSongInfo songInfo = window.getSongInfo();
 				songInfo.setAlbumPath(res.getAlbumPath());
-				songInfo.setAlbumId(res.getAlbumId());
+				songInfo.albumId = res.getAlbumId()
 				CoverPanel cover = centerPanel.getCoverPanel();
 				cover.setAlbumTitle(res.getAlbumTitle());
 				cover.setArtistName(artistName);
@@ -136,27 +134,24 @@ public class SearchEntry extends JPanel
 				playlistSubNavPanel.removeAll();
 				// add a button 'Artist information' to the subnavigation if the artist
 				// name is given
-				if(!StringUtils.isEmpty(artistName))
-				{
+				if(!StringUtils.isEmpty(artistName)) {
 					SubNavButton artistInfo = new SubNavButton();
 					artistInfo.setText(LocaleMessage.getInstance().getString("nav.artistinfo"));
 					BufferedImage artistInfoIco = null;
-					try
-					{
+					try {
 						artistInfoIco = ImageIO.read(getClass().getResource("/images/artist.png"));
-					}
-					catch(IOException e1)
-					{
+					} catch(IOException e1) {
 						e1.printStackTrace();
 					}
 					artistInfo.setIcon(artistInfoIco);
-					artistInfo.addMouseListener(new MouseAdapter(){
-						@Override
-						public void mouseClicked(MouseEvent e)
-						{
+					
+					def artistInfoMouseAdapter = [
+						mouseClicked: {
 							new ArtistInfoFrame(window, artistName);
 						}
-					});
+					] as MouseAdapter 
+				
+					artistInfo.addMouseListener(artistInfoMouseAdapter);
 					playlistSubNavPanel.add(artistInfo);
 				}
 				
@@ -164,69 +159,63 @@ public class SearchEntry extends JPanel
 				SubNavButton albumInfo = new SubNavButton();
 				albumInfo.setText(LocaleMessage.getInstance().getString("nav.albuminfo"));
 				BufferedImage albumInfoIco = null;
-				try
-				{
+				try {
 					albumInfoIco = ImageIO.read(getClass().getResource("/images/cover_small.jpg"));
-				}
-				catch(IOException e1)
-				{
+				} catch(IOException e1) {
 					e1.printStackTrace();
 				}
 				albumInfo.setIcon(albumInfoIco);
-				albumInfo.addMouseListener(new MouseAdapter(){
-					@Override
-					public void mouseClicked(MouseEvent e)
-					{
+				
+				def albumInfoMouseAdapter = [
+					mouseClicked: {
 						new AlbumInfoFrame(window, res.getAlbumId());
 					}
-				});
+				] as MouseAdapter
+			
+				albumInfo.addMouseListener(albumInfoMouseAdapter);
 				playlistSubNavPanel.add(albumInfo);
 				
 				// edit id3 tags of the songs
 				SubNavButton editId3Tags = new SubNavButton();
 				editId3Tags.setText(LocaleMessage.getInstance().getString("nav.editid3"));
 				BufferedImage id3TagIco = null;
-				try
-				{
+				try {
 					id3TagIco = ImageIO.read(getClass().getResource("/images/tag.png"));
-				}
-				catch(IOException e1)
-				{
+				} catch(IOException e1) {
 					e1.printStackTrace();
 				}
 				editId3Tags.setIcon(id3TagIco);
-				editId3Tags.addMouseListener(new MouseAdapter(){
-					@Override
-					public void mouseClicked(MouseEvent e)
-					{
-						new EditId3TagFrame(window, res.getAlbumId(), res.getAlbumPath(), window.getDatabase().getSongFileNamesForAlbum(res.getAlbumId())); 
+				
+				def editId3TagsMouseAdapter = [
+					mouseClicked: {
+						new EditId3TagFrame(window, res.getAlbumId(), res.getAlbumPath(), window.getDatabase().getSongFileNamesForAlbum(res.getAlbumId()));
 					}
-				});
+				] as MouseAdapter
+			
+				editId3Tags.addMouseListener(editId3TagsMouseAdapter);
 				playlistSubNavPanel.add(editId3Tags);
 				
 				// play selected song
 				Playlist pl = centerPanel.getPlaylist().getPlaylist();
 				ArrayList<PlaylistEntry> songs = pl.getEntries();
-				for(PlaylistEntry song : songs)
-				{
-					if(song.getSongId() == res.getSongId())
-					{
+				for(PlaylistEntry song : songs) {
+					if(song.getSongId() == res.getSongId()) {
 						pl.setSelectedEntry(song);
 						window.getPlayerPanel().playSong();
 						break;
 					}
 				}
 			}
-		});
+		] as MouseAdapter
+		
+		return mouseAdapter
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g)
-	{
+	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		
-		if(mouseOver)
-		{
+		if(mouseOver) {
 			g2.setColor(activeBg);
 			g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 5, 5);
 			g2.setColor(border);
@@ -238,8 +227,7 @@ public class SearchEntry extends JPanel
 	/**
 	 * Initialized the GUI elements.
 	 */
-	private void initGUI()
-	{
+	private void initGUI() {
 		setLayout(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -276,13 +264,11 @@ public class SearchEntry extends JPanel
 	}
 
 
-	/**
-	 * Sets the mouse over effect for gradient background.
-	 * 
-	 * @param mouseOver <code>true</code> for gradient background, otherwise: <code>false</code>
-	 */
-	public void setMouseOver(boolean mouseOver)
-	{
-		this.mouseOver = mouseOver;
-	}
+	
+	
+	
 }
+
+
+
+
