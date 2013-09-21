@@ -79,13 +79,13 @@ public class AboutDialog extends JDialog
 		this.setTitle(LocaleMessage.getInstance().getString("common.about") + " VibrantPlayer");
 		this.setIconImage(new ImageIcon(getClass().getResource("/images/about.png")).getImage());
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
+		SwingUtilities.invokeLater([
+			run: {
 				initGUI();
 				okButt.requestFocus();
 				okButt.requestFocusInWindow();
 			}
-		});
+		] as Runnable);
 		this.setSize(300, 410);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -97,8 +97,7 @@ public class AboutDialog extends JDialog
 	/**
 	 * Init the GUI elements.
 	 */
-	private void initGUI() 
-	{
+	protected void initGUI(){
 		this.setLayout(new BorderLayout());
 		
 		// build a two-stops gradient backgroundpanel
@@ -106,14 +105,16 @@ public class AboutDialog extends JDialog
 			private static final long serialVersionUID = -7174635128295673280L;
 
 			@Override
-			protected void paintComponent(Graphics g)
-			{
+			protected void paintComponent(Graphics g){
 				Graphics2D g2 = (Graphics2D)g;
 				Paint oldPaint = g2.getPaint();
 				LinearGradientPaint p;
+				
+				Color[] colors = [Color.GRAY, Color.LIGHT_GRAY, Color.WHITE, Color.WHITE]
+				float[] coords = [0.0f, 0.2f, 0.4f, 1.0f]
 				p = new LinearGradientPaint(0.0f, 0.0f, 0.0f, getHeight(), 
-						new float[]{0.0f, 0.2f, 0.4f, 1.0f},
-						new Color[]{Color.GRAY, Color.LIGHT_GRAY, Color.WHITE, Color.WHITE}
+						coords,
+						colors
 						);
 				g2.setPaint(p);
 				g2.fillRect(0, 0, getWidth(), getHeight());
@@ -147,8 +148,7 @@ public class AboutDialog extends JDialog
 		
 		// get the language code for the current locale, for example "de"
 		String testlang = Locale.getDefault().getLanguage(); 
-		if(testlang.toLowerCase().equals("de"))
-		{
+		if(testlang.toLowerCase().equals("de")){
 			text = "<HTML>&copy; Impressive Artworx, 2k8<br />Programmiert von Manuel Kaess. " +
 				"Dieses Programm darf für den nicht kommerziellen Einsatz uneingeschränkt " +
 				"benutzt werden. Bitte beachten Sie die Lizensbedingungen. Für einen eventuellen " +
@@ -164,28 +164,25 @@ public class AboutDialog extends JDialog
 		JPanel buttonPanel = new JPanel();
 		JButton webButt = new JButton(LocaleMessage.getInstance().getString("about.webpage"));
 		webButt.setToolTipText(LocaleMessage.getInstance().getString("about.webpage_tooltip"));
-		webButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		webButt.addActionListener([
+			actionPerformed: {
 				BrowserControl.getInstance().displayURL("http://www.impressive-artworx.de/albumplayer.php");
 			}
-		});
+		] as ActionListener);
 		okButt = new JButton();
 		okButt.setText(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
 		okButt.setToolTipText(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		okButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		okButt.addActionListener([
+			actionPerformed: {
 				dispose();
 			}
-		});
+		] as ActionListener);
 		
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(webButt);
 		buttonPanel.add(okButt);
 		okButt.setSelected(true);
-		buttonPanel.setBorder(new VariableLineBorder(5, 5, 5, 5, Color.GRAY, 1, true, 
-				false, false, false));
+		buttonPanel.setBorder(new VariableLineBorder(5, 5, 5, 5, Color.GRAY, 1, true, false, false, false));
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 }
