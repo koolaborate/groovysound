@@ -11,7 +11,6 @@ import java.util.Properties
 import java.util.ResourceBundle
 
 import com.koolaborate.mvc.view.dialogs.VistaDialog
-import com.koolaborate.util.FileHelper
 
 /***********************************************************************************
  * Settings                                                                        *
@@ -41,10 +40,9 @@ import com.koolaborate.util.FileHelper
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Settings
-{
+public class Settings {
 	/** file path to the settings file */
-	private static String SETTINGS_PATH = System.getProperty("user.dir") +  File.separator + "settings.ini"
+	public static String SETTINGS_PATH = System.getProperty("user.dir") +  File.separator + "settings.ini"
 	
 	// the settings that are being tracked
 	int mainWindowX, mainWindowY = -1
@@ -62,55 +60,67 @@ public class Settings
 	 * Loads the settings from the specified file.
 	 * @see SETTINGS_PATH
 	 */
-	public void loadSettings(){
-		Properties getprops = new Properties()
-		try{
-			FileInputStream fis = new FileInputStream(SETTINGS_PATH)
-			getprops.load(fis)
-			fis.close()
-		} catch(IOException e){
-			// if the file could not be found, it has to be created
-			try{
-				File file = new File(SETTINGS_PATH)
-				file.createNewFile()
-			} catch(IOException e2) {
-				ResourceBundle lang = null
-				try{ 
-			    	lang = ResourceBundle.getBundle("resources.maintexts") 
-			    } catch(MissingResourceException e3){ 
-			    	e3.printStackTrace() 
-			    } 
-				
-				// this is a severe error! the settings file could not be created, this means that the user cannot write any files
-				// or store anything in the current directory
-				VistaDialog.showDialog(lang.getString("error.3"), lang.getString("error.4"), lang.getString("error.5"), VistaDialog.ERROR_MESSAGE)
-				
-				// additionally, print error to console
-				e2.printStackTrace()
-				
-				// give up
-				System.exit(-1)
-			}
-			// save the settings for the first time
-			save()
-			return
-		}
+	
+	// TODO refactor, split file and settings logic
+	def void loadSettings(){
+		Properties properties = getProperties()
 		
 		// read the properties
-		mainWindowX = Integer.parseInt(getprops.getProperty("mainwindow_x", "-1"))
-		mainWindowY = Integer.parseInt(getprops.getProperty("mainwindow_y", "-1"))
-		lastFolder  = getprops.getProperty("lastfolder", System.getProperty("user.dir"))
-		volume = Float.parseFloat(getprops.getProperty("volume", "0.5"))
-		balance = Float.parseFloat(getprops.getProperty("balance", "0.0"))
-		version = getprops.getProperty("version", "1.0")
-		hardwareAccellerated = Boolean.parseBoolean(getprops.getProperty("opengl", "false"))
-		checkForUpdatesAtStart = Boolean.parseBoolean(getprops.getProperty("checkupdates", "true"))
+		mainWindowX = Integer.parseInt(properties.getProperty("mainwindow_x", "-1"))
+		mainWindowY = Integer.parseInt(properties.getProperty("mainwindow_y", "-1"))
+		lastFolder  = properties.getProperty("lastfolder", System.getProperty("user.dir"))
+		volume = Float.parseFloat(properties.getProperty("volume", "0.5"))
+		balance = Float.parseFloat(properties.getProperty("balance", "0.0"))
+		version = properties.getProperty("version", "1.0")
+		hardwareAccellerated = Boolean.parseBoolean(properties.getProperty("opengl", "false"))
+		checkForUpdatesAtStart = Boolean.parseBoolean(properties.getProperty("checkupdates", "true"))
+	}
+	
+	protected Properties getProperties(){
+		Properties properties = new Properties()
+		try{
+			FileInputStream fis = new FileInputStream(SETTINGS_PATH)
+			properties.load(fis)
+			fis.close()
+		}catch(Exception e){
+			handleLoadError(properties)
+		}
+		
+		return properties
+	}
+
+	protected void handleLoadError(Properties properties) {
+		// if the file could not be found, it has to be created
+		File file = new File(SETTINGS_PATH)
+		try{
+			file.createNewFile()
+		} catch(IOException e2) {
+			ResourceBundle lang = null
+			try{
+				lang = ResourceBundle.getBundle("resources.maintexts")
+			} catch(MissingResourceException e3){
+				e3.printStackTrace()
+			}
+
+			// this is a severe error! the settings file could not be created, this means that the user cannot write any files
+			// or store anything in the current directory
+			VistaDialog.showDialog(lang.getString("error.3"), lang.getString("error.4"), lang.getString("error.5"), VistaDialog.ERROR_MESSAGE)
+
+			// additionally, print error to console
+			e2.printStackTrace()
+
+			// give up
+			System.exit(-1)
+		}
+		// save the settings for the first time
+		save()
+		properties.load(new FileInputStream(file))
 	}
 
 	/**
 	 * @return the current location of the main window
 	 */
-	public Point getMainWindowLocation(){
+	def Point getMainWindowLocation(){
 		if(mainWindowX > 0 && mainWindowY > 0) return new Point(mainWindowX, mainWindowY)
 		return null
 	}
@@ -121,6 +131,7 @@ public class Settings
 	 * @param p the point that indivates the top left point of the window
 	 */
 	public void setMainWindowLocation(Point p){
+		if(null == p) return
 		this.mainWindowX = p.x
 		this.mainWindowY = p.y
 	}
@@ -129,7 +140,7 @@ public class Settings
 	 * Saves the settings to the specified file.
 	 * @see SETTINGS_PATH
 	 */
-	public void save(){
+	def void save(){
 		// save the settings to the file
 	    try{
 	       Properties saveProps = new Properties()
@@ -155,23 +166,4 @@ public class Settings
 	
 
 
-	public boolean isHardwareAccellerated()
-	{
-		return hardwareAccellerated
-	}
-
-	public void setHardwareAccellerated(boolean hardwareAccellerated)
-	{
-		this.hardwareAccellerated = hardwareAccellerated
-	}
-
-	public boolean isCheckForUpdatesAtStart()
-	{
-		return checkForUpdatesAtStart
-	}
-	
-	public void setCheckForUpdatesAtStart(boolean checkForUpdatesAtStart)
-	{
-		this.checkForUpdatesAtStart = checkForUpdatesAtStart
-	}
 }
