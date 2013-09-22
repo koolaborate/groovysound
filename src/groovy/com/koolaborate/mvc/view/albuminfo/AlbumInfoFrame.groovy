@@ -1,55 +1,55 @@
-package com.koolaborate.mvc.view.albuminfo;
+package com.koolaborate.mvc.view.albuminfo
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.List;
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.FlowLayout
+import java.awt.Graphics2D
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import java.awt.Insets
+import java.awt.MouseInfo
+import java.awt.Point
+import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.Transferable
+import java.awt.datatransfer.UnsupportedFlavorException
+import java.awt.dnd.DnDConstants
+import java.awt.dnd.DropTarget
+import java.awt.dnd.DropTargetDragEvent
+import java.awt.dnd.DropTargetDropEvent
+import java.awt.dnd.DropTargetEvent
+import java.awt.dnd.DropTargetListener
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import java.net.MalformedURLException
+import java.util.List
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
+import javax.swing.JButton
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JTextField
+import javax.swing.SwingUtilities
+import javax.swing.UIManager
 
-import org.apache.commons.lang3.StringUtils;
-import org.jdesktop.swingx.graphics.ReflectionRenderer;
+import org.apache.commons.lang3.StringUtils
+import org.jdesktop.swingx.graphics.ReflectionRenderer
 
-import com.koolaborate.model.Album;
-import com.koolaborate.mvc.view.common.VariableLineBorder;
-import com.koolaborate.mvc.view.dialogs.VistaDialog;
-import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane;
+import com.koolaborate.model.Album
+import com.koolaborate.mvc.view.common.VariableLineBorder
+import com.koolaborate.mvc.view.dialogs.VistaDialog
+import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane
 import com.koolaborate.mvc.view.mainwindow.MainWindow
-import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
-import com.koolaborate.util.GraphicsUtilities;
-import com.koolaborate.util.GraphicsUtilities2;
-import com.koolaborate.util.ImageHelper;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.util.GraphicsUtilities
+import com.koolaborate.util.GraphicsUtilities2
+import com.koolaborate.util.ImageHelper
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * AlbumInfoFrame *
@@ -75,27 +75,30 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class AlbumInfoFrame extends JFrame implements DropTargetListener{
-	private static final long serialVersionUID = -3655016129532421572L;
+	private static final long serialVersionUID = -3655016129532421572L
 	
-	JPanel showPanel, editPanel;
-	JLabel img;
-	JButton editButton, saveButton, closeButton, changeImage;
-	JTextField title, artist, year;
+	JPanel showPanel, editPanel
+	JLabel img
+	JButton editButton, saveButton, closeButton, changeImage
+	JTextField title, artist, year
+	
+	@Override
+	public String getTitle(){ return null}
 
-	boolean imageChanged = false;
-	boolean changesMade = false;
+	boolean imageChanged = false
+	boolean changesMade = false
 
-	Album album;
+	Album album
 
-	MainWindow mainWindow;
-	BufferedImage coverPreviewImage, coverImageBig;
+	MainWindow mainWindow
+	BufferedImage coverPreviewImage, coverImageBig
 
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	GhostDragGlassPane glassPane;
-	File imgFile;
-	BufferedImage image;
-	int maxWidth = 80; // maximum width for the ghost image
-	int maxHeight = 80; // maximum height for the ghost image
+	GhostDragGlassPane glassPane
+	File imgFile
+	BufferedImage image
+	int maxWidth = 80 // maximum width for the ghost image
+	int maxHeight = 80 // maximum height for the ghost image
 
 	/**
 	 * Constructor.
@@ -106,8 +109,8 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 *            the name of the artist or band
 	 */
 	public AlbumInfoFrame(MainWindow window, int albumId){
-		this.mainWindow = window;
-		this.album = mainWindow.getDatabase().getAlbumById(albumId);
+		this.mainWindow = window
+		this.album = mainWindow.getDatabase().getAlbumById(albumId)
 
 		def initThread = [
 			run: {
@@ -115,37 +118,37 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 			}
 		] as Runnable
 		
-		SwingUtilities.invokeLater(initThread);
+		SwingUtilities.invokeLater(initThread)
 	}
 
 	/**
 	 * Initializes the GUI elements.
 	 */
 	private void initGUI(){
-		setTitle(LocaleMessage.getInstance().getString("album.info") + " " + album.getTitle());
-		setSize(500, 220);
-		setMinimumSize(new Dimension(400, 190));
-		setLocationRelativeTo(null);
+		setTitle(LocaleMessage.getInstance().getString("album.info") + " " + album.getTitle())
+		setSize(500, 220)
+		setMinimumSize(new Dimension(400, 190))
+		setLocationRelativeTo(null)
 
-		setIconImage(new ImageIcon(getClass().getResource("/images/about.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/images/about.png")).getImage())
 
 		// define a drop target for the entire frame
-		DropTarget dt = new DropTarget(this, this);
-		this.setDropTarget(dt);
-		glassPane = new GhostDragGlassPane();
-		this.setGlassPane(glassPane);
+		DropTarget dt = new DropTarget(this, this)
+		this.setDropTarget(dt)
+		glassPane = new GhostDragGlassPane()
+		this.setGlassPane(glassPane)
 
-		setLayout(new BorderLayout());
+		setLayout(new BorderLayout())
 
 		// initialize the edit and show panels
-		initEditPanel();
-		initShowPanel();
+		initEditPanel()
+		initShowPanel()
 
 		// the button panel
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2))
 
-		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"));
-		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"));
+		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"))
+		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"))
 		
 		def editButtonActionListener = [
 			actionPerformed: {
@@ -153,22 +156,22 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 			}
 		]as ActionListener
 	
-		editButton.addActionListener(editButtonActionListener);
+		editButton.addActionListener(editButtonActionListener)
 		saveButton = new JButton(
-				UIManager.getString("FileChooser.saveButtonText"));
-		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
+				UIManager.getString("FileChooser.saveButtonText"))
+		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"))
 		
 		def saveButtonActionListener = [
 			actionPerformed: {
-				setEditModeEnabled(false);
-				saveChanges();
+				setEditModeEnabled(false)
+				saveChanges()
 			}
 		] as ActionListener
 	
-		saveButton.addActionListener(saveButtonActionListener);
-		saveButton.setEnabled(false);
-		closeButton = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
+		saveButton.addActionListener(saveButtonActionListener)
+		saveButton.setEnabled(false)
+		closeButton = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"))
+		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"))
 		
 		def closeButtonActionListener = [
 			actionPerformed: {
@@ -176,255 +179,255 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 					VistaDialog dialog = VistaDialog.showConfirmationDialog(
 							LocaleMessage.getInstance().getString("common.discard_title"),
 							LocaleMessage.getInstance().getString("common.discard_label"),
-							LocaleMessage.getInstance().getString("common.discard_text"));
-					if(dialog.yesSelected) dispose();
+							LocaleMessage.getInstance().getString("common.discard_text"))
+					if(dialog.yesSelected) dispose()
 				} else {
-					dispose();
+					dispose()
 				}
 			}
 		] as ActionListener 
 	
-		closeButton.addActionListener(closeButtonActionListener);
+		closeButton.addActionListener(closeButtonActionListener)
 
-		buttonPanel.add(editButton);
-		buttonPanel.add(saveButton);
-		buttonPanel.add(closeButton);
+		buttonPanel.add(editButton)
+		buttonPanel.add(saveButton)
+		buttonPanel.add(closeButton)
 		buttonPanel.setBorder(new VariableLineBorder(5, 5, 5, 5, Color.GRAY, 1,
-				true, false, false, false));
+				true, false, false, false))
 
-		add(showPanel, BorderLayout.CENTER);
-		add(buttonPanel, BorderLayout.SOUTH);
+		add(showPanel, BorderLayout.CENTER)
+		add(buttonPanel, BorderLayout.SOUTH)
 
-		setEditModeEnabled(false);
+		setEditModeEnabled(false)
 
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setVisible(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE)
+		setLocationRelativeTo(null)
+		setVisible(true)
 	}
 
 	/**
 	 * Initializes the editPanel.
 	 */
 	private void initEditPanel(){
-		editPanel = new JPanel();
-		editPanel.setOpaque(true);
-		editPanel.setBackground(Color.WHITE);
-		editPanel.setLayout(new GridBagLayout());
+		editPanel = new JPanel()
+		editPanel.setOpaque(true)
+		editPanel.setBackground(Color.WHITE)
+		editPanel.setLayout(new GridBagLayout())
 
 		// the image of the album
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-		gbc.weightx = 0.0f;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 3;
-		gbc.insets = new Insets(10, 10, 0, 10);
+		GridBagConstraints gbc = new GridBagConstraints()
+		gbc.gridx = 0
+		gbc.gridy = 0
+		gbc.fill = GridBagConstraints.NONE
+		gbc.anchor = GridBagConstraints.FIRST_LINE_START
+		gbc.weightx = 0.0f
+		gbc.gridwidth = 1
+		gbc.gridheight = 3
+		gbc.insets = new Insets(10, 10, 0, 10)
 		// create the reflection
-		ReflectionRenderer rend = new ReflectionRenderer();
-		rend.setBlurEnabled(true); // more realistic reflection with a blur
+		ReflectionRenderer rend = new ReflectionRenderer()
+		rend.setBlurEnabled(true) // more realistic reflection with a blur
 									// filter
-		coverPreviewImage = album.getPreview();
+		coverPreviewImage = album.getPreview()
 		// if the album does not have a cover image, use the standard empty
 		// album image
 		if(coverPreviewImage == null) {
 			try {
 				def resource = getClass().getResource("/images/emptycover.jpg")
-				coverPreviewImage = ImageIO.read(resource);
+				coverPreviewImage = ImageIO.read(resource)
 			} catch(IOException e1) {
-				e1.printStackTrace();
+				e1.printStackTrace()
 			}
 		}
-		BufferedImage reflection = rend.appendReflection(coverPreviewImage);
-		img = new JLabel(new ImageIcon(reflection));
-		editPanel.add(img, gbc);
+		BufferedImage reflection = rend.appendReflection(coverPreviewImage)
+		img = new JLabel(new ImageIcon(reflection))
+		editPanel.add(img, gbc)
 
 		// the change image button (at first invisible)
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.gridheight = 1;
-		gbc.weightx = 0.0f;
-		gbc.insets = new Insets(0, 10, 4, 10);
+		gbc.gridx = 0
+		gbc.gridy = 3
+		gbc.gridheight = 1
+		gbc.weightx = 0.0f
+		gbc.insets = new Insets(0, 10, 4, 10)
 		
 		def changeImageName = LocaleMessage.getInstance().getString("common.changeimg")
-		changeImage = new JButton(changeImageName);
+		changeImage = new JButton(changeImageName)
 		
 		def changeImageActionListener = [
 			actionPerformed: {
-				new SearchNewCoverFrame(getThisInstance(), album, artist.getText().trim(), title.getText().trim());
+				new SearchNewCoverFrame(getThisInstance(), album, artist.getText().trim(), title.getText().trim())
 			}
 		] as ActionListener
 	
-		changeImage.addActionListener(changeImageActionListener);
-		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
-		changeImage.setVisible(false);
-		editPanel.add(changeImage, gbc);
+		changeImage.addActionListener(changeImageActionListener)
+		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"))
+		changeImage.setVisible(false)
+		editPanel.add(changeImage, gbc)
 
 		// the name of the album
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.weightx = 0.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title") + ":");
-		editPanel.add(titleLabel, gbc);
+		gbc.gridx = 1
+		gbc.gridy = 0
+		gbc.weightx = 0.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title") + ":")
+		editPanel.add(titleLabel, gbc)
 
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		title = new JTextField(album.getTitle());
-		editPanel.add(title, gbc);
+		gbc.gridx = 2
+		gbc.gridy = 0
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.weightx = 1.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		title = new JTextField(album.getTitle())
+		editPanel.add(title, gbc)
 
 		// the text to the artist
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.weightx = 0.0f;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel artistLabel = new JLabel(LocaleMessage.getInstance().getString("common.artist") + ":");
-		editPanel.add(artistLabel, gbc);
+		gbc.gridx = 1
+		gbc.gridy = 1
+		gbc.weightx = 0.0f
+		gbc.fill = GridBagConstraints.NONE
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel artistLabel = new JLabel(LocaleMessage.getInstance().getString("common.artist") + ":")
+		editPanel.add(artistLabel, gbc)
 
-		gbc.gridx = 2;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		artist = new JTextField(album.getArtist());
-		editPanel.add(artist, gbc);
+		gbc.gridx = 2
+		gbc.gridy = 1
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.weightx = 1.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		artist = new JTextField(album.getArtist())
+		editPanel.add(artist, gbc)
 
 		// the release year
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.weightx = 0.0f;
-		gbc.weighty = 1.0f;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year") + ":");
-		editPanel.add(yearLabel, gbc);
+		gbc.gridx = 1
+		gbc.gridy = 2
+		gbc.weightx = 0.0f
+		gbc.weighty = 1.0f
+		gbc.fill = GridBagConstraints.NONE
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year") + ":")
+		editPanel.add(yearLabel, gbc)
 
-		gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0f;
-		gbc.weighty = 1.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		year = new JTextField(Integer.toString(album.getYear()));
-		editPanel.add(year, gbc);
+		gbc.gridx = 2
+		gbc.gridy = 2
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.weightx = 1.0f
+		gbc.weighty = 1.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		year = new JTextField(Integer.toString(album.getYear()))
+		editPanel.add(year, gbc)
 	}
 
 	/**
 	 * Initializes the showPanel.
 	 */
 	private void initShowPanel(){
-		showPanel = new JPanel();
-		showPanel.setOpaque(true);
-		showPanel.setBackground(Color.WHITE);
-		showPanel.setLayout(new GridBagLayout());
+		showPanel = new JPanel()
+		showPanel.setOpaque(true)
+		showPanel.setBackground(Color.WHITE)
+		showPanel.setLayout(new GridBagLayout())
 
 		// the image of the album
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-		gbc.weightx = 0.0f;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 3;
-		gbc.insets = new Insets(10, 10, 0, 10);
+		GridBagConstraints gbc = new GridBagConstraints()
+		gbc.gridx = 0
+		gbc.gridy = 0
+		gbc.fill = GridBagConstraints.NONE
+		gbc.anchor = GridBagConstraints.FIRST_LINE_START
+		gbc.weightx = 0.0f
+		gbc.gridwidth = 1
+		gbc.gridheight = 3
+		gbc.insets = new Insets(10, 10, 0, 10)
 		// create the reflection
-		ReflectionRenderer rend = new ReflectionRenderer();
-		rend.setBlurEnabled(true); // more realistic reflection with a blur
+		ReflectionRenderer rend = new ReflectionRenderer()
+		rend.setBlurEnabled(true) // more realistic reflection with a blur
 									// filter
-		coverPreviewImage = album.getPreview();
+		coverPreviewImage = album.getPreview()
 		// if the album does not have a cover image, use the standard empty
 		// album image
 		if(coverPreviewImage == null) {
 			try {
 				coverPreviewImage = ImageIO.read(getClass().getResource(
-						"/images/emptycover.jpg"));
+						"/images/emptycover.jpg"))
 			} catch(IOException e1) {
-				e1.printStackTrace();
+				e1.printStackTrace()
 			}
 		}
-		BufferedImage reflection = rend.appendReflection(coverPreviewImage);
-		img = new JLabel(new ImageIcon(reflection));
-		showPanel.add(img, gbc);
+		BufferedImage reflection = rend.appendReflection(coverPreviewImage)
+		img = new JLabel(new ImageIcon(reflection))
+		showPanel.add(img, gbc)
 
 		// the change image button (at first invisible)
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.gridheight = 1;
-		gbc.weightx = 0.0f;
-		gbc.insets = new Insets(0, 10, 4, 10);
-		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg"));
+		gbc.gridx = 0
+		gbc.gridy = 3
+		gbc.gridheight = 1
+		gbc.weightx = 0.0f
+		gbc.insets = new Insets(0, 10, 4, 10)
+		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg"))
 		
 		def changeImageActionListener = [
 			actionPerformed: {
-				new SearchNewCoverFrame(getThisInstance(), album, artist.getText().trim(), title.getText().trim());
+				new SearchNewCoverFrame(getThisInstance(), album, artist.getText().trim(), title.getText().trim())
 			}
 		] as ActionListener
 	
-		changeImage.addActionListener(changeImageActionListener);
-		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
-		changeImage.setVisible(false);
-		showPanel.add(changeImage, gbc);
+		changeImage.addActionListener(changeImageActionListener)
+		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"))
+		changeImage.setVisible(false)
+		showPanel.add(changeImage, gbc)
 
 		// the name of the album
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.weightx = 0.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title") + ":");
-		showPanel.add(titleLabel, gbc);
+		gbc.gridx = 1
+		gbc.gridy = 0
+		gbc.weightx = 0.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("common.title") + ":")
+		showPanel.add(titleLabel, gbc)
 
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel titleTextLabel = new JLabel(album.getTitle());
-		showPanel.add(titleTextLabel, gbc);
+		gbc.gridx = 2
+		gbc.gridy = 0
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.weightx = 1.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel titleTextLabel = new JLabel(album.getTitle())
+		showPanel.add(titleTextLabel, gbc)
 
 		// the text to the artist
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.weightx = 0.0f;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(10, 0, 0, 10);
+		gbc.gridx = 1
+		gbc.gridy = 1
+		gbc.weightx = 0.0f
+		gbc.fill = GridBagConstraints.NONE
+		gbc.insets = new Insets(10, 0, 0, 10)
 		JLabel artistLabel = new JLabel(
-				LocaleMessage.getInstance().getString("common.artist") + ":");
-		showPanel.add(artistLabel, gbc);
+				LocaleMessage.getInstance().getString("common.artist") + ":")
+		showPanel.add(artistLabel, gbc)
 
-		gbc.gridx = 2;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel artistTextLabel = new JLabel(album.getArtist());
-		showPanel.add(artistTextLabel, gbc);
+		gbc.gridx = 2
+		gbc.gridy = 1
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.weightx = 1.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel artistTextLabel = new JLabel(album.getArtist())
+		showPanel.add(artistTextLabel, gbc)
 
 		// the release year
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.weightx = 0.0f;
-		gbc.weighty = 1.0f;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(10, 0, 0, 10);
+		gbc.gridx = 1
+		gbc.gridy = 2
+		gbc.weightx = 0.0f
+		gbc.weighty = 1.0f
+		gbc.fill = GridBagConstraints.NONE
+		gbc.insets = new Insets(10, 0, 0, 10)
 		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("common.year")
-				+ ":");
-		showPanel.add(yearLabel, gbc);
+				+ ":")
+		showPanel.add(yearLabel, gbc)
 
-		gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0f;
-		gbc.weighty = 1.0f;
-		gbc.insets = new Insets(10, 0, 0, 10);
-		JLabel yearTextLabel = new JLabel(Integer.toString(album.getYear()));
+		gbc.gridx = 2
+		gbc.gridy = 2
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.weightx = 1.0f
+		gbc.weighty = 1.0f
+		gbc.insets = new Insets(10, 0, 0, 10)
+		JLabel yearTextLabel = new JLabel(Integer.toString(album.getYear()))
 
-		showPanel.add(yearTextLabel, gbc);
+		showPanel.add(yearTextLabel, gbc)
 	}
 
 	/**
@@ -434,43 +437,43 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		if(changesMade || imageChanged) {
 			// only if entries are valid...
 			if(checkEntries()) {
-				album.setArtist(artist.getText().trim());
-				album.setTitle(title.getText().trim());
-				album.setYear(Integer.parseInt(year.getText().trim()));
+				album.setArtist(artist.getText().trim())
+				album.setTitle(title.getText().trim())
+				album.setYear(Integer.parseInt(year.getText().trim()))
 				if(imageChanged) {
 					// set the little preview image
-					album.setPreview(coverPreviewImage);
+					album.setPreview(coverPreviewImage)
 
 					// then create the big image in the destination folder
-					String filename = "folder.jpg";
-					String destination = album.getFolderPath() + File.separator + filename;
+					String filename = "folder.jpg"
+					String destination = album.getFolderPath() + File.separator + filename
 					// check if there is already a cover jpg file
-					File oldCover = new File(destination);
+					File oldCover = new File(destination)
 					// just for now: rename the old jpg
 					if(oldCover.exists())
-						oldCover.renameTo(new File(album.getFolderPath() + File.separator + "folder_old.jpg"));
+						oldCover.renameTo(new File(album.getFolderPath() + File.separator + "folder_old.jpg"))
 					try {
-						ImageIO.write(coverImageBig, "jpg", new File(destination));
+						ImageIO.write(coverImageBig, "jpg", new File(destination))
 					} catch(IOException e) {
-						e.printStackTrace();
+						e.printStackTrace()
 					}
 				}
-				mainWindow.getDatabase().updateAlbum(album);
+				mainWindow.getDatabase().updateAlbum(album)
 
 				// refresh the albums view
-				mainWindow.getCenterPanel().getAlbumsPanel().refreshSelectedAlbum(album);
+				mainWindow.getCenterPanel().getAlbumsPanel().refreshSelectedAlbum(album)
 				if(mainWindow.getCurrentNavigation() == NAVIGATION.ALBUMS) {
 					mainWindow.getCenterPanel().refreshAlbumsView(
-							mainWindow.getCenterPanel().getAlbumsPanel().getSortMode());
+							mainWindow.getCenterPanel().getAlbumsPanel().getSortMode())
 				}
 
 				// refresh the playlist view if it is the selected album
 				if(mainWindow.getCurrentFolderPath() != null && mainWindow.getCurrentFolderPath().equals(album.getFolderPath())) {
-					mainWindow.getCenterPanel().updateCoverInCase(mainWindow.getSongInfo(), true);
+					mainWindow.getCenterPanel().updateCoverInCase(mainWindow.getSongInfo(), true)
 				}
 
-				changesMade = false;
-				imageChanged = false;
+				changesMade = false
+				imageChanged = false
 			}
 		}
 	}
@@ -483,33 +486,33 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 *         otherwise
 	 */
 	private boolean checkEntries(){
-		boolean ret = true;
+		boolean ret = true
 
-		String albumTitle = title.getText().trim();
-		albumTitle = albumTitle.replaceAll("'", "`");
-		title.setText(albumTitle);
+		String albumTitle = title.getText().trim()
+		albumTitle = albumTitle.replaceAll("'", "`")
+		title.setText(albumTitle)
 
-		String albumArtist = artist.getText().trim();
-		albumArtist = albumArtist.replaceAll("'", "`");
-		artist.setText(albumArtist);
+		String albumArtist = artist.getText().trim()
+		albumArtist = albumArtist.replaceAll("'", "`")
+		artist.setText(albumArtist)
 
 		// check parsable year...
 		try {
-			String yearText = year.getText().trim();
+			String yearText = year.getText().trim()
 			// an empty year is handled as year 0
-			if(StringUtils.isEmpty(yearText)) yearText = "0";
-			int yearInt = Integer.parseInt(yearText);
-			year.setText(Integer.toString(yearInt));
-			ret = true;
+			if(StringUtils.isEmpty(yearText)) yearText = "0"
+			int yearInt = Integer.parseInt(yearText)
+			year.setText(Integer.toString(yearInt))
+			ret = true
 		} catch(NumberFormatException e) {
 			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.6"),
 					LocaleMessage.getInstance().getString("error.7"),
 					LocaleMessage.getInstance().getString("error.8"),
-					VistaDialog.ERROR_MESSAGE);
-			ret = false;
+					VistaDialog.ERROR_MESSAGE)
+			ret = false
 		}
 
-		return ret;
+		return ret
 	}
 
 	/**
@@ -525,24 +528,24 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		def editModeInitializer = [
 			run: {
 				if(b) {
-					remove(showPanel);
-					add(editPanel, BorderLayout.CENTER);
+					remove(showPanel)
+					add(editPanel, BorderLayout.CENTER)
 				} else {
-					remove(editPanel);
-					add(showPanel, BorderLayout.CENTER);
+					remove(editPanel)
+					add(showPanel, BorderLayout.CENTER)
 				}
 				// enable/disable change image button
-				changeImage.setVisible(b);
-				saveButton.setEnabled(b);
+				changeImage.setVisible(b)
+				saveButton.setEnabled(b)
 
-				if(b) changesMade = true;
+				if(b) changesMade = true
 
-				getContentPane().validate();
-				getContentPane().repaint();
+				getContentPane().validate()
+				getContentPane().repaint()
 			}
 		] as Runnable
 	
-		SwingUtilities.invokeLater(editModeInitializer);
+		SwingUtilities.invokeLater(editModeInitializer)
 	}
 
 	/**
@@ -552,18 +555,18 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 *            the orignial BufferedImage
 	 */
 	public void setAlbumImage(BufferedImage image){
-		this.coverImageBig = image;
-		ImageHelper helper = new ImageHelper();
-		BufferedImage smallImg = helper.createSmallCover(image);
-		this.coverPreviewImage = smallImg;
-		ReflectionRenderer rend = new ReflectionRenderer();
-		rend.setBlurEnabled(true); // the reflection is more realistic with a
+		this.coverImageBig = image
+		ImageHelper helper = new ImageHelper()
+		BufferedImage smallImg = helper.createSmallCover(image)
+		this.coverPreviewImage = smallImg
+		ReflectionRenderer rend = new ReflectionRenderer()
+		rend.setBlurEnabled(true) // the reflection is more realistic with a
 									// blur filter applied to it
-		BufferedImage reflection = rend.appendReflection(coverPreviewImage);
-		img.setIcon(new ImageIcon(reflection));
+		BufferedImage reflection = rend.appendReflection(coverPreviewImage)
+		img.setIcon(new ImageIcon(reflection))
 
-		getContentPane().validate();
-		getContentPane().repaint();
+		getContentPane().validate()
+		getContentPane().repaint()
 	}
 
 
@@ -571,7 +574,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 * @return a reference to the instance of this class
 	 */
 	private AlbumInfoFrame getThisInstance(){
-		return this;
+		return this
 	}
 
 	/**
@@ -582,19 +585,19 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	public void dragEnter(DropTargetDragEvent dtde){
 		// create image if it has not already been created
 		if(image == null) {
-			Transferable t = dtde.getTransferable();
+			Transferable t = dtde.getTransferable()
 			try {
-				Object data = t.getTransferData(DataFlavor.javaFileListFlavor);
-				List<File> fileList = (List<File>) data;
-				BufferedImage image = createImage(fileList);
+				Object data = t.getTransferData(DataFlavor.javaFileListFlavor)
+				List<File> fileList = (List<File>) data
+				BufferedImage image = createImage(fileList)
 				if(image != null) {
-					Point p = MouseInfo.getPointerInfo().getLocation();
-					glassPane.showIt(image, p);
+					Point p = MouseInfo.getPointerInfo().getLocation()
+					glassPane.showIt(image, p)
 				}
 			} catch(UnsupportedFlavorException e) {
-				e.printStackTrace();
+				e.printStackTrace()
 			} catch(IOException e) {
-				e.printStackTrace();
+				e.printStackTrace()
 			}
 		}
 	}
@@ -607,9 +610,9 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 * @return an image of the first image file in the list
 	 */
 	private BufferedImage createImage(List<File> files){
-		BufferedImage image = null;
+		BufferedImage image = null
 
-		imgFile = new File("");
+		imgFile = new File("")
 		for(File file: files) {
 			// accept jpeg, gif, bmp and png images
 			if(file.getName().toLowerCase().endsWith(".png")
@@ -617,68 +620,68 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 					|| file.getName().toLowerCase().endsWith(".jpeg")
 					|| file.getName().toLowerCase().endsWith(".gif")
 					|| file.getName().toLowerCase().endsWith(".bmp")) {
-				imgFile = file;
-				break;
+				imgFile = file
+				break
 			} else {
-				continue;
+				continue
 			}
 		}
 
 		try {
-			BufferedImage origImg = ImageIO.read(imgFile);
+			BufferedImage origImg = ImageIO.read(imgFile)
 			if(origImg == null) {
-				return null;
+				return null
 			}
 
-			int origWidth = origImg.getWidth();
-			int origHeight = origImg.getHeight();
+			int origWidth = origImg.getWidth()
+			int origHeight = origImg.getHeight()
 
 			// calculate the dimensions of the thumbnail
-			int width;
-			int height;
-			float factor;
+			int width
+			int height
+			float factor
 
 			// landscape format
 			if(origWidth > origHeight) {
-				width = maxWidth;
-				factor = (float) width / (float) origWidth;
-				height = (int) ((float) origHeight * factor);
+				width = maxWidth
+				factor = (float) width / (float) origWidth
+				height = (int) ((float) origHeight * factor)
 			}
 			// higher than wide
 			else {
-				height = maxHeight;
-				factor = (float) height / (float) origHeight;
-				width = (int) ((float) origWidth * factor);
+				height = maxHeight
+				factor = (float) height / (float) origHeight
+				width = (int) ((float) origWidth * factor)
 			}
 
-			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height);
-			Graphics2D g2 = image.createGraphics();
+			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height)
+			Graphics2D g2 = image.createGraphics()
 
-			BufferedImage externalImage = null;
+			BufferedImage externalImage = null
 			try {
-				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL());
+				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL())
 			} catch(MalformedURLException ex) {
-				ex.printStackTrace();
+				ex.printStackTrace()
 			} catch(IOException ex) {
-				ex.printStackTrace();
+				ex.printStackTrace()
 			}
 			// create the thumbnail image using SwingX GraphicsUtilities class
-			externalImage = GraphicsUtilities.getInstance().createThumbnailFast(externalImage, width, height);
+			externalImage = GraphicsUtilities.getInstance().createThumbnailFast(externalImage, width, height)
 
-			g2.drawImage(externalImage, 0, 0, null);
-			g2.dispose();
+			g2.drawImage(externalImage, 0, 0, null)
+			g2.dispose()
 		} catch(IOException e) {
-			e.printStackTrace();
+			e.printStackTrace()
 		}
-		return image;
+		return image
 	}
 
 	/**
 	 * Method is called when the dragged object leaves the application's frame.
 	 */
 	public void dragExit(DropTargetEvent dte){
-		glassPane.hideIt();
-		image = null;
+		glassPane.hideIt()
+		image = null
 	}
 
 	/**
@@ -686,34 +689,33 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 * frame.
 	 */
 	public void dragOver(DropTargetDragEvent dtde){
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		glassPane.moveIt(p);
+		Point p = MouseInfo.getPointerInfo().getLocation()
+		glassPane.moveIt(p)
 	}
 
 	/**
 	 * Drop method which is called when the dragged object is being dropped.
 	 */
 	public void drop(DropTargetDropEvent dtde){
-		Point point = dtde.getLocation();
+		Point point = dtde.getLocation()
 
 		// accept the drop only on the cover image
 		if(getContentPane().getComponentAt(point) instanceof JPanel) {
-			if((showPanel.getComponentAt(point) instanceof JLabel && showPanel.getComponentAt(point) == this.img)
-					|| (editPanel.getComponentAt(point) instanceof JLabel && editPanel.getComponentAt(point) == this.img)) {
-				dtde.acceptDrop(DnDConstants.ACTION_LINK);
+			if((showPanel.getComponentAt(point) instanceof JLabel && showPanel.getComponentAt(point) == this.img) || (editPanel.getComponentAt(point) instanceof JLabel && editPanel.getComponentAt(point) == this.img)) {
+				dtde.acceptDrop(DnDConstants.ACTION_LINK)
 				try {
-					setAlbumImage(ImageIO.read(imgFile));
-					imageChanged = true;
-					saveButton.setEnabled(true);
+					setAlbumImage(ImageIO.read(imgFile))
+					imageChanged = true
+					saveButton.setEnabled(true)
 				} catch(IOException e) {
-					e.printStackTrace();
+					e.printStackTrace()
 				}
 			}
 		} else {
-			dtde.rejectDrop();
+			dtde.rejectDrop()
 		}
-		glassPane.hideIt();
-		image = null;
+		glassPane.hideIt()
+		image = null
 	}
 
 	/** unused */

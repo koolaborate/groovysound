@@ -33,10 +33,10 @@ import javax.swing.JComponent;
 public class NavButton extends JComponent
 {
 	private static final long serialVersionUID = -3709284104725338580L;
-	private BufferedImage activeImg;
-	private BufferedImage inActiveImg;
-	private boolean mouseOver = false;
-	private boolean active = false;
+	BufferedImage activeImg;
+	BufferedImage inActiveImg;
+	boolean mouseOver = false;
+	boolean active = false;
 	
 	/**
 	 * Constructor.
@@ -45,90 +45,22 @@ public class NavButton extends JComponent
 	{
         setPreferredSize(new Dimension(40, 36));
         
-        addMouseListener(new MouseAdapter(){
-        	@Override
-        	public void mouseEntered(MouseEvent e)
-        	{
+        addMouseListener([
+        	mouseEntered: {
         		mouseOver = true;
         		repaint();
-        	}
+        	},
         	
-        	@Override
-        	public void mouseExited(MouseEvent e)
-        	{
+        	mouseExited: {
         		mouseOver = false;
         		repaint();
-        	}
+        	},
         	
-        	@Override
-        	public void mouseClicked(MouseEvent e) 
-        	{
+        	mouseClicked: {
         		active = !active;
         		repaint();
         	}
-        });
+        ] as MouseAdapter);
 	}
 	
-	
-	/**
-	 * Sets the active image (when being selected).
-	 * 
-	 * @param activeImg the active image to be set
-	 */
-	public void setActiveImg(BufferedImage activeImg)
-	{
-		this.activeImg = activeImg;
-	}
-
-
-	/**
-	 * Sets the inactive image (when not being selected).
-	 * 
-	 * @param inActiveImg the inactive image to be set
-	 */
-	public void setInActiveImg(BufferedImage inActiveImg)
-	{
-		this.inActiveImg = inActiveImg;
-	}
-
-
-	/**
-	 * Sets the state of this button to active or inactive.
-	 * 
-	 * @param active whether to set the state to active or inactive
-	 */
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-
-
-	public boolean isMouseOver()
-	{
-		return mouseOver;
-	}
-
-
-	public void setMouseOver(boolean mouseOver)
-	{
-		this.mouseOver = mouseOver;
-	}
-
-
-	public boolean isActive()
-	{
-		return active;
-	}
-
-
-	public BufferedImage getActiveImg()
-	{
-		return activeImg;
-	}
-
-
-	public BufferedImage getInActiveImg()
-	{
-		return inActiveImg;
-	}
 }

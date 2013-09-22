@@ -70,7 +70,7 @@ public class PluginCellRenderer extends AbstractCellEditor implements TableCellR
 				g2d.setPaint(paint);
 				g2d.fillRect(0, 0, table.getWidth(), height - 1);
 				g2d.setColor(new Color(127, 157, 185));
-				float[] dash = {1.0f};
+				float[] dash = [1.0f]
 				g2d.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
 				g2d.drawLine(0, height - 1, table.getWidth(), height - 1);
 				g2d.setStroke(new BasicStroke());
@@ -83,18 +83,10 @@ public class PluginCellRenderer extends AbstractCellEditor implements TableCellR
 		icon.setVerticalAlignment(SwingConstants.TOP);
 		icon.setPreferredSize(new Dimension(50, height));
 		if (plugin.getIcon() != null) {
-			ImageIcon img = new ImageIcon(getThumbnail(plugin.getIcon(), 40));
+			ImageIcon img = new ImageIcon(getThumbnail(plugin.icon, 40));
 			icon.setIcon(img);			
 		}
 		panel.add(icon, BorderLayout.WEST);
-		
-		
-		//TODO
-		System.out.println(plugin.getName());
-		System.out.println(plugin);
-		System.out.println(plugin.getDescription());
-		System.out.println(plugin.getIcon());
-		
 		
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3), true);
 		rightPanel.setOpaque(false);
@@ -184,17 +176,17 @@ public class PluginCellRenderer extends AbstractCellEditor implements TableCellR
 			JCheckBox enabled = new JCheckBox(Messages.getString("PluginCellRenderer.12"), PlugEngine.getInstance().isEnabled(plugin)); //$NON-NLS-1$
 			enabled.setOpaque(false);
 			enabled.setEnabled(PlugEngine.getInstance().isCompatible(plugin));
-			enabled.addItemListener(new ItemListener() {
-				public void itemStateChanged(ItemEvent e) {
+			enabled.addItemListener([
+				itemStateChanged: { e ->
 					try {
-						boolean enabled = e.getStateChange() == ItemEvent.SELECTED;
-						PlugEngine.getInstance().setEnabled(plugin, enabled);
-						option.setEnabled(enabled);
-						name.setForeground(enabled ? Color.BLACK : Color.GRAY);
-						version.setForeground(enabled ? Color.GRAY : Color.LIGHT_GRAY);
-						description.setForeground(enabled ? Color.BLACK : Color.GRAY);
+						boolean isEnabled = e.getStateChange() == ItemEvent.SELECTED;
+						PlugEngine.getInstance().setEnabled(plugin, isEnabled);
+						option.setEnabled(isEnabled);
+						name.setForeground(isEnabled ? Color.BLACK : Color.GRAY);
+						version.setForeground(isEnabled ? Color.GRAY : Color.LIGHT_GRAY);
+						description.setForeground(isEnabled ? Color.BLACK : Color.GRAY);
 						ImageIcon img = null;
-						if (enabled)
+						if (isEnabled)
 							img = new ImageIcon(getThumbnail(plugin.getIcon(), 40));
 						else
 							img = new ImageIcon(GrayFilter.createDisabledImage(getThumbnail(plugin.getIcon(), 40)));
@@ -204,7 +196,7 @@ public class PluginCellRenderer extends AbstractCellEditor implements TableCellR
 						e1.printStackTrace();
 					}
 				}
-			});
+			] as ItemListener);
 			
 			bottomPanel.add(option);
 			bottomPanel.add(Box.createHorizontalGlue());

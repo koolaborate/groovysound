@@ -10,9 +10,9 @@ import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder
 
 class Mp3ToWavConverterView extends JDialog{
-	private JLabel currentFile
-	private JProgressBar progressBar
-	private String language
+	JLabel currentFile
+	JProgressBar progressBar
+	String language
 	
 	Mp3ToWavConverterController mp3ToWavConverterController
 	

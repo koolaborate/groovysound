@@ -36,7 +36,7 @@ import javax.swing.border.Border;
 public class Sidepanel extends JPanel
 {
 	private static final long serialVersionUID = -3089113951383589257L;
-	private boolean leftBorder = true;
+	boolean leftBorder = true;
 	
 	/**
 	 * Constructor.
@@ -46,31 +46,22 @@ public class Sidepanel extends JPanel
 		setOpaque(true);
 		setPreferredSize(new Dimension(10, Integer.MAX_VALUE));
 		setBackground(new Color(99, 108, 135));
-		setBorder(new Border(){
-			public Insets getBorderInsets(Component c)
-			{
+		setBorder([
+			getBorderInsets: {
 				return new Insets(0, 0, 0, 0);
-			}
-			public boolean isBorderOpaque()
-			{
+			},
+		
+			isBorderOpaque: {
 				return false;
-			}
-			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
-			{
+			},
+		
+//			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
+			paintBorder: { c, g, arg2, arg4, arg5 ->
 				g.setColor(Color.BLACK);
 				if(leftBorder) g.drawLine(9, 0, 9, getHeight());
 				else g.drawLine(0, 0, 0, getHeight());
 			}
-		});
+		] as Border);
 	}
 	
-	/**
-	 * Sets the panel to be the left border or the right border.
-	 * 
-	 * @param leftBorder <code>true</code> if it shall be the left panel, <code>false</code> if it shall be the right one
-	 */
-	public void setLeftBorder(boolean leftBorder)
-	{
-		this.leftBorder = leftBorder;
-	}
 }

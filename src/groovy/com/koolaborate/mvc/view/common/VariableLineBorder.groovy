@@ -33,12 +33,11 @@ import javax.swing.border.EmptyBorder;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class VariableLineBorder extends EmptyBorder
-{
+public class VariableLineBorder extends EmptyBorder{
 	private static final long serialVersionUID = 602883418224872088L;
-	private Color c;
-	private int thickness;
-	private boolean paintTop, paintLeft, paintBottom, paintRight;
+	Color c;
+	int thickness;
+	boolean paintTop, paintLeft, paintBottom, paintRight;
 	
 	/**
 	 * Constructor.
@@ -54,10 +53,7 @@ public class VariableLineBorder extends EmptyBorder
 	 * @param paintBottom whether or not to paint a line at the bottom
 	 * @param paintRight whether or not to paint a line at the right side
 	 */
-	public VariableLineBorder(int top, int left, int bottom, int right, Color c, 
-			int thickness, boolean paintTop, boolean paintLeft, boolean paintBottom, 
-			boolean paintRight)
-	{
+	public VariableLineBorder(int top, int left, int bottom, int right, Color c,  int thickness, boolean paintTop, boolean paintLeft, boolean paintBottom, boolean paintRight){
 		super(top, left, bottom, right);
 		this.c = c;
 		this.thickness = thickness;

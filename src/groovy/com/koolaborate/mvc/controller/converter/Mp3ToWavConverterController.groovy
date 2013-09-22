@@ -4,12 +4,10 @@ import com.koolaborate.converter.MP3ToWAVConverter
 import com.koolaborate.transaction.TransactionMessage
 
 class Mp3ToWavConverterController{
-	private MP3ToWAVConverter mp3ToWAVConverter
+	MP3ToWAVConverter mp3ToWAVConverter
 	
 	// maps to init
-	def void init(String sourceFolderLocation, String destinationFolderLocation){
-		
-	}
+	def void init(String sourceFolderLocation, String destinationFolderLocation){}
 	
 	// maps to amountFiles
 	def int getNumberOfFiles(){

@@ -44,19 +44,11 @@ import org.tritonus.share.sampled.file.TAudioFileFormat;
  ***********************************************************************************/
 public class MP3PropertyReader
 {
-	/**
-	 * Constructor.
-	 */
-	public MP3PropertyReader()
-	{
+	public MP3PropertyReader() {
 		// disable the JAudioTagger logging
-		try
-		{
-			LogManager.getLogManager().readConfiguration(new FileInputStream(new File(System.getProperty("user.dir") + 
-					File.separator + "log.properties")));
-		}
-		catch(Exception e)
-		{
+		try {
+			LogManager.getLogManager().readConfiguration(new FileInputStream(new File(System.getProperty("user.dir") + File.separator + "log.properties")));
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -67,7 +59,7 @@ public class MP3PropertyReader
 	 * @param filename the name of the song file to be displayed
 	 */
 	@Deprecated
-	public void showMP3Info(String filename)
+	def void showMP3Info(String filename)
 	{
 		File file = new File(filename);
 		AudioFileFormat baseFileFormat = null;
@@ -153,13 +145,9 @@ public class MP3PropertyReader
 				val /= 1000;
 				System.out.println("Bitrate: " + val + " kHz");
 			}
-		}
-		catch (UnsupportedAudioFileException e)
-		{
+		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -173,8 +161,7 @@ public class MP3PropertyReader
 	 * @param filename the name of the song
 	 * @return an array containing the title and duration of a song as Strings
 	 */
-	public String[] getSongTitleAndLength(String albumPath, String filename)
-	{
+	public String[] getSongTitleAndLength(String albumPath, String filename) {
 		String songPath = albumPath + File.separator + filename;
 		return getSongTitleAndLength(songPath);
 	}
@@ -186,8 +173,7 @@ public class MP3PropertyReader
 	 * @param songPath the path to the song file
 	 * @return an array containing the title and duration of a song as Strings
 	 */
-	public String[] getSongTitleAndLength(String songPath)
-	{
+	public String[] getSongTitleAndLength(String songPath) {
 		File file = new File(songPath);
 		
 		String[] info = new String[2];
@@ -195,8 +181,7 @@ public class MP3PropertyReader
 		info[1] = "0:00"; // duration
 		
 		AudioFile f;
-		try
-		{
+		try{
 			f = AudioFileIO.read(file);
 			Tag tag = f.getTag();
 			AudioHeader h = f.getAudioHeader();
@@ -212,9 +197,7 @@ public class MP3PropertyReader
 			if(secString.length() > 2) secString = secString.substring(0, 2);
 			else if(secString.length() < 2) secString = "0" + secString;
 			info[1] = mins + ":" + secString;
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return info;
@@ -227,27 +210,20 @@ public class MP3PropertyReader
 	 * @param songPath the path to the song file
 	 * @return the duration of the song in milliseconds
 	 */
-	public long getSongLength(String songPath)
-	{
+	public long getSongLength(String songPath) {
 		long ret = (long)0;
 		File file = new File(songPath);
 		AudioFileFormat baseFileFormat = null;
-		try
-		{
+		try {
 			baseFileFormat = AudioSystem.getAudioFileFormat(file);
 			// TAudioFileFormat properties
-			if(baseFileFormat instanceof TAudioFileFormat)
-			{
+			if(baseFileFormat instanceof TAudioFileFormat) {
 				Map properties = ((TAudioFileFormat)baseFileFormat).properties();
 				ret = (Long)properties.get("duration");
 			}
-		}
-		catch (UnsupportedAudioFileException e)
-		{
+		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		

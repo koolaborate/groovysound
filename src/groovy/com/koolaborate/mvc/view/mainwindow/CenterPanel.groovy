@@ -12,6 +12,7 @@ import com.koolaborate.model.CurrentSongInfo;
 import com.koolaborate.mvc.controller.PlaybackController;
 import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel;
 import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel.SORT_MODE;
+import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
 import com.koolaborate.mvc.view.navigation.NavigationPanel;
 import com.koolaborate.mvc.view.optionscreen.OptionScreen;
 import com.koolaborate.mvc.view.playlistview.CoverAndInfoPanel;
@@ -21,7 +22,6 @@ import com.koolaborate.mvc.view.playlistview.SongInfoPanel;
 import com.koolaborate.mvc.view.playlistview.TimeElapsedPanel;
 import com.koolaborate.service.db.Database;
 
-import static com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
 
 /***********************************************************************************
  * CenterPanel                                                                     *
@@ -51,23 +51,23 @@ import static com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
 public class CenterPanel extends JPanel
 {
 	private static final long serialVersionUID = -1865306352685281295L;
-	private NavigationPanel navigationPanel;
-	private PlaybackController playerControls;
-	private PlaylistPanel playlistPanel;
-	private CoverAndInfoPanel coverAndInfoPanel; 
-	private CoverPanel coverPanel;
-	private SongInfoPanel infoPanel;
-	private TimeElapsedPanel timeElapsedPanel;
+	NavigationPanel navigationPanel;
+	PlaybackController playerControls;
+	PlaylistPanel playlistPanel;
+	CoverAndInfoPanel coverAndInfoPanel; 
+	CoverPanel coverPanel;
+	SongInfoPanel infoPanel;
+	TimeElapsedPanel timeElapsedPanel;
 	
 	/** holds all the contents of the center panel */
-	private JPanel contentPanel;
+	JPanel contentPanel;
 	
-	private JPanel mainPanel;
-	private MainWindow window;
-	private Database db;
+	JPanel mainPanel;
+	MainWindow mainWindow;
+	Database db;
 	
-	private JScrollPane scroll;
-	private AlbumsOverviewPanel albumsPanel;
+	JScrollPane scroll;
+	AlbumsOverviewPanel albumsPanel;
 	
 	
 	/**
@@ -77,7 +77,7 @@ public class CenterPanel extends JPanel
 	 */
 	public CenterPanel(MainWindow window)
 	{
-		this.window = window;
+		this.mainWindow = window;
 		this.db = window.getDatabase();
 		
 		setLayout(new BorderLayout());
@@ -127,7 +127,7 @@ public class CenterPanel extends JPanel
 	public void setCurrentView(NAVIGATION nav, boolean repaintRequest)
 	{
 		navigationPanel.setCurrentView(nav);
-		window.setCurrentNavigation(nav);
+		mainWindow.setCurrentNavigation(nav);
 		// clear the main panel
 		mainPanel.removeAll();
 		
@@ -140,7 +140,7 @@ public class CenterPanel extends JPanel
 		// settings view
 		else if(nav == NAVIGATION.SETTINGS)
 		{
-			mainPanel.add(new OptionScreen(window));
+			mainPanel.add(new OptionScreen(mainWindow));
 		}
 		// otherwise: show albums view
 		else
@@ -162,7 +162,7 @@ public class CenterPanel extends JPanel
 	private void createPanels()
 	{
 		// cover panel
-		coverPanel = new CoverPanel(window);
+		coverPanel = new CoverPanel(mainWindow);
 		
 		// song info panel
 		infoPanel = new SongInfoPanel();
@@ -196,7 +196,7 @@ public class CenterPanel extends JPanel
 	 */
 	public void refreshAlbumsView(SORT_MODE sorting)
 	{
-		if(window.getCurrentNavigation() == NAVIGATION.ALBUMS)
+		if(mainWindow.getCurrentNavigation() == NAVIGATION.ALBUMS)
 		{
 			mainPanel.remove(scroll);
 		}
@@ -209,48 +209,20 @@ public class CenterPanel extends JPanel
 		scroll.getViewport().setOpaque(false);
 		scroll.setViewportBorder(empty);
 		
-		if(window.getCurrentNavigation() == NAVIGATION.ALBUMS)
+		if(mainWindow.getCurrentNavigation() == NAVIGATION.ALBUMS)
 		{
 			mainPanel.add(scroll);
 			scroll.repaint();
 			scroll.revalidate();
 		}
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
+		SwingUtilities.invokeLater([
+			run: {
 				revalidate();
 			}
-		});
+		] as Runnable);
 	}
 	
-	
-	/**
-	 * @return the playlist
-	 */
-	public PlaylistPanel getPlaylist()
-	{
-		return this.playlistPanel;
-	}
-
-
-	/**
-	 * @return the cover panel
-	 */
-	public CoverPanel getCoverPanel()
-	{
-		return this.coverPanel;
-	}
-
-	
-	/**
-	 * @return the song information panel (containing the song title and the artist's name)
-	 */
-	public SongInfoPanel getInfoPanel()
-	{
-		return this.infoPanel;
-	}
-
 	
 	/**
 	 * @return the player panel with the player controls
@@ -280,7 +252,7 @@ public class CenterPanel extends JPanel
 	 */
 	public void updateCoverInCase(CurrentSongInfo songInfo, boolean alsoIfNotPlaylistView)
 	{
-		boolean update = (window.getCurrentNavigation() == NAVIGATION.PLAYLIST);
+		boolean update = (mainWindow.getCurrentNavigation() == NAVIGATION.PLAYLIST);
 		if(alsoIfNotPlaylistView) update = true;
 		
 		// update of the cover image
@@ -288,35 +260,15 @@ public class CenterPanel extends JPanel
 		if(update)
 		{
 			coverPanel.refreshCover();
-			SwingUtilities.invokeLater(new Runnable(){
-				public void run()
-				{
+			SwingUtilities.invokeLater([
+				run: {
 					repaint();
 					revalidate();
 				}
-			});
+			] as Runnable);
 		}
 	}
 
-
-	/**
-	 * @return the time elapsed panel with the seek slider
-	 */
-	public TimeElapsedPanel getTimeElapsedPanel()
-	{
-		return timeElapsedPanel;
-	}
-
-
-	/**
-	 * @return the reference to the main window
-	 */
-	public MainWindow getMainWindow()
-	{
-		return this.window;
-	}
-	
-	
 	/**
 	 * @return the albums overview panel
 	 */

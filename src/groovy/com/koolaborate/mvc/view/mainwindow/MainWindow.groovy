@@ -117,8 +117,8 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	String currentFolder
 	CurrentSongInfo songInfo
 
-	Database db
-	Settings s
+	Database database
+	Settings settings
 
 	public enum NAVIGATION{
 		ALBUMS, PLAYLIST, SETTINGS
@@ -163,7 +163,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	
 	protected void init(Settings s){
 		// load the settings
-		this.s = s
+		this.settings = s
 
 		decorator = new Decorator()
 		setThemeSettings()
@@ -193,7 +193,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		setWindowShape(true)
 
 		// establish database connection
-		db = new Database()
+		database = new Database()
 
 		songInfo = new CurrentSongInfo()
 
@@ -227,7 +227,6 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	/**
 	 * Sets all theme specific colors and panels.
 	 */
-	@SuppressWarnings("unchecked")
 	private void setThemeSettings(){
 		// retrieve the active theme name from the XML file. If the file is not
 		// present,
@@ -310,7 +309,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		JLabel txtLogo = new JLabel(new ImageIcon(logoTextImg))
 		txtLogo.setBorder(new EmptyBorder(0, 10, 0, 0))
 
-		JLabel version = new JLabel(s.getVersion())
+		JLabel version = new JLabel(settings.getVersion())
 		version.setForeground(decorator.getLogoForegroundColor())
 		version.setFont(new Font("Serif", Font.PLAIN, 8))
 		version.setBorder(new EmptyBorder(0, 0, 14, 0))
@@ -342,7 +341,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 			actionPerformed: {
 				this.setVisible(false)
 				this.tinyWindow = new TinyView(getThisInstance(),
-						db.getAlbumById(songInfo.albumId),
+						database.getAlbumById(songInfo.albumId),
 						songInfo.songId)
 				tinyWindowShown = true
 			}
@@ -352,7 +351,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 			public void actionPerformed(ActionEvent e){
 				setVisible(false)
 				tinyWindow = new TinyView(getThisInstance(),
-						db.getAlbumById(songInfo.getAlbumId()),
+						database.getAlbumById(songInfo.getAlbumId()),
 						songInfo.getSongID())
 				tinyWindowShown = true
 			}
@@ -365,8 +364,8 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		maximize.setBorder(null)
 		maximize.setFocusPainted(false)
 		maximize.setContentAreaFilled(false)
-		maximize.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		maximize.addActionListener([
+			actionPerformed: { e ->
 				if(getExtendedState() != MAXIMIZED_BOTH)
 					maximize()
 				else deMaximize()
@@ -378,7 +377,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 				centerPanel.getAlbumsPanel().refreshAlbums(centerPanel,
 						centerPanel.getAlbumsPanel().getShownAlbums())
 			}
-		})
+		] as ActionListener)
 		maximize.setPreferredSize(new Dimension(25, 17))
 		decoration.add(maximize)
 
@@ -408,11 +407,11 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		help.setBorder(null)
 		help.setFocusPainted(false)
 		help.setContentAreaFilled(false)
-		help.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		help.addActionListener([
+			actionPerformed: {
 				showHelp()
 			}
-		})
+		] as ActionListener)
 		help.setPreferredSize(new Dimension(16, 16))
 		helpPanel.add(help)
 
@@ -492,9 +491,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		if(winShaper == null) winShaper = new WindowShaper()
 
 		if(roundCorners) {
-			roundWindowSupported = winShaper.shapeWindow(this,
-					new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),
-							20, 20))
+			roundWindowSupported = winShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20))
 			if(roundWindowSupported && mainPanel != null)
 				mainPanel.setBorder(new RoundedBorder(20))
 		} else {
@@ -519,10 +516,10 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	 * Method to end the application and save the status before leaving.
 	 */
 	public void exit(){
-		s.setMainWindowLocation(getLocation())
-		s.save()
+		settings.setMainWindowLocation(getLocation())
+		settings.save()
 		dispose()
-		db.shutDownConnection()
+		database.shutDownConnection()
 		System.exit(0)
 	}
 
@@ -532,12 +529,17 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	 */
 	protected class InnerListener extends MouseAdapter implements MouseMotionListener{
 		private Point startDrag
-
+		JFrame jFrame
+		
+		InnerListener(JFrame jFrame){
+			this.jFrame = jFrame
+		}
+		
 		@Override
 		public void mouseClicked(MouseEvent e){
 			if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1
 					&& e.getComponent() == header) {
-				if(getExtendedState() == MAXIMIZED_BOTH)
+				if(jFrame.getExtendedState() == MAXIMIZED_BOTH)
 					deMaximize()
 				else maximize()
 			}
@@ -553,17 +555,17 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		public void mouseDragged(MouseEvent e){
 			if(startDrag != null) {
 				if(e.getComponent() == header) {
-					setLocation(e.getX() + getLocation().x - startDrag.x,
-							e.getY() + getLocation().y - startDrag.y)
+					jFrame.setLocation(e.getX() + jFrame.getLocation().x - startDrag.x,
+							e.getY() + jFrame.getLocation().y - startDrag.y)
 				} else {
-					int width = getWidth() + e.getX() - startDrag.x
-					int height = getHeight() + e.getY() - startDrag.y
-					if(width < getMinimumSize().width)
-						width = getMinimumSize().width
-					if(height < getMinimumSize().height)
-						height = getMinimumSize().height
-					setSize(width, height)
-					setVisible(true)
+					int width = jFrame.getWidth() + e.getX() - startDrag.x
+					int height = jFrame.getHeight() + e.getY() - startDrag.y
+					if(width < jFrame.getMinimumSize().width)
+						width = jFrame.getMinimumSize().width
+					if(height < jFrame.getMinimumSize().height)
+						height = jFrame.getMinimumSize().height
+					jFrame.setSize(width, height)
+					jFrame.setVisible(true)
 				}
 			}
 		}
@@ -647,7 +649,6 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	 * Method is called when an object is being dragged onto the application
 	 * window.
 	 */
-	@SuppressWarnings("unchecked")
 	public void dragEnter(DropTargetDragEvent dtde){
 		if(!enableDnD) return
 
@@ -850,9 +851,9 @@ public class MainWindow extends JFrame implements DropTargetListener{
 					preview = helper.createSmallCover(bigCover)
 				}
 
-				Album a = db.getAlbumById(songInfo.getAlbumId())
+				Album a = database.getAlbumById(songInfo.getAlbumId())
 				a.setPreview(preview)
-				db.updateAlbum(a)
+				database.updateAlbum(a)
 
 				// refresh the albumsview since the thumbnail might have changed
 				centerPanel.getAlbumsPanel().refreshSelectedAlbum(a)
@@ -885,7 +886,7 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	}
 
 	public Database getDatabase(){
-		return db
+		return database
 	}
 
 	private MainWindow getThisInstance(){
@@ -896,20 +897,21 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	 * Registers a global listener to show the help in case the F1 key is
 	 * pressed.
 	 */
-	private void addF1KeyListener(){
+	protected void addF1KeyListener(){
 		EventQueue e = Toolkit.getDefaultToolkit().getSystemEventQueue()
-		e.push(new EventQueue(){
-			protected void dispatchEvent(AWTEvent event){
+		e.push([
+			dispatchEvent: { event ->
 				if(event instanceof KeyEvent) {
 					KeyEvent k = (KeyEvent) event
 					// only at the event key released and only if it is the F1
 					// key
-					if(k.getID() == KeyEvent.KEY_RELEASED
-							&& k.getKeyCode() == KeyEvent.VK_F1) showHelp()
+					if(k.getID() == KeyEvent.KEY_RELEASED && k.getKeyCode() == KeyEvent.VK_F1) {
+						showHelp()
+					}
 				}
 				super.dispatchEvent(event)
 			}
-		})
+		] as EventQueue)
 	}
 
 	/**
@@ -943,13 +945,9 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		help.showHelp()
 	}
 
-	public Settings getSettings(){
-		return s
-	}
-
 	public void handleTinyWindowUpdate(){
 		if(!tinyWindowShown) return
-		tinyWindow.updateView(songInfo.getSongID())
+		tinyWindow.updateView(songInfo.songId)
 
 	}
 
@@ -957,12 +955,6 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		this.tinyWindowShown = tinyWindowShown
 	}
 
-	/**
-	 * @return the decorator which contains all JPanels
-	 */
-	public Decorator getDecorator(){
-		return decorator
-	}
 
 	/**
 	 * @return the helper class for window shaping

@@ -50,7 +50,7 @@ public class Decorator
 	
 	// mouse selections
 	private Color selectionColor1, selectionColor2;
-	private float selectionAlpha = .9f; // 1.0f
+	private float selectionAlpha = 0.9f; // 1.0f
 	
 	// separators
 	private Color albumSeparatorColor = new Color(0x04446e); // dark blue by default

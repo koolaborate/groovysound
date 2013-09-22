@@ -147,7 +147,7 @@ public class Database
 		ResultSet resultSet;
 		try
 		{
-			resultSet = conn.getMetaData().getTables("%", "%", "%", new String[]{"TABLE"});
+			resultSet = conn.getMetaData().getTables("%", "%", "%", ["TABLE"]);
 			boolean shouldCreateTable = true;
 			
 			while(resultSet.next()) 

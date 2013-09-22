@@ -28,9 +28,9 @@ import com.koolaborate.service.db.Database;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class Album{
-	private String title, artist, folderPath;
-	private int id, year;
-	private BufferedImage preview;
+	String title, artist, folderPath;
+	int id, year;
+	BufferedImage preview;
 
 	/**
 	 * Constructor.
@@ -69,53 +69,7 @@ public class Album{
 		this.year = Integer.parseInt(infos.get("albumyear"));
 	}
 
-	// getter and setter
 
-	public String getArtist(){
-		return artist;
-	}
 
-	public void setArtist(String artist){
-		this.artist = artist;
-	}
 
-	public String getFolderPath(){
-		return folderPath;
-	}
-
-	public void setFolderPath(String folderPath){
-		this.folderPath = folderPath;
-	}
-
-	public int getId(){
-		return id;
-	}
-
-	public void setId(int id){
-		this.id = id;
-	}
-
-	public BufferedImage getPreview(){
-		return preview;
-	}
-
-	public void setPreview(BufferedImage preview){
-		this.preview = preview;
-	}
-
-	public String getTitle(){
-		return title;
-	}
-
-	public void setTitle(String title){
-		this.title = title;
-	}
-
-	public int getYear(){
-		return year;
-	}
-
-	public void setYear(int year){
-		this.year = year;
-	}
 }

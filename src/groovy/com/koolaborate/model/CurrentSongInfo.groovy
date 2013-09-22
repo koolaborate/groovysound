@@ -43,14 +43,14 @@ import org.jaudiotagger.tag.Tag;
 public class CurrentSongInfo
 {
 	// TODO change this to groovy style after java / groovy conversion
-	public String albumPath = "";
-	public String songPath = "";
-	public String artist, songTitle, albumTitle, year, coverPath, genre = ""; 
+	String albumPath = "";
+	String songPath = "";
+	String artist, songTitle, albumTitle, year, coverPath, genre = ""; 
 	
-	public int trackNo = 0;
-	public int albumId = -1;
-	public long duration = (long) 0;
-	public int songId = -1;
+	int trackNo = 0;
+	int albumId = -1;
+	long duration = (long) 0;
+	int songId = -1;
 	
 	public static String folderImg = "folder.jpg";
 	
@@ -118,13 +118,11 @@ public class CurrentSongInfo
 		if(StringUtils.isEmpty(this.albumPath)) return;
 		
 		File album = new File(this.albumPath);
-		{
-			File folderImg = new File(album.getAbsolutePath() + File.separator + CurrentSongInfo.folderImg);
-			if(folderImg.exists()){
-				this.coverPath = folderImg.getAbsolutePath();
-			}
-			else this.coverPath = null;
+		File folderImg = new File(album.getAbsolutePath() + File.separator + CurrentSongInfo.folderImg);
+		if(folderImg.exists()){
+			this.coverPath = folderImg.getAbsolutePath();
 		}
+		else this.coverPath = null;
 	}
 	
 	/**

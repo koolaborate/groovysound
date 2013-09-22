@@ -36,9 +36,9 @@ import javax.swing.JLabel;
 public class SeparatorLabel extends JLabel
 {
 	private static final long serialVersionUID = -360654062567845706L;
-	private String letter;
-	private Color foreground; // = new Color(0x04446e);
-	private int spaceToBorder = 10;
+	String letter;
+	Color foreground; // = new Color(0x04446e);
+	int spaceToBorder = 10;
 	
 	/**
 	 * Constructor.
@@ -50,18 +50,6 @@ public class SeparatorLabel extends JLabel
 		this.letter = firstChar;
 		setPreferredSize(new Dimension(2000, 16));
 	}
-	
-	
-	/**
-	 * Sets the color for the separator.
-	 * 
-	 * @param foreground the color to be set
-	 */
-	public void setForeground(Color foreground)
-	{
-		this.foreground = foreground;
-	}
-	
 	
 	@Override
 	protected void paintComponent(Graphics g)

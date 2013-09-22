@@ -1,34 +1,34 @@
-package com.koolaborate.bo.search;
+package com.koolaborate.bo.search
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.awt.Color
+import java.awt.GradientPaint
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import java.awt.Insets
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.event.KeyAdapter
+import java.awt.event.KeyEvent
+import java.util.ArrayList
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.Box
+import javax.swing.BoxLayout
+import javax.swing.ImageIcon
+import javax.swing.JButton
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JScrollPane
+import javax.swing.JTextField
+import javax.swing.SwingUtilities
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils
 
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.service.db.Database;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.service.db.Database
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * SearchFrame                                                                     *
@@ -57,15 +57,15 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class SearchFrame extends JFrame
 {
-	private static final long serialVersionUID = -6496420334431430661L;
-	private Database db;
-	private Color color1 = new Color(237, 242, 249);
-	private Color color2 = new Color(255, 255, 255);
-	private JTextField search;
-	private JButton go;
-	private JPanel resultPanel;
-	private JScrollPane resultList;
-	private MainWindow window;
+	private static final long serialVersionUID = -6496420334431430661L
+	Database db
+	Color color1 = new Color(237, 242, 249)
+	Color color2 = new Color(255, 255, 255)
+	JTextField search
+	JButton go
+	JPanel resultPanel
+	JScrollPane resultList
+	MainWindow window
 	
 	
 	/**
@@ -73,22 +73,21 @@ public class SearchFrame extends JFrame
 	 */
 	public SearchFrame(MainWindow w)
 	{
-		this.window = w;
-		this.db = w.getDatabase();
+		this.window = w
+		this.db = w.getDatabase()
 		
-		setTitle(LocaleMessage.getInstance().getString("search.title"));
-		setIconImage(new ImageIcon(getClass().getResource("/images/search.png")).getImage());
+		setTitle(LocaleMessage.getInstance().getString("search.title"))
+		setIconImage(new ImageIcon(getClass().getResource("/images/search.png")).getImage())
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				initGUI();
-				setSize(560, 360);
-				setLocationRelativeTo(null);
-				setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				setVisible(true);
+		SwingUtilities.invokeLater([
+			run: {
+				initGUI()
+				setSize(560, 360)
+				setLocationRelativeTo(null)
+				setDefaultCloseOperation(DISPOSE_ON_CLOSE)
+				setVisible(true)
 			}
-		});
+		] as Runnable)
 	}
 
 	
@@ -98,88 +97,84 @@ public class SearchFrame extends JFrame
 	private void initGUI()
 	{
 		// a gradient background panel
-		JPanel bg = new JPanel(){
-			private static final long serialVersionUID = -7634430239968324001L;
-
-			protected void paintComponent(Graphics g) 
-			{
-				Graphics2D g2d = (Graphics2D) g;
+		def bg = [
+			paintComponent: { g ->
+				Graphics2D g2d = (Graphics2D) g
 				
-				int w = getWidth();
-				int h = getHeight();
+				int w = getWidth()
+				int h = getHeight()
 				
 				// Paint a gradient from top to bottom
 				GradientPaint gp = new GradientPaint(
 						0, 0, color1,
-						0, h, color2);
+						0, h, color2)
 				
-				g2d.setPaint(gp);
-				g2d.fillRect(0, 0, w, h);
-			};
-		};
+				g2d.setPaint(gp)
+				g2d.fillRect(0, 0, w, h)
+			}
+		] as JPanel
 		
-		bg.setLayout(new GridBagLayout());
+		bg.setLayout(new GridBagLayout())
 		
 		// a description text
-		JLabel searchLabel = new JLabel(LocaleMessage.getInstance().getString("search.phrase"));
+		JLabel searchLabel = new JLabel(LocaleMessage.getInstance().getString("search.phrase"))
 		
 		// a search text field
-		search = new JTextField();
-		search.addKeyListener(new KeyAdapter(){
-			@Override
-			public void keyReleased(KeyEvent e)
-			{
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) startSearch();
+		search = new JTextField()
+		search.addKeyListener([
+			keyReleased: { e ->
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					startSearch()
+				}
 			}
-		});
+		] as KeyAdapter)
 		
 		// a "go" button
-		go = new JButton(LocaleMessage.getInstance().getString("search.go_button"));
-		go.setToolTipText(LocaleMessage.getInstance().getString("search.go_tooltip"));
-		go.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				startSearch();
+		go = new JButton(LocaleMessage.getInstance().getString("search.go_button"))
+		go.setToolTipText(LocaleMessage.getInstance().getString("search.go_tooltip"))
+		go.addActionListener([
+			actionPerformed: { 
+				startSearch()
 			}
-		});
+		] as ActionListener)
 		
 		// the result list
-		resultPanel = new JPanel();
-		resultPanel.setOpaque(false);
-		resultPanel.setLayout(new BoxLayout(resultPanel, BoxLayout.Y_AXIS));
-		resultList = new JScrollPane(resultPanel);
-		resultList.setOpaque(false);
-		resultList.getViewport().setOpaque(false);
+		resultPanel = new JPanel()
+		resultPanel.setOpaque(false)
+		resultPanel.setLayout(new BoxLayout(resultPanel, BoxLayout.Y_AXIS))
+		resultList = new JScrollPane(resultPanel)
+		resultList.setOpaque(false)
+		resultList.getViewport().setOpaque(false)
 		
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(4, 4, 4, 4);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		bg.add(searchLabel, gbc);
+		GridBagConstraints gbc = new GridBagConstraints()
+		gbc.anchor = GridBagConstraints.LINE_START
+		gbc.fill = GridBagConstraints.NONE
+		gbc.insets = new Insets(4, 4, 4, 4)
+		gbc.gridx = 0
+		gbc.gridy = 0
+		bg.add(searchLabel, gbc)
 		
-		gbc.weightx = 1.0f;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = 1;
-		gbc.insets = new Insets(4, 0, 4, 4);
-		bg.add(search, gbc);
+		gbc.weightx = 1.0f
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.gridx = 1
+		gbc.insets = new Insets(4, 0, 4, 4)
+		bg.add(search, gbc)
 		
-		gbc.weightx = 0.0f;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 2;
-		bg.add(go, gbc);
+		gbc.weightx = 0.0f
+		gbc.fill = GridBagConstraints.NONE
+		gbc.gridx = 2
+		bg.add(go, gbc)
 		
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(0, 4, 4, 4);
-		gbc.weightx = 1.0f;
-		gbc.weighty = 1.0f;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.gridwidth = 3;
-		bg.add(resultList, gbc);
+		gbc.fill = GridBagConstraints.BOTH
+		gbc.insets = new Insets(0, 4, 4, 4)
+		gbc.weightx = 1.0f
+		gbc.weighty = 1.0f
+		gbc.gridx = 0
+		gbc.gridy = 1
+		gbc.gridwidth = 3
+		bg.add(resultList, gbc)
 		
-		add(bg);
+		add(bg)
 	}
 	
 	
@@ -188,33 +183,38 @@ public class SearchFrame extends JFrame
 	 */
 	private void startSearch()
 	{
-		if(StringUtils.isEmpty(search.getText())) return;
+		if(StringUtils.isEmpty(search.getText())) return
 		
-		resultPanel.removeAll();
+		resultPanel.removeAll()
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				search.setEnabled(false);
-				go.setEnabled(false);
+		SwingUtilities.invokeLater([
+			run: {
+				search.setEnabled(false)
+				go.setEnabled(false)
 			}
-		});
+		] as Runnable)
 		
-		ArrayList<SearchResult> results = db.getSearchResults(search.getText().trim());
+		ArrayList<SearchResult> results = db.getSearchResults(search.getText().trim())
 		for(SearchResult result : results)
 		{
-			SearchEntry entry = new SearchEntry(window, result, this);
-			resultPanel.add(entry);
+			SearchEntry entry = new SearchEntry(window, result, this)
+			resultPanel.add(entry)
 		}
-		resultPanel.add(Box.createVerticalGlue());
-		resultList.revalidate();
+		resultPanel.add(Box.createVerticalGlue())
+		resultList.revalidate()
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				search.setEnabled(true);
-				go.setEnabled(true);
+		SwingUtilities.invokeLater([
+			run: {
+				search.setEnabled(true)
+				go.setEnabled(true)
 			}
-		});
+		] as Runnable)
 	}
+	
+	
 }
+
+
+
+
+

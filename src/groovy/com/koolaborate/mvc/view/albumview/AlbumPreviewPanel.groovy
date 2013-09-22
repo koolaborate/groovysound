@@ -1,54 +1,54 @@
-package com.koolaborate.mvc.view.albumview;
+package com.koolaborate.mvc.view.albumview
 
-import java.awt.AlphaComposite;
-import java.awt.Component;
-import java.awt.Composite;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.AlphaComposite
+import java.awt.Component
+import java.awt.Composite
+import java.awt.Cursor
+import java.awt.Dimension
+import java.awt.Font
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.RenderingHints
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import java.util.ArrayList
+import java.util.List
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO
+import javax.swing.BoxLayout
+import javax.swing.ImageIcon
+import javax.swing.JLabel
+import javax.swing.JMenuItem
+import javax.swing.JPanel
+import javax.swing.JPopupMenu
+import javax.swing.SwingUtilities
+import javax.swing.border.EmptyBorder
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils
+import org.apache.log4j.Logger
 
-import com.koolaborate.model.Album;
-import com.koolaborate.model.CurrentSongInfo;
-import com.koolaborate.model.Song;
-import com.koolaborate.mvc.controller.PlaybackController;
-import com.koolaborate.mvc.controller.PlaybackController.STATE;
-import com.koolaborate.mvc.view.albuminfo.AlbumInfoFrame;
-import com.koolaborate.mvc.view.artistinfo.ArtistInfoFrame;
-import com.koolaborate.mvc.view.dialogs.DeleteDialog;
-import com.koolaborate.mvc.view.editid3tag.EditId3TagFrame;
-import com.koolaborate.mvc.view.mainwindow.CenterPanel;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
-import com.koolaborate.mvc.view.navigation.SubNavButton;
-import com.koolaborate.mvc.view.playlistview.CoverPanel;
-import com.koolaborate.mvc.view.playlistview.PlaylistPanel;
-import com.koolaborate.util.FileHelper;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.model.Album
+import com.koolaborate.model.CurrentSongInfo
+import com.koolaborate.model.Song
+import com.koolaborate.mvc.controller.PlaybackController
+import com.koolaborate.mvc.controller.PlaybackController.STATE
+import com.koolaborate.mvc.view.albuminfo.AlbumInfoFrame
+import com.koolaborate.mvc.view.artistinfo.ArtistInfoFrame
+import com.koolaborate.mvc.view.dialogs.DeleteDialog
+import com.koolaborate.mvc.view.editid3tag.EditId3TagFrame
+import com.koolaborate.mvc.view.mainwindow.CenterPanel
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.mvc.view.navigation.SubNavButton
+import com.koolaborate.mvc.view.playlistview.CoverPanel
+import com.koolaborate.mvc.view.playlistview.PlaylistPanel
+import com.koolaborate.util.FileHelper
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * AlbumPreviewPanel *
@@ -74,79 +74,75 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class AlbumPreviewPanel extends JPanel{
-	private static final long serialVersionUID = -1492349214353820515L;
+	private static final long serialVersionUID = -1492349214353820515L
 
-	BufferedImage preview;
-	JLabel previewImgLabel, titleLabel, artistLabel;
-	CenterPanel centerPanel;
-	CurrentSongInfo songInfo;
-	MainWindow window;
+	BufferedImage preview
+	JLabel previewImgLabel, titleLabel, artistLabel
+	CenterPanel centerPanel
+	CurrentSongInfo songInfo
+	MainWindow window
 
-	Album album;
-	String albumFolder;
-	int albumId;
-	boolean active = false;
+	Album album
+	String albumFolder
+	int albumId
+	boolean active = false
 
 	/** the log4j logger */
-	static Logger log = Logger.getLogger(AlbumPreviewPanel.class.getName());
+	static Logger log = Logger.getLogger(AlbumPreviewPanel.class.getName())
 
 	/**
 	 * Constructor.
 	 */
 	public AlbumPreviewPanel(CenterPanel panel, CurrentSongInfo info){
-		this.songInfo = info;
-		this.centerPanel = panel;
-		this.window = panel.getMainWindow();
+		this.songInfo = info
+		this.centerPanel = panel
+		this.window = panel.getMainWindow()
 
-		setOpaque(false);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(102, 108));
+		setOpaque(false)
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
+		setPreferredSize(new Dimension(102, 108))
 
 		try {
-			preview = ImageIO.read(getClass().getResource(
-					"/images/emptycover.jpg"));
+			preview = ImageIO.read(getClass().getResource("/images/emptycover.jpg"))
 		} catch(IOException ioe) {
-			ioe.printStackTrace();
+			ioe.printStackTrace()
 		}
 
-		previewImgLabel = new JLabel(new ImageIcon(preview));
-		previewImgLabel.setBorder(new EmptyBorder(2, 2, 0, 0));
-		titleLabel = new JLabel("");
-		titleLabel.setFont(new Font("Serif", Font.PLAIN, 12));
-		titleLabel.setBorder(new EmptyBorder(0, 2, 0, 0));
-		artistLabel = new JLabel("");
-		artistLabel.setFont(new Font("Serif", Font.PLAIN, 10));
-		artistLabel.setBorder(new EmptyBorder(0, 2, 0, 0));
+		previewImgLabel = new JLabel(new ImageIcon(preview))
+		previewImgLabel.setBorder(new EmptyBorder(2, 2, 0, 0))
+		titleLabel = new JLabel("")
+		titleLabel.setFont(new Font("Serif", Font.PLAIN, 12))
+		titleLabel.setBorder(new EmptyBorder(0, 2, 0, 0))
+		artistLabel = new JLabel("")
+		artistLabel.setFont(new Font("Serif", Font.PLAIN, 10))
+		artistLabel.setBorder(new EmptyBorder(0, 2, 0, 0))
 
-		add(previewImgLabel);
-		add(titleLabel);
-		add(artistLabel);
+		add(previewImgLabel)
+		add(titleLabel)
+		add(artistLabel)
 
-		addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseEntered(MouseEvent arg0){
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-				setActive(true);
-				repaint();
-			}
+		addMouseListener([
+			mouseEntered: {
+				setCursor(new Cursor(Cursor.HAND_CURSOR))
+				setActive(true)
+				repaint()
+			},
 
-			@Override
-			public void mouseExited(MouseEvent arg0){
-				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				setActive(false);
-				repaint();
-			}
+			mouseExited: {
+				setCursor(new Cursor(Cursor.DEFAULT_CURSOR))
+				setActive(false)
+				repaint()
+			},
 
-			@Override
-			public void mouseClicked(MouseEvent e){
+			mouseClicked: { e ->
 				if(SwingUtilities.isLeftMouseButton(e)) {
-					showPlaylistofSelectedAlbum();
+					showPlaylistofSelectedAlbum()
 				} else if(SwingUtilities.isRightMouseButton(e)) {
 					// show a popup menu
-					showPopup(previewImgLabel, e.getPoint().x, e.getPoint().y);
+					showPopup(previewImgLabel, e.getPoint().x, e.getPoint().y)
 				}
 			}
-		});
+		] as MouseAdapter)
 	}
 
 	/**
@@ -160,231 +156,209 @@ public class AlbumPreviewPanel extends JPanel{
 	 *            the y value of the location
 	 */
 	private void showPopup(Component c, int x, int y){
-		JPopupMenu popmen = new JPopupMenu();
+		JPopupMenu popmen = new JPopupMenu()
 
-		JMenuItem playItem = new JMenuItem(
-				LocaleMessage.getInstance().getString("album.play"));
-		playItem.setIcon(new ImageIcon(getClass().getResource(
-				"/images/playlist_play.png")));
+		JMenuItem playItem = new JMenuItem(LocaleMessage.getInstance().getString("album.play"))
+		playItem.setIcon(new ImageIcon(getClass().getResource("/images/playlist_play.png")))
 			
 		def actionListener = [
 			actionPerformed: {
-				showPlaylistofSelectedAlbum();
+				showPlaylistofSelectedAlbum()
 			}
 		] as ActionListener
 	
-		playItem.addActionListener(actionListener);
-		popmen.add(playItem);
+		playItem.addActionListener(actionListener)
+		popmen.add(playItem)
 
-		JMenuItem infoItem = new JMenuItem(
-				LocaleMessage.getInstance().getString("album.information"));
-		infoItem.setIcon(new ImageIcon(getClass().getResource(
-				"/images/about.png")));
+		JMenuItem infoItem = new JMenuItem(LocaleMessage.getInstance().getString("album.information"))
+		infoItem.setIcon(new ImageIcon(getClass().getResource("/images/about.png")))
 			
 		def infoItemActionListener = [
 			actionPerformed: {
-				new AlbumInfoFrame(window, albumId);
+				new AlbumInfoFrame(window, albumId)
 			}
 		] as ActionListener
 	
-		infoItem.addActionListener(infoItemActionListener);
-		popmen.add(infoItem);
+		infoItem.addActionListener(infoItemActionListener)
+		popmen.add(infoItem)
 
-		popmen.addSeparator();
+		popmen.addSeparator()
 
-		JMenuItem delItem = new JMenuItem(
-				LocaleMessage.getInstance().getString("album.delete"));
-		delItem.setIcon(new ImageIcon(getClass().getResource(
-				"/images/deletesmall.png")));
+		JMenuItem delItem = new JMenuItem(LocaleMessage.getInstance().getString("album.delete"))
+		delItem.setIcon(new ImageIcon(getClass().getResource("/images/deletesmall.png")))
 		def delItemActionListener = [
 			actionPerformed: {
-				DeleteDialog delDiag = DeleteDialog.showDeleteAlbumDialog();
+				DeleteDialog delDiag = DeleteDialog.showDeleteAlbumDialog()
 				if(delDiag.yesSelected) {
 					// del the files from disk (if desired)
 					if(delDiag.delFilesSelected) {
-						log.debug("Deleting files...");
-						List<Song> songs = window.getDatabase().getSongsForAlbum(
-								albumId);
+						log.debug("Deleting files...")
+						List<Song> songs = window.getDatabase().getSongsForAlbum(albumId)
 						for(Song s: songs)
 							FileHelper.getInstance().removeFile(
-									album.getFolderPath() + File.separator
-											+ s.getFileName());
+									album.getFolderPath() + File.separator + s.getFileName())
 						// delete the folder
-						log.debug("Deleting folder...");
+						log.debug("Deleting folder...")
 						if(!StringUtils.isEmpty(album.getFolderPath()))
-							FileHelper.getInstance().removeFile(
-									album.getFolderPath());
-						log.debug("done.");
+							FileHelper.getInstance().removeFile(album.getFolderPath())
+						log.debug("done.")
 					}
 
 					// delete the album from the database
-					log.debug("Deleting album with ID " + albumId
-							+ " from the database.");
-					window.getDatabase().deleteAlbum(albumId);
+					log.debug("Deleting album with ID " + albumId + " from the database.")
+					window.getDatabase().deleteAlbum(albumId)
 
 					// refresh the albums view
-					centerPanel.refreshAlbumsView(centerPanel.getAlbumsPanel().getSortMode());
-					SwingUtilities.invokeLater(new Runnable(){
-						public void run(){
-							centerPanel.revalidate();
+					centerPanel.refreshAlbumsView(centerPanel.getAlbumsPanel().getSortMode())
+					SwingUtilities.invokeLater([
+						run: {
+							centerPanel.revalidate()
 						}
-					});
+					] as Runnable)
 
 					// refresh the playlist view if it is the selected album
 					// load empty cover if it is the active album in the
 					// playlist...
-					log.debug("The currently selected album folder path is: "
-							+ window.getCurrentFolderPath());
-					log.debug("The path of the album to be deleted is: "
-							+ album.getFolderPath());
-					if(window.getCurrentFolderPath() != null
-							&& window.getCurrentFolderPath().equals(
-									album.getFolderPath())) {
-						log.debug("The folders are eyual => stop playback");
+					log.debug("The currently selected album folder path is: " + window.getCurrentFolderPath())
+					log.debug("The path of the album to be deleted is: " + album.getFolderPath())
+					if(window.getCurrentFolderPath() != null && window.getCurrentFolderPath().equals(album.getFolderPath())) {
+						log.debug("The folders are eyual => stop playback")
 
-						PlaybackController playerPanel = window.getPlayerPanel();
-						centerPanel.getPlaylist().getPlaylist().clearPlaylist();
+						PlaybackController playerPanel = window.getPlayerPanel()
+						centerPanel.playlistPanel.getPlaylist().clearPlaylist()
 
 						// stop playback if song is from current album
 						if(window.getPlayerPanel().getCurrentState() == STATE.PLAYING) {
-							playerPanel.fadeOut();
+							playerPanel.fadeOut()
 						}
-						playerPanel.setCurrentState(STATE.ENDED);
+						playerPanel.setCurrentState(STATE.ENDED)
 
-						CurrentSongInfo info = new CurrentSongInfo();
+						CurrentSongInfo info = new CurrentSongInfo()
 
 						// then clear the playlist and update the view
-						window.setCurrentSongInfo(info);
-						centerPanel.updateCover(window.getSongInfo());
-						centerPanel.getCoverPanel().refreshCover();
-						window.updateArtist(info);
-						window.setCurrentFolder(null);
+						window.setCurrentSongInfo(info)
+						centerPanel.updateCover(window.getSongInfo())
+						centerPanel.getCoverPanel().refreshCover()
+						window.updateArtist(info)
+						window.setCurrentFolder(null)
 					}
 				}
 			}
 		] as ActionListener
 		
-		delItem.addActionListener(delItemActionListener);
-		popmen.add(delItem);
+		delItem.addActionListener(delItemActionListener)
+		popmen.add(delItem)
 
-		popmen.show(c, x, y);
+		popmen.show(c, x, y)
 	}
 
 	/**
 	 * Switches to the playlist view of the selected album.
 	 */
 	private void showPlaylistofSelectedAlbum(){
-		NAVIGATION nav = NAVIGATION.PLAYLIST;
+		NAVIGATION nav = NAVIGATION.PLAYLIST
 
-		final String artistName = album.getArtist();
-		centerPanel.setCurrentView(nav, true);
+		final String artistName = album.getArtist()
+		centerPanel.setCurrentView(nav, true)
 
 		// refresh the playlist
-		PlaylistPanel playlist = centerPanel.getPlaylist();
-		playlist.setAlbumFolder(new File(albumFolder));
-		playlist.setAlbumId(albumId);
-		playlist.refreshSongList();
-		songInfo.setAlbumPath(albumFolder);
+		PlaylistPanel playlist = centerPanel.playlistPanel
+		playlist.setAlbumFolder(new File(albumFolder))
+		playlist.setAlbumId(albumId)
+		playlist.refreshSongList()
+		songInfo.setAlbumPath(albumFolder)
 		songInfo.albumId = album.getId()
 		// refresh the cover image
-		CoverPanel cover = centerPanel.getCoverPanel();
-		cover.setAlbumTitle(album.getTitle());
-		cover.setArtistName(artistName);
-		cover.setAlbumFolder(albumFolder);
-		centerPanel.updateCover(songInfo);
-		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		setActive(false);
-		centerPanel.getAlbumsPanel().setSelectedAlbum(getThisInstance(), album);
-		window.repaintBackgroundPanel();
+		CoverPanel cover = centerPanel.getCoverPanel()
+		cover.setAlbumTitle(album.getTitle())
+		cover.setArtistName(artistName)
+		cover.setAlbumFolder(albumFolder)
+		centerPanel.updateCover(songInfo)
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR))
+		setActive(false)
+		centerPanel.getAlbumsPanel().setSelectedAlbum(getThisInstance(), album)
+		window.repaintBackgroundPanel()
 
 		// refresh the sub navigation buttons
-		JPanel playlistSubNavPanel = centerPanel.getNavigationPanel().getCurrentSubNavigationPanel(
-				nav);
+		JPanel playlistSubNavPanel = centerPanel.getNavigationPanel().getCurrentSubNavigationPanel(nav)
 
 		// save any previously added buttons (by plugins etc.)
-		Component[] previousButtons = playlistSubNavPanel.getComponents();
-		List<SubNavButton> safeButtons = new ArrayList<SubNavButton>();
+		Component[] previousButtons = playlistSubNavPanel.getComponents()
+		List<SubNavButton> safeButtons = new ArrayList<SubNavButton>()
 		for(Component c: previousButtons) {
 			if(c instanceof SubNavButton) {
-				SubNavButton b = (SubNavButton) c;
-				if(!b.getText().equals(
-						LocaleMessage.getInstance().getString("nav.artistinfo"))
-						&& !b.getText().equals(
-								LocaleMessage.getInstance().getString("nav.albuminfo"))
-						&& !b.getText().equals(
-								LocaleMessage.getInstance().getString("nav.editid3"))) {
-					safeButtons.add(b);
+				SubNavButton b = (SubNavButton) c
+				
+				def artistInfo = LocaleMessage.getInstance().getString("nav.artistinfo")
+				def albumInfo = LocaleMessage.getInstance().getString("nav.albuminfo")
+				def editId3 = LocaleMessage.getInstance().getString("nav.editid3")
+				if(!b.getText().equals(artistInfo) && !b.getText().equals(albumInfo) && !b.getText().equals(editId3)) {
+					safeButtons.add(b)
 				}
 			}
 		}
 
-		playlistSubNavPanel.removeAll();
+		playlistSubNavPanel.removeAll()
 
 		// add a button 'Artist information' to the subnavigation if the artist
 		// name is given
 		if(!StringUtils.isEmpty(artistName)) {
-			SubNavButton artistInfo = window.getDecorator().getArtistInfoSubNavButton();
-			artistInfo.setText(LocaleMessage.getInstance().getString("nav.artistinfo"));
-			artistInfo.setMouseListener(new MouseAdapter(){
-				@Override
-				public void mouseClicked(MouseEvent e){
-					new ArtistInfoFrame(window, artistName);
+			SubNavButton artistInfo = window.getDecorator().getArtistInfoSubNavButton()
+			artistInfo.setText(LocaleMessage.getInstance().getString("nav.artistinfo"))
+			artistInfo.setMouseListener([
+				mouseClicked: {
+					new ArtistInfoFrame(window, artistName)
 				}
-			});
-			playlistSubNavPanel.add(artistInfo);
+			] as MouseAdapter)
+			playlistSubNavPanel.add(artistInfo)
 		}
 
 		// general album information (with the ability to edit)
-		SubNavButton albumInfo = window.getDecorator().getAlbumInfoSubNavButton();
-		albumInfo.setText(LocaleMessage.getInstance().getString("nav.albuminfo"));
-		albumInfo.setMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
-				new AlbumInfoFrame(centerPanel.getMainWindow(), albumId);
+		SubNavButton albumInfo = window.getDecorator().getAlbumInfoSubNavButton()
+		albumInfo.setText(LocaleMessage.getInstance().getString("nav.albuminfo"))
+		albumInfo.setMouseListener([
+			mouseClicked: {
+				new AlbumInfoFrame(centerPanel.getMainWindow(), albumId)
 			}
-		});
-		playlistSubNavPanel.add(albumInfo);
+		] as MouseAdapter)
+		playlistSubNavPanel.add(albumInfo)
 
 		// edit id3 tags of the songs
-		SubNavButton editId3Tags = window.getDecorator().getEditId3TagsSubNavButton();
-		editId3Tags.setText(LocaleMessage.getInstance().getString("nav.editid3"));
-		editId3Tags.setMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
-				new EditId3TagFrame(window, albumId, albumFolder,
-						window.getDatabase().getSongFileNamesForAlbum(albumId));
+		SubNavButton editId3Tags = window.getDecorator().getEditId3TagsSubNavButton()
+		editId3Tags.setText(LocaleMessage.getInstance().getString("nav.editid3"))
+		editId3Tags.setMouseListener([
+			mouseClicked: {
+				new EditId3TagFrame(window, albumId, albumFolder, window.getDatabase().getSongFileNamesForAlbum(albumId))
 			}
-		});
-		playlistSubNavPanel.add(editId3Tags);
+		] as MouseAdapter)
+		playlistSubNavPanel.add(editId3Tags)
 
 		// now add the previously saved buttons
 		for(SubNavButton b: safeButtons)
-			playlistSubNavPanel.add(b);
+			playlistSubNavPanel.add(b)
 
-		playlistSubNavPanel.repaint();
+		playlistSubNavPanel.repaint()
 
 		// update the tray icon
-		window.updateTrayIconAndText(album.getFolderPath() + File.separator
-				+ "folder.jpg", album.getArtist(), album.getTitle());
+		window.updateTrayIconAndText(album.getFolderPath() + File.separator + "folder.jpg", album.getArtist(), album.getTitle())
 	}
 
 	@Override
 	protected void paintComponent(Graphics g){
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		Graphics2D g2 = (Graphics2D) g
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
 		if(active) {
 			// transparency according to set value
 			// g2.setComposite(AlphaComposite.SrcAtop.derive(window.getDecorator().getSelectionAlpha()));
-			Composite oldComposite = g2.getComposite();
-			g2.setComposite(AlphaComposite.SrcOver.derive(window.getDecorator().getSelectionAlpha()));
-			g2.setColor(window.getDecorator().getSelectionColor1());
-			g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5);
-			g2.setColor(window.getDecorator().getSelectionColor2());
-			g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5);
+			Composite oldComposite = g2.getComposite()
+			g2.setComposite(AlphaComposite.SrcOver.derive(window.getDecorator().getSelectionAlpha()))
+			g2.setColor(window.getDecorator().getSelectionColor1())
+			g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5)
+			g2.setColor(window.getDecorator().getSelectionColor2())
+			g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5)
 			// afterwards set alpha value back to 1.0
-			g2.setComposite(oldComposite);
+			g2.setComposite(oldComposite)
 			// g2.setComposite(AlphaComposite.SrcAtop.derive(1.0f));
 		}
 	}
@@ -396,8 +370,8 @@ public class AlbumPreviewPanel extends JPanel{
 	 *            the album to be set
 	 */
 	public void setAlbum(Album a){
-		this.album = a;
-		setAlbumData(a.getId(), a.getFolderPath(), a.getTitle(), a.getArtist(), a.getPreview());
+		this.album = a
+		setAlbumData(a.getId(), a.getFolderPath(), a.getTitle(), a.getArtist(), a.getPreview())
 	}
 
 	/**
@@ -415,20 +389,20 @@ public class AlbumPreviewPanel extends JPanel{
 	 *            the cover image of the album
 	 */
 	private void setAlbumData(int albumId, String albumFolder, String albumTitle, String albumArtist, BufferedImage image){
-		this.albumId = albumId;
-		this.albumFolder = albumFolder;
-		if(image == null) image = preview;
-		previewImgLabel.setIcon(new ImageIcon(image));
-		titleLabel.setText(albumTitle);
-		artistLabel.setText(albumArtist);
-		setToolTipText(albumArtist + " - " + albumTitle);
-		repaint();
+		this.albumId = albumId
+		this.albumFolder = albumFolder
+		if(image == null) image = preview
+		previewImgLabel.setIcon(new ImageIcon(image))
+		titleLabel.setText(albumTitle)
+		artistLabel.setText(albumArtist)
+		setToolTipText(albumArtist + " - " + albumTitle)
+		repaint()
 	}
 
 	/**
 	 * @return a refernce to the instance of the class
 	 */
 	private AlbumPreviewPanel getThisInstance(){
-		return this;
+		return this
 	}
 }

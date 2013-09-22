@@ -1,60 +1,60 @@
-package com.koolaborate.mvc.view.artistinfo;
+package com.koolaborate.mvc.view.artistinfo
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.FlowLayout
+import java.awt.Font
+import java.awt.Graphics2D
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import java.awt.Insets
+import java.awt.MouseInfo
+import java.awt.Point
+import java.awt.Toolkit
+import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.Transferable
+import java.awt.datatransfer.UnsupportedFlavorException
+import java.awt.dnd.DnDConstants
+import java.awt.dnd.DropTarget
+import java.awt.dnd.DropTargetDragEvent
+import java.awt.dnd.DropTargetDropEvent
+import java.awt.dnd.DropTargetEvent
+import java.awt.dnd.DropTargetListener
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.URL
+import java.util.List
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JWindow;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
+import javax.swing.JButton
+import javax.swing.JEditorPane
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JScrollPane
+import javax.swing.JWindow
+import javax.swing.SwingUtilities
+import javax.swing.UIManager
+import javax.swing.border.EmptyBorder
+import javax.swing.border.LineBorder
+import javax.swing.text.html.HTMLEditorKit
+import javax.swing.text.html.StyleSheet
 
-import org.jdesktop.swingx.JXBusyLabel;
+import org.jdesktop.swingx.JXBusyLabel
 
-import com.koolaborate.model.Artist;
-import com.koolaborate.mvc.view.dialogs.VistaDialog;
-import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.util.GraphicsUtilities;
-import com.koolaborate.util.GraphicsUtilities2;
-import com.koolaborate.util.HtmlParser;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.model.Artist
+import com.koolaborate.mvc.view.dialogs.VistaDialog
+import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.util.GraphicsUtilities
+import com.koolaborate.util.GraphicsUtilities2
+import com.koolaborate.util.HtmlParser
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * ArtistInfoFrame                                                                 *
@@ -85,28 +85,28 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class ArtistInfoFrame extends JFrame implements DropTargetListener
 {
-	private static final long serialVersionUID = 3351665800950796092L;
-	private String artistname;
-	private JScrollPane scroll;
-	private JEditorPane htmlPane;
-	private JLabel img;
-	private JButton editButton, saveButton, closeButton, changeImage;
+	private static final long serialVersionUID = 3351665800950796092L
+	String artistname
+	JScrollPane scroll
+	JEditorPane htmlPane
+	JLabel img
+	JButton editButton, saveButton, closeButton, changeImage
 	
-	private boolean imageChanged = false;
-	private boolean changesMade = false;
+	boolean imageChanged = false
+	boolean changesMade = false
 	
-	private Artist artist;
+	Artist artist
 	
-	private JWindow window;
-	private MainWindow mainWindow;
-	private BufferedImage bigImage;
+	JWindow window
+	MainWindow mainWindow
+	BufferedImage bigImage
 	
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	private GhostDragGlassPane glassPane;
-	private File imgFile;
-	private BufferedImage image;
-	private int maxWidth = 80;  // maximum width for the ghost image
-	private int maxHeight = 80; // maximum height for the ghost image
+	GhostDragGlassPane glassPane
+	File imgFile
+	BufferedImage image
+	int maxWidth = 80  // maximum width for the ghost image
+	int maxHeight = 80 // maximum height for the ghost image
 	
 	
 	/**
@@ -117,15 +117,14 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 */
 	public ArtistInfoFrame(MainWindow w, final String artistname)
 	{
-		this.mainWindow = w;
-		this.artistname = artistname;
+		this.mainWindow = w
+		this.artistname = artistname
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				initGUI();
+		SwingUtilities.invokeLater([
+			run: {
+				initGUI()
 			}
-		});
+		] as Runnable)
 	}
 
 	
@@ -134,179 +133,172 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 */
 	private void initGUI()
 	{
-		setTitle(LocaleMessage.getInstance().getString("common.info_about") + " " + artistname);
-		setSizeAccordingToScreen(80);
-		setIconImage(new ImageIcon(getClass().getResource("/images/artist.png")).getImage());
+		setTitle(LocaleMessage.getInstance().getString("common.info_about") + " " + artistname)
+		setSizeAccordingToScreen(80)
+		setIconImage(new ImageIcon(getClass().getResource("/images/artist.png")).getImage())
 		
 		// define a drop target for the entire frame
-		DropTarget dt = new DropTarget(this, this);
-		this.setDropTarget(dt);
-		glassPane = new GhostDragGlassPane();
-		this.setGlassPane(glassPane);
+		DropTarget dt = new DropTarget(this, this)
+		this.setDropTarget(dt)
+		glassPane = new GhostDragGlassPane()
+		this.setGlassPane(glassPane)
 		
-		setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout())
 		
 		// the name of the artist
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.weightx = 1.0f;
-		gbc.gridwidth = 2;
-		gbc.insets = new Insets(10, 10, 0, 10);
-		JLabel title = new JLabel(artistname);
-		title.setFont(new Font("Calibri", Font.BOLD, 20));
-		add(title, gbc);
+		GridBagConstraints gbc = new GridBagConstraints()
+		gbc.gridx = 0
+		gbc.gridy = 0
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.anchor = GridBagConstraints.LINE_START
+		gbc.weightx = 1.0f
+		gbc.gridwidth = 2
+		gbc.insets = new Insets(10, 10, 0, 10)
+		JLabel title = new JLabel(artistname)
+		title.setFont(new Font("Calibri", Font.BOLD, 20))
+		add(title, gbc)
 		
 		// the image of the artist
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.weightx = 0.0f;
-		gbc.gridwidth = 1;
-		gbc.insets = new Insets(0, 10, 4, 10);
-		img = new JLabel();
-		img.setPreferredSize(new Dimension(340, 320));
-		img.setBorder(new LineBorder(Color.BLACK));
-		add(img, gbc);
+		gbc.gridx = 0
+		gbc.gridy = 1
+		gbc.fill = GridBagConstraints.NONE
+		gbc.anchor = GridBagConstraints.LINE_START
+		gbc.weightx = 0.0f
+		gbc.gridwidth = 1
+		gbc.insets = new Insets(0, 10, 4, 10)
+		img = new JLabel()
+		img.setPreferredSize(new Dimension(340, 320))
+		img.setBorder(new LineBorder(Color.BLACK))
+		add(img, gbc)
 		
 		// the change image button (at first invisible)
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.weightx = 0.0f;
-		gbc.insets = new Insets(0, 10, 4, 10);
-		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg")); 
-		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"));
-		changeImage.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				new SearchArtistImgFrame(mainWindow, getThisInstance(), artistname);
+		gbc.gridx = 0
+		gbc.gridy = 2
+		gbc.fill = GridBagConstraints.NONE
+		gbc.anchor = GridBagConstraints.NORTHWEST
+		gbc.weightx = 0.0f
+		gbc.insets = new Insets(0, 10, 4, 10)
+		changeImage = new JButton(LocaleMessage.getInstance().getString("common.changeimg")) 
+		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"))
+		changeImage.addActionListener([
+			actionPerformed: {
+				new SearchArtistImgFrame(mainWindow, getThisInstance(), artistname)
 			}
-		});
-		changeImage.setVisible(false);
-		add(changeImage, gbc);
+		] as ActionListener)
+		changeImage.setVisible(false)
+		add(changeImage, gbc)
 		
 		// the text to the artist
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.gridheight = 2;
-		gbc.weightx = 1.0f;
-		gbc.weighty = 1.0f;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.insets = new Insets(0, 0, 0, 0);
-		htmlPane = new JEditorPane();
-		htmlPane.setContentType("text/html");
+		gbc.gridx = 1
+		gbc.gridy = 1
+		gbc.gridheight = 2
+		gbc.weightx = 1.0f
+		gbc.weighty = 1.0f
+		gbc.fill = GridBagConstraints.BOTH
+		gbc.anchor = GridBagConstraints.LINE_START
+		gbc.insets = new Insets(0, 0, 0, 0)
+		htmlPane = new JEditorPane()
+		htmlPane.setContentType("text/html")
 		
-		HTMLEditorKit kit = new HTMLEditorKit(); 
-		StyleSheet ss = getStyleSheet();
-		kit.setStyleSheet(ss); 
-		htmlPane.setEditorKit(kit);
-		htmlPane.setEditable(false);
+		HTMLEditorKit kit = new HTMLEditorKit() 
+		StyleSheet ss = getStyleSheet()
+		kit.setStyleSheet(ss) 
+		htmlPane.setEditorKit(kit)
+		htmlPane.setEditable(false)
 		
-		scroll = new JScrollPane(htmlPane);
-		add(scroll, gbc);
+		scroll = new JScrollPane(htmlPane)
+		add(scroll, gbc)
 		
 		// the copyright notice
-		gbc.gridx = 1;
-		gbc.gridy = 3;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 2;
-		gbc.weightx = 1.0f;
-		gbc.weighty = 0.0f;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridx = 1
+		gbc.gridy = 3
+		gbc.gridheight = 1
+		gbc.gridwidth = 2
+		gbc.weightx = 1.0f
+		gbc.weighty = 0.0f
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.anchor = GridBagConstraints.LINE_START
+		gbc.insets = new Insets(0, 0, 0, 0)
 		
-		JLabel copyright = new JLabel("<HTML>&copy; Wikipedia&reg;</HTML>");
-		add(copyright, gbc);
+		JLabel copyright = new JLabel("<HTML>&copy; Wikipedia&reg;</HTML>")
+		add(copyright, gbc)
 		
 		// the button panel
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2))
 		
-		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"));
-		editButton.setActionCommand("edit");
-		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"));
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				JButton s = (JButton) e.getSource();
-				if(s.getActionCommand().equals("edit"))
-				{
-					setEditModeEnabled(true);
-				}
-				else
-				{
-					new Thread(new Runnable(){
-						public void run()
-						{
-							showSearchingWindow();
+		editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"))
+		editButton.setActionCommand("edit")
+		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"))
+		editButton.addActionListener([
+			actionPerformed: {
+				JButton s = (JButton) e.getSource()
+				if(s.getActionCommand().equals("edit")) {
+					setEditModeEnabled(true)
+				} else {
+					new Thread([
+						run: {
+							showSearchingWindow()
 							// update textual information
-							searchWikipediaForInfo();
-							window.dispose();
+							searchWikipediaForInfo()
+							window.dispose()
 						}
-					}).start();
+					] as Runnable).start()
 				}
 			}
-		});
-		saveButton = new JButton(UIManager.getString("FileChooser.saveButtonText"));
-		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"));
-		saveButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0)
-			{
-				setEditModeEnabled(false);
-				saveChanges();
+		] as ActionListener)
+		saveButton = new JButton(UIManager.getString("FileChooser.saveButtonText"))
+		saveButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"))
+		saveButton.addActionListener([
+			actionPerformed: {
+				setEditModeEnabled(false)
+				saveChanges()
 			}
-		});
-		saveButton.setEnabled(false);
-		closeButton = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"));
-		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"));
-		closeButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0)
-			{
+		] as ActionListener)
+		saveButton.setEnabled(false)
+		closeButton = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"))
+		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"))
+		closeButton.addActionListener([
+			actionPerformed: {
 				if(changesMade || imageChanged)
 				{
 					VistaDialog dialog = VistaDialog.showConfirmationDialog(LocaleMessage.getInstance().getString("common.discard_title"), 
-							LocaleMessage.getInstance().getString("common.discard_label"), LocaleMessage.getInstance().getString("common.discard_text"));
-					if(dialog.yesSelected) dispose();
+					LocaleMessage.getInstance().getString("common.discard_label"), LocaleMessage.getInstance().getString("common.discard_text"))
+					if(dialog.yesSelected) {
+						dispose()
+					}
 				}
 				else
 				{
-					dispose();
+					dispose()
 				}
 			}
-		});
+		] as ActionListener)
 		
-		buttonPanel.add(editButton);
-		buttonPanel.add(saveButton);
-		buttonPanel.add(closeButton);
+		buttonPanel.add(editButton)
+		buttonPanel.add(saveButton)
+		buttonPanel.add(closeButton)
 		
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 2;
-		gbc.weightx = 1.0f;
-		gbc.weighty = 0.0f;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridx = 0
+		gbc.gridy = 4
+		gbc.gridheight = 1
+		gbc.gridwidth = 2
+		gbc.weightx = 1.0f
+		gbc.weighty = 0.0f
+		gbc.fill = GridBagConstraints.HORIZONTAL
+		gbc.anchor = GridBagConstraints.LINE_START
+		gbc.insets = new Insets(0, 0, 0, 0)
 		
-		add(buttonPanel, gbc);
+		add(buttonPanel, gbc)
 		
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setVisible(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE)
+		setLocationRelativeTo(null)
+		setVisible(true)
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				searchForInfo();
+		SwingUtilities.invokeLater([
+			run: {
+				searchForInfo()
 			}
-		});
+		] as Runnable)
 	}
 	
 	
@@ -317,24 +309,22 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	{
 		if(changesMade || imageChanged) //TODO maybe one boolean is enough...
 		{
-			if(artist != null)
-			{
-				artist.setPic(this.bigImage);
-				artist.setDescription(htmlPane.getText());
-				mainWindow.getDatabase().updateArtist(artist);
+			if(artist != null) {
+				artist.setPic(this.bigImage)
+				artist.setDescription(htmlPane.getText())
+				mainWindow.getDatabase().updateArtist(artist)
+			} else {
+				artist = new Artist()
+				artist.setName(artistname)
+				artist.setPic(this.bigImage)
+				artist.setDescription(htmlPane.getText())
+				artist.setName(artistname)
+				int id = mainWindow.getDatabase().insertNewArtist(artistname, htmlPane.getText(), this.bigImage)
+				artist.setId(id)
 			}
-			else
-			{
-				artist = new Artist();
-				artist.setName(artistname);
-				artist.setPic(this.bigImage);
-				artist.setDescription(htmlPane.getText());
-				artist.setName(artistname);
-				int id = mainWindow.getDatabase().insertNewArtist(artistname, htmlPane.getText(), this.bigImage);
-				artist.setId(id);
-			}
-			changesMade = false;
-			imageChanged = false;
+			
+			changesMade = false
+			imageChanged = false
 		}
 	}
 	
@@ -347,74 +337,63 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	private void setSizeAccordingToScreen(int border)
 	{
 		// Get the size of the default screen
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		int winWidth = dim.width - border;
-		int winHeight = dim.height - border;
-		setSize(winWidth, winHeight);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize()
+		int winWidth = dim.width - border
+		int winHeight = dim.height - border
+		setSize(winWidth, winHeight)
 	}
 
 
 	/**
 	 * Uses a Wikipedia(R) web search to determine the textual artist information.
 	 */
-	private void searchForInfo()
-	{
+	private void searchForInfo() {
 		// first try to look in the database for information about the artist
-		boolean infoInDb = false;
+		boolean infoInDb = false
 		
-		artist = mainWindow.getDatabase().getArtistByName(artistname);
-		if(artist != null) infoInDb = true;
+		artist = mainWindow.getDatabase().getArtistByName(artistname)
+		if(artist != null) infoInDb = true
 		
 		// if there is no information about the artist in the database, try to look it up in the web
-		if(!infoInDb)
-		{
-			new Thread(new Runnable(){
-				public void run()
-				{
-					showSearchingWindow();
+		if(!infoInDb) {
+			new Thread([
+				run: {
+					showSearchingWindow()
 					
 					// textual information
-					searchWikipediaForInfo();
+					searchWikipediaForInfo()
 					
 					// artist image
-					try
-					{
-						URL imgUrl = HtmlParser.getInstance().getArtistImageFromGoogle(artistname);
-						if(imgUrl != null)
-						{
-							BufferedImage bigImage = ImageIO.read(imgUrl);
-							if(bigImage != null) 
-							{
-								setArtistImage(bigImage);
+					try {
+						URL imgUrl = HtmlParser.getInstance().getArtistImageFromGoogle(artistname)
+						if(imgUrl != null) {
+							BufferedImage bigImage = ImageIO.read(imgUrl)
+							if(bigImage != null) {
+								setArtistImage(bigImage)
 							}
 						}
+					} catch (IOException e) {
+						e.printStackTrace()
 					}
-					catch (IOException e)
-					{
-						e.printStackTrace();
-					}
-					changesMade = true;
-					setEditModeEnabled(true);
-					window.dispose();
+					changesMade = true
+					setEditModeEnabled(true)
+					window.dispose()
 				}
-			}).start();
-		}
-		else
-		{
-			if(artist.getPic() != null) setArtistImage(artist.getPic());
-			htmlPane.setText(artist.getDescription());
+			] as Runnable).start()
+		} else {
+			if(artist.getPic() != null) setArtistImage(artist.getPic())
+			htmlPane.setText(artist.getDescription())
 		}
 		
-		htmlPane.setCaretPosition(0);
+		htmlPane.setCaretPosition(0)
 	}
 	
 	
 	/**
 	 * Searches at Wikipedia for artist information.
 	 */
-	private void searchWikipediaForInfo()
-	{
-		htmlPane.setText(HtmlParser.getInstance().getArtistInfoFromWikipedia(artistname));
+	private void searchWikipediaForInfo() {
+		htmlPane.setText(HtmlParser.getInstance().getArtistInfoFromWikipedia(artistname))
 	}
 	
 	
@@ -425,56 +404,50 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 * 
 	 * @param b <code>true</code> if the edit mode shall be set, <code>false</code> if the viewing mode shall be set
 	 */
-	private void setEditModeEnabled(boolean b)
-	{
+	private void setEditModeEnabled(boolean b) {
 		// enable/disable text changes
-		htmlPane.setEditable(b);
+		htmlPane.setEditable(b)
 		// enable/disable change image button
-		changeImage.setVisible(b);
+		changeImage.setVisible(b)
 		
-		if(b)
-		{
-			editButton.setText(LocaleMessage.getInstance().getString("common.refresh"));
-			editButton.setToolTipText(LocaleMessage.getInstance().getString("artist.refresh_info"));
-			editButton.setActionCommand("refresh");
-		}
-		else
-		{
-			editButton.setText(LocaleMessage.getInstance().getString("common.edit"));
-			editButton.setToolTipText(LocaleMessage.getInstance().getString("artist.change_to_edit"));
-			editButton.setActionCommand("edit");
+		if(b) {
+			editButton.setText(LocaleMessage.getInstance().getString("common.refresh"))
+			editButton.setToolTipText(LocaleMessage.getInstance().getString("artist.refresh_info"))
+			editButton.setActionCommand("refresh")
+		} else {
+			editButton.setText(LocaleMessage.getInstance().getString("common.edit"))
+			editButton.setToolTipText(LocaleMessage.getInstance().getString("artist.change_to_edit"))
+			editButton.setActionCommand("edit")
 		}
 		
-		saveButton.setEnabled(b);
+		saveButton.setEnabled(b)
 	}
 	
 	
 	/**
 	 * Displays a window while the information is being searched.
 	 */
-	private void showSearchingWindow()
-	{
-		String text = LocaleMessage.getInstance().getString("common.search_for") + " " + artistname + "...";
-		final JXBusyLabel busy = new JXBusyLabel();
-		busy.setText(text);
-		busy.setBorder(new EmptyBorder(20, 10, 20, 10));
-		busy.setBusy(true);
-		JPanel busyBack = new JPanel();
-		busyBack.setBackground(Color.WHITE);
-		busyBack.setBorder(new LineBorder(Color.BLACK));
-		busyBack.add(busy);
-		window = new JWindow();
-		window.add(busyBack);
-		window.pack();
-		window.setLocationRelativeTo(null);
-		window.setAlwaysOnTop(true);
+	private void showSearchingWindow() {
+		String text = LocaleMessage.getInstance().getString("common.search_for") + " " + artistname + "..."
+		final JXBusyLabel busy = new JXBusyLabel()
+		busy.setText(text)
+		busy.setBorder(new EmptyBorder(20, 10, 20, 10))
+		busy.setBusy(true)
+		JPanel busyBack = new JPanel()
+		busyBack.setBackground(Color.WHITE)
+		busyBack.setBorder(new LineBorder(Color.BLACK))
+		busyBack.add(busy)
+		window = new JWindow()
+		window.add(busyBack)
+		window.pack()
+		window.setLocationRelativeTo(null)
+		window.setAlwaysOnTop(true)
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				window.setVisible(true);
+		SwingUtilities.invokeLater([
+			run: {
+				window.setVisible(true)
 			}
-		});
+		])
 	}
 	
 	
@@ -483,18 +456,17 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 * 
 	 * @return the stylesheet for the JEditorPane
 	 */
-	private StyleSheet getStyleSheet() 
-	{
-		StyleSheet myStyle = new StyleSheet();
-		myStyle.addRule(".firstHeading {margin-bottom: .1em; line-height: 1.2em;padding-bottom: 0;}");
-		myStyle.addRule(".mw-headline {font-size:1.2em; font-weight:bold; margin-bottom: .1em; line-height: 1.2em; padding-bottom: 0;}");
+	private StyleSheet getStyleSheet()  {
+		StyleSheet myStyle = new StyleSheet()
+		myStyle.addRule(".firstHeading {margin-bottom: .1em; line-height: 1.2em;padding-bottom: 0;}")
+		myStyle.addRule(".mw-headline {font-size:1.2em; font-weight:bold; margin-bottom: .1em; line-height: 1.2em; padding-bottom: 0;}")
 		
 //		myStyle.addRule(".prettytable float-right{display:block; float:right; margin: 1em 1em 1em 0;background: #f9f9f9;border: 1px #aaa solid;border-collapse: collapse;}");
 //		myStyle.addRule(".prettytable th, .prettytable td {border: 5px #aaa solid;padding: 0.2em;}");
 //		myStyle.addRule(".prettytable th {background: #f2f2f2;text-align: center;}");
 //		myStyle.addRule(".prettytable caption {margin-left: inherit; margin-right: inherit;font-weight: bold;}");
 		
-		return myStyle;
+		return myStyle
 	}
 
 
@@ -503,17 +475,16 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 * 
 	 * @param bigImage the orignial BufferedImage which will be resized
 	 */
-	public void setArtistImage(BufferedImage bigImage)
-	{
-		this.bigImage = bigImage;
-		BufferedImage image = GraphicsUtilities.getInstance().createThumbnail(bigImage, 300); 
-		BufferedImage imgWithBorder = GraphicsUtilities.getInstance().createCompatibleImage(image.getWidth() + 40, image.getHeight() + 20);
-		Graphics2D g2 = imgWithBorder.createGraphics();
-		g2.setColor(Color.WHITE);
-		g2.fillRect(0, 0, imgWithBorder.getWidth(), imgWithBorder.getHeight());
-		g2.drawImage(image, 20, 10, null);
-		g2.dispose();
-		img.setIcon(new ImageIcon(imgWithBorder));
+	public void setArtistImage(BufferedImage bigImage) {
+		this.bigImage = bigImage
+		BufferedImage image = GraphicsUtilities.getInstance().createThumbnail(bigImage, 300) 
+		BufferedImage imgWithBorder = GraphicsUtilities.getInstance().createCompatibleImage(image.getWidth() + 40, image.getHeight() + 20)
+		Graphics2D g2 = imgWithBorder.createGraphics()
+		g2.setColor(Color.WHITE)
+		g2.fillRect(0, 0, imgWithBorder.getWidth(), imgWithBorder.getHeight())
+		g2.drawImage(image, 20, 10, null)
+		g2.dispose()
+		img.setIcon(new ImageIcon(imgWithBorder))
 	}
 
 
@@ -523,18 +494,16 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 * 
 	 * @param b whether or not to set the image changed status
 	 */
-	public void setImageChanged(boolean b)
-	{
-		this.imageChanged = b;
+	public void setImageChanged(boolean b) {
+		this.imageChanged = b
 	}
 	
 	
 	/**
 	 * @return a reference to the instance of the class
 	 */
-	private ArtistInfoFrame getThisInstance()
-	{
-		return this;
+	private ArtistInfoFrame getThisInstance() {
+		return this
 	}
 	
 	
@@ -542,30 +511,23 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 * Method is called when an object is being dragged onto the application window.
 	 */
 	@SuppressWarnings("unchecked")
-	public void dragEnter(DropTargetDragEvent dtde)
-	{
+	public void dragEnter(DropTargetDragEvent dtde) {
 		// create image if it has not already been created
-		if (image == null)
-		{
-            Transferable t = dtde.getTransferable();
-            try
-            {
-                Object data = t.getTransferData(DataFlavor.javaFileListFlavor);
-                List<File> fileList = (List<File>) data;
-                BufferedImage image = createImage(fileList);
+		if (image == null) {
+            Transferable t = dtde.getTransferable()
+            try {
+                Object data = t.getTransferData(DataFlavor.javaFileListFlavor)
+                List<File> fileList = (List<File>) data
+                BufferedImage image = createImage(fileList)
                 if (image != null)
                 {
-                    Point p = MouseInfo.getPointerInfo().getLocation();
-                    glassPane.showIt(image, p);
+                    Point p = MouseInfo.getPointerInfo().getLocation()
+                    glassPane.showIt(image, p)
                 }
-            } 
-            catch(UnsupportedFlavorException e)
-            {
-            	e.printStackTrace();
-            } 
-            catch(IOException e)
-            {
-            	e.printStackTrace();
+            }  catch(UnsupportedFlavorException e) {
+            	e.printStackTrace()
+            }  catch(IOException e) {
+            	e.printStackTrace()
             }
         }
 	}
@@ -579,11 +541,10 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 */
 	private BufferedImage createImage(List<File> files) 
 	{
-		BufferedImage image = null;
+		BufferedImage image = null
 
-		imgFile = new File("");
-        for(File file : files)
-        {
+		imgFile = new File("")
+        for(File file : files) {
         	// accept jpeg, gif, bmp and png images
             if (file.getName().toLowerCase().endsWith(".png") ||
             	file.getName().toLowerCase().endsWith(".jpg") ||
@@ -591,130 +552,106 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
             	file.getName().toLowerCase().endsWith(".gif") ||
                 file.getName().toLowerCase().endsWith(".bmp"))
             {
-            	imgFile = file;
-            	break;
-            }
-            else
-            {
-            	continue;
+            	imgFile = file
+            	break
+            } else {
+            	continue
             }
         }
         
-		try
-		{
-			BufferedImage origImg = ImageIO.read(imgFile);
-			if(origImg == null)
-			{
-				return null;
+		try {
+			BufferedImage origImg = ImageIO.read(imgFile)
+			if(origImg == null) {
+				return null
 			}
 			
-			int origWidth = origImg.getWidth();
-			int origHeight = origImg.getHeight();
+			int origWidth = origImg.getWidth()
+			int origHeight = origImg.getHeight()
 			
 			// calculate the dimensions of the thumbnail
-			int width;
-			int height;
-			float factor;
+			int width
+			int height
+			float factor
 			
 			// landscape format
-			if(origWidth > origHeight)
-			{
-				width = maxWidth;
-				factor = (float)width / (float)origWidth;
-				height = (int)((float)origHeight * factor);
-			}
-			// higher than wide
-			else
-			{
-				height = maxHeight;
-				factor = (float)height / (float)origHeight;
-				width = (int)((float)origWidth * factor);
+			if(origWidth > origHeight) {
+				width = maxWidth
+				factor = (float)width / (float)origWidth
+				height = (int)((float)origHeight * factor)
+			} else {
+				// higher than wide
+				height = maxHeight
+				factor = (float)height / (float)origHeight
+				width = (int)((float)origWidth * factor)
 			}
 			
-			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height);
-			Graphics2D g2 = image.createGraphics();
+			image = GraphicsUtilities2.getInstance().createCompatibleTranslucentImage(width, height)
+			Graphics2D g2 = image.createGraphics()
 			
-			BufferedImage externalImage = null;
-			try
-			{
-				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL());
-			} 
-			catch (MalformedURLException ex)
-			{
-				ex.printStackTrace();
-			} 
-			catch (IOException ex)
-			{
-				ex.printStackTrace();
+			BufferedImage externalImage = null
+			try {
+				externalImage = GraphicsUtilities.getInstance().loadCompatibleImage(imgFile.toURI().toURL())
+			} catch (MalformedURLException ex){
+				ex.printStackTrace()
+			} catch (IOException ex){
+				ex.printStackTrace()
 			}
 			// create the thumbnail image using SwingX GraphicsUtilities class
-			externalImage = GraphicsUtilities.getInstance().createThumbnailFast(externalImage, width, height);
+			externalImage = GraphicsUtilities.getInstance().createThumbnailFast(externalImage, width, height)
 			
-			g2.drawImage(externalImage, 0, 0, null);
-			g2.dispose();
+			g2.drawImage(externalImage, 0, 0, null)
+			g2.dispose()
+		} catch(IOException e) {
+			e.printStackTrace()
 		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-        return image;
+        return image
     }
 
 	
 	/**
 	 * Method is called when the dragged object leaves the application's frame.
 	 */
-	public void dragExit(DropTargetEvent dte)
-	{
-		glassPane.hideIt();
-		image = null;
+	public void dragExit(DropTargetEvent dte) {
+		glassPane.hideIt()
+		image = null
 	}
 
 	
 	/**
 	 * Method is called when an object is being dragged over the application's frame.
 	 */
-	public void dragOver(DropTargetDragEvent dtde)
-	{
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		glassPane.moveIt(p);
+	public void dragOver(DropTargetDragEvent dtde) {
+		Point p = MouseInfo.getPointerInfo().getLocation()
+		glassPane.moveIt(p)
 	}
 
 	
 	/**
 	 * Drop method which is called when the dragged object is being dropped.
 	 */
-	public void drop(DropTargetDropEvent dtde)
-	{
-		Point p = dtde.getLocation();
+	public void drop(DropTargetDropEvent dtde) {
+		Point p = dtde.getLocation()
 		
 		// accept the drop only on the cover image
-		if(getContentPane().getComponentAt(p) instanceof JLabel && getContentPane().getComponentAt(p) == this.img)
-		{
-			dtde.acceptDrop(DnDConstants.ACTION_LINK);
-			try
-			{
-				setArtistImage(ImageIO.read(imgFile));
-				imageChanged = true;
-				saveButton.setEnabled(true);
+		if(getContentPane().getComponentAt(p) instanceof JLabel && getContentPane().getComponentAt(p) == this.img) {
+			dtde.acceptDrop(DnDConstants.ACTION_LINK)
+			try {
+				setArtistImage(ImageIO.read(imgFile))
+				imageChanged = true
+				saveButton.setEnabled(true)
+			} catch(IOException e) {
+				e.printStackTrace()
 			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
+		} else {
+			dtde.rejectDrop()
 		}
-		else
-		{
-			dtde.rejectDrop();
-		}
-		glassPane.hideIt();
-		image = null;
+		glassPane.hideIt()
+		image = null
 	}
 
 
 	@Override
 	public void dropActionChanged(DropTargetDragEvent arg0){
-		// TODO Auto-generated method stub
 		
 	}
 	

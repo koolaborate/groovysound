@@ -26,74 +26,11 @@ package com.koolaborate.bo.search;
  ***********************************************************************************/
 public class SearchResult
 {
-	private String songTitle, artist, albumTitle;
-	private String albumPath;
-	private int songId, albumId = -1;
+	String songTitle, artist, albumTitle;
+	String albumPath;
+	int songId, albumId = -1;
 	
-	/**
-	 * Constructor.
-	 */
 	public SearchResult(){}
 
-	// getter and setter
 	
-	public int getAlbumId()
-	{
-		return albumId;
-	}
-
-	public void setAlbumId(int albumId)
-	{
-		this.albumId = albumId;
-	}
-
-	public String getAlbumPath()
-	{
-		return albumPath;
-	}
-
-	public void setAlbumPath(String albumPath)
-	{
-		this.albumPath = albumPath;
-	}
-	
-	public int getSongId()
-	{
-		return songId;
-	}
-
-	public void setSongId(int songId)
-	{
-		this.songId = songId;
-	}
-
-	public void setAlbumTitle(String albumTitle)
-	{
-		this.albumTitle = albumTitle;
-	}
-
-	public void setArtist(String artist)
-	{
-		this.artist = artist;
-	}
-
-	public void setSongTitle(String songTitle)
-	{
-		this.songTitle = songTitle;
-	}
-
-	public String getSongTitle()
-	{
-		return songTitle;
-	}
-
-	public String getArtist()
-	{
-		return artist;
-	}
-
-	public String getAlbumTitle()
-	{
-		return albumTitle;
-	}
 }

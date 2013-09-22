@@ -1,11 +1,11 @@
-package com.koolaborate.mvc.view.navigation;
+package com.koolaborate.mvc.view.navigation
 
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import javax.swing.JComponent;
-import javax.swing.border.EmptyBorder;
+import java.awt.Dimension
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.image.BufferedImage
+import javax.swing.JComponent
+import javax.swing.border.EmptyBorder
 
 /***********************************************************************************
  * SubNavButton                                                                    *
@@ -34,60 +34,36 @@ import javax.swing.border.EmptyBorder;
  ***********************************************************************************/
 public class SubNavButton extends JComponent
 {
-	private static final long serialVersionUID = 2476824458682313176L;
-	private BufferedImage ico; 
-	private String text;
-	private boolean mouseOver = false;
+	private static final long serialVersionUID = 2476824458682313176L
+	BufferedImage ico 
+	String text
+	boolean mouseOver = false
 	
 	// the mouse listener that performs an action when the button is clicked
-	private MouseAdapter listener;
+	private MouseAdapter listener
 	
 	/**
 	 * Constructor.
 	 */
 	public SubNavButton()
 	{
-        setPreferredSize(new Dimension(36, 36));
-        setOpaque(false);
+        setPreferredSize(new Dimension(36, 36))
+        setOpaque(false)
         
-        addMouseListener(new MouseAdapter(){
-        	@Override
-        	public void mouseEntered(MouseEvent e)
-        	{
-        		mouseOver = true;
-        		repaint();
-        	}
+        addMouseListener([
+        	mouseEntered: {
+        		mouseOver = true
+        		repaint()
+        	},
         	
-        	@Override
-        	public void mouseExited(MouseEvent e)
-        	{
-        		mouseOver = false;
-        		repaint();
+        	mouseExited: {
+        		mouseOver = false
+        		repaint()
         	}
-        });
-        setBorder(new EmptyBorder(0, 0, 0, 2)); // 2 px border at the right
+        ] as MouseAdapter)
+        setBorder(new EmptyBorder(0, 0, 0, 2)) // 2 px border at the right
 	}
 	
-	
-	/**
-	 * Sets the icon for this button.
-	 * 
-	 * @param icon the icon to be set
-	 */
-	public void setIcon(BufferedImage icon)
-	{
-		this.ico = icon;
-	}
-
-	
-	/**
-	 * @return the text of the sub navigation button
-	 */
-	public String getText()
-	{
-		return text;
-	}
-
 	/**
 	 * Sets the text of this button.
 	 * 
@@ -95,26 +71,26 @@ public class SubNavButton extends JComponent
 	 */
 	public void setText(String text)
 	{
-		this.text = text;
-		setToolTipText(text);
+		this.text = text
+		setToolTipText(text)
 	}
 
 
 	public BufferedImage getIcon()
 	{
-		return ico;
+		return ico
 	}
 
 
 	public boolean isMouseOver()
 	{
-		return mouseOver;
+		return mouseOver
 	}
 
 
 	public void setMouseOver(boolean mouseOver)
 	{
-		this.mouseOver = mouseOver;
+		this.mouseOver = mouseOver
 	}
 
 
@@ -130,9 +106,9 @@ public class SubNavButton extends JComponent
 	public void setMouseListener(MouseAdapter mouseAdapter) 
 	{
 		// remove the old listener first
-		this.removeMouseListener(listener);
-		this.listener = mouseAdapter;
+		this.removeMouseListener(listener)
+		this.listener = mouseAdapter
 		// add the new listener
-		this.addMouseListener(listener);
+		this.addMouseListener(listener)
 	}
 }

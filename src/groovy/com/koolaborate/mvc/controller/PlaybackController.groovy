@@ -1,47 +1,47 @@
-package com.koolaborate.mvc.controller;
+package com.koolaborate.mvc.controller
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Map;
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.FileInputStream
+import java.util.Map
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.sound.sampled.AudioInputStream
+import javax.sound.sampled.AudioSystem
+import javax.swing.JLabel
+import javax.swing.JSlider
+import javax.swing.SwingUtilities
+import javax.swing.event.ChangeEvent
+import javax.swing.event.ChangeListener
 
-import javazoom.jl.decoder.Bitstream;
-import javazoom.jlgui.basicplayer.BasicController;
-import javazoom.jlgui.basicplayer.BasicPlayer;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-import mp3.CoverHelper;
+import javazoom.jl.decoder.Bitstream
+import javazoom.jlgui.basicplayer.BasicController
+import javazoom.jlgui.basicplayer.BasicPlayer
+import javazoom.jlgui.basicplayer.BasicPlayerEvent
+import javazoom.jlgui.basicplayer.BasicPlayerException
+import javazoom.jlgui.basicplayer.BasicPlayerListener
+import mp3.CoverHelper
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils
+import org.apache.log4j.Logger
 
-import com.koolaborate.model.Album;
-import com.koolaborate.model.CurrentSongInfo;
-import com.koolaborate.model.Settings;
-import com.koolaborate.mvc.view.decorations.Decorator;
-import com.koolaborate.mvc.view.dialogs.VistaDialog;
-import com.koolaborate.mvc.view.mainwindow.CenterPanel;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.mvc.view.playercontrols.NextButton;
-import com.koolaborate.mvc.view.playercontrols.PlayButton;
-import com.koolaborate.mvc.view.playercontrols.PreviousButton;
-import com.koolaborate.mvc.view.playercontrols.StopButton;
-import com.koolaborate.mvc.view.playlistview.PlaylistPanel;
-import com.koolaborate.service.db.Database;
-import com.koolaborate.util.FileHelper;
-import com.koolaborate.util.ImageHelper;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.model.Album
+import com.koolaborate.model.CurrentSongInfo
+import com.koolaborate.model.Settings
+import com.koolaborate.mvc.view.decorations.Decorator
+import com.koolaborate.mvc.view.dialogs.VistaDialog
+import com.koolaborate.mvc.view.mainwindow.CenterPanel
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.mvc.view.playercontrols.NextButton
+import com.koolaborate.mvc.view.playercontrols.PlayButton
+import com.koolaborate.mvc.view.playercontrols.PreviousButton
+import com.koolaborate.mvc.view.playercontrols.StopButton
+import com.koolaborate.mvc.view.playlistview.PlaylistPanel
+import com.koolaborate.service.db.Database
+import com.koolaborate.util.FileHelper
+import com.koolaborate.util.ImageHelper
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * PlaybackController *
@@ -69,36 +69,36 @@ import com.koolaborate.util.LocaleMessage;
 // public class PlaybackController extends JPanel implements BasicPlayerListener
 public class PlaybackController implements BasicPlayerListener{
 	/** the log4j logger */
-	static Logger log = Logger.getLogger(PlaybackController.class.getName());
+	static Logger log = Logger.getLogger(PlaybackController.class.getName())
 
 	/** the volume slider */
-	JSlider volumeSlider;
+	JSlider volumeSlider
 
 	// button elements
-	PreviousButton prevButt;
-	PlayButton playButt;
-	StopButton stopButt;
-	NextButton nextButt;
+	PreviousButton prevButt
+	PlayButton playButt
+	StopButton stopButt
+	NextButton nextButt
 
 	/** the player to playback sound files */
-	BasicPlayer player;
+	BasicPlayer player
 	/** control unit to set volume, balance etc. */
-	BasicController control;
+	BasicController control
 
 	public enum STATE{
 		PLAYING, PAUSED, ENDED
 	}
 
-	STATE currentState = STATE.ENDED;
+	STATE currentState = STATE.ENDED
 
-	String filename = "";
+	String filename = ""
 
-	Settings s;
+	Settings s
 
-	CurrentSongInfo songInfo;
-	MainWindow window;
-	PlaylistPanel playListPanel;
-	CenterPanel centerPanel;
+	CurrentSongInfo songInfo
+	MainWindow window
+	PlaylistPanel playListPanel
+	CenterPanel centerPanel
 
 	/**
 	 * Constructor.
@@ -111,27 +111,27 @@ public class PlaybackController implements BasicPlayerListener{
 	 *            the reference to the main window
 	 */
 	public PlaybackController(CenterPanel cPanel, PlaylistPanel playlist, MainWindow window){
-		this.centerPanel = cPanel;
-		this.playListPanel = playlist;
-		this.window = window;
-		this.songInfo = window.getSongInfo();
-		this.s = window.getSettings();
+		this.centerPanel = cPanel
+		this.playListPanel = playlist
+		this.window = window
+		this.songInfo = window.getSongInfo()
+		this.s = window.getSettings()
 
-		Decorator d = window.getDecorator();
+		Decorator d = window.getDecorator()
 		// load the GUI elements from the decorator
-		prevButt = d.getPrevButt();
-		playButt = d.getPlayButt();
-		stopButt = d.getStopButt();
-		nextButt = d.getNextButt();
-		volumeSlider = d.getVolumeSlider();
-		JLabel softLabel = d.getLoudVolumeLabel();
-		JLabel loudLabel = d.getSoftVolumeLabel();
-		d.getPlaybackControlsPanel();
+		prevButt = d.getPrevButt()
+		playButt = d.getPlayButt()
+		stopButt = d.getStopButt()
+		nextButt = d.getNextButt()
+		volumeSlider = d.getVolumeSlider()
+		JLabel softLabel = d.getLoudVolumeLabel()
+		JLabel loudLabel = d.getSoftVolumeLabel()
+		d.getPlaybackControlsPanel()
 
 		// init the player for audio playback
-		player = new BasicPlayer();
-		control = (BasicController) player;
-		player.addBasicPlayerListener(this);
+		player = new BasicPlayer()
+		control = (BasicController) player
+		player.addBasicPlayerListener(this)
 
 		// add the buttons...
 
@@ -139,77 +139,74 @@ public class PlaybackController implements BasicPlayerListener{
 		prevButt.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e){
-				playButt.setActive(false);
+				playButt.setActive(false)
 				if(currentState == STATE.PLAYING) {
-					fadeOut();
+					fadeOut()
 				}
-				playPreviousSong();
+				playPreviousSong()
 			}
-		});
+		})
 
 		// play button
 		playButt.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e){
 				if(currentState == STATE.ENDED) {
-					playSong();
+					playSong()
 				} else if(currentState == STATE.PLAYING) {
-					pauseSong();
+					pauseSong()
 				} else if(currentState == STATE.PAUSED) {
-					resumeSong();
+					resumeSong()
 				}
 			}
-		});
+		})
 
 		// stop button
-		stopButt.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
-				fadeOut();
+		stopButt.addMouseListener([
+			mouseClicked: {
+				fadeOut()
 			}
-		});
+		] as MouseAdapter)
 
 		// next song button
-		nextButt.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
-				playButt.setActive(false);
+		nextButt.addMouseListener([
+			mouseClicked: { e ->
+				playButt.setActive(false)
 				// first stop playback if running
 				if(currentState == STATE.PLAYING) {
-					fadeOut();
+					fadeOut()
 				}
-				playNextSong();
+				playNextSong()
 			}
-		});
+		] as MouseAdapter)
 
 		// volume slider
-		volumeSlider.setOpaque(false);
+		volumeSlider.setOpaque(false)
 
 		// loudness labels
-		softLabel.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent arg0){
-				volumeSlider.setValue(volumeSlider.getMinimum());
+		softLabel.addMouseListener([
+			mouseClicked: {
+				volumeSlider.setValue(volumeSlider.getMinimum())
 			}
-		});
+		] as MouseAdapter)
 
-		volumeSlider.setMinimum(0);
-		volumeSlider.setMaximum(10);
-		int volumeInt = (int) (s.getVolume() * 10);
-		volumeSlider.setValue(volumeInt);
+		volumeSlider.setMinimum(0)
+		volumeSlider.setMaximum(10)
+		int volumeInt = (int) (s.getVolume() * 10)
+		volumeSlider.setValue(volumeInt)
 		volumeSlider.addChangeListener([
 			stateChanged: { e ->
-				JSlider source = (JSlider) e.getSource();
-				float vol = source.getValue() * 0.1f;
-				setPlayerVolume(vol);
+				JSlider source = (JSlider) e.getSource()
+				float vol = source.getValue() * 0.1f
+				setPlayerVolume(vol)
 			}
-		] as ChangeListener);
+		] as ChangeListener)
 
 		loudLabel.addMouseListener([
 			mouseClicked: { 
-				volumeSlider.setValue(volumeSlider.getMaximum());
+				volumeSlider.setValue(volumeSlider.getMaximum())
 			}
-		] as MouseAdapter);
+		] as MouseAdapter)
 	}
 
 	/**
@@ -217,12 +214,12 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void resumeSong(){
 		try {
-			control.resume();
-			currentState = STATE.PLAYING;
-			playButt.setPressed(true);
-			playListPanel.getPlaylist().setPlayIconAtCurrentEntry();
+			control.resume()
+			currentState = STATE.PLAYING
+			playButt.setPressed(true)
+			playListPanel.getPlaylist().setPlayIconAtCurrentEntry()
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to resume song: " + e.getMessage());
+			log.warn("Unable to resume song: " + e.getMessage())
 		}
 	}
 
@@ -231,12 +228,12 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void pauseSong(){
 		try {
-			control.pause();
-			currentState = STATE.PAUSED;
-			playButt.setPressed(false);
-			playListPanel.getPlaylist().setPausedIconAtCurrentEntry();
+			control.pause()
+			currentState = STATE.PAUSED
+			playButt.setPressed(false)
+			playListPanel.getPlaylist().setPausedIconAtCurrentEntry()
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to pause song: " + e.getMessage());
+			log.warn("Unable to pause song: " + e.getMessage())
 		}
 	}
 
@@ -246,11 +243,11 @@ public class PlaybackController implements BasicPlayerListener{
 	private void adjustVolumeAndBalance(){
 		try {
 			// Set volume (0 to 1.0).
-			control.setGain(s.volume);
+			control.setGain(s.volume)
 			// Set pan (balance) (-1.0 to 1.0).
-			control.setPan(s.balance);
+			control.setPan(s.balance)
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to adjust volume and balance: " + e.getMessage());
+			log.warn("Unable to adjust volume and balance: " + e.getMessage())
 		}
 	}
 
@@ -261,30 +258,30 @@ public class PlaybackController implements BasicPlayerListener{
 		try {
 			// first end currently running song
 			if(currentState == STATE.PLAYING || currentState == STATE.PAUSED)
-				control.pause();
+				control.pause()
 
-			filename = playListPanel.getCurrentlySelectedSong();
+			filename = playListPanel.getCurrentlySelectedSong()
 
 			// if there is no song to be played
 			if(StringUtils.isEmpty(filename)) {
 				// the play button has to be deselected again
-				playButt.setActive(false);
-				playButt.setPressed(false);
-				return;
+				playButt.setActive(false)
+				playButt.setPressed(false)
+				return
 			}
 
-			File f = new File(filename);
+			File f = new File(filename)
 			if(!f.exists()) {
 				// in case the file doesn't exist any more, the user has to be
 				// asked whether or not
 				// to remove the song from the list. If the whole album cannot
 				// be found any more,
 				// the user is asked to delete the album
-				handleSongNoLongerAvailable();
-				return;
+				handleSongNoLongerAvailable()
+				return
 			}
 
-			control.open(f);
+			control.open(f)
 
 			// has to be in a thread, otherwise no playback und XP!
 			// new Thread(new Runnable(){
@@ -294,28 +291,28 @@ public class PlaybackController implements BasicPlayerListener{
 			// }
 			// }).start();
 
-			control.play();
+			control.play()
 
 			// HOTFIX: adjust the volume once again since it did not work under
 			// Vista in
 			// the first place the volume was always at max when a new song was
 			// started...
-			adjustVolumeAndBalance();
+			adjustVolumeAndBalance()
 
-			currentState = STATE.PLAYING;
-			playButt.setPressed(true);
+			currentState = STATE.PLAYING
+			playButt.setPressed(true)
 
 			// read and display song info
 			songInfo.songPath = filename
 			songInfo.songId = playListPanel.getCurrentlySelectedSongID()
-			playListPanel.getPlaylist().setPlayIconAtCurrentEntry();
+			playListPanel.getPlaylist().setPlayIconAtCurrentEntry()
 
 			try {
-				songInfo.readSongInfo();
-				window.updateArtist(songInfo);
+				songInfo.readSongInfo()
+				window.updateArtist(songInfo)
 			} catch(Exception e) {
 				// the artist information and song name could not be read
-				log.debug(e.getMessage());
+				log.debug(e.getMessage())
 			}
 		} catch(BasicPlayerException e) {
 			// TODO catch this cause in a more elegant way!
@@ -327,26 +324,26 @@ public class PlaybackController implements BasicPlayerListener{
 				// if return value is true: refresh cover image
 				if(CoverHelper.saveEmbeddedCover(filename)) {
 					// causes the cover path in songInfo to be determined
-					songInfo.setAlbumPath(songInfo.getAlbumPath());
-					window.updateCover(songInfo);
+					songInfo.setAlbumPath(songInfo.getAlbumPath())
+					window.updateCover(songInfo)
 					// update album in album overview as well!
 					String big = songInfo.getAlbumPath() + File.separator
-							+ "folder.jpg";
-					BufferedImage preview = null;
-					File bigCover = new File(big);
+							+ "folder.jpg"
+					BufferedImage preview = null
+					File bigCover = new File(big)
 					if(bigCover.exists()) {
-						ImageHelper helper = new ImageHelper();
-						preview = helper.createSmallCover(bigCover);
+						ImageHelper helper = new ImageHelper()
+						preview = helper.createSmallCover(bigCover)
 					}
 
-					Database db = window.getDatabase();
-					Album a = db.getAlbumById(songInfo.getAlbumId());
-					a.setPreview(preview);
-					db.updateAlbum(a);
+					Database db = window.getDatabase()
+					Album a = db.getAlbumById(songInfo.getAlbumId())
+					a.setPreview(preview)
+					db.updateAlbum(a)
 
 					// refresh the albumsview since the thumbnail might have
 					// changed
-					centerPanel.getAlbumsPanel().refreshSelectedAlbum(a);
+					centerPanel.getAlbumsPanel().refreshSelectedAlbum(a)
 				}
 
 				// now skip the cover image and playback the file
@@ -357,53 +354,53 @@ public class PlaybackController implements BasicPlayerListener{
 				// and
 				// BitStream to seek to the beginning of the audio data
 				try {
-					FileInputStream f_in = new FileInputStream(filename);
-					Bitstream m = new Bitstream(f_in);
-					long start = m.header_pos();
+					FileInputStream f_in = new FileInputStream(filename)
+					Bitstream m = new Bitstream(f_in)
+					long start = m.header_pos()
 
 					// need to open the stream again
 					try {
-						m.close();
+						m.close()
 					} catch(Exception ex) {
-						ex.printStackTrace();
+						ex.printStackTrace()
 					}
-					f_in = new FileInputStream(filename);
+					f_in = new FileInputStream(filename)
 
 					// skip the header
-					f_in.skip(start);
+					f_in.skip(start)
 
-					AudioInputStream instream = AudioSystem.getAudioInputStream(f_in);
-					control.open(instream);
-					control.play();
+					AudioInputStream instream = AudioSystem.getAudioInputStream(f_in)
+					control.open(instream)
+					control.play()
 
 					// HOTFIX: adjust the volume once again since it did not
 					// work under Vista in
 					// the first place the volume was always at max when a new
 					// song was started...
-					adjustVolumeAndBalance();
+					adjustVolumeAndBalance()
 
-					currentState = STATE.PLAYING;
-					playButt.setPressed(true);
+					currentState = STATE.PLAYING
+					playButt.setPressed(true)
 
 					// read and display song info
-					songInfo.setSongPath(filename);
+					songInfo.setSongPath(filename)
 					songInfo.setSongId(playListPanel
-							.getCurrentlySelectedSongID());
-					playListPanel.getPlaylist().setPlayIconAtCurrentEntry();
+							.getCurrentlySelectedSongID())
+					playListPanel.getPlaylist().setPlayIconAtCurrentEntry()
 
-					songInfo.readSongInfo();
-					window.updateArtist(songInfo);
+					songInfo.readSongInfo()
+					window.updateArtist(songInfo)
 				} catch(Exception e1) {
-					log.debug(e1.getMessage());
+					log.debug(e1.getMessage())
 				}
 			} else {
 				VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.1"),
 						LocaleMessage.getInstance().getString("error.22"),
 						LocaleMessage.getInstance().getString("error.23"),
-						VistaDialog.WARNING_MESSAGE);
-				playListPanel.getPlaylist().setCurrentEntryUnplayable();
-				playListPanel.getPlaylist().setNoIconAtCurrentEntry();
-				log.debug(e.getMessage());
+						VistaDialog.WARNING_MESSAGE)
+				playListPanel.getPlaylist().setCurrentEntryUnplayable()
+				playListPanel.getPlaylist().setNoIconAtCurrentEntry()
+				log.debug(e.getMessage())
 			}
 		}
 	}
@@ -414,56 +411,56 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	private void handleSongNoLongerAvailable(){
 		// check if the album folder is available
-		log.debug("File " + filename + " not found!");
-		log.debug("Current folder: " + window.getCurrentFolderPath());
+		log.debug("File " + filename + " not found!")
+		log.debug("Current folder: " + window.getCurrentFolderPath())
 
-		window.getPlaylist().getPlaylist().setCurrentEntryUnplayable();
+		window.getPlaylist().getPlaylist().setCurrentEntryUnplayable()
 
-		String path = window.getCurrentFolderPath();
+		String path = window.getCurrentFolderPath()
 		if(StringUtils.isNotEmpty(path)) {
-			File folder = new File(path);
+			File folder = new File(path)
 			if(!folder.exists()) {
 				VistaDialog delAlbum = VistaDialog.showConfirmationDialog(
 						LocaleMessage.getInstance().getString("error.15"),
 						LocaleMessage.getInstance().getString("error.16"),
 						LocaleMessage.getInstance().getString("error.17") + " '" + " " + path
 								+ " ' " + LocaleMessage.getInstance().getString("error.20")
-								+ "\n\n" + LocaleMessage.getInstance().getString("error.18"));
+								+ "\n\n" + LocaleMessage.getInstance().getString("error.18"))
 				if(delAlbum.yesSelected) {
 					int albumId = window.getPlaylist()
-							.getCurrentlySelectedSongAlbumId();
-					log.debug("Deleting album with id " + albumId);
+							.getCurrentlySelectedSongAlbumId()
+					log.debug("Deleting album with id " + albumId)
 					if(albumId != -1)
-						window.getDatabase().deleteAlbum(albumId);
+						window.getDatabase().deleteAlbum(albumId)
 
 					// refresh the albums view
 					centerPanel.refreshAlbumsView(centerPanel.getAlbumsPanel()
-							.getSortMode());
+							.getSortMode())
 					SwingUtilities.invokeLater(new Runnable(){
 						public void run(){
-							centerPanel.revalidate();
+							centerPanel.revalidate()
 						}
-					});
+					})
 
 					// refresh the playlist view (load empty cover since it was
 					// the active
 					// album in the playlist)...
-					centerPanel.getPlaylist().getPlaylist().clearPlaylist();
+					centerPanel.getPlaylist().getPlaylist().clearPlaylist()
 
 					// stop playback if song is from current album
 					if(currentState == STATE.PLAYING) {
-						fadeOut();
+						fadeOut()
 					}
-					currentState = STATE.ENDED;
+					currentState = STATE.ENDED
 
-					CurrentSongInfo info = new CurrentSongInfo();
+					CurrentSongInfo info = new CurrentSongInfo()
 
 					// then clear the playlist and update the view
-					window.setCurrentSongInfo(info);
-					centerPanel.updateCover(window.getSongInfo());
-					centerPanel.getCoverPanel().refreshCover();
-					window.updateArtist(info);
-					window.setCurrentFolder(null);
+					window.setCurrentSongInfo(info)
+					centerPanel.updateCover(window.getSongInfo())
+					centerPanel.getCoverPanel().refreshCover()
+					window.updateArtist(info)
+					window.setCurrentFolder(null)
 				}
 			}
 			// if the folder exists, only the song is missing
@@ -473,14 +470,14 @@ public class PlaybackController implements BasicPlayerListener{
 						LocaleMessage.getInstance().getString("error.12"),
 						LocaleMessage.getInstance().getString("error.19") + " '" + filename
 								+ "' " + LocaleMessage.getInstance().getString("error.20")
-								+ LocaleMessage.getInstance().getString("error.21"));
+								+ LocaleMessage.getInstance().getString("error.21"))
 				if(delSong.yesSelected) {
 					int songId = window.getPlaylist()
-							.getCurrentlySelectedSongID();
-					if(songId != -1) window.getDatabase().deleteSong(songId);
-					FileHelper.getInstance().removeFile(filename);
-					window.getPlaylist().refreshSongList();
-					window.getPlaylist().repaint();
+							.getCurrentlySelectedSongID()
+					if(songId != -1) window.getDatabase().deleteSong(songId)
+					FileHelper.getInstance().removeFile(filename)
+					window.getPlaylist().refreshSongList()
+					window.getPlaylist().repaint()
 				}
 			}
 		}
@@ -493,8 +490,8 @@ public class PlaybackController implements BasicPlayerListener{
 		// selectNextSong returns true if there was another song in the list,
 		// if it was the last song, then don't play it again
 		if(playListPanel.selectNextSong()) {
-			playSong();
-			window.handleTinyWindowUpdate();
+			playSong()
+			window.handleTinyWindowUpdate()
 		}
 	}
 
@@ -503,9 +500,9 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void playPreviousSong(){
 		// if it was the first song, then play it again
-		playListPanel.selectPreviousSong();
-		playSong();
-		window.handleTinyWindowUpdate();
+		playListPanel.selectPreviousSong()
+		playSong()
+		window.handleTinyWindowUpdate()
 	}
 
 	/**
@@ -516,10 +513,10 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	private void setPlayerVolume(float vol){
 		try {
-			s.setVolume(vol);
-			control.setGain(vol);
+			s.setVolume(vol)
+			control.setGain(vol)
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to set volume: " + e.getMessage());
+			log.warn("Unable to set volume: " + e.getMessage())
 		}
 	}
 
@@ -527,18 +524,18 @@ public class PlaybackController implements BasicPlayerListener{
 	 * To softly fade out.
 	 */
 	public void fadeOut(){
-		float vol = s.getVolume();
+		float vol = s.getVolume()
 		try {
 			for(double volume = vol; volume >= 0.0; volume -= 0.01) {
-				control.setGain(volume);
-				Thread.sleep(30);
+				control.setGain(volume)
+				Thread.sleep(30)
 			}
-			stopSong();
-			control.setGain(vol);
+			stopSong()
+			control.setGain(vol)
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to fade out: " + e.getMessage());
+			log.warn("Unable to fade out: " + e.getMessage())
 		} catch(InterruptedException e) {
-			log.debug(e.getMessage());
+			log.debug(e.getMessage())
 		}
 	}
 
@@ -547,12 +544,12 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void stopSong(){
 		try {
-			control.stop();
-			playButt.setPressed(false);
-			playListPanel.getPlaylist().setNoIconAtCurrentEntry();
-			currentState = STATE.ENDED;
+			control.stop()
+			playButt.setPressed(false)
+			playListPanel.getPlaylist().setNoIconAtCurrentEntry()
+			currentState = STATE.ENDED
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to stop song: " + e.getMessage());
+			log.warn("Unable to stop song: " + e.getMessage())
 		}
 	}
 
@@ -563,11 +560,11 @@ public class PlaybackController implements BasicPlayerListener{
 	 *            the amount of bytes to which the player shall seek to
 	 */
 	public void seekToPosition(long bytes){
-		System.out.println("SEEKING TO " + bytes); // TODO
+		System.out.println("SEEKING TO " + bytes) // TODO
 		try {
-			control.seek(bytes);
+			control.seek(bytes)
 		} catch(BasicPlayerException e) {
-			log.debug("Cannot skip: " + e.getMessage());
+			log.debug("Cannot skip: " + e.getMessage())
 		}
 	}
 
@@ -585,7 +582,7 @@ public class PlaybackController implements BasicPlayerListener{
 	public void opened(Object stream, Map properties){
 		// Pay attention to properties. It's useful to get duration,
 		// bitrate, channels, even tag such as ID3v2.
-		log.info("opened : " + properties.toString());
+		log.info("opened : " + properties.toString())
 	}
 
 	/**
@@ -609,8 +606,9 @@ public class PlaybackController implements BasicPlayerListener{
 		// MP3SPI provides mp3.equalizer.
 		// System.out.println("progress : " + properties.toString());
 
-		centerPanel.getTimeElapsedPanel().updateSlider(
-				(int) (long) (Long) properties.get("mp3.position.byte"));
+		def mp3PositionByteLong = Long.parseLong(properties.get("mp3.position.byte"))
+		def mp3PositionByteInt = Integer.parseInt(properties.get("mp3.position.byte"))
+		centerPanel.getTimeElapsedPanel().updateSlider(mp3PositionByteInt)
 	}
 
 	/**
@@ -620,23 +618,23 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void stateUpdated(BasicPlayerEvent event){
 		// Notification of BasicPlayer states (opened, playing, end of media,
-		log.debug("stateUpdated : " + event.toString());
+		log.debug("stateUpdated : " + event.toString())
 
-		int state = event.getCode();
+		int state = event.getCode()
 
 		// if end of media, play next song
 		if(state == BasicPlayerEvent.EOM) {
-			playNextSong();
+			playNextSong()
 		} else if(state == BasicPlayerEvent.SEEKING) {
-			System.out.println("SEEKING..."); // TODO
+			System.out.println("SEEKING...") // TODO
 		} else if(state == BasicPlayerEvent.SEEKED) {
-			System.out.println("SEEKED!"); // TODO
+			System.out.println("SEEKED!") // TODO
 		} else if(state == BasicPlayerEvent.STOPPED) {
 			// reset slider
 			JSlider slider = centerPanel.getTimeElapsedPanel()
-					.getTimeElapsedSlider();
-			slider.setValue(0);
-			slider.repaint();
+					.getTimeElapsedSlider()
+			slider.setValue(0)
+			slider.repaint()
 		}
 	}
 
@@ -658,10 +656,10 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void setPlayerBalance(float balance){
 		try {
-			s.setBalance(balance);
-			control.setPan((double) balance);
+			s.setBalance(balance)
+			control.setPan((double) balance)
 		} catch(BasicPlayerException e) {
-			log.warn("Unable to set balance: " + e.getMessage());
+			log.warn("Unable to set balance: " + e.getMessage())
 		}
 	}
 
@@ -672,8 +670,8 @@ public class PlaybackController implements BasicPlayerListener{
 	 *            the desired volume between 0.0f and 1.0f
 	 */
 	public void setVolumeAndUpdateSlider(float newVol){
-		volumeSlider.setValue((int) (newVol * 10));
-		setPlayerVolume(newVol);
+		volumeSlider.setValue((int) (newVol * 10))
+		setPlayerVolume(newVol)
 	}
 
 }

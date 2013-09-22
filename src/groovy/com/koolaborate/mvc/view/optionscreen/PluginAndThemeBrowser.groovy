@@ -67,20 +67,20 @@ import plug.engine.ui.swing.firefoxstyle.UpdateDialog;
 public class PluginAndThemeBrowser extends JDialog
 {
 	private static final long serialVersionUID = 3020990619723531782L;
-	private final JTable table;
-	private final DefaultTableModel model;
+	final JTable table;
+	final DefaultTableModel model;
 	
-	private JPanel header, mainPanel;
-	private JPanel panel;
-	private ToggleButton b1, b2;
+	JPanel header, mainPanel;
+	JPanel panel;
+	ToggleButton b1, b2;
 	
-	private boolean changedTheme = false;
+	boolean changedTheme = false;
 	
 	static String step1 = "plugins";
 	static String step2 = "themes";
 	
-	private MainWindow window;
-	private ThemesPanel themesPanel;
+	MainWindow window;
+	ThemesPanel themesPanel;
 	
 	/**
 	 * Constructor.
@@ -315,12 +315,14 @@ public class PluginAndThemeBrowser extends JDialog
 				Graphics2D g2 = (Graphics2D)g;
 				Paint oldPaint = g2.getPaint();
 
-				LinearGradientPaint p = new LinearGradientPaint(0.0f, 0.0f, 0.0f, 50.0f,
-						new float[]{0.0f, 0.34f, 0.341f, 1.0f},
-						new Color[]{new Color(0x516b9b),
+				def coords = [0.0f, 0.34f, 0.341f, 1.0f]
+				def colors = [new Color(0x516b9b),
 						new Color(0x435d8d),
 						new Color(0x365080),
-						new Color(0x2b4575)});
+						new Color(0x2b4575)]
+				LinearGradientPaint p = new LinearGradientPaint(0.0f, 0.0f, 0.0f, 50.0f,
+						coords,
+						colors);
 		        
 		        g2.setPaint(p);
 		        g2.fillRect(0, 0, getWidth(), getHeight());

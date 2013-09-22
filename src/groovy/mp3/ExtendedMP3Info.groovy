@@ -45,7 +45,7 @@ public class ExtendedMP3Info
 	 * @throws TagException if a tag is unavailable
 	 */
 	@Deprecated
-	public static void showMP3Info(String filename) throws IOException, TagException
+	def static void showMP3Info(String filename) throws IOException, TagException
 	{
 		JFrame infoFrame = new JFrame("MP3 Informationen");
 		
@@ -122,7 +122,7 @@ public class ExtendedMP3Info
 	 * @throws IOException if the song file could not be read
 	 * @throws TagException if the song file does not contain the needed tags
 	 */
-	public static String[] getAlbumInfoFromSongFiles(String filename) throws IOException, TagException
+	def static String[] getAlbumInfoFromSongFiles(String filename) throws IOException, TagException
 	{
 		String[] albumInfo = new String[3];
 		albumInfo[0] = ""; // album title

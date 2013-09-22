@@ -93,14 +93,14 @@ public class VistaDialog extends JDialog implements ActionListener
 	private static VistaDialog dialog;
 	
 	/** the selected yes or no option of a confirmation dialog */
-	public boolean yesSelected = false;
+	boolean yesSelected = false;
 	
 	/** a label that shows the appropriate icon image */
-	private JLabel iconLabel;
+	JLabel iconLabel;
 	/** a text area for the messages */
-	private JTextArea messages;
+	JTextArea messages;
 	/** a text area that shows the title description of the message(s) */
-	private JTextArea titleText;
+	JTextArea titleText;
 		
 	/** the different fonts */
 	private static Font titleTextFont   = new Font("Segoe UI", Font.PLAIN, 15);

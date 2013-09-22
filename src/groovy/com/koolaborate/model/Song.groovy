@@ -28,83 +28,17 @@ import com.koolaborate.service.db.Database;
  ***********************************************************************************/
 public class Song
 {
-	private String title, artist, fileName, duration;
-	private int id, albumId;
+	String title, artist, fileName, duration;
+	int id, albumId;
 	
-	/**
-	 * Constructor.
-	 */
 	public Song(){}
-
-	public int getAlbumId()
-	{
-		return albumId;
-	}
-
-	// getter and setter
-	
-	public void setAlbumId(int albumId)
-	{
-		this.albumId = albumId;
-	}
-
-	public String getArtist()
-	{
-		return artist;
-	}
-
-	public void setArtist(String artist)
-	{
-		this.artist = artist;
-	}
-
-	public String getDuration()
-	{
-		return duration;
-	}
-
-	public void setDuration(String duration)
-	{
-		this.duration = duration;
-	}
-
-	public String getFileName()
-	{
-		return fileName;
-	}
-
-	public void setFileName(String fileName)
-	{
-		this.fileName = fileName;
-	}
-
-	public int getId()
-	{
-		return id;
-	}
-
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-
-	public String getTitle()
-	{
-		return title;
-	}
-
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
 
 	/**
 	 * Method to save the song into the database.
 	 * 
 	 * @param db the database instance
 	 */
-	public void saveIntoDB(Database db)
-	{
+	public void saveIntoDB(Database db){
 		db.insertNewSong(this.title, this.fileName, this.duration, this.albumId);
 	}
 }

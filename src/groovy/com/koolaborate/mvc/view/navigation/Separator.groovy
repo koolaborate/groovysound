@@ -31,39 +31,28 @@ import javax.swing.JLabel;
 public class Separator extends JComponent implements Cloneable 
 {
 	private static final long serialVersionUID = -1799382510955618434L;
-	private JLabel content;
+	JLabel content;
 	
 	/**
 	 * Constructor.
 	 */
-	public Separator()
-	{
+	public Separator(){
 		setOpaque(false);
 		setLayout(new BorderLayout());
 	}
 	
-	public JLabel getContent()
-	{
-		return content;
-	}
-
-	public void setContent(JLabel content)
-	{
+	public void setContent(JLabel content){
 		this.content = content;
 		removeAll();
 		add(content, BorderLayout.CENTER);
 	}
 	
 	@Override
-	public JComponent clone() 
-	{
+	public JComponent clone() {
 		JComponent ret = null;
-		try
-		{
+		try{
 			ret = (JComponent) super.clone();
-		}
-		catch(CloneNotSupportedException e)
-		{
+		}catch(CloneNotSupportedException e){
 			e.printStackTrace();
 		}
 		return ret;

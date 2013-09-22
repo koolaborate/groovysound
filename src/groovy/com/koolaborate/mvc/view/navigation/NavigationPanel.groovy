@@ -1,30 +1,30 @@
-package com.koolaborate.mvc.view.navigation;
+package com.koolaborate.mvc.view.navigation
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.FlowLayout
+import java.awt.event.ItemEvent
+import java.awt.event.ItemListener
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
+import javax.swing.Box
+import javax.swing.BoxLayout
+import javax.swing.JComboBox
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.SwingUtilities
+import javax.swing.border.EmptyBorder
 
-import com.koolaborate.bo.search.SearchFrame;
-import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel.SORT_MODE;
-import com.koolaborate.mvc.view.decorations.Decorator;
-import com.koolaborate.mvc.view.dialogs.AboutDialog;
-import com.koolaborate.mvc.view.mainwindow.CenterPanel;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION;
-import com.koolaborate.mvc.view.newalbum.NewAlbumFrame;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.bo.search.SearchFrame
+import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel.SORT_MODE
+import com.koolaborate.mvc.view.decorations.Decorator
+import com.koolaborate.mvc.view.dialogs.AboutDialog
+import com.koolaborate.mvc.view.mainwindow.CenterPanel
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.mvc.view.newalbum.NewAlbumFrame
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * NavigationPanel                                                                 *
@@ -52,18 +52,18 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class NavigationPanel extends JPanel
 {
-	private static final long serialVersionUID = -152859065478817033L;
+	private static final long serialVersionUID = -152859065478817033L
 
-	private NavButton albumsButton, playlistButton, settingsButton;
+	NavButton albumsButton, playlistButton, settingsButton
 	
-	private MainWindow mainWindow;
-	private CenterPanel centerPanel; 
+	MainWindow mainWindow
+	CenterPanel centerPanel 
 	
-	private JPanel themedBgPanel;
-	private JPanel subNavPanel;
-	private JPanel albumsSubNavPanel; 
-	private JPanel playlistSubNavPanel;
-	private JPanel settingsSubNavPanel;
+	JPanel themedBgPanel
+	JPanel subNavPanel
+	JPanel albumsSubNavPanel 
+	JPanel playlistSubNavPanel
+	JPanel settingsSubNavPanel
 	
 	
 	/**
@@ -74,119 +74,108 @@ public class NavigationPanel extends JPanel
 	 */
 	public NavigationPanel(CenterPanel panel, MainWindow window)
 	{
-		this.centerPanel = panel;
-		this.mainWindow = window;
+		this.centerPanel = panel
+		this.mainWindow = window
 		
 		// load the theme specific panels and buttons
-		Decorator d = window.getDecorator();
-		this.themedBgPanel  = d.getNavigationBackgroundPanel();
-		this.albumsButton   = d.getAlbumsViewButton();
-		this.playlistButton = d.getPlaylistViewButton();
-		this.settingsButton = d.getSettingsViewButton();
+		Decorator d = window.getDecorator()
+		this.themedBgPanel  = d.getNavigationBackgroundPanel()
+		this.albumsButton   = d.getAlbumsViewButton()
+		this.playlistButton = d.getPlaylistViewButton()
+		this.settingsButton = d.getSettingsViewButton()
 		
-		albumsButton.setToolTipText(LocaleMessage.getInstance().getString("nav.showalbums"));
-		albumsButton.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				centerPanel.setCurrentView(NAVIGATION.ALBUMS, true);
-				playlistButton.setActive(false);
-				settingsButton.setActive(false);
-				updateButtons();
+		albumsButton.setToolTipText(LocaleMessage.getInstance().getString("nav.showalbums"))
+		albumsButton.addMouseListener([
+			mouseClicked: {
+				centerPanel.setCurrentView(NAVIGATION.ALBUMS, true)
+				playlistButton.setActive(false)
+				settingsButton.setActive(false)
+				updateButtons()
 			}
-		});
-		albumsButton.setActive(true);
+		] as MouseAdapter)
+		albumsButton.setActive(true)
 		
-		playlistButton.setToolTipText(LocaleMessage.getInstance().getString("nav.playlist"));
-		playlistButton.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				centerPanel.setCurrentView(NAVIGATION.PLAYLIST, true);
-				albumsButton.setActive(false);
-				settingsButton.setActive(false);
-				updateButtons();
+		playlistButton.setToolTipText(LocaleMessage.getInstance().getString("nav.playlist"))
+		playlistButton.addMouseListener([
+			mouseClicked: {
+				centerPanel.setCurrentView(NAVIGATION.PLAYLIST, true)
+				albumsButton.setActive(false)
+				settingsButton.setActive(false)
+				updateButtons()
 			}
-		});
+		] as MouseAdapter)
 		
-		settingsButton.setToolTipText(LocaleMessage.getInstance().getString("nav.options"));
-		settingsButton.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				centerPanel.setCurrentView(NAVIGATION.SETTINGS, true);
-				albumsButton.setActive(false);
-				playlistButton.setActive(false);
-				updateButtons();
-			}
-		});
+		settingsButton.setToolTipText(LocaleMessage.getInstance().getString("nav.options"))
+		settingsButton.addMouseListener([
+			mouseClicked: {
+				centerPanel.setCurrentView(NAVIGATION.SETTINGS, true)
+				albumsButton.setActive(false)
+				playlistButton.setActive(false)
+				updateButtons()
+			}] as MouseAdapter)
 		
 		// the sub navigation (depending on the current view like album view or playlist view)
-		subNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		subNavPanel.setOpaque(false);
-		calculateSubNavWidth(mainWindow.getSize());
+		subNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0))
+		subNavPanel.setOpaque(false)
+		calculateSubNavWidth(mainWindow.getSize())
 		
-		Box box = new Box(BoxLayout.X_AXIS);
-		box.add(Box.createHorizontalStrut(10));
-		box.add(albumsButton);
-		box.add(Box.createHorizontalStrut(2));
-		box.add(playlistButton);
-		box.add(Box.createHorizontalStrut(2));
-		box.add(settingsButton);
-		box.add(Box.createHorizontalStrut(10));
+		Box box = new Box(BoxLayout.X_AXIS)
+		box.add(Box.createHorizontalStrut(10))
+		box.add(albumsButton)
+		box.add(Box.createHorizontalStrut(2))
+		box.add(playlistButton)
+		box.add(Box.createHorizontalStrut(2))
+		box.add(settingsButton)
+		box.add(Box.createHorizontalStrut(10))
 		
-		Separator s1 = new Separator();
-		s1.setContent(d.getSubNavSeparatorContent());
+		Separator s1 = new Separator()
+		s1.setContent(d.getSubNavSeparatorContent())
 		
-		box.add(s1);
-		box.add(Box.createHorizontalStrut(10));
+		box.add(s1)
+		box.add(Box.createHorizontalStrut(10))
 		
-		createAllSubNavigationButtons();
-		setSubNavButtons(NAVIGATION.ALBUMS);
+		createAllSubNavigationButtons()
+		setSubNavButtons(NAVIGATION.ALBUMS)
 
-		box.add(subNavPanel);
+		box.add(subNavPanel)
 		
-		box.add(Box.createHorizontalStrut(10));
-		box.add(new Separator());
+		box.add(Box.createHorizontalStrut(10))
+		box.add(new Separator())
 		
-		box.add(s1.clone());
-		box.add(Box.createHorizontalStrut(10));
+		box.add(s1.clone())
+		box.add(Box.createHorizontalStrut(10))
 		
 		// navigation buttons that are always visible
-		JPanel commonFuntionsPanel = new JPanel();
-		commonFuntionsPanel.setOpaque(false);
-		commonFuntionsPanel.setPreferredSize(new Dimension(80, 36));
-		commonFuntionsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+		JPanel commonFuntionsPanel = new JPanel()
+		commonFuntionsPanel.setOpaque(false)
+		commonFuntionsPanel.setPreferredSize(new Dimension(80, 36))
+		commonFuntionsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0))
 		
-		SubNavButton searchButt = d.getSearchSubNavButton();
-		searchButt.setText(LocaleMessage.getInstance().getString("search.search"));
-		searchButt.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				new SearchFrame(mainWindow);
+		SubNavButton searchButt = d.getSearchSubNavButton()
+		searchButt.setText(LocaleMessage.getInstance().getString("search.search"))
+		searchButt.addMouseListener([
+			mouseClicked: {
+				new SearchFrame(mainWindow)
 			}
-		});
-		commonFuntionsPanel.add(searchButt);
+		] as MouseAdapter)
+		commonFuntionsPanel.add(searchButt)
 		
-		SubNavButton aboutButt = d.getAboutSubNavButton();
-		aboutButt.setText(LocaleMessage.getInstance().getString("common.about") + "...");
-		aboutButt.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				new AboutDialog(mainWindow);
+		SubNavButton aboutButt = d.getAboutSubNavButton()
+		aboutButt.setText(LocaleMessage.getInstance().getString("common.about") + "...")
+		aboutButt.addMouseListener([
+			mouseClicked: {
+				new AboutDialog(mainWindow)
 			}
-		});
-		commonFuntionsPanel.add(aboutButt);
-		commonFuntionsPanel.setBorder(new EmptyBorder(0, 0, 0, 4)); // Spacing to the right
-		box.add(commonFuntionsPanel);
+		] as MouseAdapter)
+		commonFuntionsPanel.add(aboutButt)
+		commonFuntionsPanel.setBorder(new EmptyBorder(0, 0, 0, 4)) // Spacing to the right
+		box.add(commonFuntionsPanel)
 		
 		
-		themedBgPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		themedBgPanel.add(box);
-		setLayout(new BorderLayout());
-		add(themedBgPanel);
+		themedBgPanel.setLayout(new FlowLayout(FlowLayout.LEFT))
+		themedBgPanel.add(box)
+		setLayout(new BorderLayout())
+		add(themedBgPanel)
 	}
 	
 	
@@ -195,11 +184,10 @@ public class NavigationPanel extends JPanel
 	 * 
 	 * @param dimension the dimension of the main window
 	 */
-	public void calculateSubNavWidth(Dimension dimension)
-	{
-		int width = dimension.width - 2*20 - settingsButton.getPreferredSize().width*3 - 30 - 90;
-		subNavPanel.setPreferredSize(new Dimension(width, 36));
-		subNavPanel.revalidate();
+	public void calculateSubNavWidth(Dimension dimension) {
+		int width = dimension.width - 2*20 - settingsButton.getPreferredSize().width*3 - 30 - 90
+		subNavPanel.setPreferredSize(new Dimension(width, 36))
+		subNavPanel.revalidate()
 	}
 
 
@@ -208,81 +196,76 @@ public class NavigationPanel extends JPanel
 	 * 
 	 * @param nav the currently selected navigation
 	 */
-	private void setSubNavButtons(NAVIGATION nav)
-	{
-		subNavPanel.removeAll();
+	private void setSubNavButtons(NAVIGATION nav) {
+		subNavPanel.removeAll()
 		
-		if(nav == NAVIGATION.ALBUMS) 		subNavPanel.add(albumsSubNavPanel); 
-		else if(nav == NAVIGATION.PLAYLIST)	subNavPanel.add(playlistSubNavPanel);
-		else if(nav == NAVIGATION.SETTINGS) subNavPanel.add(settingsSubNavPanel);
+		if(nav == NAVIGATION.ALBUMS) 		subNavPanel.add(albumsSubNavPanel) 
+		else if(nav == NAVIGATION.PLAYLIST)	subNavPanel.add(playlistSubNavPanel)
+		else if(nav == NAVIGATION.SETTINGS) subNavPanel.add(settingsSubNavPanel)
 		
-		subNavPanel.repaint();
+		subNavPanel.repaint()
 	}
 
 
-	private void createAllSubNavigationButtons()
-	{
+	private void createAllSubNavigationButtons() {
 		// sub navigation for the albums view
-		albumsSubNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		albumsSubNavPanel.setOpaque(false);
+		albumsSubNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0))
+		albumsSubNavPanel.setOpaque(false)
 		
-		SubNavButton addAlbum = mainWindow.getDecorator().getAddAlbumSubNavButton();
-		addAlbum.setText(LocaleMessage.getInstance().getString("newalbum.add_album"));
-		addAlbum.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				new NewAlbumFrame(mainWindow);
+		SubNavButton addAlbum = mainWindow.getDecorator().getAddAlbumSubNavButton()
+		addAlbum.setText(LocaleMessage.getInstance().getString("newalbum.add_album"))
+		addAlbum.addMouseListener([
+			mouseClicked: {
+				new NewAlbumFrame(mainWindow)
 			}
-		});
-		albumsSubNavPanel.add(addAlbum);
+		] as MouseAdapter)
+		albumsSubNavPanel.add(addAlbum)
 		
-		final String[] choices = {LocaleMessage.getInstance().getString("nav.sort_album"), 
+		final String[] choices = [LocaleMessage.getInstance().getString("nav.sort_album"), 
 				LocaleMessage.getInstance().getString("nav.sort_artist"), 
-				LocaleMessage.getInstance().getString("nav.sort_none")};
+				LocaleMessage.getInstance().getString("nav.sort_none")]
 		
 		// TODO this is where the concurrent modification happens...
-		JComboBox<String> sortModeBox = new JComboBox<String>(choices);
-		sortModeBox.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e)
-			{
+		JComboBox<String> sortModeBox = new JComboBox<String>(choices)
+		sortModeBox.addItemListener([
+			itemStateChanged: { e ->
 				if(e.getStateChange() == ItemEvent.SELECTED)
 				{
-					String selection = (String) e.getItem();
-					SORT_MODE selectedMode = null;
+					String selection = (String) e.getItem()
+					SORT_MODE selectedMode = null
 					if(selection.equals(choices[0])) 
 					{
-						selectedMode = SORT_MODE.SORT_ALBUMTITLE;
+						selectedMode = SORT_MODE.SORT_ALBUMTITLE
 					}
 					else if(selection.equals(choices[1]))
 					{
-						selectedMode = SORT_MODE.SORT_ARTIST;
+						selectedMode = SORT_MODE.SORT_ARTIST
 					}
 					else if(selection.equals(choices[2]))
 					{
-						selectedMode = SORT_MODE.SORT_SHOW_ALL;
+						selectedMode = SORT_MODE.SORT_SHOW_ALL
 					}
-					centerPanel.getAlbumsPanel().setSortMode(selectedMode);
-					centerPanel.refreshAlbumsView(selectedMode);
+					centerPanel.getAlbumsPanel().setSortMode(selectedMode)
+					centerPanel.refreshAlbumsView(selectedMode)
 				}
 			}
-		});
-		JLabel sortLabel = new JLabel(LocaleMessage.getInstance().getString("nav.sorting") + ":");
-		sortLabel.setForeground(mainWindow.getDecorator().getNavbarForegroundColor());
-		sortLabel.setBorder(new EmptyBorder(0, 10, 0, 4));
+		] as ItemListener)
+		JLabel sortLabel = new JLabel(LocaleMessage.getInstance().getString("nav.sorting") + ":")
+		sortLabel.setForeground(mainWindow.getDecorator().getNavbarForegroundColor())
+		sortLabel.setBorder(new EmptyBorder(0, 10, 0, 4))
 		
-		albumsSubNavPanel.add(sortLabel);
-		albumsSubNavPanel.add(sortModeBox);
+		albumsSubNavPanel.add(sortLabel)
+		albumsSubNavPanel.add(sortModeBox)
 		
 		// sub navigation for the playlist view
-		playlistSubNavPanel = new JPanel();
-		playlistSubNavPanel.setOpaque(false);
-		playlistSubNavPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		playlistSubNavPanel = new JPanel()
+		playlistSubNavPanel.setOpaque(false)
+		playlistSubNavPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0))
 		
 		// sub navigation for the settings view
-		settingsSubNavPanel = new JPanel();	
-		settingsSubNavPanel.setOpaque(false);
-		settingsSubNavPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		settingsSubNavPanel = new JPanel()	
+		settingsSubNavPanel.setOpaque(false)
+		settingsSubNavPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0))
 	}
 
 
@@ -291,9 +274,9 @@ public class NavigationPanel extends JPanel
 	 */
 	public void updateButtons()
 	{
-		albumsButton.repaint();
-		playlistButton.repaint();
-		settingsButton.repaint();
+		albumsButton.repaint()
+		playlistButton.repaint()
+		settingsButton.repaint()
 	}
 	
 	
@@ -305,22 +288,21 @@ public class NavigationPanel extends JPanel
 	public void setCurrentView(NAVIGATION nav)
 	{
 		// first, set all buttons to inactive and then turn the one to active
-		albumsButton.setActive(false);
-		playlistButton.setActive(false);
-		settingsButton.setActive(false);
+		albumsButton.setActive(false)
+		playlistButton.setActive(false)
+		settingsButton.setActive(false)
 		
-		if(nav == NAVIGATION.ALBUMS) 		albumsButton.setActive(true);
-		else if(nav == NAVIGATION.PLAYLIST)	playlistButton.setActive(true);
-		else if(nav == NAVIGATION.SETTINGS) settingsButton.setActive(true);
+		if(nav == NAVIGATION.ALBUMS) 		albumsButton.setActive(true)
+		else if(nav == NAVIGATION.PLAYLIST)	playlistButton.setActive(true)
+		else if(nav == NAVIGATION.SETTINGS) settingsButton.setActive(true)
 		
-		setSubNavButtons(nav);
+		setSubNavButtons(nav)
 		
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				updateButtons();
+		SwingUtilities.invokeLater([
+			run: {
+				updateButtons()
 			}
-		});
+		] as Runnable)
 	}
 	
 	
@@ -332,10 +314,10 @@ public class NavigationPanel extends JPanel
 	 */
 	public JPanel getCurrentSubNavigationPanel(NAVIGATION nav)
 	{
-		if(nav == NAVIGATION.ALBUMS) 		return albumsSubNavPanel;
-		else if(nav == NAVIGATION.PLAYLIST)	return playlistSubNavPanel;
-		else if(nav == NAVIGATION.SETTINGS) return settingsSubNavPanel;
-		else return null;
+		if(nav == NAVIGATION.ALBUMS) 		return albumsSubNavPanel
+		else if(nav == NAVIGATION.PLAYLIST)	return playlistSubNavPanel
+		else if(nav == NAVIGATION.SETTINGS) return settingsSubNavPanel
+		else return null
 	}
 	
 	
@@ -347,8 +329,8 @@ public class NavigationPanel extends JPanel
 	 */
 	public void addSubNavButton(NAVIGATION nav, SubNavButton b)
 	{
-		if(nav == NAVIGATION.ALBUMS)        albumsSubNavPanel.add(b);
-		else if(nav == NAVIGATION.PLAYLIST)	playlistSubNavPanel.add(b);
-		else if(nav == NAVIGATION.SETTINGS) settingsSubNavPanel.add(b);
+		if(nav == NAVIGATION.ALBUMS)        albumsSubNavPanel.add(b)
+		else if(nav == NAVIGATION.PLAYLIST)	playlistSubNavPanel.add(b)
+		else if(nav == NAVIGATION.SETTINGS) settingsSubNavPanel.add(b)
 	}
 }
