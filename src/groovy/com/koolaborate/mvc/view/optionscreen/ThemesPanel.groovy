@@ -66,15 +66,15 @@ public class ThemesPanel extends JPanel{
 
 	private static String themesFilePath = System.getProperty("user.dir") + File.separator + "themes.xml"
 
-	private ArrayList<String> themeNames = new ArrayList<String>()
-	private ArrayList<BufferedImage> themePreviews = new ArrayList<BufferedImage>()
-	private ArrayList<ThemePanelEntry> themeEntries = new ArrayList<ThemePanelEntry>()
-	private int activeIndex = -1
+	ArrayList<String> themeNames = new ArrayList<String>()
+	ArrayList<BufferedImage> themePreviews = new ArrayList<BufferedImage>()
+	ArrayList<ThemePanelEntry> themeEntries = new ArrayList<ThemePanelEntry>()
+	int activeIndex = -1
 
-	private String selectedThemeClassName
-	private String originallySelectedTheme
-	private PluginAndThemeBrowser window
-	private JPanel themesList
+	String selectedThemeClassName
+	String originallySelectedTheme
+	PluginAndThemeBrowser window
+	JPanel themesList
 
 	/**
 	 * Constructor.
@@ -84,7 +84,6 @@ public class ThemesPanel extends JPanel{
 	 * @param decorator
 	 *            the decorator for the selection color
 	 */
-	@SuppressWarnings("unchecked")
 	public ThemesPanel(PluginAndThemeBrowser w, Decorator decorator){
 		window = w
 		setLayout(new BorderLayout())
@@ -97,8 +96,7 @@ public class ThemesPanel extends JPanel{
 		themeNames.add("DefaultTheme")
 		BufferedImage defaultPreview = null
 		try {
-			defaultPreview = ImageIO.read(getClass().getResource(
-					"/images/defaultpreview.png"))
+			defaultPreview = ImageIO.read(getClass().getResource("/images/defaultpreview.png"))
 		} catch(IOException e2) {
 			e2.printStackTrace()
 		}
@@ -116,8 +114,8 @@ public class ThemesPanel extends JPanel{
 			defaultName = "Standard-Thema"
 			defaultDesc = "Standardm‰ﬂig erscheint der VibrantPlayer im Media Player&reg;-Look."
 		}
-		ThemePanelEntry defaultEntry = new ThemePanelEntry(defaultName,
-				defaultDesc, "DefaultTheme", decorator)
+		
+		ThemePanelEntry defaultEntry = new ThemePanelEntry(defaultName, defaultDesc, "DefaultTheme", decorator)
 		themeEntries.add(defaultEntry)
 		themePreviews.add(defaultPreview)
 
@@ -125,14 +123,13 @@ public class ThemesPanel extends JPanel{
 
 		Document doc
 		try {
-			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-					f)
+			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(f)
 			Element e = doc.getDocumentElement()
 			NodeList childNodes = e.getChildNodes()
 			for(int i = 0; i < childNodes.getLength(); i++) {
 				Node n = childNodes.item(i)
 				String name = n.getNodeName()
-				if(name.equals("Theme")) {
+				if("Theme".equals(name)) {
 					String themeName = n.getTextContent().trim()
 					themeNames.add(themeName)
 					boolean isActiveTheme = false
@@ -195,9 +192,8 @@ public class ThemesPanel extends JPanel{
 		final ThemePreviewPanel previewPanel = new ThemePreviewPanel()
 
 		// a listener for the theme selection
-		MouseAdapter l = new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
+		MouseAdapter themePanelMouseAdapter = [
+			mouseClicked: { e ->
 				ThemePanelEntry src = (ThemePanelEntry) e.getSource()
 				int i = 0, index = 0
 				for(ThemePanelEntry entry: themeEntries) {
@@ -220,19 +216,23 @@ public class ThemesPanel extends JPanel{
 				previewPanel.updateImage(currentImage)
 				themesList.repaint()
 			}
-		}
+		] as MouseAdapter
 
 		// if no theme other than the default theme is selected, set the default
 		// theme as active
-		if(activeIndex < 0) themeEntries.get(0).setSelected(true)
+		if(activeIndex < 0) {
+			themeEntries.get(0).setSelected(true)
+		}
 
 		// add all entries to the view
 		int index = 0
 		for(ThemePanelEntry entry: themeEntries) {
-			entry.addMouseListener(l)
+			entry.addMouseListener(themePanelMouseAdapter)
 			themesList.add(entry)
-			if(entry.isSelected())
+			if(entry.isSelected()){
 				previewPanel.updateImage(themePreviews.get(index))
+			}
+				
 			index++
 		}
 
@@ -284,12 +284,10 @@ public class ThemesPanel extends JPanel{
 			Transformer tr = TransformerFactory.newInstance().newTransformer()
 			tr.setOutputProperty(OutputKeys.INDENT, "yes")
 			tr.setOutputProperty(OutputKeys.METHOD, "xml")
-			tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount",
-					"3")
+			tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "3")
 
 			// to send the output to a file
-			tr.transform(new DOMSource(dom), new StreamResult(
-					new FileOutputStream(f)))
+			tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(f)))
 		} catch(Exception ex) {
 			ex.printStackTrace()
 		}

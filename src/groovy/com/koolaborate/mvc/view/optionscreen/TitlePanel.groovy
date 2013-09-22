@@ -1,13 +1,13 @@
-package com.koolaborate.mvc.view.optionscreen;
+package com.koolaborate.mvc.view.optionscreen
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.BorderLayout
+import java.awt.Component
+import java.awt.Dimension
+import java.awt.Font
+import javax.swing.ImageIcon
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.border.EmptyBorder
 
 /***********************************************************************************
  * TitlePanel                                                                      *
@@ -33,9 +33,8 @@ import javax.swing.border.EmptyBorder;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class TitlePanel extends JPanel
-{
-	private static final long serialVersionUID = -3361496455045512196L;
+public class TitlePanel extends JPanel{
+	private static final long serialVersionUID = -3361496455045512196L
 
 	/**
 	 * Constructor.
@@ -43,23 +42,22 @@ public class TitlePanel extends JPanel
 	 * @param title the title
 	 * @param ico the icon for the category
 	 */
-	public TitlePanel(String title, ImageIcon ico)
-	{
-		setOpaque(false);
-		setLayout(new BorderLayout());
+	public TitlePanel(String title, ImageIcon imageIcon){
+		setOpaque(false)
+		setLayout(new BorderLayout())
 		
-		JLabel imgLabel = new JLabel(ico);
-		imgLabel.setBorder(new EmptyBorder(0, 10, 0, 10));
-		add(imgLabel, BorderLayout.WEST);
+		JLabel imgLabel = new JLabel(imageIcon)
+		imgLabel.setBorder(new EmptyBorder(0, 10, 0, 10))
+		add(imgLabel, BorderLayout.WEST)
 		
-		JLabel titleLabel = new JLabel(title);
-		titleLabel.setFont(new Font("Calibri", Font.BOLD, 20));
-		add(titleLabel, BorderLayout.CENTER);
+		JLabel titleLabel = new JLabel(title)
+		titleLabel.setFont(new Font("Calibri", Font.BOLD, 20))
+		add(titleLabel, BorderLayout.CENTER)
 
-		setPreferredSize(new Dimension(Integer.MAX_VALUE, ico.getIconHeight() + 4));
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, ico.getIconHeight() + 4));
+		setPreferredSize(new Dimension(Integer.MAX_VALUE, imageIcon.getIconHeight() + 4))
+		setMaximumSize(new Dimension(Integer.MAX_VALUE, imageIcon.getIconHeight() + 4))
 		
-		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setAlignmentY(Component.TOP_ALIGNMENT);
+		setAlignmentX(Component.LEFT_ALIGNMENT)
+		setAlignmentY(Component.TOP_ALIGNMENT)
 	}
 }

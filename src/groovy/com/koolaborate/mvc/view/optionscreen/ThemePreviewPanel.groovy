@@ -1,16 +1,16 @@
-package com.koolaborate.mvc.view.optionscreen;
+package com.koolaborate.mvc.view.optionscreen
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.image.BufferedImage
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
+import javax.swing.BoxLayout
+import javax.swing.ImageIcon
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.border.LineBorder
 
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * ThemePreviewPanel                                                               *
@@ -36,26 +36,24 @@ import com.koolaborate.util.LocaleMessage;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ThemePreviewPanel extends JPanel
-{
-	private static final long serialVersionUID = -3091117485725551187L;
-	private JLabel imgLabel;
+public class ThemePreviewPanel extends JPanel{
+	private static final long serialVersionUID = -3091117485725551187L
+	JLabel imageLabel
 	
 	/**
 	 * Constructor.
 	 */
-	public ThemePreviewPanel()
-	{
-		setOpaque(false);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	public ThemePreviewPanel(){
+		setOpaque(false)
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
 		
-		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("options.preview")); 
-		titleLabel.setPreferredSize(new Dimension(230, 12));
-		add(titleLabel);
+		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("options.preview")) 
+		titleLabel.setPreferredSize(new Dimension(230, 12))
+		add(titleLabel)
 		
-		imgLabel = new JLabel();
-		imgLabel.setBorder(new LineBorder(Color.BLACK));
-		add(imgLabel);
+		imageLabel = new JLabel()
+		imageLabel.setBorder(new LineBorder(Color.BLACK))
+		add(imageLabel)
 	}
 	
 	
@@ -64,12 +62,9 @@ public class ThemePreviewPanel extends JPanel
 	 * 
 	 * @param img the new image to be shown
 	 */
-	public void updateImage(BufferedImage img)
-	{
-		if(img != null)
-		{
-			imgLabel.setIcon(new ImageIcon(img));
-//			imgLabel.repaint();
+	public void updateImage(BufferedImage img){
+		if(img != null){
+			imageLabel.icon = new ImageIcon(img)
 		}
 	}
 }
