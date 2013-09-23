@@ -1,14 +1,14 @@
-package com.koolaborate.mvc.view.playlistview;
+package com.koolaborate.mvc.view.playlistview
 
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.Dimension
+import java.awt.Font
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.BoxLayout
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.SwingUtilities
 
-import com.koolaborate.model.CurrentSongInfo;
+import com.koolaborate.model.CurrentSongInfo
 
 /***********************************************************************************
  * SongInfoPanel                                                                   *
@@ -34,29 +34,27 @@ import com.koolaborate.model.CurrentSongInfo;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SongInfoPanel extends JPanel
-{
-	private static final long serialVersionUID = 3097822843691742573L;
-	private JLabel songLabel, artistLabel; 
-	private CurrentSongInfo songInfo;
+public class SongInfoPanel extends JPanel{
+	private static final long serialVersionUID = 3097822843691742573L
+	JLabel songLabel, artistLabel 
+	CurrentSongInfo songInfo
 	
 	/**
 	 * Constructor.
 	 */
-	public SongInfoPanel()
-	{
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setOpaque(false);
+	public SongInfoPanel(){
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
+		setOpaque(false)
 		
-		songLabel   = new JLabel();
-		artistLabel = new JLabel();
-		songLabel.setOpaque(false);
-		songLabel.setPreferredSize(new Dimension(230, 12));
-		songLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		artistLabel.setOpaque(false);
+		songLabel   = new JLabel()
+		artistLabel = new JLabel()
+		songLabel.setOpaque(false)
+		songLabel.setPreferredSize(new Dimension(230, 12))
+		songLabel.setFont(new Font("Serif", Font.BOLD, 20))
+		artistLabel.setOpaque(false)
 		
-		add(songLabel);
-		add(artistLabel);
+		add(songLabel)
+		add(artistLabel)
 	}
 	
 	/**
@@ -64,35 +62,28 @@ public class SongInfoPanel extends JPanel
 	 * 
 	 * @param _songInfo the new song information object
 	 */
-	public void updateSongInfo(CurrentSongInfo _songInfo)
-	{
-		this.songInfo = _songInfo;
+	public void updateSongInfo(CurrentSongInfo _songInfo){
+		this.songInfo = _songInfo
 		
-		if(songInfo.songTitle != null)
-		{
-			songLabel.setText(songInfo.songTitle);
-		}
-		else
-		{
-			songLabel.setText(songInfo.getSongFileName());
-		}
-		if(songInfo.artist != null)
-		{
-			artistLabel.setText(songInfo.artist);
-		}
-		else
-		{
-			artistLabel.setText("");
+		if(songInfo.songTitle != null){
+			songLabel.setText(songInfo.songTitle)
+		} else{
+			songLabel.setText(songInfo.getSongFileName())
 		}
 		
-		artistLabel.setOpaque(false);
+		if(songInfo.artist != null){
+			artistLabel.setText(songInfo.artist)
+		} else{
+			artistLabel.setText("")
+		}
+		
+		artistLabel.setOpaque(false)
 		
 		// repaint thread safe
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
-				repaint();
+		SwingUtilities.invokeLater([
+			run: {
+				repaint()
 			}
-		});
+		] as Runnable)
 	}
 }

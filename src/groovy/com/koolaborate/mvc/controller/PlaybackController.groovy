@@ -93,10 +93,10 @@ public class PlaybackController implements BasicPlayerListener{
 
 	String filename = ""
 
-	Settings s
+	Settings settings
 
 	CurrentSongInfo songInfo
-	MainWindow window
+	MainWindow mainWindow
 	PlaylistPanel playListPanel
 	CenterPanel centerPanel
 
@@ -113,9 +113,9 @@ public class PlaybackController implements BasicPlayerListener{
 	public PlaybackController(CenterPanel cPanel, PlaylistPanel playlist, MainWindow window){
 		this.centerPanel = cPanel
 		this.playListPanel = playlist
-		this.window = window
+		this.mainWindow = window
 		this.songInfo = window.getSongInfo()
-		this.s = window.getSettings()
+		this.settings = window.getSettings()
 
 		Decorator d = window.getDecorator()
 		// load the GUI elements from the decorator
@@ -136,21 +136,19 @@ public class PlaybackController implements BasicPlayerListener{
 		// add the buttons...
 
 		// previous song button
-		prevButt.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
+		prevButt.addMouseListener([
+			mouseClicked: { mouseEvent ->
 				playButt.setActive(false)
 				if(currentState == STATE.PLAYING) {
 					fadeOut()
 				}
 				playPreviousSong()
 			}
-		})
+		] as MouseAdapter)
 
 		// play button
-		playButt.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e){
+		playButt.addMouseListener([
+			mouseClicked: {
 				if(currentState == STATE.ENDED) {
 					playSong()
 				} else if(currentState == STATE.PLAYING) {
@@ -159,7 +157,7 @@ public class PlaybackController implements BasicPlayerListener{
 					resumeSong()
 				}
 			}
-		})
+		] as MouseAdapter)
 
 		// stop button
 		stopButt.addMouseListener([
@@ -192,7 +190,7 @@ public class PlaybackController implements BasicPlayerListener{
 
 		volumeSlider.setMinimum(0)
 		volumeSlider.setMaximum(10)
-		int volumeInt = (int) (s.getVolume() * 10)
+		int volumeInt = (int) (settings.getVolume() * 10)
 		volumeSlider.setValue(volumeInt)
 		volumeSlider.addChangeListener([
 			stateChanged: { e ->
@@ -243,9 +241,9 @@ public class PlaybackController implements BasicPlayerListener{
 	private void adjustVolumeAndBalance(){
 		try {
 			// Set volume (0 to 1.0).
-			control.setGain(s.volume)
+			control.setGain(settings.volume)
 			// Set pan (balance) (-1.0 to 1.0).
-			control.setPan(s.balance)
+			control.setPan(settings.balance)
 		} catch(BasicPlayerException e) {
 			log.warn("Unable to adjust volume and balance: " + e.getMessage())
 		}
@@ -309,7 +307,7 @@ public class PlaybackController implements BasicPlayerListener{
 
 			try {
 				songInfo.readSongInfo()
-				window.updateArtist(songInfo)
+				mainWindow.updateArtist(songInfo)
 			} catch(Exception e) {
 				// the artist information and song name could not be read
 				log.debug(e.getMessage())
@@ -325,10 +323,9 @@ public class PlaybackController implements BasicPlayerListener{
 				if(CoverHelper.saveEmbeddedCover(filename)) {
 					// causes the cover path in songInfo to be determined
 					songInfo.setAlbumPath(songInfo.getAlbumPath())
-					window.updateCover(songInfo)
+					mainWindow.updateCover(songInfo)
 					// update album in album overview as well!
-					String big = songInfo.getAlbumPath() + File.separator
-							+ "folder.jpg"
+					String big = songInfo.getAlbumPath() + File.separator + "folder.jpg"
 					BufferedImage preview = null
 					File bigCover = new File(big)
 					if(bigCover.exists()) {
@@ -336,7 +333,7 @@ public class PlaybackController implements BasicPlayerListener{
 						preview = helper.createSmallCover(bigCover)
 					}
 
-					Database db = window.getDatabase()
+					Database db = mainWindow.getDatabase()
 					Album a = db.getAlbumById(songInfo.getAlbumId())
 					a.setPreview(preview)
 					db.updateAlbum(a)
@@ -389,7 +386,7 @@ public class PlaybackController implements BasicPlayerListener{
 					playListPanel.getPlaylist().setPlayIconAtCurrentEntry()
 
 					songInfo.readSongInfo()
-					window.updateArtist(songInfo)
+					mainWindow.updateArtist(songInfo)
 				} catch(Exception e1) {
 					log.debug(e1.getMessage())
 				}
@@ -412,40 +409,36 @@ public class PlaybackController implements BasicPlayerListener{
 	private void handleSongNoLongerAvailable(){
 		// check if the album folder is available
 		log.debug("File " + filename + " not found!")
-		log.debug("Current folder: " + window.getCurrentFolderPath())
+		log.debug("Current folder: " + mainWindow.getCurrentFolderPath())
 
-		window.getPlaylist().getPlaylist().setCurrentEntryUnplayable()
+		mainWindow.getPlaylist().getPlaylist().setCurrentEntryUnplayable()
 
-		String path = window.getCurrentFolderPath()
+		String path = mainWindow.getCurrentFolderPath()
 		if(StringUtils.isNotEmpty(path)) {
 			File folder = new File(path)
 			if(!folder.exists()) {
 				VistaDialog delAlbum = VistaDialog.showConfirmationDialog(
 						LocaleMessage.getInstance().getString("error.15"),
 						LocaleMessage.getInstance().getString("error.16"),
-						LocaleMessage.getInstance().getString("error.17") + " '" + " " + path
-								+ " ' " + LocaleMessage.getInstance().getString("error.20")
-								+ "\n\n" + LocaleMessage.getInstance().getString("error.18"))
+						LocaleMessage.getInstance().getString("error.17") + " '" + " " + path + " ' " + LocaleMessage.getInstance().getString("error.20") + "\n\n" + LocaleMessage.getInstance().getString("error.18"))
 				if(delAlbum.yesSelected) {
-					int albumId = window.getPlaylist()
-							.getCurrentlySelectedSongAlbumId()
+					int albumId = mainWindow.getPlaylist().getCurrentlySelectedSongAlbumId()
 					log.debug("Deleting album with id " + albumId)
 					if(albumId != -1)
-						window.getDatabase().deleteAlbum(albumId)
+						mainWindow.getDatabase().deleteAlbum(albumId)
 
 					// refresh the albums view
-					centerPanel.refreshAlbumsView(centerPanel.getAlbumsPanel()
-							.getSortMode())
-					SwingUtilities.invokeLater(new Runnable(){
-						public void run(){
+					centerPanel.refreshAlbumsView(centerPanel.getAlbumsPanel().getSortMode())
+					SwingUtilities.invokeLater([
+						run: {
 							centerPanel.revalidate()
 						}
-					})
+					] as Runnable)
 
 					// refresh the playlist view (load empty cover since it was
 					// the active
 					// album in the playlist)...
-					centerPanel.getPlaylist().getPlaylist().clearPlaylist()
+					centerPanel.playlistPanel.getPlaylist().clearPlaylist()
 
 					// stop playback if song is from current album
 					if(currentState == STATE.PLAYING) {
@@ -456,11 +449,11 @@ public class PlaybackController implements BasicPlayerListener{
 					CurrentSongInfo info = new CurrentSongInfo()
 
 					// then clear the playlist and update the view
-					window.setCurrentSongInfo(info)
-					centerPanel.updateCover(window.getSongInfo())
+					mainWindow.setCurrentSongInfo(info)
+					centerPanel.updateCover(mainWindow.getSongInfo())
 					centerPanel.getCoverPanel().refreshCover()
-					window.updateArtist(info)
-					window.setCurrentFolder(null)
+					mainWindow.updateArtist(info)
+					mainWindow.setCurrentFolder(null)
 				}
 			}
 			// if the folder exists, only the song is missing
@@ -468,16 +461,13 @@ public class PlaybackController implements BasicPlayerListener{
 				VistaDialog delSong = VistaDialog.showConfirmationDialog(
 						LocaleMessage.getInstance().getString("error.13"),
 						LocaleMessage.getInstance().getString("error.12"),
-						LocaleMessage.getInstance().getString("error.19") + " '" + filename
-								+ "' " + LocaleMessage.getInstance().getString("error.20")
-								+ LocaleMessage.getInstance().getString("error.21"))
+						LocaleMessage.getInstance().getString("error.19") + " '" + filename + "' " + LocaleMessage.getInstance().getString("error.20") + LocaleMessage.getInstance().getString("error.21"))
 				if(delSong.yesSelected) {
-					int songId = window.getPlaylist()
-							.getCurrentlySelectedSongID()
-					if(songId != -1) window.getDatabase().deleteSong(songId)
+					int songId = mainWindow.getPlaylist().getCurrentlySelectedSongID()
+					if(songId != -1) mainWindow.getDatabase().deleteSong(songId)
 					FileHelper.getInstance().removeFile(filename)
-					window.getPlaylist().refreshSongList()
-					window.getPlaylist().repaint()
+					mainWindow.getPlaylist().refreshSongList()
+					mainWindow.getPlaylist().repaint()
 				}
 			}
 		}
@@ -491,7 +481,7 @@ public class PlaybackController implements BasicPlayerListener{
 		// if it was the last song, then don't play it again
 		if(playListPanel.selectNextSong()) {
 			playSong()
-			window.handleTinyWindowUpdate()
+			mainWindow.handleTinyWindowUpdate()
 		}
 	}
 
@@ -502,7 +492,7 @@ public class PlaybackController implements BasicPlayerListener{
 		// if it was the first song, then play it again
 		playListPanel.selectPreviousSong()
 		playSong()
-		window.handleTinyWindowUpdate()
+		mainWindow.handleTinyWindowUpdate()
 	}
 
 	/**
@@ -513,7 +503,7 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	private void setPlayerVolume(float vol){
 		try {
-			s.setVolume(vol)
+			settings.setVolume(vol)
 			control.setGain(vol)
 		} catch(BasicPlayerException e) {
 			log.warn("Unable to set volume: " + e.getMessage())
@@ -524,7 +514,7 @@ public class PlaybackController implements BasicPlayerListener{
 	 * To softly fade out.
 	 */
 	public void fadeOut(){
-		float vol = s.getVolume()
+		float vol = settings.getVolume()
 		try {
 			for(double volume = vol; volume >= 0.0; volume -= 0.01) {
 				control.setGain(volume)
@@ -631,8 +621,7 @@ public class PlaybackController implements BasicPlayerListener{
 			System.out.println("SEEKED!") // TODO
 		} else if(state == BasicPlayerEvent.STOPPED) {
 			// reset slider
-			JSlider slider = centerPanel.getTimeElapsedPanel()
-					.getTimeElapsedSlider()
+			JSlider slider = centerPanel.getTimeElapsedPanel().getTimeElapsedSlider()
 			slider.setValue(0)
 			slider.repaint()
 		}
@@ -656,7 +645,7 @@ public class PlaybackController implements BasicPlayerListener{
 	 */
 	public void setPlayerBalance(float balance){
 		try {
-			s.setBalance(balance)
+			settings.setBalance(balance)
 			control.setPan((double) balance)
 		} catch(BasicPlayerException e) {
 			log.warn("Unable to set balance: " + e.getMessage())

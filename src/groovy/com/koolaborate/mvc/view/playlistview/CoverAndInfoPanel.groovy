@@ -1,7 +1,7 @@
-package com.koolaborate.mvc.view.playlistview;
+package com.koolaborate.mvc.view.playlistview
 
-import java.awt.Dimension;
-import javax.swing.JPanel;
+import java.awt.Dimension
+import javax.swing.JPanel
 
 /***********************************************************************************
  * CoverAndInfoPanel                                                               *
@@ -29,34 +29,32 @@ import javax.swing.JPanel;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class CoverAndInfoPanel extends JPanel
-{
-	private static final long serialVersionUID = -9201729498791490290L;
-	private CoverPanel coverPanel;
-	private SongInfoPanel songInfoPanel;
-	private TimeElapsedPanel timeElapsedPanel;
+public class CoverAndInfoPanel extends JPanel{
+	private static final long serialVersionUID = -9201729498791490290L
+	CoverPanel coverPanel
+	SongInfoPanel songInfoPanel
+	TimeElapsedPanel timeElapsedPanel
 	
 	
 	/**
 	 * Constructor.
 	 */
-	public CoverAndInfoPanel(CoverPanel coverPanel, SongInfoPanel songInfoPanel, TimeElapsedPanel timeElapsedPanel)
-	{
-		this.coverPanel = coverPanel;
-		this.songInfoPanel = songInfoPanel;
-		this.timeElapsedPanel = timeElapsedPanel;
-		setOpaque(false);
-		setLayout(null);
-		setPreferredSize(new Dimension(coverPanel.getPreferredSize().width, coverPanel.getPreferredSize().height + 90));
+	public CoverAndInfoPanel(CoverPanel coverPanel, SongInfoPanel songInfoPanel, TimeElapsedPanel timeElapsedPanel){
+		this.coverPanel = coverPanel
+		this.songInfoPanel = songInfoPanel
+		this.timeElapsedPanel = timeElapsedPanel
+		setOpaque(false)
+		setLayout(null)
+		setPreferredSize(new Dimension(coverPanel.getPreferredSize().width, coverPanel.getPreferredSize().height + 90))
 		
-		this.coverPanel.setBounds(0, 0, coverPanel.getPreferredSize().width, coverPanel.getPreferredSize().height);
+		this.coverPanel.setBounds(0, 0, coverPanel.getPreferredSize().width, coverPanel.getPreferredSize().height)
 		this.songInfoPanel.setBounds(20, (int)(coverPanel.getPreferredSize().height/1.5 + 10), 
-				coverPanel.getPreferredSize().width - 20, songInfoPanel.getPreferredSize().height + 50);
+				coverPanel.getPreferredSize().width - 20, songInfoPanel.getPreferredSize().height + 50)
 		this.timeElapsedPanel.setBounds(10, (int)(coverPanel.getPreferredSize().height/1.5 + 50), 
-				coverPanel.getPreferredSize().width - 10, songInfoPanel.getPreferredSize().height + 90);
+				coverPanel.getPreferredSize().width - 10, songInfoPanel.getPreferredSize().height + 90)
 		
-		add(this.coverPanel);
-		add(this.songInfoPanel);
-		add(this.timeElapsedPanel);
+		add(this.coverPanel)
+		add(this.songInfoPanel)
+		add(this.timeElapsedPanel)
 	}
 }

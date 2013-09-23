@@ -80,7 +80,7 @@ public class AlbumPreviewPanel extends JPanel{
 	JLabel previewImgLabel, titleLabel, artistLabel
 	CenterPanel centerPanel
 	CurrentSongInfo songInfo
-	MainWindow window
+	MainWindow mainWindow
 
 	Album album
 	String albumFolder
@@ -96,7 +96,7 @@ public class AlbumPreviewPanel extends JPanel{
 	public AlbumPreviewPanel(CenterPanel panel, CurrentSongInfo info){
 		this.songInfo = info
 		this.centerPanel = panel
-		this.window = panel.getMainWindow()
+		this.mainWindow = panel.mainWindow
 
 		setOpaque(false)
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
@@ -175,7 +175,7 @@ public class AlbumPreviewPanel extends JPanel{
 			
 		def infoItemActionListener = [
 			actionPerformed: {
-				new AlbumInfoFrame(window, albumId)
+				new AlbumInfoFrame(mainWindow, albumId)
 			}
 		] as ActionListener
 	
@@ -193,7 +193,7 @@ public class AlbumPreviewPanel extends JPanel{
 					// del the files from disk (if desired)
 					if(delDiag.delFilesSelected) {
 						log.debug("Deleting files...")
-						List<Song> songs = window.getDatabase().getSongsForAlbum(albumId)
+						List<Song> songs = mainWindow.getDatabase().getSongsForAlbum(albumId)
 						for(Song s: songs)
 							FileHelper.getInstance().removeFile(
 									album.getFolderPath() + File.separator + s.getFileName())
@@ -206,7 +206,7 @@ public class AlbumPreviewPanel extends JPanel{
 
 					// delete the album from the database
 					log.debug("Deleting album with ID " + albumId + " from the database.")
-					window.getDatabase().deleteAlbum(albumId)
+					mainWindow.getDatabase().deleteAlbum(albumId)
 
 					// refresh the albums view
 					centerPanel.refreshAlbumsView(centerPanel.getAlbumsPanel().getSortMode())
@@ -219,16 +219,16 @@ public class AlbumPreviewPanel extends JPanel{
 					// refresh the playlist view if it is the selected album
 					// load empty cover if it is the active album in the
 					// playlist...
-					log.debug("The currently selected album folder path is: " + window.getCurrentFolderPath())
+					log.debug("The currently selected album folder path is: " + mainWindow.getCurrentFolderPath())
 					log.debug("The path of the album to be deleted is: " + album.getFolderPath())
-					if(window.getCurrentFolderPath() != null && window.getCurrentFolderPath().equals(album.getFolderPath())) {
+					if(mainWindow.getCurrentFolderPath() != null && mainWindow.getCurrentFolderPath().equals(album.getFolderPath())) {
 						log.debug("The folders are eyual => stop playback")
 
-						PlaybackController playerPanel = window.getPlayerPanel()
+						PlaybackController playerPanel = mainWindow.getPlayerPanel()
 						centerPanel.playlistPanel.getPlaylist().clearPlaylist()
 
 						// stop playback if song is from current album
-						if(window.getPlayerPanel().getCurrentState() == STATE.PLAYING) {
+						if(mainWindow.getPlayerPanel().getCurrentState() == STATE.PLAYING) {
 							playerPanel.fadeOut()
 						}
 						playerPanel.setCurrentState(STATE.ENDED)
@@ -236,11 +236,11 @@ public class AlbumPreviewPanel extends JPanel{
 						CurrentSongInfo info = new CurrentSongInfo()
 
 						// then clear the playlist and update the view
-						window.setCurrentSongInfo(info)
-						centerPanel.updateCover(window.getSongInfo())
+						mainWindow.setCurrentSongInfo(info)
+						centerPanel.updateCover(mainWindow.getSongInfo())
 						centerPanel.getCoverPanel().refreshCover()
-						window.updateArtist(info)
-						window.setCurrentFolder(null)
+						mainWindow.updateArtist(info)
+						mainWindow.setCurrentFolder(null)
 					}
 				}
 			}
@@ -277,7 +277,7 @@ public class AlbumPreviewPanel extends JPanel{
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR))
 		setActive(false)
 		centerPanel.getAlbumsPanel().setSelectedAlbum(getThisInstance(), album)
-		window.repaintBackgroundPanel()
+		mainWindow.repaintBackgroundPanel()
 
 		// refresh the sub navigation buttons
 		JPanel playlistSubNavPanel = centerPanel.getNavigationPanel().getCurrentSubNavigationPanel(nav)
@@ -303,32 +303,32 @@ public class AlbumPreviewPanel extends JPanel{
 		// add a button 'Artist information' to the subnavigation if the artist
 		// name is given
 		if(!StringUtils.isEmpty(artistName)) {
-			SubNavButton artistInfo = window.getDecorator().getArtistInfoSubNavButton()
+			SubNavButton artistInfo = mainWindow.getDecorator().getArtistInfoSubNavButton()
 			artistInfo.setText(LocaleMessage.getInstance().getString("nav.artistinfo"))
 			artistInfo.setMouseListener([
 				mouseClicked: {
-					new ArtistInfoFrame(window, artistName)
+					new ArtistInfoFrame(mainWindow, artistName)
 				}
 			] as MouseAdapter)
 			playlistSubNavPanel.add(artistInfo)
 		}
 
 		// general album information (with the ability to edit)
-		SubNavButton albumInfo = window.getDecorator().getAlbumInfoSubNavButton()
+		SubNavButton albumInfo = mainWindow.getDecorator().getAlbumInfoSubNavButton()
 		albumInfo.setText(LocaleMessage.getInstance().getString("nav.albuminfo"))
 		albumInfo.setMouseListener([
 			mouseClicked: {
-				new AlbumInfoFrame(centerPanel.getMainWindow(), albumId)
+				new AlbumInfoFrame(centerPanel.mainWindow, albumId)
 			}
 		] as MouseAdapter)
 		playlistSubNavPanel.add(albumInfo)
 
 		// edit id3 tags of the songs
-		SubNavButton editId3Tags = window.getDecorator().getEditId3TagsSubNavButton()
+		SubNavButton editId3Tags = mainWindow.getDecorator().getEditId3TagsSubNavButton()
 		editId3Tags.setText(LocaleMessage.getInstance().getString("nav.editid3"))
 		editId3Tags.setMouseListener([
 			mouseClicked: {
-				new EditId3TagFrame(window, albumId, albumFolder, window.getDatabase().getSongFileNamesForAlbum(albumId))
+				new EditId3TagFrame(mainWindow, albumId, albumFolder, mainWindow.getDatabase().getSongFileNamesForAlbum(albumId))
 			}
 		] as MouseAdapter)
 		playlistSubNavPanel.add(editId3Tags)
@@ -340,7 +340,7 @@ public class AlbumPreviewPanel extends JPanel{
 		playlistSubNavPanel.repaint()
 
 		// update the tray icon
-		window.updateTrayIconAndText(album.getFolderPath() + File.separator + "folder.jpg", album.getArtist(), album.getTitle())
+		mainWindow.updateTrayIconAndText(album.getFolderPath() + File.separator + "folder.jpg", album.getArtist(), album.getTitle())
 	}
 
 	@Override
@@ -352,10 +352,10 @@ public class AlbumPreviewPanel extends JPanel{
 			// transparency according to set value
 			// g2.setComposite(AlphaComposite.SrcAtop.derive(window.getDecorator().getSelectionAlpha()));
 			Composite oldComposite = g2.getComposite()
-			g2.setComposite(AlphaComposite.SrcOver.derive(window.getDecorator().getSelectionAlpha()))
-			g2.setColor(window.getDecorator().getSelectionColor1())
+			g2.setComposite(AlphaComposite.SrcOver.derive(mainWindow.getDecorator().getSelectionAlpha()))
+			g2.setColor(mainWindow.getDecorator().getSelectionColor1())
 			g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5)
-			g2.setColor(window.getDecorator().getSelectionColor2())
+			g2.setColor(mainWindow.getDecorator().getSelectionColor2())
 			g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5)
 			// afterwards set alpha value back to 1.0
 			g2.setComposite(oldComposite)

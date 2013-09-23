@@ -47,14 +47,10 @@ public class LocaleMessage
 	 * @param key the key to be searched for
 	 * @return a String containing the text in the current Locale
 	 */
-	public String getString(String key) 
-	{
-		try 
-		{
+	public String getString(String key) {
+		try {
 			return RESOURCE_BUNDLE.getString(key);
-		} 
-		catch (MissingResourceException e) 
-		{
+		} catch (MissingResourceException e){
 			System.out.println("Ressource for key '" + key + "' is missing.");
 			return "MISSING: " + key;
 		}

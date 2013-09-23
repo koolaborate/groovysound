@@ -79,7 +79,7 @@ public class TinyView extends JWindow
 	
 	int coverSize = 100
 	
-	MainWindow window
+	MainWindow mainWindow
 	Album album
 	int currentSongId = -1
 	
@@ -95,7 +95,7 @@ public class TinyView extends JWindow
 	 */
 	public TinyView(MainWindow window, Album a, int currentSongId)
 	{
-		this.window = window
+		this.mainWindow = window
 		playerPanel = window.getPlayerPanel()
 		this.album = a
 		this.currentSongId = currentSongId
@@ -146,9 +146,9 @@ public class TinyView extends JWindow
 		bg.setLayout(null)
 		
 		// add the cover
-		cover = new CoverPanel(window)
+		cover = new CoverPanel(mainWindow)
 		cover.setBigView(true)
-		cover.setCoverPath(window.getCurrentFolderPath() + File.separator + "folder.jpg")
+		cover.setCoverPath(mainWindow.getCurrentFolderPath() + File.separator + "folder.jpg")
 		cover.refreshCover()
 		cover.setCoverSize(coverSize)
 		cover.setBounds(0, 0, coverSize + 20, (int)(coverSize * 1.5))
@@ -163,8 +163,8 @@ public class TinyView extends JWindow
 		closeButton.setPreferredSize(new Dimension(43, 17))
 		closeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				window.setVisible(true)
-				window.setTinyWindowShown(false)
+				mainWindow.setVisible(true)
+				mainWindow.setTinyWindowShown(false)
 				setVisible(false)
 				outTimer.stop()
 				inTimer.stop()
@@ -175,7 +175,7 @@ public class TinyView extends JWindow
 		bg.add(closeButton)
 		
 		// the playlist is needed for getting the current and next song
-		PlaylistPanel play = new PlaylistPanel(window)
+		PlaylistPanel play = new PlaylistPanel(mainWindow)
 		play.setAlbumId(album.getId())
 		play.refreshSongList()
 		playlist = play.getPlaylist()
@@ -316,7 +316,7 @@ public class TinyView extends JWindow
 		bg.add(controlPanel)
 		
 		// if song is already playing, update play button
-		if(window.getPlayerPanel().getCurrentState() == STATE.PLAYING)
+		if(mainWindow.getPlayerPanel().getCurrentState() == STATE.PLAYING)
 		{
 			playButton.setIcon(pauseIcon)
 			playButton.setActionCommand("pause")
@@ -445,7 +445,7 @@ public class TinyView extends JWindow
 	 */
 	private void setWindowShape()
 	{
-		if(window.getWindowShaper().shapeWindow(this, new RoundRectangle2D.Double(0, 0, 
+		if(mainWindow.getWindowShaper().shapeWindow(this, new RoundRectangle2D.Double(0, 0, 
 				getWidth(), getHeight(), 10, 10)) && bg != null) 
 			bg.setBorder(new RoundedBorder(10))
 	}

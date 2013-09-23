@@ -99,6 +99,10 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	BufferedImage image
 	int maxWidth = 80 // maximum width for the ghost image
 	int maxHeight = 80 // maximum height for the ghost image
+	
+	// get rid of these groovy getters
+	@Override
+	java.awt.Component getGlassPane(){return null}
 
 	/**
 	 * Constructor.
@@ -581,7 +585,6 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	 * Method is called when an object is being dragged onto the application
 	 * window.
 	 */
-	@SuppressWarnings("unchecked")
 	public void dragEnter(DropTargetDragEvent dtde){
 		// create image if it has not already been created
 		if(image == null) {

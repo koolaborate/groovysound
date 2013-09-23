@@ -26,7 +26,7 @@ import java.util.ArrayList;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class StringUtils {
+class StringUtils {
 	
 	private static StringUtils instance;
 	

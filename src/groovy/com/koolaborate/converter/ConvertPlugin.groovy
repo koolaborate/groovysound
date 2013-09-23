@@ -57,7 +57,7 @@ import plug.engine.Plugin
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ConvertPlugin extends Plugin {
+class ConvertPlugin extends Plugin {
 	
 	public String getName(){
 		String language = Locale.getDefault().getLanguage()
@@ -95,7 +95,7 @@ public class ConvertPlugin extends Plugin {
 		List<Pluggable> allPluggables = PlugEngine.getInstance().getAllPluggables()
 		for(Pluggable plugin : allPluggables){
 			if(plugin instanceof MainPlugin){
-				final MainPlugin m = (MainPlugin) plugin
+				final MainPlugin mainPlugin = (MainPlugin) plugin
 			
 				// create a sub navigation button for the playlist view which enables the user to convert the album to WAV
 				SubNavButton convertButton = new SubNavButton(){
@@ -153,19 +153,19 @@ public class ConvertPlugin extends Plugin {
 				if(language.equalsIgnoreCase("de")) tooltip = "Wandeln Sie dieses Album ins WAV-Format, um es danach als Audio-CD brennen zu können"
 				convertButton.setToolTipText(tooltip)
 				
-				convertButton.addMouseListener(new MouseAdapter(){
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						String srcFolder = m.getMainwindow().getCurrentFolderPath()
+				convertButton.addMouseListener([
+					mouseClicked: { mouseEvent ->
+						MouseEvent e = mouseEvent
+						String srcFolder = mainPlugin.mainWindow.getCurrentFolderPath()
 						if(!StringUtils.isEmpty(srcFolder)) {
 							// open a directory choose dialog for selecting the destination folder
-							final JFileChooser chooser = new JFileChooser(m.getMainwindow().getSettings().getLastFolder())
+							final JFileChooser chooser = new JFileChooser(mainPlugin.mainWindow.getSettings().getLastFolder())
 							chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
 							int state = chooser.showOpenDialog(null)
 							if(state == JFileChooser.APPROVE_OPTION) {
 								if(chooser.getSelectedFile() != null) {
 									File dstFolder = chooser.getSelectedFile()
-									m.getMainwindow().getSettings().setLastFolder(dstFolder.getParent())
+									mainPlugin.mainWindow.getSettings().setLastFolder(dstFolder.getParent())
 									Convertable converter = new MP3ToWAVConverter()
 									converter.init(srcFolder, dstFolder.getAbsolutePath())
 									converter.convert()
@@ -173,10 +173,10 @@ public class ConvertPlugin extends Plugin {
 							}
 						}
 					}
-				})
+				] as MouseAdapter)
 				
 				// HOTFIX: trick, since the main window needs more time to set the center panel up...
-				if(m.getMainwindow().getCenterPanel() == null){
+				if(mainPlugin.mainWindow.getCenterPanel() == null){
 					// check every second if the main window is loaded or not
 					int timeOut = 20000 // stop trying after 20 seconds
 					int waited = 0
@@ -184,7 +184,7 @@ public class ConvertPlugin extends Plugin {
 						try{
 							// wait another second for the system to set up the main window
 							Thread.sleep(1000) 
-							if(m.getMainwindow().getCenterPanel() != null){
+							if(mainPlugin.mainWindow.getCenterPanel() != null){
 								// window is visible now -> end waiting
 								waited = timeOut
 							}
@@ -194,7 +194,7 @@ public class ConvertPlugin extends Plugin {
 					}
 				}
 				
-				m.getMainwindow().getCenterPanel().getNavigationPanel().addSubNavButton(NAVIGATION.PLAYLIST, convertButton)
+				mainPlugin.mainWindow.getCenterPanel().getNavigationPanel().addSubNavButton(NAVIGATION.PLAYLIST, convertButton)
 				break
 			}
 		}

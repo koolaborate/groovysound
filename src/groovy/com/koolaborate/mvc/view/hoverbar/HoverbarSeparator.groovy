@@ -30,11 +30,10 @@ import javax.swing.JComponent;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class HoverbarSeparator extends JComponent 
-{
+class HoverbarSeparator extends JComponent{
 	private static final long serialVersionUID = -3427651944716569302L;
-	private int width, height;
-	private Color c = new Color(75, 89, 105); // Color.BLACK
+	int width, height;
+	Color c = new Color(75, 89, 105); // Color.BLACK
 	
 	public HoverbarSeparator(int width, int height)
 	{

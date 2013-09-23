@@ -74,7 +74,7 @@ public class AlbumsOverviewPanel extends JPanel{
 	 *            the list of all albums to be shown
 	 */
 	public void refreshAlbums(CenterPanel centerPanel, List<Album> albumlist){
-		MainWindow mainWindow = centerPanel.getMainWindow();
+		MainWindow mainWindow = centerPanel.mainWindow
 		CurrentSongInfo songInfo = mainWindow.getSongInfo();
 
 		int availableWidth = mainWindow.getWidth() - 2 * 20;

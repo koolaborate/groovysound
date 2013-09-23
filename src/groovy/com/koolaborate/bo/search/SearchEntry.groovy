@@ -62,8 +62,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchEntry extends JPanel
-{
+public class SearchEntry extends JPanel{
 	private static final long serialVersionUID = -3415668077276831303L
 	boolean mouseOver = false
 	Color border = new Color(216, 240, 250)
@@ -71,31 +70,13 @@ public class SearchEntry extends JPanel
 	Font normalFont = new Font("Calibri", Font.PLAIN, 12)
 	
 	JLabel aristLabel, albumLabel, songLabel
-	MainWindow window
-	SearchFrame frame
+	MainWindow mainWindow
+	SearchFrame searchFrame
 	
-	SearchResult res
+	SearchResult searchResult
 	
 	@Override
 	public javax.swing.border.Border getBorder(){ return null}
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param w reference to the main window
-	 * @param result the search result object
-	 * @param frame the search frame reference
-	 */
-	public SearchEntry(MainWindow w, SearchResult result, SearchFrame f){
-		this.window = w
-		this.res = result
-		this.frame = f
-		
-		setOpaque(false)
-		initGUI()
-		
-		addMouseListener(mouseAdapter)
-	}
 	
 	protected MouseAdapter getMouseAdapter(){
 		
@@ -114,20 +95,20 @@ public class SearchEntry extends JPanel
 		
 			mouseClicked: {
 				// hide search window
-				frame.dispose()
+				searchFrame.dispose()
 				
-				final String artistName = res.getArtist()
-				CenterPanel centerPanel = window.getCenterPanel()
+				final String artistName = searchResult.getArtist()
+				CenterPanel centerPanel = mainWindow.getCenterPanel()
 				centerPanel.setCurrentView(NAVIGATION.PLAYLIST, true)
 				PlaylistPanel playlist = centerPanel.playlistPanel
-				playlist.setAlbumFolder(new File(res.getAlbumPath()))
-				playlist.setAlbumId(res.getAlbumId())
+				playlist.setAlbumFolder(new File(searchResult.albumPath))
+				playlist.setAlbumId(searchResult.albumId)
 				playlist.refreshSongList()
-				CurrentSongInfo songInfo = window.getSongInfo()
-				songInfo.setAlbumPath(res.getAlbumPath())
-				songInfo.albumId = res.getAlbumId()
+				CurrentSongInfo songInfo = mainWindow.getSongInfo()
+				songInfo.setAlbumPath(searchResult.albumPath)
+				songInfo.albumId = searchResult.albumPath
 				CoverPanel cover = centerPanel.getCoverPanel()
-				cover.albumTitle = res.albumTitle
+				cover.albumTitle = searchResult.albumTitle
 				cover.setArtistName(artistName)
 				centerPanel.updateCover(songInfo)
 				setCursor(Cursor.getDefaultCursor())
@@ -149,7 +130,7 @@ public class SearchEntry extends JPanel
 					
 					def artistInfoMouseAdapter = [
 						mouseClicked: {
-							new ArtistInfoFrame(window, artistName)
+							new ArtistInfoFrame(mainWindow, artistName)
 						}
 					] as MouseAdapter 
 				
@@ -170,7 +151,7 @@ public class SearchEntry extends JPanel
 				
 				def albumInfoMouseAdapter = [
 					mouseClicked: {
-						new AlbumInfoFrame(window, res.getAlbumId())
+						new AlbumInfoFrame(mainWindow, searchResult.albumId)
 					}
 				] as MouseAdapter
 			
@@ -190,7 +171,7 @@ public class SearchEntry extends JPanel
 				
 				def editId3TagsMouseAdapter = [
 					mouseClicked: {
-						new EditId3TagFrame(window, res.getAlbumId(), res.getAlbumPath(), window.getDatabase().getSongFileNamesForAlbum(res.getAlbumId()))
+						new EditId3TagFrame(mainWindow, searchResult.getAlbumId(), searchResult.getAlbumPath(), mainWindow.getDatabase().getSongFileNamesForAlbum(res.getAlbumId()))
 					}
 				] as MouseAdapter
 			
@@ -201,9 +182,9 @@ public class SearchEntry extends JPanel
 				Playlist pl = centerPanel.playlistPanel.getPlaylist()
 				ArrayList<PlaylistEntry> songs = pl.getEntries()
 				for(PlaylistEntry song : songs) {
-					if(song.getSongId() == res.getSongId()) {
+					if(song.getSongId() == searchResult.getSongId()) {
 						pl.setSelectedEntry(song)
-						window.getPlayerPanel().playSong()
+						mainWindow.getPlayerPanel().playSong()
 						break
 					}
 				}
@@ -229,7 +210,10 @@ public class SearchEntry extends JPanel
 	/**
 	 * Initialized the GUI elements.
 	 */
-	protected void initGUI() {
+	def void initializeGui() {
+		setOpaque(false)
+		addMouseListener(mouseAdapter)
+		
 		setLayout(new GridBagLayout())
 		
 		GridBagConstraints gbc = new GridBagConstraints()
@@ -239,14 +223,14 @@ public class SearchEntry extends JPanel
 		gbc.gridy = 0
 		gbc.insets = new Insets(2, 4, 2, 4)
 		
-		aristLabel = new JLabel(res.getArtist())
+		aristLabel = new JLabel(searchResult.getArtist())
 		aristLabel.setFont(normalFont)
 		aristLabel.setPreferredSize(new Dimension(160, 12))
 		aristLabel.setHorizontalAlignment(SwingConstants.LEFT)
 		add(aristLabel, gbc)
 		
 		gbc.gridx = 1
-		albumLabel = new JLabel(res.getAlbumTitle())
+		albumLabel = new JLabel(searchResult.albumTitle)
 		albumLabel.setFont(normalFont)
 		albumLabel.setPreferredSize(new Dimension(160, 12))
 		albumLabel.setHorizontalAlignment(SwingConstants.LEFT)
@@ -255,7 +239,7 @@ public class SearchEntry extends JPanel
 		gbc.gridx = 2
 		gbc.fill = GridBagConstraints.HORIZONTAL
 		gbc.weightx = 1.0f
-		songLabel = new JLabel(res.getSongTitle())
+		songLabel = new JLabel(searchResult.songTitle)
 		songLabel.setHorizontalAlignment(SwingConstants.LEFT)
 		songLabel.setFont(normalFont)
 		add(songLabel, gbc)

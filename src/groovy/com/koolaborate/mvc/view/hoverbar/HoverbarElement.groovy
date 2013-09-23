@@ -1,14 +1,14 @@
-package com.koolaborate.mvc.view.hoverbar;
+package com.koolaborate.mvc.view.hoverbar
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import javax.swing.JComponent;
+import java.awt.AlphaComposite
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.image.BufferedImage
+import javax.swing.JComponent
 
 /***********************************************************************************
  * HoverbarElement                                                                 *
@@ -36,12 +36,11 @@ import javax.swing.JComponent;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class HoverbarElement extends JComponent
-{
-	private static final long serialVersionUID = 6010793052206803430L;
-	private Thread action;
-	private BufferedImage img;
-	private boolean mouseOver = false;
+class HoverbarElement extends JComponent{
+	private static final long serialVersionUID = 6010793052206803430L
+	Thread action
+	BufferedImage img
+	boolean mouseOver = false
 	
 	
 	/**
@@ -49,33 +48,26 @@ public class HoverbarElement extends JComponent
 	 */
 	public HoverbarElement()
 	{
-		setOpaque(false);
+		setOpaque(false)
 		
-		addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseEntered(MouseEvent e) 
-			{
-				mouseOver = true;
-				repaint();
-			}
+		addMouseListener([
+			mouseEntered: {
+				mouseOver = true
+				repaint()
+			},
 			
-			@Override
-			public void mouseExited(MouseEvent e) 
-			{
-				mouseOver = false;
-				repaint();
-			}
+			mouseExited: {
+				mouseOver = false
+				repaint()
+			},
 			
-			@Override
-			public void mouseClicked(MouseEvent e) 
-			{
-				if(action != null)
-				{
-					Thread go = new Thread(action);
-					go.start();
+			mouseClicked: {
+				if(action != null){
+					Thread go = new Thread(action)
+					go.start()
 				}
 			}
-		});
+		] as MouseAdapter)
 	}
 	
 	
@@ -84,10 +76,9 @@ public class HoverbarElement extends JComponent
 	 * 
 	 * @param i the image to be set
 	 */
-	public void setImage(BufferedImage i)
-	{
-		this.img = i;
-		setPreferredSize(new Dimension(i.getWidth(), i.getHeight()));
+	public void setImage(BufferedImage i){
+		this.img = i
+		setPreferredSize(new Dimension(i.getWidth(), i.getHeight()))
 	}
 	
 	
@@ -96,27 +87,26 @@ public class HoverbarElement extends JComponent
 	 * 
 	 * @param t the thread which will be executed when the label is clicked onto
 	 */
-	public void setActionThread(Thread t)
-	{
-		this.action = t;
+	public void setActionThread(Thread t){
+		this.action = t
 	}
 	
 
 	@Override
 	protected void paintComponent(Graphics g) 
 	{
-		Graphics2D g2 = (Graphics2D) g;
+		Graphics2D g2 = (Graphics2D) g
 		
 		if(mouseOver)
 		{
 			//TODO on mouseover: show icon highlighted. For now: draw demi-translucent oval
-			g2.setComposite(AlphaComposite.SrcOver.derive(0.5f));
-			g2.setColor(Color.WHITE);
-			Dimension s = getSize();
-			g2.fillOval(1, 1, s.width - 1, s.height - 1);
-			g2.setComposite(AlphaComposite.SrcOver.derive(1.0f));
+			g2.setComposite(AlphaComposite.SrcOver.derive(0.5f))
+			g2.setColor(Color.WHITE)
+			Dimension s = getSize()
+			g2.fillOval(1, 1, s.width - 1, s.height - 1)
+			g2.setComposite(AlphaComposite.SrcOver.derive(1.0f))
 		}
 		
-		if(img != null) g2.drawImage(img, 0, 0, null);
+		if(img != null) g2.drawImage(img, 0, 0, null)
 	}
 }

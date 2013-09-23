@@ -45,7 +45,6 @@ import plug.engine.ui.swing.PluggableWrapper
 /**
  * @author Christophe Le Besnerais
  */
-@SuppressWarnings("serial") //$NON-NLS-1$
 public class PluginCellRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
 	
 	private PluggableWrapper plugin

@@ -87,13 +87,6 @@ public class ExtendedMP3Info
 				sb.append("\nTitel:     " + id3v2.getSongTitle());
 				sb.append("\nAlbumtitel:     " + id3v2.getAlbumTitle());
 				sb.append("\nJahr:      " + id3v2.getYearReleased());
-//				sb.append("\n------MP3 ID3 VERSION 2 INFO------------------");
-//				sb.append("\nInterpret:    " + mp3file.getID3v2Tag().getLeadArtist());
-//				sb.append("\nTrack#:    " + mp3file.getID3v2Tag().getTrackNumberOnAlbum());
-//				sb.append("\nGenre:  " +  mp3file.getID3v2Tag().getSongGenre());
-//				sb.append("\nTitel:     " + mp3file.getID3v2Tag().getSongTitle());
-//				sb.append("\nAlbumtitel:     " + mp3file.getID3v2Tag().getAlbumTitle());
-//				sb.append("\nJahr:      " + mp3file.getID3v2Tag().getYearReleased());
 			}
 		}
 		if(mp3file.hasLyrics3Tag())

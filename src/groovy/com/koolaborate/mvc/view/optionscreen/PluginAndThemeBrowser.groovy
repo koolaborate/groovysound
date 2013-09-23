@@ -79,7 +79,7 @@ public class PluginAndThemeBrowser extends JDialog
 	static String step1 = "plugins";
 	static String step2 = "themes";
 	
-	MainWindow window;
+	MainWindow mainWindow;
 	ThemesPanel themesPanel;
 	
 	/**
@@ -90,7 +90,7 @@ public class PluginAndThemeBrowser extends JDialog
 	public PluginAndThemeBrowser(MainWindow window)
 	{
 		super();
-		this.window = window;
+		this.mainWindow = window;
 		setTitle(LocaleMessage.getInstance().getString("options.plugins"));
 		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -294,7 +294,7 @@ public class PluginAndThemeBrowser extends JDialog
 		panel.add(scrollPane, BorderLayout.CENTER);
 		panel.add(getButtonPanel(), BorderLayout.SOUTH);
 		
-		themesPanel = new ThemesPanel(this, window.getDecorator());
+		themesPanel = new ThemesPanel(this, mainWindow.getDecorator());
 		mainPanel.add(panel, step1);
 		mainPanel.add(themesPanel, step2);
 		return mainPanel;

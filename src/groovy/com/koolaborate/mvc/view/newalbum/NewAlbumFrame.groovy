@@ -52,7 +52,7 @@ import com.koolaborate.util.LocaleMessage;
  * (c) Impressive Artworx, 2k8 *
  * 
  * @author Manuel Kaess *
- * @version 1.01 *
+ * @version 1.01 * 
  *********************************************************************************** 
  *          This file is part of VibrantPlayer. * * VibrantPlayer is free
  *          software: you can redistribute it and/or modify * it under the terms
@@ -68,30 +68,26 @@ import com.koolaborate.util.LocaleMessage;
  ***********************************************************************************/
 public class NewAlbumFrame extends JFrame{
 	private static final long serialVersionUID = 3396798307868339914L;
-	private JButton okButt, cancelButt, searchButt;
-	private JTextField folderPath, albumTitle, albumArtist, albumYear;
-	private JComboBox<String> songList;
-	private JXBusyLabel busyLabel;
-	private JPanel albumInfoPanel, centerPanel;
-	private MainWindow window;
-	private BufferedImage searchImg;
+	JButton okButt, cancelButt, searchButt;
+	JTextField folderPath, albumTitle, albumArtist, albumYear;
+	JComboBox<String> songList;
+	JXBusyLabel busyLabel;
+	JPanel albumInfoPanel, centerPanel;
+	MainWindow mainWindow;
+	BufferedImage searchImg;
 
-	private File albumFolder;
-	private Album a;
-	private List<Song> songs;
+	File albumFolder;
+	Album a;
+	List<Song> songs;
 
-	/**
-	 * Constructor.
-	 */
-	public NewAlbumFrame(MainWindow window){
-		this.window = window;
+	def initializeGui(){
 		songs = new ArrayList<Song>();
-
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
+		
+		SwingUtilities.invokeLater([
+			run: {
 				initGUI();
 			}
-		});
+		] as Runnable);
 	}
 
 	/**
@@ -196,12 +192,12 @@ public class NewAlbumFrame extends JFrame{
 		searchButt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				final JFileChooser chooser = new JFileChooser(
-						window.getSettings().getLastFolder());
+						mainWindow.getSettings().getLastFolder());
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int state = chooser.showOpenDialog(getThisInstance());
 				if(state == JFileChooser.APPROVE_OPTION) {
 					if(chooser.getSelectedFile() != null) {
-						window.getSettings().setLastFolder(
+						mainWindow.getSettings().setLastFolder(
 								chooser.getSelectedFile().getParent());
 						new Thread(new Runnable(){
 							public void run(){
@@ -463,7 +459,7 @@ public class NewAlbumFrame extends JFrame{
 		}
 
 		// check if the album is already in the database
-		if(window.getDatabase().checkAlbumAlreadyInDB(artist, title)) {
+		if(mainWindow.getDatabase().checkAlbumAlreadyInDB(artist, title)) {
 			VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.9"),
 					LocaleMessage.getInstance().getString("error.10"),
 					LocaleMessage.getInstance().getString("error.11"),

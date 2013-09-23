@@ -48,8 +48,7 @@ import com.koolaborate.service.db.Database;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class CenterPanel extends JPanel
-{
+class CenterPanel extends JPanel{
 	private static final long serialVersionUID = -1865306352685281295L;
 	NavigationPanel navigationPanel;
 	PlaybackController playerControls;
@@ -75,7 +74,7 @@ public class CenterPanel extends JPanel
 	 * 
 	 * @param window the main window
 	 */
-	public CenterPanel(MainWindow window)
+	public initializeMainWindow(MainWindow window)
 	{
 		this.mainWindow = window;
 		this.db = window.getDatabase();

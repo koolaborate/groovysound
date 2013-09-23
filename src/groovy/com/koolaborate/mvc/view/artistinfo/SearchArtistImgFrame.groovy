@@ -67,8 +67,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchArtistImgFrame extends JDialog
-{
+public class SearchArtistImgFrame extends JDialog{
 	private static final long serialVersionUID = -123343458456008535L
 	JButton cancelButt, searchButt
 	JPanel centerPanel, searchPanel1, searchPanel2, searchPanel3
@@ -82,10 +81,7 @@ public class SearchArtistImgFrame extends JDialog
 	MainWindow mainWindow
 	
 	
-	/**
-	 * Constructor.
-	 */
-	public SearchArtistImgFrame(MainWindow mainWindow, ArtistInfoFrame window, String artist){
+	def void initializeGui(MainWindow mainWindow, ArtistInfoFrame window, String artist){
 		this.mainWindow = mainWindow
 		this.window = window
 		this.artist = artist
@@ -278,8 +274,7 @@ public class SearchArtistImgFrame extends JDialog
 	 * 
 	 * @return the center JPanel
 	 */
-	private JPanel createCenterPanel()
-	{
+	private JPanel createCenterPanel(){
 		JPanel center = new JPanel()
 		center.setLayout(new BorderLayout())
 		center.setOpaque(false)
@@ -366,7 +361,7 @@ public class SearchArtistImgFrame extends JDialog
 		
 		searchButt.addActionListener([
 			actionPerformed: {
-				JFileChooser fc = new JFileChooser(new File(mainWindow.s.getLastFolder())) 
+				JFileChooser fc = new JFileChooser(new File(mainWindow.settings.getLastFolder())) 
 			    fc.setFileFilter([
 			      accept: { file ->
 					  File f = (File) file 
@@ -389,7 +384,7 @@ public class SearchArtistImgFrame extends JDialog
 			    int state = fc.showOpenDialog(getThisInstance()) 
 			    if(state == JFileChooser.APPROVE_OPTION && fc.getSelectedFile() != null){ 
 			    	File file = fc.getSelectedFile() 
-			    	mainWindow.s.setLastFolder(file.getParent())
+			    	mainWindow.settings.setLastFolder(file.getParent())
 			    	pathText.setText(file.getAbsolutePath())
 			    	
 			    	BufferedImage ownImg = null
@@ -415,8 +410,7 @@ public class SearchArtistImgFrame extends JDialog
 	 * 
 	 * @return the button JPanel
 	 */
-	private JPanel createButtonPanel()
-	{
+	private JPanel createButtonPanel(){
 		JPanel p = new JPanel()
 		cancelButt = new JButton(UIManager.getString("OptionPane.cancelButtonText"))
 		cancelButt.addActionListener([

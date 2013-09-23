@@ -64,36 +64,35 @@ import com.koolaborate.mvc.view.playercontrols.StopButton
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class DefaultTheme 
-{
+public class DefaultTheme {
 	/**
 	 * Creates a side panel which forms a kind of border to the content of the views.
 	 * 
 	 * @param leftSide whether it is the left side panel or not
 	 * @return the newly created side panel
 	 */
-	public static JPanel createSidePanel(final boolean leftSide)
-	{
+	public static JPanel createSidePanel(final boolean leftSide){
 		final JPanel sidePanel = new JPanel()
 		sidePanel.setOpaque(true)
 		sidePanel.setPreferredSize(new Dimension(10, Integer.MAX_VALUE))
 		sidePanel.setBackground(new Color(99, 108, 135))
-		sidePanel.setBorder(new Border(){
-			public Insets getBorderInsets(Component c)
-			{
+		sidePanel.setBorder([
+			getBorderInsets: {
 				return new Insets(0, 0, 0, 0)
-			}
-			public boolean isBorderOpaque()
-			{
+			},
+		
+			isBorderOpaque: {
 				return false
-			}
-			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
-			{
+			},
+		
+//			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
+			paintBorder: { c, graphics ->
+				Graphics g = (Graphics) graphics
 				g.setColor(Color.BLACK)
 				if(leftSide) g.drawLine(9, 0, 9, sidePanel.getHeight())
 				else g.drawLine(0, 0, 0, sidePanel.getHeight())
 			}
-		})
+		] as Border)
 		return sidePanel
 	}
 	
@@ -102,17 +101,12 @@ public class DefaultTheme
 	 * 
 	 * @return the newly created main panel
 	 */
-	public static JPanel createMainBackgroundPanel()
-	{
+	public static JPanel createMainBackgroundPanel(){
 		final Color color1 = new Color(237, 242, 249)//getBackground();
 		final Color color2 = new Color(255, 255, 255)//color1.darker();
 		
-		JPanel mainBackgroundPanel = new JPanel(){
-			private static final long serialVersionUID = 6985991099772225024L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JPanel mainBackgroundPanel = [
+			paintComponent: { g ->
 				Graphics2D g2d = (Graphics2D) g
 
 				int w = getWidth()
@@ -126,7 +120,8 @@ public class DefaultTheme
 				g2d.setPaint(gp)
 				g2d.fillRect(0, 0, w, h)
 			}
-		}
+		] as JPanel
+		
 		mainBackgroundPanel.setOpaque(true)
 		mainBackgroundPanel.setName("ACTION") // define action region for drag'n'drop
 		return mainBackgroundPanel
@@ -137,17 +132,13 @@ public class DefaultTheme
 	 * 
 	 * @return the newly created panel
 	 */
-	public static JPanel createNavigationBackgroundPanel()
-	{
+	public static JPanel createNavigationBackgroundPanel(){
 		final Color black = new Color(13, 15, 19)
 		final Color grey = new Color(97, 107, 133)
 		
-		final JPanel navigationBackgroundPanel = new JPanel(){
-			private static final long serialVersionUID = 1967036586082905213L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		final JPanel navigationBackgroundPanel = [
+			paintComponent: { graphics ->
+				Graphics g = (Graphics) graphics
 				Graphics2D g2d = (Graphics2D) g
 	
 				int w = getWidth()
@@ -158,8 +149,7 @@ public class DefaultTheme
 				// Paint a gradient from top to bottom
 			    float[] dist = [0.0f, 0.2f, 1.0f]
 			    Color[] colors = [black, black, grey]
-			    LinearGradientPaint gp = new LinearGradientPaint(new Point(0, 0), new Point(0, getHeight()), dist, colors, 
-			    		CycleMethod.NO_CYCLE)
+			    LinearGradientPaint gp = new LinearGradientPaint(new Point(0, 0), new Point(0, getHeight()), dist, colors, CycleMethod.NO_CYCLE)
 	
 				g2d.setPaint(gp)
 				g2d.fillRect(0, 0, w, h)
@@ -182,7 +172,8 @@ public class DefaultTheme
 				
 				g2d.drawLine(10, getHeight()-1, getWidth()-10, getHeight()-1)
 			}
-		}
+		] as JPanel
+	
 		return navigationBackgroundPanel
 	}
 	
@@ -193,14 +184,10 @@ public class DefaultTheme
 	 * @param inactiveImgLoc the location to the inactive image
 	 * @return the created navigation button
 	 */
-	public static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc)
-	{
-		NavButton b = new NavButton(){
-			private static final long serialVersionUID = 9098403506001666242L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+	public static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc){
+		NavButton b = [
+			paintComponent: { graphics ->
+				Graphics g = (Graphics) graphics
 				Graphics2D g2d = (Graphics2D) g
 				
 				BufferedImage icon = null
@@ -249,24 +236,21 @@ public class DefaultTheme
 					int icoHeight = icon.getHeight()
 					g2d.drawImage(icon, (int)(getWidth()/2 - icoWidth/2), (int)(getHeight()/2 - icoHeight / 2), icoWidth, icoHeight, null)
 				}
-			}
+			},
 			
-			@Override
-		    protected void paintBorder(Graphics g)
-		    {
-		        Graphics2D g2 = (Graphics2D)g
+			paintBorder: { graphics ->
+				Graphics g = (Graphics) graphcis
+		        Graphics2D g2 = (Graphics2D) g
 		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 		        g2.setColor(Color.BLACK)
 		        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 8, 8)
 		    }
-		}
-		try
-		{
+		] as NavButton
+		
+		try {
 			b.setActiveImg(ImageIO.read(DefaultTheme.class.getResource(activeImgLoc)))
 			b.setInActiveImg(ImageIO.read(DefaultTheme.class.getResource(inactiveImgLoc)))
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("Image not found for navigation button in theme decorator. Requested ressource missing: " + e.getMessage())
 		}
 		return b
@@ -278,14 +262,10 @@ public class DefaultTheme
 	 * @param imgLoc the location to the button's image
 	 * @return the created sub-navigation button
 	 */
-	public static SubNavButton createNewSubNavButton(String imgLoc)
-	{
-		SubNavButton b = new SubNavButton(){
-			private static final long serialVersionUID = -59535576596018849L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+	public static SubNavButton createNewSubNavButton(String imgLoc){
+		SubNavButton b = [
+			paintComponent: { graphics ->
+				Graphics g = (Graphics) graphics
 				Graphics2D g2d = (Graphics2D) g
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 				
@@ -293,8 +273,7 @@ public class DefaultTheme
 				int h = getHeight()
 				
 				// draw a nice border if the mouse cursor if over the button
-				if(isMouseOver())
-				{
+				if(isMouseOver()){
 					Color c1 = Color.GRAY.darker()
 					Color c2 = Color.GRAY.brighter()
 					
@@ -320,8 +299,7 @@ public class DefaultTheme
 				}
 				
 				// draw the icon (if not null)
-				if(getIcon() != null) 
-				{
+				if(getIcon() != null) {
 					BufferedImage ico = getIcon()
 					int icoH = ico.getHeight()
 					int icoW = ico.getWidth()
@@ -329,13 +307,11 @@ public class DefaultTheme
 					g2d.drawImage(ico, (int)(w - icoW) / 2, (int)(h - icoH) / 2, null)
 				}
 			}
-		}
-		try
-		{
+		] as SubNavButton
+	
+		try {
 			b.setIcon(ImageIO.read(DefaultTheme.class.getResource(imgLoc)))
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("Image not found for sub-navigation button in theme decorator. Requested ressource missing: " + e.getMessage())
 		}
 		return b
@@ -346,19 +322,15 @@ public class DefaultTheme
 	 * 
 	 * @return the newly created separator
 	 */
-	public static Separator createNavigationSeparator()
-	{
+	public static Separator createNavigationSeparator(){
 		final Separator subNavSeparator = new Separator()
 		subNavSeparator.setPreferredSize(new Dimension(3, 36))
 		subNavSeparator.setSize(new Dimension(3, 36))
 		subNavSeparator.setMinimumSize(new Dimension(3, 36))
 		subNavSeparator.setMaximumSize(new Dimension(3, 36))
-		JLabel separatorContent = new JLabel(){
-			private static final long serialVersionUID = 4760269657761120248L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JLabel separatorContent = [
+			paintComponent: { graphics ->
+				Graphics g = (Graphics) graphics
 				g.setColor(Color.BLACK)
 //				g.drawLine(0, 0, 0, subNavSeparator.getHeight());
 				g.drawLine(0, 0, 0, 36)
@@ -366,21 +338,18 @@ public class DefaultTheme
 //				g.drawLine(1, 1, 1, subNavSeparator.getHeight()-1);
 				g.drawLine(0, 0, 0, 35)
 			}
-		}
+		] as JLabel
+	
 		subNavSeparator.setOpaque(false)
 		separatorContent.setOpaque(false)
 		subNavSeparator.setContent(separatorContent)
 		return subNavSeparator
 	}
 
-	public static JLabel createSubNavSeparatorLabel()
-	{
-		JLabel separatorContent = new JLabel(){
-			private static final long serialVersionUID = -2965608741010625105L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+	public static JLabel createSubNavSeparatorLabel(){
+		JLabel separatorContent = [
+			paintComponent: { graphics ->
+				Graphics g = (Graphics) graphics
 				g.setColor(Color.BLACK)
 //				g.drawLine(0, 0, 0, subNavSeparator.getHeight());
 				g.drawLine(0, 0, 0, 36)
@@ -388,7 +357,8 @@ public class DefaultTheme
 //				g.drawLine(1, 1, 1, subNavSeparator.getHeight()-1);
 				g.drawLine(0, 0, 0, 35)
 			}
-		}
+		] as JLabel
+	
 		separatorContent.setPreferredSize(new Dimension(3, 36))
 		separatorContent.setSize(new Dimension(3, 36))
 		separatorContent.setMinimumSize(new Dimension(3, 36))
@@ -402,12 +372,9 @@ public class DefaultTheme
 		final Color c1 = new Color(18, 18, 18)
 		final Color c2 = new Color(66, 76, 116)
 		
-		JPanel header = new JPanel(){
-			private static final long serialVersionUID = -8451008914571645033L
-
-			@Override
-			protected void paintComponent(Graphics g) 
-			{
+		JPanel header = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 				
@@ -415,7 +382,7 @@ public class DefaultTheme
 				g2d.setPaint(gp)
 				g2d.fillRect(0, 0, getWidth(), getHeight() + 8)
 			}
-		}
+		] as JPanel
 		header.setOpaque(false)
 		return header
 	}
@@ -425,17 +392,13 @@ public class DefaultTheme
 	 * 
 	 * @return the newly created panel
 	 */
-	public static JPanel createBottomPanel()
-	{
+	public static JPanel createBottomPanel(){
 		final Color c1 = new Color(18, 18, 18)
 		final Color c2 = new Color(66, 76, 116)
 		
-		JPanel bottomPanel = new JPanel(){
-			private static final long serialVersionUID = 6406964132573136649L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JPanel bottomPanel = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 
 				int w = getWidth()
@@ -446,7 +409,7 @@ public class DefaultTheme
 				g2d.setPaint(gp)
 				g2d.fillRect(0, 0, w, h)
 			}
-		}
+		] as JPanel
 		return bottomPanel
 	}
 
@@ -455,12 +418,9 @@ public class DefaultTheme
 		final Color c1 = Color.BLACK
 		final Color c2 = Color.GRAY
 		
-		JPanel bg = new JPanel(){
-			private static final long serialVersionUID = 8619467384514992560L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JPanel bg = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				
 				int w = getWidth()
@@ -475,19 +435,15 @@ public class DefaultTheme
 				g2d.setPaint(gp)
 				g2d.fillRect(0, 0, w, h)
 			}
-		}
+		] as JPanel
+	
 		return bg
 	}
 
-	public static JPanel createPlaybackControlsPanel(PlayButton playButt, PreviousButton prevButt, NextButton nextButt, 
-			StopButton stopButt, JSlider volumeSlider, JLabel softLabel, JLabel loudLabel)
-	{
-		JPanel playbackControlsPanel = new JPanel(){
-			private static final long serialVersionUID = 9140550009361861137L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+	public static JPanel createPlaybackControlsPanel(PlayButton playButt, PreviousButton prevButt, NextButton nextButt, StopButton stopButt, JSlider volumeSlider, JLabel softLabel, JLabel loudLabel){
+		JPanel playbackControlsPanel = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
@@ -502,7 +458,7 @@ public class DefaultTheme
 				
 				g2d.setClip(0, 0, getWidth(), getHeight())
 			}
-		}
+		] as JPanel
 		
 		playbackControlsPanel.setOpaque(false)
 		playbackControlsPanel.setPreferredSize(new Dimension(350, 50))
@@ -556,32 +512,25 @@ public class DefaultTheme
 		return playbackControlsPanel
 	}
 
-	public static PlayButton createPlaybackPlayButton()
-	{
+	public static PlayButton createPlaybackPlayButton(){
 		// play song button
-		try
-		{
-			final PlayButton playButt = new PlayButton(ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_active.png")),
-					ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_inactive.png")),
-					ImageIO.read(DefaultTheme.class.getResource("/images/pausebutton.png"))){
-						private static final long serialVersionUID = 7523674211790241350L
+		try{
+			def activePlayButton = ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_active.png"))
+			def inactivePlayButton = ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_inactive.png"))
+			def pauseButton = ImageIO.read(DefaultTheme.class.getResource("/images/pausebutton.png"))
+			final PlayButton playButton = new PlayButton(activePlayButton, inactivePlayButton, pauseButton){
+				private static final long serialVersionUID = 7523674211790241350L
 
 				@Override
-				protected void paintComponent(Graphics g)
-				{
+				protected void paintComponent(Graphics g){
 					initShape()
 					Graphics2D g2d = (Graphics2D) g
 					g2d.setClip(getShape())
-					if(isPressed())
-					{
+					if(isPressed()){
 						g2d.drawImage(getPauseImg(), 0, 0, getActiveImg().getWidth(), getActiveImg().getHeight(), null)
-					}
-					else if(isActive())
-					{
+					} else if(isActive()){
 						g2d.drawImage(getActiveImg(), 0, 0, getActiveImg().getWidth(), getActiveImg().getHeight(), null)
-					}
-					else
-					{
+					} else {
 						g2d.drawImage(getInActiveImg(), 0, 0, getActiveImg().getWidth(), getActiveImg().getHeight(), null)
 					}
 				}
@@ -607,17 +556,15 @@ public class DefaultTheme
 			}
 			
 			
-			Shape base = playButt.getBounds()
-			playButt.setBase(base)
+			Shape base = playButton.getBounds()
+			playButton.setBase(base)
 			
-			Dimension s = playButt.getPreferredSize()
+			Dimension s = playButton.getPreferredSize()
 			Shape shape = new Ellipse2D.Float(0, 0, s.width-1, s.height-1)
-			playButt.setShape(shape)
+			playButton.setShape(shape)
 			
-			return playButt
-		}
-		catch(Exception e)
-		{
+			return playButton
+		} catch(Exception e) {
 			e.printStackTrace()
 		}
 		
@@ -793,51 +740,15 @@ public class DefaultTheme
 		return null
 	}
 
-	public static StopButton createPlaybackStopButton()
-	{
+	public static StopButton createPlaybackStopButton(){
 		// stop song button
-		try
-		{
-			final StopButton stopButt = new StopButton(ImageIO.read(DefaultTheme.class.getResource("/images/stopbutton_active.png")),
-					ImageIO.read(DefaultTheme.class.getResource("/images/stopbutton_inactive.png"))){
-					private static final long serialVersionUID = -6107597720059198702L
-
-				@Override
-				protected void paintComponent(Graphics g)
-				{
-					initShape()
-					Graphics2D g2d = (Graphics2D) g
-					g2d.setClip(getShape())
-					if(isActive())
-					{
-						g2d.drawImage(getActiveImg(), 0, 0, null)
-					}
-					else
-					{
-						g2d.drawImage(getInActiveImg(), 0, 0, null)
-					}
-				}
-				
-				@Override
-			    public boolean contains(int x, int y) 
-				{
-			        initShape()
-			        return getShape().contains(x, y)
-			    }
-				
-				@Override
-			    protected void paintBorder(Graphics g)
-			    {
-			        initShape()
-			        Graphics2D g2 = (Graphics2D)g
-			        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-			        g2.setColor(getBackground())
-			        g2.draw(getShape())
-			    }
-			}
+		try{
+			def activeStopButton = ImageIO.read(DefaultTheme.class.getResource("/images/stopbutton_active.png"))
+			def inactiveStopButton = ImageIO.read(DefaultTheme.class.getResource("/images/stopbutton_inactive.png"))
+			final StopButton stopButton = new DefaultThemeStopButton(activeStopButton, inactiveStopButton)
 			
-			Shape base = stopButt.getBounds()
-			stopButt.setBase(base)
+			Shape base = stopButton.getBounds()
+			stopButton.setBase(base)
 			
 			// coordinates
 			int centerY = 11
@@ -864,45 +775,35 @@ public class DefaultTheme
 			// transformation into a shape
 			AffineTransform af = new AffineTransform()
 			Shape shape = myShape.createTransformedShape(af)
-			stopButt.setShape(shape)
+			stopButton.setShape(shape)
 			
-			return stopButt
-		}
-		catch(Exception e)
-		{
+			return stopButton
+		} catch(Exception e) {
 			e.printStackTrace()
 		}
 		
 		return null
 	}
 
-	public static JSlider createVolumeSlider()
-	{
+	public static JSlider createVolumeSlider(){
 		return new JSlider()
 	}
 
-	public static JLabel createLoudVolumeLabel()
-	{
+	public static JLabel createLoudVolumeLabel(){
 		JLabel loudLabel = new JLabel(new ImageIcon(DefaultTheme.class.getResource("/images/loud.png")))
 		return loudLabel
 	}
 
-	public static JLabel createSoftVolumeLabel()
-	{
+	public static JLabel createSoftVolumeLabel(){
 		JLabel softLabel = new JLabel(new ImageIcon(DefaultTheme.class.getResource("/images/soft.png")))
 		return softLabel
 	}
 
-	public static JPanel createPlayerControlsPanel()
-	{
-		JPanel p = new JPanel(){
-			private static final long serialVersionUID = -4531199334427828803L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
-				if(!isOpaque())
-			    {
+	public static JPanel createPlayerControlsPanel(){
+		JPanel p = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
+				if(!isOpaque()){
 			        super.paintComponent(g)
 			        return
 			    }
@@ -917,9 +818,7 @@ public class DefaultTheme
 //			    Point2D end = new Point2D.Float(50, 50);
 			    float[] dist = [0.0f, 0.499f, 0.5f, 1.0f]
 			    Color[] colors = [new Color(99, 108, 135), new Color(56, 62, 75), new Color(21, 21, 22), new Color(18, 18, 18)]
-//			    Color[] colors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.WHITE};
-			    LinearGradientPaint gp = new LinearGradientPaint(new Point(0, 0), new Point(0, getHeight()), dist, colors, 
-			    		CycleMethod.NO_CYCLE)
+			    LinearGradientPaint gp = new LinearGradientPaint(new Point(0, 0), new Point(0, getHeight()), dist, colors, CycleMethod.NO_CYCLE)
 			    
 			    Paint p = g2d.getPaint()
 				g2d.setPaint(gp)
@@ -931,8 +830,50 @@ public class DefaultTheme
 				g2d.setColor(new Color(99, 108, 135))
 				g2d.fillRect(9, 1, getWidth()-20, 2)
 			}
-		}
+		] as JPanel
+	
 		p.setLayout(new FlowLayout())
 		return p
 	}
 }
+
+
+class DefaultThemeStopButton extends StopButton{
+	private static final long serialVersionUID = -6107597720059198702L
+
+	DefaultThemeStopButton(BufferedImage activeStopButton, BufferedImage inactiveStopButton){
+		super(activeStopButton, inactiveStopButton)
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		initShape()
+		Graphics2D g2d = (Graphics2D) g
+		g2d.setClip(getShape())
+		if(isActive()){
+			g2d.drawImage(getActiveImg(), 0, 0, null)
+		} else {
+			g2d.drawImage(getInActiveImg(), 0, 0, null)
+		}
+	}
+
+	@Override
+	public boolean contains(int x, int y){
+		initShape()
+		return getShape().contains(x, y)
+	}
+
+	@Override
+	protected void paintBorder(Graphics g){
+		initShape()
+		Graphics2D g2 = (Graphics2D)g
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+		g2.setColor(getBackground())
+		g2.draw(getShape())
+	}
+}
+
+
+
+
+

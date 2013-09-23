@@ -362,7 +362,7 @@ public class SearchNewCoverFrame extends JDialog
 		searchButt.setToolTipText(LocaleMessage.getInstance().getString("common.searchfile"))
 		searchButt.addActionListener([
 			actionPerformed: { e ->
-				JFileChooser fc = new JFileChooser(new File(window.getMainWindow().getSettings().getLastFolder())) 
+				JFileChooser fc = new JFileChooser(new File(window.mainWindow.getSettings().getLastFolder())) 
 			    fc.setFileFilter([
 			      accept: { file ->
 					  File f = (File) file 

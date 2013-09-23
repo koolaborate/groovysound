@@ -55,27 +55,18 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchFrame extends JFrame
-{
+public class SearchFrame extends JFrame{
 	private static final long serialVersionUID = -6496420334431430661L
-	Database db
+	Database database
 	Color color1 = new Color(237, 242, 249)
 	Color color2 = new Color(255, 255, 255)
 	JTextField search
 	JButton go
 	JPanel resultPanel
 	JScrollPane resultList
-	MainWindow window
+	MainWindow mainWindow
 	
-	
-	/**
-	 * Constructor.
-	 */
-	public SearchFrame(MainWindow w)
-	{
-		this.window = w
-		this.db = w.getDatabase()
-		
+	def void initializeGui(){
 		setTitle(LocaleMessage.getInstance().getString("search.title"))
 		setIconImage(new ImageIcon(getClass().getResource("/images/search.png")).getImage())
 		
@@ -94,8 +85,7 @@ public class SearchFrame extends JFrame
 	/**
 	 * Initializes the GUI elements.
 	 */
-	private void initGUI()
-	{
+	private void initGUI(){
 		// a gradient background panel
 		def bg = [
 			paintComponent: { g ->
@@ -194,10 +184,11 @@ public class SearchFrame extends JFrame
 			}
 		] as Runnable)
 		
-		ArrayList<SearchResult> results = db.getSearchResults(search.getText().trim())
+		ArrayList<SearchResult> results = database.getSearchResults(search.getText().trim())
 		for(SearchResult result : results)
 		{
-			SearchEntry entry = new SearchEntry(window, result, this)
+			def entry = new SearchEntry(mainWindow: mainWindow, searchResult: result, searchFrame: this)
+			entry.initializeGui()
 			resultPanel.add(entry)
 		}
 		resultPanel.add(Box.createVerticalGlue())

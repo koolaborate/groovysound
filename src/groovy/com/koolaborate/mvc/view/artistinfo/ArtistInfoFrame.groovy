@@ -83,8 +83,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ArtistInfoFrame extends JFrame implements DropTargetListener
-{
+public class ArtistInfoFrame extends JFrame implements DropTargetListener{
 	private static final long serialVersionUID = 3351665800950796092L
 	String artistname
 	JScrollPane scroll
@@ -108,6 +107,8 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	int maxWidth = 80  // maximum width for the ghost image
 	int maxHeight = 80 // maximum height for the ghost image
 	
+	@Override
+	java.awt.Component getGlassPane(){return null}
 	
 	/**
 	 * Constructor.
@@ -115,8 +116,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	 * @param mainWindow reference to the main window
 	 * @param artist the name of the artist or band
 	 */
-	public ArtistInfoFrame(MainWindow w, final String artistname)
-	{
+	public ArtistInfoFrame(MainWindow w, final String artistname){ 
 		this.mainWindow = w
 		this.artistname = artistname
 		
@@ -131,8 +131,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	/**
 	 * Initializes the GUI elements.
 	 */
-	private void initGUI()
-	{
+	private void initGUI(){
 		setTitle(LocaleMessage.getInstance().getString("common.info_about") + " " + artistname)
 		setSizeAccordingToScreen(80)
 		setIconImage(new ImageIcon(getClass().getResource("/images/artist.png")).getImage())
@@ -182,7 +181,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		changeImage.setToolTipText(LocaleMessage.getInstance().getString("common.changeimg_tooltip"))
 		changeImage.addActionListener([
 			actionPerformed: {
-				new SearchArtistImgFrame(mainWindow, getThisInstance(), artistname)
+				new SearchArtistImgFrame(mainWindow: mainWindow, window: getThisInstance(), artist: artistname)
 			}
 		] as ActionListener)
 		changeImage.setVisible(false)
@@ -259,16 +258,13 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 		closeButton.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"))
 		closeButton.addActionListener([
 			actionPerformed: {
-				if(changesMade || imageChanged)
-				{
+				if(changesMade || imageChanged){
 					VistaDialog dialog = VistaDialog.showConfirmationDialog(LocaleMessage.getInstance().getString("common.discard_title"), 
 					LocaleMessage.getInstance().getString("common.discard_label"), LocaleMessage.getInstance().getString("common.discard_text"))
 					if(dialog.yesSelected) {
 						dispose()
 					}
-				}
-				else
-				{
+				} else{
 					dispose()
 				}
 			}
@@ -510,7 +506,6 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener
 	/**
 	 * Method is called when an object is being dragged onto the application window.
 	 */
-	@SuppressWarnings("unchecked")
 	public void dragEnter(DropTargetDragEvent dtde) {
 		// create image if it has not already been created
 		if (image == null) {

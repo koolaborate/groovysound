@@ -216,7 +216,7 @@ public class NavigationPanel extends JPanel
 		addAlbum.setText(LocaleMessage.getInstance().getString("newalbum.add_album"))
 		addAlbum.addMouseListener([
 			mouseClicked: {
-				new NewAlbumFrame(mainWindow)
+				new NewAlbumFrame(mainWindow: mainWindow)
 			}
 		] as MouseAdapter)
 		albumsSubNavPanel.add(addAlbum)

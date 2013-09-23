@@ -262,57 +262,57 @@ public class LiveTheme implements Theme
 		}
 		sidePanel.setOpaque(true)
 		sidePanel.setPreferredSize(new Dimension(10, Integer.MAX_VALUE))
-		sidePanel.setBorder(new Border(){
-			public Insets getBorderInsets(Component c)
-			{
+		sidePanel.setBorder([
+			getBorderInsets: {
 				return new Insets(0, 0, 0, 0)
-			}
-			public boolean isBorderOpaque()
-			{
+			},
+		
+			isBorderOpaque: {
 				return false
-			}
-			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
-			{
+			},
+		
+//			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
+			paintBorder: { c, graphics ->
+				Graphics g = graphics
 				g.setColor(borderColor)
 				g.drawLine(9, 0, 9, sidePanel.getHeight())
 			}
-		})
+		] as Border)
+		
 		d.setLeftSidePanel(sidePanel)
 		
 		final JPanel sidePanel2 = new JPanel()
 		sidePanel2.setOpaque(true)
 		sidePanel2.setBackground(sideBackground)
 		sidePanel2.setPreferredSize(new Dimension(10, Integer.MAX_VALUE))
-		sidePanel2.setBorder(new Border(){
-			public Insets getBorderInsets(Component c)
-			{
+		sidePanel2.setBorder([
+//			public Insets getBorderInsets(Component c)
+			getBorderInsets: {
 				return new Insets(0, 0, 0, 0)
-			}
-			public boolean isBorderOpaque()
-			{
+			},
+		
+			isBorderOpaque: {
 				return false
-			}
-			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
-			{
+			},
+		
+//			public void paintBorder(Component c, Graphics g, int arg2, int arg3, int arg4, int arg5)
+			paintBorder: { c, graphics ->
+				Graphics g = graphics
 				g.setColor(borderColor)
 				g.drawLine(0, 0, 0, sidePanel2.getHeight())
 			}
-		})
+		] as Border)
 		d.setRightSidePanel(sidePanel2)
 		
 		// the main panel ----------------------------------------------------------------
-		final JPanel mainPanel = new JPanel(){
-			private static final long serialVersionUID = -3124275953814833551L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		final JPanel mainPanel = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				g2d.setColor(Color.WHITE)
 				g2d.fillRect(0, 0, getWidth(), getHeight())
 				
-				try
-				{
+				try {
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER).derive(0.7f))
 					BufferedImage bgImg = ImageIO.read(getClass().getResource("/images/live_theme/cd_top.png"))
 					int offsetTop = getHeight() - bgImg.getHeight() -60
@@ -320,24 +320,20 @@ public class LiveTheme implements Theme
 					
 					// reset opacity
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER).derive(1.0f))
-				}
-				catch(IOException e)
-				{
+				} catch(IOException e) {
 					e.printStackTrace()
 				}
 			}
-		}
+		] as JPanel
+		
 		mainPanel.setOpaque(true)
 		d.setMainBackgroundPanel(mainPanel)
 		
 		// the navigation bar ------------------------------------------------------------
 		d.setNavbarForegroundColor(new Color(0x04446e)) // dark blue
-		JPanel navigationBackgroundPanel = new JPanel(){
-			private static final long serialVersionUID = -7060946726740450596L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JPanel navigationBackgroundPanel = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				Paint p = g2d.getPaint()
 				
@@ -365,7 +361,8 @@ public class LiveTheme implements Theme
 				g2d.setColor(borderColor)
 				g2d.drawLine(10, getHeight()-1, getWidth()-10, getHeight()-1)
 			}
-		}
+		] as JPanel
+	
 		d.setNavigationBackgroundPanel(navigationBackgroundPanel)
 		
 		// navigation buttons
@@ -376,18 +373,16 @@ public class LiveTheme implements Theme
 		d.setPlaylistButton(b2)
 		d.setSettingsButton(b3)
 		
-		JLabel subNavSeparator = new JLabel(){
-			private static final long serialVersionUID = -7206842802324724181L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JLabel subNavSeparator = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				g.setColor(new Color(79, 156, 182))
 				g.drawLine(0, 2, 0, 32)
 				g.setColor(new Color(78, 145, 166))
 				g.drawLine(0, 2, 0, 31)
 			}
-		}
+		] as JLabel
+	
 		subNavSeparator.setPreferredSize(new Dimension(3, 36))
 		subNavSeparator.setSize(new Dimension(3, 36))
 		subNavSeparator.setMinimumSize(new Dimension(3, 36))
@@ -403,12 +398,9 @@ public class LiveTheme implements Theme
 		d.setEditId3TagsSubNavButton(createNewSubNavButton("/images/tag.png"))
 		
 		// The bottom panel ---------------------------------------------------------------------------------------
-		JPanel bottomPanel = new JPanel(){
-			private static final long serialVersionUID = -4447050663278366307L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+		JPanel bottomPanel = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				g2d.setColor(sideBackground)
 				g2d.fillRect(0, 0, getWidth(), getHeight())
@@ -422,47 +414,41 @@ public class LiveTheme implements Theme
 					
 					// reset opacity
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER).derive(1.0f))
-				}
-				catch(IOException e)
-				{
+				} catch(IOException e) {
 					e.printStackTrace()
 				}
 				
 				// don't paint the arcs in full screen mode 
-				if(getWidth() < 600)
-				{
+				if(getWidth() < 600) {
 					g2d.setColor(Color.BLACK)
 					g2d.drawArc(0, getHeight()-14, 13, 13, 180, 90) // bottom left
 					g2d.drawArc(getWidth()-14, getHeight()-14, 13, 13, 270, 90) // bottom right
 				}
 			}
-		}
+		] as JPanel
+		
 		bottomPanel.setOpaque(true)
 		d.setBottomPanel(bottomPanel)
 		
 		// The player controls panel ------------------------------------------------------------------------------
-		JPanel p = new JPanel(){
+		JPanel p = [
 			private static final long serialVersionUID = 3736755119613955895L
 
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				g2d.setColor(sideBackground)
 				g2d.fillRect(0, 0, getWidth(), getHeight())
 				
 				// image upper part in the background
-				try
-				{
+				try {
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER).derive(0.7f))
 					BufferedImage bgImg = ImageIO.read(getClass().getResource("/images/live_theme/cd_main.png"))
 					g2d.drawImage(bgImg, 0, 0, null)
 					
 					// reset opacity
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER).derive(1.0f))
-				}
-				catch(IOException e)
-				{
+				} catch(IOException e) {
 					e.printStackTrace()
 				}
 				
@@ -473,7 +459,8 @@ public class LiveTheme implements Theme
 				// set opacity to 70% for the player control buttons to be glassy like
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER).derive(0.7f))
 			}
-		}
+		] as JPanel
+	
 		p.setOpaque(true)
 		p.setLayout(new FlowLayout(FlowLayout.LEFT))
 		d.setPlayerControlsPanel(p)
@@ -501,48 +488,40 @@ public class LiveTheme implements Theme
 	 * @param inactiveImgLoc the location to the inactive image
 	 * @return the created navigation button
 	 */
-	private static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc)
-	{
-		NavButton b = new NavButton(){
-			private static final long serialVersionUID = -8194658561074752611L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
+	private static NavButton createNewNavButton(String activeImgLoc, String inactiveImgLoc) {
+		NavButton b = [
+			paintComponent: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				
 				BufferedImage icon = null
 				
 				// first, draw the background according to mouseover or active status
-				if(isMouseOver() || isActive())
-				{
+				if(isMouseOver() || isActive()) {
 					icon = getActiveImg()
 
 					// now draw the background gradient
 					// draw gradient in the top
 					Paint paint = g2d.getPaint()
-					GradientPaint painter = new GradientPaint(0.0f, 0.0f, color1, 0.0f, 
-							getHeight() / 2.0f, new Color(1.0f, 1.0f, 1.0f, 0.0f))
+					GradientPaint painter = new GradientPaint(0.0f, 0.0f, color1, 0.0f,  getHeight() / 2.0f, new Color(1.0f, 1.0f, 1.0f, 0.0f))
 					g2d.setPaint(painter)
 					g2d.fillRoundRect(0, 0, getWidth(), 20, 8, 8)
 					g2d.setPaint(paint)
-				}
-				else
+				} else {
 					icon = getInActiveImg()
+				}
+					
 				
 				// then draw the icon (if not null)
-				if(icon != null) 
-				{
+				if(icon != null){
 					int icoWidth = icon.getWidth()
 					int icoHeight = icon.getHeight()
-					g2d.drawImage(icon, (int)(getWidth()/2 - icoWidth/2), 
-							(int)(getHeight()/2 - icoHeight / 2), icoWidth, icoHeight, null)
+					g2d.drawImage(icon, (int)(getWidth()/2 - icoWidth/2), (int)(getHeight()/2 - icoHeight / 2), icoWidth, icoHeight, null)
 				}
-			}
+			},
 			
-			@Override
-		    protected void paintBorder(Graphics g)
-		    {
+			paintBorder: { graphics ->
+				Graphics g = graphics
 				Graphics2D g2d = (Graphics2D) g
 				
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
@@ -553,16 +532,13 @@ public class LiveTheme implements Theme
 				
 				g2d.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 8, 8)
 		    }
-		}
-		try
-		{
+		] as NavButton
+		
+		try {
 			b.setActiveImg(ImageIO.read(LiveTheme.class.getResource(activeImgLoc)))
 			b.setInActiveImg(ImageIO.read(LiveTheme.class.getResource(inactiveImgLoc)))
-		}
-		catch(IOException e)
-		{
-			log.error("Image not found for navigation button in theme decorator. " +
-					"Requested ressource missing: " + e.getMessage())
+		} catch(IOException e) {
+			log.error("Image not found for navigation button in theme decorator. " + "Requested ressource missing: " + e.getMessage())
 			e.printStackTrace()
 		}
 		return b
@@ -582,8 +558,8 @@ public class LiveTheme implements Theme
 	 */
 	private static JPanel createPlaybackControlsPanel(PlayButton playButt, 
 			PreviousButton prevButt, NextButton nextButt, StopButton stopButt, 
-			JSlider volumeSlider, JLabel softLabel, JLabel loudLabel)
-	{
+			JSlider volumeSlider, JLabel softLabel, JLabel loudLabel){
+			
 		JPanel playbackControlsPanel = new JPanel()
 		playbackControlsPanel.setOpaque(false)
 		playbackControlsPanel.setPreferredSize(new Dimension(350, 50))
@@ -596,8 +572,7 @@ public class LiveTheme implements Theme
 		// previous song button
 		Dimension buttDim = prevButt.getPreferredSize()
 		int prevButtIndex = beginIndex
-		prevButt.setBounds(prevButtIndex, (int)(playbackControlsPanel.getPreferredSize().height/2) 
-				- buttDim.height/2, buttDim.width, buttDim.height)
+		prevButt.setBounds(prevButtIndex, (int)(playbackControlsPanel.getPreferredSize().height/2) - buttDim.height/2, buttDim.width, buttDim.height)
 		
 		// play button
 		int playButtIndex = prevButtIndex + buttDim.width + padding
@@ -607,14 +582,12 @@ public class LiveTheme implements Theme
 		// stop button
 		int stopButtIndex = playButtIndex + buttDim.width + padding
 		buttDim = stopButt.getPreferredSize()
-		stopButt.setBounds(stopButtIndex, (int)(playbackControlsPanel.getPreferredSize().height/2) 
-				- buttDim.height/2, buttDim.width, buttDim.height)
+		stopButt.setBounds(stopButtIndex, (int)(playbackControlsPanel.getPreferredSize().height/2)  - buttDim.height/2, buttDim.width, buttDim.height)
 		
 		// next song button
 		int nextButtIndex = stopButtIndex + buttDim.width + padding
 		buttDim = nextButt.getPreferredSize()
-		nextButt.setBounds(nextButtIndex, (int)(playbackControlsPanel.getPreferredSize().height/2) 
-				- buttDim.height/2, buttDim.width, buttDim.height)
+		nextButt.setBounds(nextButtIndex, (int)(playbackControlsPanel.getPreferredSize().height/2)  - buttDim.height/2, buttDim.width, buttDim.height)
 		
 		// volume slider
 		volumeSlider.setOpaque(false)
@@ -641,8 +614,7 @@ public class LiveTheme implements Theme
 		return playbackControlsPanel
 	}
 	
-	private static PlayButton createPlaybackPlayButton()
-	{
+	private static PlayButton createPlaybackPlayButton() {
 		// play song button
 		float[] BLUR = [0.10f, 0.10f, 0.10f, 0.10f, 0.30f, 0.10f, 0.10f, 0.10f, 0.10f]
 		final ConvolveOp blurOp = new ConvolveOp(new Kernel(3, 3, BLUR))
@@ -663,8 +635,7 @@ public class LiveTheme implements Theme
 		final Color selectedBevelBottomStart = new Color(53, 120, 209)
 		final Color selectedBevelBottomEnd = new Color(142, 215, 248)
 
-		try
-		{
+		try {
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB)
 			
 			final PlayButton playButt = new PlayButton(fakeButton, fakeButton, fakeButton){

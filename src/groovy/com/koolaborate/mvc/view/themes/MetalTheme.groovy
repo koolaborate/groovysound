@@ -458,39 +458,6 @@ public class MetalTheme implements Theme
 			StopButton stopButt, JSlider volumeSlider, JLabel softLabel, JLabel loudLabel)
 	{
 		JPanel playbackControlsPanel = new JPanel()
-//		{
-//			@Override
-//			protected void paintComponent(Graphics g)
-//			{
-//				Graphics2D g2d = (Graphics2D) g;
-//				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//
-//				Paint p = g2d.getPaint();
-//				
-//				// first the upper half
-//				g2d.setColor(Color.BLACK);
-//				g2d.setClip(0, 0, getWidth(), (int)(getHeight()/2)+1);
-//				g2d.drawRoundRect(0, 10, getWidth()-10, getHeight()-20, 30, 40);
-//				// then the lower half
-//				g2d.setColor(new Color(65, 65, 65));
-//				g2d.setClip(0, (int)(getHeight()/2)+1, getWidth(), getHeight());
-//				g2d.drawRoundRect(0, 10, getWidth()-10, getHeight()-20, 30, 40);
-				
-				// Paint a gradient from top to bottom
-//			    float[] dist = {0.0f, 1.0f};
-//			    Color[] colors = {new Color(232, 232, 232), new Color(144, 144, 144)};
-//			    LinearGradientPaint gp = new LinearGradientPaint(new Point(0, 0), new Point(0, getHeight()), dist, colors, 
-//			    		CycleMethod.NO_CYCLE);
-//				g2d.setPaint(gp);
-//				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 5, 5);
-				
-//				g2d.setPaint(p);
-//				g2d.setColor(Color.BLACK);
-//				g2d.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 5, 5);
-//				
-//				g2d.setClip(0, 0, getWidth(), getHeight());
-//			}
-//		};
 		
 		playbackControlsPanel.setOpaque(false)
 		playbackControlsPanel.setPreferredSize(new Dimension(350, 50))

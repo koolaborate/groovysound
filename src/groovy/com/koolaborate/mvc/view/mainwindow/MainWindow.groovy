@@ -96,18 +96,18 @@ import ui.VistaHelp
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class MainWindow extends JFrame implements DropTargetListener{
+class MainWindow extends JFrame implements DropTargetListener{
 	private static final long serialVersionUID = 170657189613362120L
 
 	// images
-	static BufferedImage logoImg, logoTextImg, minimizeImg, closeImg,
-			helpImg, minimizeOverImg, closeOverImg, helpOverImg, maximizeImg,
-			maximizeOverImg, maximize2Img, maximize2OverImg, tinyImg,
-			tinyOverImg
+	static BufferedImage logoImg, logoTextImg, minimizeImg, closeImg
+	static BufferedImage helpImg, minimizeOverImg, closeOverImg, helpOverImg, maximizeImg
+	static BufferedImage maximizeOverImg, maximize2Img, maximize2OverImg, tinyImg
+	static BufferedImage tinyOverImg
 
 	// GUI elements
 	JPanel mainPanel, header
-	CenterPanel centerPanel
+	CenterPanel centerPanel 
 	JButton maximize
 
 	// the tiny view
@@ -123,11 +123,15 @@ public class MainWindow extends JFrame implements DropTargetListener{
 	public enum NAVIGATION{
 		ALBUMS, PLAYLIST, SETTINGS
 	}
+	
+	// get rid of these groovy getters
+	@Override
+	java.awt.Component getGlassPane(){return null}
 
 	NAVIGATION currentNavigation = NAVIGATION.ALBUMS
 
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	GhostDragGlassPane glassPane
+	GhostDragGlassPane glassPane 
 	File imgFile
 	BufferedImage image
 	int maxWidth = 80 // maximum width for the ghost image
@@ -211,7 +215,8 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		addF1KeyListener()
 
 		// add the tray icon
-		tray = new TrayIconHandler(this)
+		tray = new TrayIconHandler()
+		tray.initializeWindow(this)
 		tray.showAlbumImage(null)
 
 		def guiInitializer = [
@@ -286,7 +291,8 @@ public class MainWindow extends JFrame implements DropTargetListener{
 		mainPanel.add(createHeaderPanel(), BorderLayout.NORTH)
 
 		// center panel
-		centerPanel = new CenterPanel(this)
+		centerPanel = new CenterPanel()
+		centerPanel.initializeMainWindow(this)
 		mainPanel.add(centerPanel, BorderLayout.CENTER)
 
 		// bottom panel

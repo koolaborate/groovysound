@@ -1,16 +1,16 @@
-package com.koolaborate.plugin.main;
+package com.koolaborate.plugin.main
 
-import java.awt.image.BufferedImage;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
+import java.awt.image.BufferedImage
+import java.net.URI
+import java.net.URISyntaxException
+import java.util.Locale
 
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO
 
-import com.koolaborate.model.Settings;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
+import com.koolaborate.model.Settings
+import com.koolaborate.mvc.view.mainwindow.MainWindow
 
-import plug.engine.Plugin;
+import plug.engine.Plugin
 
 /***********************************************************************************
  * MainPlugin                                                                      *
@@ -38,81 +38,61 @@ import plug.engine.Plugin;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class MainPlugin extends Plugin 
-{
-	private MainWindow window;
+public class MainPlugin extends Plugin{
+	private MainWindow mainWindow
 	
-	public String getName() 
-	{
-		return "VibrantPlayer";
+	public String getName(){
+		return "VibrantPlayer"
 	}
 	
-	public String getVersion() 
-	{
-		return "1.2";
+	public String getVersion(){
+		return "1.2"
 	}
 	
 	public URI getURI() 
 	{
-		try 
-		{
-			return new URI("http", "www.impressive-artworx.de", 
-					"/tools/vibrantplayer/plugins/mainplugin.xml", null);
-		} 
-		catch(URISyntaxException e)
-		{
-			e.printStackTrace();
-			return null;
+		try{
+			return new URI("http", "www.impressive-artworx.de", "/tools/vibrantplayer/plugins/mainplugin.xml", null)
+		} catch(URISyntaxException e) {
+			e.printStackTrace()
+			return null
 		}
 	}
 	
 	public void init(Object... args) 
 	{
 		// first argument must be the settings object
-		if(args.length == 0) 
-			throw new IllegalArgumentException("First parameter (settings) must be given.");
-	
-		System.out.println("Main plugin started...");
+		if(args.length == 0){
+			throw new IllegalArgumentException("First parameter (settings) must be given.")
+		}
+
+		System.out.println("Main plugin started...")
 		
-		Settings s = (Settings)args[0];
-		s.setVersion(getVersion());
-		window = new MainWindow(s);
-	}
-	
-	public MainWindow getMainwindow()
-	{
-		return window;
+		Settings s = (Settings)args[0]
+		s.setVersion(getVersion())
+		mainWindow = new MainWindow(s)
 	}
 	
 	@Override
 	public String getDescription()
 	{
 		// the standard text is English
-		String desc = "Make sure to always have the most current version of VibrantPlayer " +
-				"installed on your computer. This ensures that you are able to benefit " +
-				"from new features, latest additions and fewer bugs.";
-		if(Locale.getDefault().getLanguage().toLowerCase().equals("de"))
-		{
-			desc = "Laden Sie dieses Update herunter, um VibrantPlayer immer auf dem " +
-					"neuesten Stand zu halten. Auf diese Weise verpassen Sie keine neuen " +
-					"Features und profitieren von zusätzlichen Inhalten und ausgemärzten Fehlern.";
+		String desc = "Make sure to always have the most current version of VibrantPlayer " + "installed on your computer. This ensures that you are able to benefit " + "from new features, latest additions and fewer bugs."
+		if(Locale.getDefault().getLanguage().toLowerCase().equals("de")){
+			desc = "Laden Sie dieses Update herunter, um VibrantPlayer immer auf dem " + "neuesten Stand zu halten. Auf diese Weise verpassen Sie keine neuen " + "Features und profitieren von zusätzlichen Inhalten und ausgemärzten Fehlern."
 		}
 		//TODO additional languages?
 		
-		return desc;
+		return desc
 	}
 	
 	@Override
-	public BufferedImage getIcon()
-	{
-		try
-		{
-			return ImageIO.read(getClass().getResource("/images/headphones.png"));
+	public BufferedImage getIcon(){
+		try{
+			return ImageIO.read(getClass().getResource("/images/headphones.png"))
+		} catch(Exception e){
+			e.printStackTrace()
 		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
+		return null
 	}
 }

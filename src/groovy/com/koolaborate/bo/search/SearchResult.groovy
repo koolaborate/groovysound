@@ -24,8 +24,7 @@ package com.koolaborate.bo.search;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchResult
-{
+class SearchResult{
 	String songTitle, artist, albumTitle;
 	String albumPath;
 	int songId, albumId = -1;

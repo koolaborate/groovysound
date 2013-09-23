@@ -1,31 +1,31 @@
-package com.koolaborate.mvc.view.playlistview;
+package com.koolaborate.mvc.view.playlistview
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Component
+import java.awt.Dimension
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.io.File
+import java.util.ArrayList
+import java.util.List
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+import javax.swing.Box
+import javax.swing.BoxLayout
+import javax.swing.ImageIcon
+import javax.swing.JMenuItem
+import javax.swing.JPanel
+import javax.swing.JPopupMenu
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils
 
-import com.koolaborate.model.Song;
-import com.koolaborate.mvc.view.decorations.Decorator;
-import com.koolaborate.mvc.view.dialogs.DeleteDialog;
-import com.koolaborate.mvc.view.editid3tag.EditId3TagFrame;
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.mvc.view.songinfo.SongInfoFrame;
-import com.koolaborate.service.db.Database;
-import com.koolaborate.util.FileHelper;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.model.Song
+import com.koolaborate.mvc.view.decorations.Decorator
+import com.koolaborate.mvc.view.dialogs.DeleteDialog
+import com.koolaborate.mvc.view.editid3tag.EditId3TagFrame
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.mvc.view.songinfo.SongInfoFrame
+import com.koolaborate.service.db.Database
+import com.koolaborate.util.FileHelper
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * Playlist *
@@ -51,29 +51,29 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class Playlist extends JPanel{
-	private static final long serialVersionUID = 3339053811389657638L;
-	private ArrayList<PlaylistEntry> entries;
-	private PlaylistEntry selectedEntry;
+	private static final long serialVersionUID = 3339053811389657638L
+	ArrayList<PlaylistEntry> entries
+	PlaylistEntry selectedEntry
 
-	private String albumPath;
-	private MainWindow window;
+	String albumPath
+	MainWindow mainWindow
 
 	/**
 	 * Constructor.
 	 */
 	public Playlist(MainWindow w){
-		this.window = w;
-		entries = new ArrayList<PlaylistEntry>();
+		this.mainWindow = w
+		entries = new ArrayList<PlaylistEntry>()
 
-		setOpaque(false);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setOpaque(false)
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
 	}
 
 	/**
 	 * @return this instance
 	 */
 	public Playlist getPlaylist(){
-		return this;
+		return this
 	}
 
 	/**
@@ -87,85 +87,79 @@ public class Playlist extends JPanel{
 	 *            the y value of the location
 	 */
 	public void showPopup(Component c, int x, int y){
-		JPopupMenu popmen = new JPopupMenu();
+		JPopupMenu popmen = new JPopupMenu()
 
-		JMenuItem playItem = new JMenuItem(
-				LocaleMessage.getInstance().getString("playlist.play_song"));
-		playItem.setIcon(new ImageIcon(
-				Playlist.class.getResource("/images/playlist_play.png")));
-		playItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				window.getPlayerPanel().playSong();
+		JMenuItem playItem = new JMenuItem(LocaleMessage.getInstance().getString("playlist.play_song"))
+		playItem.setIcon(new ImageIcon(Playlist.class.getResource("/images/playlist_play.png")))
+		playItem.addActionListener([
+			actionPerformed: {
+				mainWindow.getPlayerPanel().playSong()
 			}
-		});
-		popmen.add(playItem);
+		] as ActionListener)
+		popmen.add(playItem)
 
-		JMenuItem infoItem = new JMenuItem(
-				LocaleMessage.getInstance().getString("playlist.informations"));
-		infoItem.setIcon(new ImageIcon(
-				Playlist.class.getResource("/images/about.png")));
-		infoItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				new SongInfoFrame(window, getCurrentlySelectedSongPath());
+		JMenuItem infoItem = new JMenuItem(LocaleMessage.getInstance().getString("playlist.informations"))
+		infoItem.setIcon(new ImageIcon(Playlist.class.getResource("/images/about.png")))
+		infoItem.addActionListener([
+			actionPerformed: {
+				new SongInfoFrame(mainWindow, getCurrentlySelectedSongPath())
 			}
-		});
-		popmen.add(infoItem);
+		] as ActionListener)
+		popmen.add(infoItem)
 
-		JMenuItem id3Item = new JMenuItem(
-				LocaleMessage.getInstance().getString("id3.edit_tags"));
-		id3Item.setIcon(new ImageIcon(
-				Playlist.class.getResource("/images/tag_small.png")));
-		id3Item.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				List<String> song = new ArrayList<String>();
+		JMenuItem id3Item = new JMenuItem(LocaleMessage.getInstance().getString("id3.edit_tags"))
+		id3Item.setIcon(new ImageIcon(Playlist.class.getResource("/images/tag_small.png")))
+		id3Item.addActionListener([
+			actionPerformed: {
+				List<String> song = new ArrayList<String>()
 				// song.add(getCurrentlySelectedSongPath());
-				if(selectedEntry != null) song.add(selectedEntry.getPath());
-				int albumId = window.getDatabase().getAlbumIdForSong(
-						getCurrentlySelectedSongID());
-				new EditId3TagFrame(window, albumId, albumPath, song);
+				if(selectedEntry != null) {
+					song.add(selectedEntry.getPath())
+				}
+				
+				int albumId = mainWindow.getDatabase().getAlbumIdForSong(getCurrentlySelectedSongID())
+				new EditId3TagFrame(mainWindow, albumId, albumPath, song)
 			}
-		});
-		popmen.add(id3Item);
+		] as ActionListener)
+		popmen.add(id3Item)
 
-		popmen.addSeparator();
+		popmen.addSeparator()
 
-		JMenuItem delItem = new JMenuItem(
-				LocaleMessage.getInstance().getString("playlist.del_song"));
-		delItem.setIcon(new ImageIcon(
-				Playlist.class.getResource("/images/deletesmall.png")));
-		delItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				DeleteDialog delDiag = DeleteDialog.showDeleteSongDialog();
+		JMenuItem delItem = new JMenuItem(LocaleMessage.getInstance().getString("playlist.del_song"))
+		delItem.setIcon(new ImageIcon(Playlist.class.getResource("/images/deletesmall.png")))
+		delItem.addActionListener([
+			actionPerformed: {
+				DeleteDialog delDiag = DeleteDialog.showDeleteSongDialog()
 				if(delDiag.yesSelected) {
-					Database db = window.getDatabase();
-					int albumId = -1;
+					Database db = mainWindow.getDatabase()
+					int albumId = -1
 
 					// del the file from disk (if desired)
 					if(delDiag.delFilesSelected) {
-						albumId = db.getAlbumIdForSong(getCurrentlySelectedSongID());
-						String path = getCurrentlySelectedSongPath();
+						albumId = db.getAlbumIdForSong(getCurrentlySelectedSongID())
+						String path = getCurrentlySelectedSongPath()
 						if(!StringUtils.isEmpty(path))
-							FileHelper.getInstance().removeFile(path);
+							FileHelper.getInstance().removeFile(path)
 					}
 
 					// delete the song from the database
 					try {
-						String songId = getCurrentlySelectedSongID();
-						albumId = db.getAlbumIdForSong(songId);
-						db.deleteSong(Integer.parseInt(songId));
+						String songId = getCurrentlySelectedSongID()
+						albumId = db.getAlbumIdForSong(songId)
+						db.deleteSong(Integer.parseInt(songId))
 						// update the view since the song is gone
-						List<Song> songs = db.getSongsForAlbum(albumId);
-						clearPlaylist();
-						setSongs(songs);
+						List<Song> songs = db.getSongsForAlbum(albumId)
+						clearPlaylist()
+						setSongs(songs)
 					} catch(NumberFormatException e) {
-						e.printStackTrace();
+						e.printStackTrace()
 					}
 				}
 			}
-		});
-		popmen.add(delItem);
+		] as ActionListener)
+		popmen.add(delItem)
 
-		popmen.show(c, x, y);
+		popmen.show(c, x, y)
 	}
 
 	/**
@@ -175,27 +169,27 @@ public class Playlist extends JPanel{
 	 *            the songs to be filled into the playlist
 	 */
 	public void setSongs(List<Song> songs){
-		entries.clear();
+		entries.clear()
 		for(Song s: songs) {
-			Decorator d = window.getDecorator();
+			Decorator d = mainWindow.getDecorator()
 			PlaylistEntry entry = new PlaylistEntry(this, s.getFileName(),
 					s.getDuration(), s.getId(), s.getTitle(),
 					d.getSelectionColor2(), d.getSelectionColor1(),
-					d.getSelectionAlpha());
-			entry.setMaximumSize(new Dimension(Integer.MAX_VALUE, 24));
-			entries.add(entry);
-			add(entry);
+					d.getSelectionAlpha())
+			entry.setMaximumSize(new Dimension(Integer.MAX_VALUE, 24))
+			entries.add(entry)
+			add(entry)
 		}
-		add(Box.createVerticalGlue());
-		revalidate();
+		add(Box.createVerticalGlue())
+		revalidate()
 	}
 
 	/**
 	 * Clears the playlist.
 	 */
 	public void clearPlaylist(){
-		this.removeAll(); // clear view
-		entries.clear(); // clear list of songs
+		this.removeAll() // clear view
+		entries.clear() // clear list of songs
 	}
 
 	/**
@@ -205,10 +199,10 @@ public class Playlist extends JPanel{
 		// set the last one not to be playing
 		for(PlaylistEntry e: entries) {
 			if(e.isPlaying())
-				e.setPlaying(false);
-			else if(e.isPaused()) e.setPaused(false);
+				e.setPlaying(false)
+			else if(e.isPaused()) e.setPaused(false)
 		}
-		if(selectedEntry != null) selectedEntry.setPlaying(true);
+		if(selectedEntry != null) selectedEntry.setPlaying(true)
 	}
 
 	/**
@@ -217,11 +211,18 @@ public class Playlist extends JPanel{
 	public void setPausedIconAtCurrentEntry(){
 		// set the last one not to be paused
 		for(PlaylistEntry e: entries) {
-			if(e.isPlaying())
-				e.setPlaying(false);
-			else if(e.isPaused()) e.setPaused(false);
+			if(e.isPlaying()){
+				e.setPlaying(false)
+			}
+				
+			else if(e.isPaused()) {
+				e.setPaused(false)
+			}
 		}
-		if(selectedEntry != null) selectedEntry.setPaused(true);
+		
+		if(selectedEntry != null) {
+			selectedEntry.setPaused(true)
+		}
 	}
 
 	/**
@@ -231,7 +232,7 @@ public class Playlist extends JPanel{
 	 *            the path of the current album
 	 */
 	public void setAlbumPath(String path){
-		this.albumPath = path;
+		this.albumPath = path
 	}
 
 	/**
@@ -241,12 +242,12 @@ public class Playlist extends JPanel{
 		// select the first entry if no entry is yet selected
 		if(selectedEntry == null) {
 			if(entries.size() > 0)
-				selectedEntry = entries.get(0);
-			else return null;
+				selectedEntry = entries.get(0)
+			else return null
 		}
-		String path = albumPath + File.separator + selectedEntry.getPath();
-		path = path.replaceAll("`", "'");
-		return path;
+		String path = albumPath + File.separator + selectedEntry.getPath()
+		path = path.replaceAll("`", "'")
+		return path
 	}
 
 	/**
@@ -255,14 +256,15 @@ public class Playlist extends JPanel{
 	public String getCurrentlySelectedSongID(){
 		// select the first entry if no entry is yet selected
 		if(selectedEntry == null) {
-			selectedEntry = entries.get(0);
+			selectedEntry = entries.get(0)
 		}
 
-		String ret = null;
-		if(selectedEntry != null)
-			ret = Integer.toString(selectedEntry.getSongId());
+		String ret = null
+		if(selectedEntry != null){
+			ret = Integer.toString(selectedEntry.getSongId())
+		}
 
-		return ret;
+		return ret
 	}
 
 	/**
@@ -272,15 +274,15 @@ public class Playlist extends JPanel{
 	 *         <code>false</code> if it was the last song
 	 */
 	public boolean selectNextSong(){
-		int selectIndex = entries.indexOf(selectedEntry) + 1;
+		int selectIndex = entries.indexOf(selectedEntry) + 1
 		// TODO if continuous play is selected, continue with first song in the
 		// list
-		if(entries.size() <= selectIndex)
-			return false;
-		else {
+		if(entries.size() <= selectIndex){
+			return false
+		} else {
 			// select next row
-			selectedEntry = entries.get(selectIndex);
-			return true;
+			selectedEntry = entries.get(selectIndex)
+			return true
 		}
 	}
 
@@ -288,10 +290,10 @@ public class Playlist extends JPanel{
 	 * Selects the previous song.
 	 */
 	public void selectPreviousSong(){
-		int currIndex = entries.indexOf(selectedEntry);
-		if(currIndex != 0) currIndex -= 1;
+		int currIndex = entries.indexOf(selectedEntry)
+		if(currIndex != 0) currIndex -= 1
 		// select previous row (currIndex)
-		selectedEntry = entries.get(currIndex);
+		selectedEntry = entries.get(currIndex)
 	}
 
 	/**
@@ -301,28 +303,28 @@ public class Playlist extends JPanel{
 	 *            the entry to be selected
 	 */
 	public void setSelectedEntry(PlaylistEntry entry){
-		this.selectedEntry = entry;
+		this.selectedEntry = entry
 	}
 
 	/**
 	 * @return all entries of the list
 	 */
 	public ArrayList<PlaylistEntry> getEntries(){
-		return entries;
+		return entries
 	}
 
 	/**
 	 * @return the reference to the main window
 	 */
 	public MainWindow getWindow(){
-		return window;
+		return mainWindow
 	}
 
 	/**
 	 * Sets the currently selected song as unplayable.
 	 */
 	public void setCurrentEntryUnplayable(){
-		if(selectedEntry != null) selectedEntry.setPlayable(false);
+		if(selectedEntry != null) selectedEntry.setPlayable(false)
 	}
 
 	/**
@@ -330,8 +332,8 @@ public class Playlist extends JPanel{
 	 */
 	public void setNoIconAtCurrentEntry(){
 		if(selectedEntry != null) {
-			selectedEntry.setPlaying(false);
-			selectedEntry.setPaused(false);
+			selectedEntry.setPlaying(false)
+			selectedEntry.setPaused(false)
 		}
 	}
 }

@@ -1,27 +1,27 @@
-package com.koolaborate.mvc.view.trayicon;
+package com.koolaborate.mvc.view.trayicon
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.Graphics
+import java.awt.Image
+import java.awt.MenuItem
+import java.awt.PopupMenu
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import java.lang.reflect.Constructor
+import java.lang.reflect.Method
 
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils
+import org.apache.log4j.Logger
 
-import com.koolaborate.mvc.view.mainwindow.MainWindow;
-import com.koolaborate.util.GraphicsUtilities;
-import com.koolaborate.util.LocaleMessage;
+import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.util.GraphicsUtilities
+import com.koolaborate.util.LocaleMessage
 
 /***********************************************************************************
  * TrayIconHandler *
@@ -48,93 +48,86 @@ import com.koolaborate.util.LocaleMessage;
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 public class TrayIconHandler{
-	private static Logger log = Logger.getLogger(TrayIconHandler.class.getName());
+	private static Logger log = Logger.getLogger(TrayIconHandler.class.getName())
 
 	// using reflection since this class may not be present to a JRE < 1.6_10...
-	private Class<?> trayClass = null;
-	private Class<?> trayIcoClass = null;
+	Class<?> trayClass = null
+	Class<?> trayIconClass = null
 
 	// necessary variable that indicate whether or not tray icon functionalities
 	// are
 	// available on the machine
-	private boolean supported = false;
+	boolean supported = false
 
-	private BufferedImage stdIco;
+	BufferedImage standardIcon
 
-	private String currentCoverPath;
-	private int icoWidth = -1, icoHeight = -1;
+	String currentCoverPath
+	int icoWidth = -1, icoHeight = -1
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param window
-	 *            reference to the main window
-	 */
-	public TrayIconHandler(final MainWindow window){
-		currentCoverPath = System.getProperty("user.dir") + File.separator
-				+ "images" + File.separator + "headphones16.gif";
+	def void initializeWindow(final MainWindow window){
+		currentCoverPath = System.getProperty("user.dir") + File.separator + "images" + File.separator + "headphones16.gif"
 
 		try {
-			stdIco = ImageIO.read(getClass().getResource(
-					"/images/headphones16.gif"));
+			def headphonesImage = getClass().getResource("/images/headphones16.gif")
+			standardIcon = ImageIO.read(headphonesImage)
 		} catch(IOException e) {
-			log.warn("Standard tray icon not found: " + e.getMessage());
+			log.warn("Standard tray icon not found: " + e.getMessage())
 		}
 
-		supported = initReflectionClasses();
+		supported = initReflectionClasses()
 
 		if(supported) {
 			try {
-				Method getTrayMethod = trayClass.getMethod("getSystemTray");
-				Object trayObject = (Object) getTrayMethod.invoke(null);
+				Method getTrayMethod = trayClass.getMethod("getSystemTray")
+				Object trayObject = (Object) getTrayMethod.invoke(null)
 
-				TrayIconListener listener = new TrayIconListener(window);
+				def listener = new TrayIconListener()
+				listener.setMainWindow(window)
 
-				PopupMenu popup = new PopupMenu();
-				MenuItem playItem = new MenuItem(
-						LocaleMessage.getInstance().getString("control.play"));
-				playItem.setActionCommand("play");
-				MenuItem stopItem = new MenuItem(
-						LocaleMessage.getInstance().getString("control.stop"));
-				stopItem.setActionCommand("stop");
-				MenuItem nextItem = new MenuItem(
-						LocaleMessage.getInstance().getString("control.next"));
-				nextItem.setActionCommand("next");
-				MenuItem prevItem = new MenuItem(
-						LocaleMessage.getInstance().getString("control.previous"));
-				prevItem.setActionCommand("previous");
-				MenuItem exitItem = new MenuItem(
-						LocaleMessage.getInstance().getString("control.exit"));
-				exitItem.setActionCommand("exit");
+				PopupMenu popup = new PopupMenu()
+				
+				// put in spring or some static mapping
+				def controlPlayText = LocaleMessage.getInstance().getString("control.play")
+				def controlStopText = LocaleMessage.getInstance().getString("control.stop")
+				def controlNextText = LocaleMessage.getInstance().getString("control.next")
+				def controlPreviousText = LocaleMessage.getInstance().getString("control.previous")
+				def controlExitText = LocaleMessage.getInstance().getString("control.exit")
+				
+				MenuItem playItem = new MenuItem(controlPlayText)
+				playItem.setActionCommand("play")
+				MenuItem stopItem = new MenuItem(controlStopText)
+				stopItem.setActionCommand("stop")
+				MenuItem nextItem = new MenuItem(controlNextText)
+				nextItem.setActionCommand("next")
+				MenuItem prevItem = new MenuItem(controlPreviousText)
+				prevItem.setActionCommand("previous")
+				MenuItem exitItem = new MenuItem(controlExitText)
+				exitItem.setActionCommand("exit")
 
-				playItem.addActionListener(listener);
-				stopItem.addActionListener(listener);
-				nextItem.addActionListener(listener);
-				prevItem.addActionListener(listener);
-				exitItem.addActionListener(listener);
+				playItem.addActionListener(listener)
+				stopItem.addActionListener(listener)
+				nextItem.addActionListener(listener)
+				prevItem.addActionListener(listener)
+				exitItem.addActionListener(listener)
 
-				popup.add(playItem);
-				popup.add(stopItem);
-				popup.add(nextItem);
-				popup.add(prevItem);
-				popup.add(exitItem);
+				popup.add(playItem)
+				popup.add(stopItem)
+				popup.add(nextItem)
+				popup.add(prevItem)
+				popup.add(exitItem)
 
-				Constructor<?> c = trayIcoClass.getConstructor(Image.class,
-						String.class, PopupMenu.class);
-				Object trayIcoObject = c.newInstance(stdIco, "VibrantPlayer",
-						popup);
+				Constructor<?> c = trayIconClass.getConstructor(Image.class, String.class, PopupMenu.class)
+				Object trayIcoObject = c.newInstance(standardIcon, "VibrantPlayer", popup)
 
-				Method setAutoSizeMethod = trayIcoClass.getMethod(
-						"setImageAutoSize", boolean.class);
-				setAutoSizeMethod.invoke(trayIcoObject, true);
+				Method setAutoSizeMethod = trayIconClass.getMethod("setImageAutoSize", boolean.class)
+				setAutoSizeMethod.invoke(trayIcoObject, true)
 
-				Method addMethod = trayClass.getMethod("add",
-						trayIcoObject.getClass());
-				addMethod.invoke(trayObject, trayIcoObject);
+				Method addMethod = trayClass.getMethod("add", trayIcoObject.getClass())
+				addMethod.invoke(trayObject, trayIcoObject)
 			} catch(Exception e) {
-				log.debug(e.getMessage());
-				e.printStackTrace();
-				supported = false;
+				log.debug(e.getMessage())
+				e.printStackTrace()
+				supported = false
 			}
 		}
 	}
@@ -147,47 +140,46 @@ public class TrayIconHandler{
 	 *            the image to be shown, may be <code>null</code>
 	 */
 	public void showAlbumImageFromPath(String imgPath){
-		if(StringUtils.isEmpty(imgPath)) showAlbumImage(null);
+		if(StringUtils.isEmpty(imgPath)) showAlbumImage(null)
 
 		try {
 			// only change image if necessary
 			if(!currentCoverPath.equals(imgPath)) {
-				currentCoverPath = imgPath;
+				currentCoverPath = imgPath
 
-				File imgFile = new File(imgPath);
-				if(!imgFile.exists()) return;
+				File imgFile = new File(imgPath)
+				if(!imgFile.exists()) return
 
 				// determine max possible ico size (is only done once)
 				if(icoWidth < 0 || icoHeight < 0) {
-					Method getTrayMethod = trayClass.getMethod("getSystemTray");
-					Object trayObject = (Object) getTrayMethod.invoke(null);
+					Method getTrayMethod = trayClass.getMethod("getSystemTray")
+					Object trayObject = (Object) getTrayMethod.invoke(null)
 
-					Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons");
-					Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject);
-					Object trayIco = trayIcons[0];
+					Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons")
+					Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject)
+					Object trayIco = trayIcons[0]
 
 					if(trayIco != null) {
-						Method getSizeMethod = trayIcoClass.getMethod("getSize");
-						Dimension dim = (Dimension) getSizeMethod.invoke(trayIco);
-						icoWidth = dim.width;
-						icoHeight = dim.height;
+						Method getSizeMethod = trayIconClass.getMethod("getSize")
+						Dimension dim = (Dimension) getSizeMethod.invoke(trayIco)
+						icoWidth = dim.width
+						icoHeight = dim.height
 					}
 				}
 
-				BufferedImage ico = ImageIO.read(imgFile);
-				BufferedImage icoSmall = GraphicsUtilities.getInstance().createThumbnailFast(ico, 16, 16);
-				BufferedImage icoSmallBorder = new BufferedImage(icoWidth,
-						icoHeight, BufferedImage.TYPE_INT_ARGB);
-				Graphics g = icoSmallBorder.getGraphics();
-				g.drawImage(icoSmall, 0, 0, null);
-				g.setColor(Color.BLACK);
-				g.drawRect(0, 0, icoWidth - 1, icoHeight - 1);
-				showAlbumImage(icoSmallBorder);
+				BufferedImage ico = ImageIO.read(imgFile)
+				BufferedImage icoSmall = GraphicsUtilities.getInstance().createThumbnailFast(ico, 16, 16)
+				BufferedImage icoSmallBorder = new BufferedImage(icoWidth, icoHeight, BufferedImage.TYPE_INT_ARGB)
+				Graphics g = icoSmallBorder.getGraphics()
+				g.drawImage(icoSmall, 0, 0, null)
+				g.setColor(Color.BLACK)
+				g.drawRect(0, 0, icoWidth - 1, icoHeight - 1)
+				showAlbumImage(icoSmallBorder)
 			}
 		} catch(Exception e) {
-			log.debug(e.getMessage());
-			e.printStackTrace();
-			supported = false;
+			log.debug(e.getMessage())
+			e.printStackTrace()
+			supported = false
 		}
 	}
 
@@ -199,23 +191,22 @@ public class TrayIconHandler{
 	 *            the image to be shown, may be <code>null</code>
 	 */
 	public void showAlbumImage(Image img){
-		if(img == null) img = stdIco;
+		if(img == null) img = standardIcon
 
 		try {
-			Method getTrayMethod = trayClass.getMethod("getSystemTray");
-			Object trayObject = (Object) getTrayMethod.invoke(null);
+			Method getTrayMethod = trayClass.getMethod("getSystemTray")
+			Object trayObject = (Object) getTrayMethod.invoke(null)
 
-			Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons");
-			Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject);
-			Object trayIco = trayIcons[0];
+			Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons")
+			Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject)
+			Object trayIco = trayIcons[0]
 
-			Method setImageMethod = trayIco.getClass().getMethod("setImage",
-					Image.class);
-			setImageMethod.invoke(trayIco, img);
+			Method setImageMethod = trayIco.getClass().getMethod("setImage", Image.class)
+			setImageMethod.invoke(trayIco, img)
 		} catch(Exception e) {
-			log.debug(e.getMessage());
-			e.printStackTrace();
-			supported = false;
+			log.debug(e.getMessage())
+			e.printStackTrace()
+			supported = false
 		}
 	}
 
@@ -227,50 +218,21 @@ public class TrayIconHandler{
 	 */
 	public void setIconToolTip(String text){
 		try {
-			Method getTrayMethod = trayClass.getMethod("getSystemTray");
-			Object trayObject = (Object) getTrayMethod.invoke(null);
+			Method getTrayMethod = trayClass.getMethod("getSystemTray")
+			Object trayObject = (Object) getTrayMethod.invoke(null)
 
-			Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons");
-			Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject);
-			Object trayIco = trayIcons[0];
+			Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons")
+			Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject)
+			Object trayIcon = trayIcons[0]
 
-			Method m = trayIco.getClass().getMethod("setToolTip", String.class);
-			m.invoke(trayIco, text);
+			Method method = trayIcon.getClass().getMethod("setToolTip", String.class)
+			method.invoke(trayIcon, text)
 		} catch(Exception e) {
-			log.debug(e.getMessage());
-			e.printStackTrace();
-			supported = false;
+			log.debug(e.getMessage())
+			e.printStackTrace()
+			supported = false
 		}
 	}
-
-	// /**
-	// * Shows a baloon-type message.
-	// *
-	// * @param caption the caption for the baloon-text
-	// * @param text the text to be displayed
-	// */
-	// public void showMessage(String caption, String text)
-	// {
-	// try
-	// {
-	// Method getTrayMethod = trayClass.getMethod("getSystemTray");
-	// Object trayObject = (Object) getTrayMethod.invoke(null);
-	//
-	// Method getTrayIconsMethod = trayClass.getMethod("getTrayIcons");
-	// Object[] trayIcons = (Object[]) getTrayIconsMethod.invoke(trayObject);
-	// Object trayIco = trayIcons[0];
-	//
-	// Method m = trayIco.getClass().getMethod("displayMessage", String.class,
-	// String.class, int.class);
-	// m.invoke(trayIco, caption, text, TrayIcon.MessageType.INFO);
-	// }
-	// catch(Exception e)
-	// {
-	// log.debug(e.getMessage());
-	// e.printStackTrace();
-	// supported = false;
-	// }
-	// }
 
 	/**
 	 * Initializes the refection classes and returns whether or not tray icons
@@ -281,57 +243,16 @@ public class TrayIconHandler{
 	 */
 	private boolean initReflectionClasses(){
 		try {
-			trayClass = Class.forName("java.awt.SystemTray");
-			trayIcoClass = Class.forName("java.awt.TrayIcon");
-			Method trayIsSupportedMethod = trayClass.getMethod("isSupported");
-			boolean s = (Boolean) trayIsSupportedMethod.invoke(null);
-			return s;
+			trayClass = Class.forName("java.awt.SystemTray")
+			trayIconClass = Class.forName("java.awt.TrayIcon")
+			Method trayIsSupportedMethod = trayClass.getMethod("isSupported")
+			boolean isTraySupportedMethod = (Boolean) trayIsSupportedMethod.invoke(null)
+			return isTraySupportedMethod
 		} catch(Exception e) {
-			log.debug("Reflection unseccessful: " + e.getMessage());
-			e.printStackTrace();
+			log.debug("Reflection unseccessful: " + e.getMessage())
+			e.printStackTrace()
 		}
-		return false;
+		return false
 	}
 }
 
-/**
- * A listener class for the mouse events when selecting an action from the tray
- * icon.
- * 
- * @author Manuel Kaess
- */
-class TrayIconListener implements ActionListener{
-	private MainWindow window;
-
-	/**
-	 * Constructor.
-	 * 
-	 * @param window
-	 *            reference to the main window
-	 */
-	public TrayIconListener(MainWindow window){
-		this.window = window;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e){
-		String action = e.getActionCommand();
-
-		if(action.equals("exit")) {
-			window.exit();
-		} else if(action.equals("next")) {
-			window.getPlayerPanel().fadeOut();
-			window.getPlayerPanel().playNextSong();
-		} else if(action.equals("previous")) {
-			window.getPlayerPanel().fadeOut();
-			window.getPlayerPanel().playPreviousSong();
-		} else if(action.equals("play")) {
-			window.getPlayerPanel().playSong();
-		} else if(action.equals("pause")) {
-			window.getPlayerPanel().pauseSong();
-		} else if(action.equals("stop")) {
-			window.getPlayerPanel().fadeOut();
-			window.getPlayerPanel().stopSong();
-		}
-	}
-}

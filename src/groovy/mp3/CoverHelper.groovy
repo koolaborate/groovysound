@@ -90,11 +90,8 @@ public class CoverHelper
 						return false;
 				}
 			}	
-		}
-		catch(Exception ex)
-		{
-			log.debug("Error retrieving and saving cover image from file " + mp3Filename +
-					". Error message: " + ex.getMessage());
+		} catch(Exception ex) {
+			log.debug("Error retrieving and saving cover image from file " + mp3Filename + ". Error message: " + ex.getMessage());
 			return false;
 		}
 		

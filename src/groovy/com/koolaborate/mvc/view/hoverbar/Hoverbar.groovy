@@ -36,19 +36,18 @@ import javax.swing.border.EmptyBorder;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Hoverbar extends JComponent 
-{
+class Hoverbar extends JComponent{
 	private static final long serialVersionUID = 3300560477607711488L;
 
-	private float alpha = 0.9f;
+	float alpha = 0.9f;
 	
-	private int width = 20;
-	private int height = 20;
-	private int arc = 20;
-	private int margin = 2;
+	int width = 20;
+	int height = 20;
+	int arc = 20;
+	int margin = 2;
 	
-	private Color background = new Color(35, 35, 35);    // Color.GRAY.darker()
-	private Color foreground = new Color(107, 118, 130); // Color.WHITE; / Color.BLACK
+	Color background = new Color(35, 35, 35);    // Color.GRAY.darker()
+	Color foreground = new Color(107, 118, 130); // Color.WHITE; / Color.BLACK
 	
 	
 	/**
@@ -78,27 +77,6 @@ public class Hoverbar extends JComponent
 		g2.setColor(foreground);
 		g2.drawRoundRect(margin, margin, width-margin-1, height-margin, arc, arc);
 	}
-	
-	
-	/**
-	 * @return the current alpha value for the transluency
-	 */
-	public float getAlpha()
-	{
-		return this.alpha;
-	}
-	
-	
-	/**
-	 * Sets the new alpha value.
-	 * 
-	 * @param alpha the new value to be set
-	 */
-	public void setAlpha(float alpha)
-	{
-		this.alpha = alpha;
-	}
-	
 	
 	/**
 	 * Adds a HoverbarElement to the bar (it is added to the right).
