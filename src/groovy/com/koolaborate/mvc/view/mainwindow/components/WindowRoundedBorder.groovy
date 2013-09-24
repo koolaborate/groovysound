@@ -1,4 +1,4 @@
-package com.koolaborate.mvc.view.mainwindow
+package com.koolaborate.mvc.view.mainwindow.components
 
 import java.awt.Color
 import java.awt.Component
@@ -32,31 +32,11 @@ import javax.swing.border.AbstractBorder
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-class RoundedBorder extends AbstractBorder{
+class WindowRoundedBorder extends AbstractBorder{
 	private static final long serialVersionUID = 8257416430750649811L
 	Color color
 	int radius
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param radius the radius of the rounded edges
-	 */
-	public RoundedBorder(int radius){
-		this(Color.BLACK, radius)
-	}
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param color the color for the border
-	 * @param radius the radius of the rounded edges
-	 */
-	public RoundedBorder(Color color, int radius){
-		this.color = color
-		this.radius = radius
-	}
-	
 	@Override
 	public Insets getBorderInsets(Component c){
 		return new Insets(1, 1, 1, 1)

@@ -102,7 +102,7 @@ public class MP3ToWAVConverter implements Convertable{
 		}
 		
 		// get all the mp3 files from the source folder
-		mp3s = getMp3s(srcFolder)
+		mp3s = getMp3sList(srcFolder)
 		
 		return transactionMessage
 	}
@@ -131,7 +131,7 @@ public class MP3ToWAVConverter implements Convertable{
 		return errorMessage
 	}
 	
-	def File[] getMp3s(File srcFolder){
+	def File[] getMp3sList(File srcFolder){
 		def mp3s
 		
 		mp3s = srcFolder.listFiles(new FileFilter(){

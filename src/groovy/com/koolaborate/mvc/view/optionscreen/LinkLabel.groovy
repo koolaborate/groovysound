@@ -1,11 +1,11 @@
-package com.koolaborate.mvc.view.optionscreen;
+package com.koolaborate.mvc.view.optionscreen
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.awt.Color
+import java.awt.Cursor
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import javax.swing.JLabel
+import javax.swing.SwingConstants
 
 /***********************************************************************************
  * LinkLabel                                                                       *
@@ -34,58 +34,45 @@ import javax.swing.SwingConstants;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class LinkLabel extends JLabel
-{
-	private static final long serialVersionUID = -5855578803801940641L;
+public class LinkLabel extends JLabel{
 	/** the action thread which is executed when being clicked */
-	private Thread action;
-	private Color inactiveColor, activeColor;
+	Thread action
+	Color inactiveColor, activeColor
 	
-	public LinkLabel(String text)
-	{
-		setText(text);
+	public LinkLabel(String text){
+		setText(text)
 		
-		inactiveColor = getForeground();
-		activeColor = Color.BLUE;
+		inactiveColor = getForeground()
+		activeColor = Color.BLUE
 		
-		setHorizontalAlignment(SwingConstants.LEFT);
+		setHorizontalAlignment(SwingConstants.LEFT)
 		
-		addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				if(isEnabled())
-				{
-					setForeground(activeColor);
-					setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-					repaint();
+		addMouseListener([
+			mouseEntered: {
+				if(isEnabled()){
+					setForeground(activeColor)
+					setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR))
+					repaint()
 				}
-			}
+			},
 			
-			@Override
-			public void mouseExited(MouseEvent arg0)
-			{
-				if(isEnabled())
-				{
-					setForeground(inactiveColor);
-					setCursor(Cursor.getDefaultCursor());
-					repaint();
+			mouseExited: {
+				if(isEnabled()){
+					setForeground(inactiveColor)
+					setCursor(Cursor.getDefaultCursor())
+					repaint()
 				}
-			}
+			},
 			
-			@Override
-			public void mouseClicked(MouseEvent arg0)
-			{
-				if(isEnabled() && action != null)
-				{
-					Thread go = new Thread(action);
-					go.start();
+			mouseClicked: {
+				if(isEnabled() && action != null){
+					Thread go = new Thread(action)
+					go.start()
 				}
 			}
-		});
+		] as MouseAdapter)
 		
-		if(!isEnabled()) setForeground(Color.GRAY);
+		if(!isEnabled()) setForeground(Color.GRAY)
 	}
 	
 	
@@ -96,6 +83,6 @@ public class LinkLabel extends JLabel
 	 */
 	public void setActionThread(Thread t)
 	{
-		this.action = t;
+		this.action = t
 	}
 }

@@ -10,8 +10,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.koolaborate.model.Album;
 import com.koolaborate.model.CurrentSongInfo;
-import com.koolaborate.mvc.view.mainwindow.CenterPanel;
 import com.koolaborate.mvc.view.mainwindow.MainWindow;
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
 import com.koolaborate.util.LocaleMessage;
 import com.koolaborate.util.StringUtils;
 
@@ -55,6 +55,10 @@ public class AlbumsOverviewPanel extends JPanel{
 
 	SORT_MODE currentSortMode = SORT_MODE.SORT_ALBUMTITLE;
 
+	// TODO remove these 
+	@Override
+	public int getHeight(){ return 0;}
+	
 	/**
 	 * Constructor.
 	 */
@@ -73,9 +77,9 @@ public class AlbumsOverviewPanel extends JPanel{
 	 * @param albumlist
 	 *            the list of all albums to be shown
 	 */
-	public void refreshAlbums(CenterPanel centerPanel, List<Album> albumlist){
+	public void refreshAlbums(WindowCenterPanel centerPanel, List<Album> albumlist){
 		MainWindow mainWindow = centerPanel.mainWindow
-		CurrentSongInfo songInfo = mainWindow.getSongInfo();
+		CurrentSongInfo songInfo = mainWindow.songInfo
 
 		int availableWidth = mainWindow.getWidth() - 2 * 20;
 
@@ -86,9 +90,7 @@ public class AlbumsOverviewPanel extends JPanel{
 
 		// show an advice if there is no album yet
 		if(albums == null || albums.size() == 0) {
-			JLabel adviceLabel = new JLabel("<HTML><i>"
-					+ LocaleMessage.getInstance().getString("newalbum.empty_info")
-					+ "</i></HTML>");
+			JLabel adviceLabel = new JLabel("<HTML><i>" + LocaleMessage.getInstance().getString("newalbum.empty_info") + "</i></HTML>");
 			add(adviceLabel);
 
 			return;

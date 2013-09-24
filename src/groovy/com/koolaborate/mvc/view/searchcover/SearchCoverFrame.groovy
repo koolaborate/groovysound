@@ -384,11 +384,11 @@ public class SearchCoverFrame extends JDialog{
 			    	pathText.setText(file.getAbsolutePath())
 			    	
 			    	String filename = "folder.jpg"
-					String destination = mainWindow.getCurrentFolderPath() + File.separator + filename
+					String destination = mainWindow.currentFolder + File.separator + filename
 					// check if there is already a cover jpg file
 					File oldCover = new File(destination)
 					// just for now: rename the old jpg
-					if(oldCover.exists()) oldCover.renameTo(new File(mainWindow.getCurrentFolderPath() + File.separator + "folder_old.jpg"))
+					if(oldCover.exists()) oldCover.renameTo(new File(mainWindow.currentFolder + File.separator + "folder_old.jpg"))
 					
 			    	BufferedImage img = null
 					try
@@ -548,7 +548,7 @@ public class SearchCoverFrame extends JDialog{
 	 */
 	private void saveAlbumCover(BufferedImage img){
 		mainWindow.setNewCover(img)
-		mainWindow.getCenterPanel().updateCover(mainWindow.getSongInfo())
+		mainWindow.getCenterPanel().updateCover(mainWindow.songInfo)
 		dispose()
 	}
 	

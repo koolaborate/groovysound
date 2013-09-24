@@ -263,12 +263,12 @@ public class CoverPanel extends JPanel{
 		try {
 			File coverFile = new File(coverPath)
 			if(!coverFile.exists()) {
-				mainWindow.setCurrentFolder(albumFolder)
+				mainWindow.currentFolder = albumFolder
 				// the default image has to be loaded from the ressources (from the JAR archive)
 				cover = ImageIO.read(getClass().getResource(defaultCover))
 			} else {
 				cover = ImageIO.read(coverFile)
-				mainWindow.setCurrentFolder(coverFile.getParent())
+				mainWindow.currentFolder = coverFile.getParent()
 			}
 		} catch(Exception e) {
 			e.printStackTrace()

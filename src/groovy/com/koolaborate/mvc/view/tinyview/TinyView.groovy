@@ -29,7 +29,7 @@ import com.koolaborate.model.Album
 import com.koolaborate.mvc.controller.PlaybackController
 import com.koolaborate.mvc.controller.PlaybackController.STATE
 import com.koolaborate.mvc.view.mainwindow.MainWindow
-import com.koolaborate.mvc.view.mainwindow.RoundedBorder
+import com.koolaborate.mvc.view.mainwindow.components.WindowRoundedBorder;
 import com.koolaborate.mvc.view.playlistview.CoverPanel
 import com.koolaborate.mvc.view.playlistview.Playlist
 import com.koolaborate.mvc.view.playlistview.PlaylistEntry
@@ -148,7 +148,7 @@ public class TinyView extends JWindow
 		// add the cover
 		cover = new CoverPanel(mainWindow)
 		cover.setBigView(true)
-		cover.setCoverPath(mainWindow.getCurrentFolderPath() + File.separator + "folder.jpg")
+		cover.setCoverPath(mainWindow.currentFolder + File.separator + "folder.jpg")
 		cover.refreshCover()
 		cover.setCoverSize(coverSize)
 		cover.setBounds(0, 0, coverSize + 20, (int)(coverSize * 1.5))
@@ -164,7 +164,7 @@ public class TinyView extends JWindow
 		closeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				mainWindow.setVisible(true)
-				mainWindow.setTinyWindowShown(false)
+				mainWindow.tinyWindowShown = false
 				setVisible(false)
 				outTimer.stop()
 				inTimer.stop()
@@ -445,9 +445,9 @@ public class TinyView extends JWindow
 	 */
 	private void setWindowShape()
 	{
-		if(mainWindow.getWindowShaper().shapeWindow(this, new RoundRectangle2D.Double(0, 0, 
+		if(mainWindow.winShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, 
 				getWidth(), getHeight(), 10, 10)) && bg != null) 
-			bg.setBorder(new RoundedBorder(10))
+			bg.setBorder(new WindowRoundedBorder(color: Color.BLACK, radius: 10))
 	}
 	
 	/**

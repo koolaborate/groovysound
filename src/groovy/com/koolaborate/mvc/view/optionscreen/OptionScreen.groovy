@@ -52,7 +52,7 @@ import plug.engine.ui.swing.firefoxstyle.UpdateDialog
  ***********************************************************************************/
 class OptionScreen extends JPanel{
 	private static final long serialVersionUID = 5938891358222523024L
-	Settings s
+	Settings settings
 	JButton searchNow
 	
 	/**
@@ -61,7 +61,7 @@ class OptionScreen extends JPanel{
 	 * @param window reference to the main window
 	 */
 	public OptionScreen(final MainWindow window) {
-		this.s = window.getSettings()
+		this.settings = window.getSettings()
 		
 		setOpaque(false)
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
@@ -70,7 +70,7 @@ class OptionScreen extends JPanel{
 		add(title1)
 		
 		JCheckBox useGraphixAcc = new JCheckBox(LocaleMessage.getInstance().getString("options.enable_d3d"))
-		useGraphixAcc.setSelected(s.isHardwareAccellerated())
+		useGraphixAcc.setSelected(settings.isHardwareAccellerated())
 		useGraphixAcc.setOpaque(false)
 		useGraphixAcc.setBorder(new EmptyBorder(0, 68, 0, 0))
 		useGraphixAcc.setAlignmentX(Component.LEFT_ALIGNMENT)
@@ -121,7 +121,7 @@ class OptionScreen extends JPanel{
 			}
 		] as ChangeListener)
 	
-		loudnessSlider.setValue((int)(s.getVolume() * 10))
+		loudnessSlider.setValue((int)(settings.getVolume() * 10))
 		sound.add(loudnessSlider, gbc)
 		
 		gbc.weightx = 1.0f
@@ -160,7 +160,7 @@ class OptionScreen extends JPanel{
 				window.getPlayerPanel().setPlayerBalance(newPan)
 			}
 		] as ChangeListener)
-		balanceSlider.setValue((int)(s.getBalance() * 10))
+		balanceSlider.setValue((int)(settings.getBalance() * 10))
 		sound.add(balanceSlider, gbc)
 		
 		gbc.weightx = 1.0f
@@ -242,14 +242,14 @@ class OptionScreen extends JPanel{
 		
 		// check for updates during application startup?
 		JCheckBox atStart = new JCheckBox(LocaleMessage.getInstance().getString("options.autoupdate"))
-		atStart.setSelected(s.isCheckForUpdatesAtStart())
+		atStart.setSelected(settings.isCheckForUpdatesAtStart())
 		atStart.setOpaque(false)
 		atStart.setVerticalAlignment(SwingConstants.TOP)
 		atStart.addChangeListener([
 			stateChanged: { changeEvent ->
 				ChangeEvent e = changeEvent
 				JCheckBox src = (JCheckBox) e.getSource()
-				s.setCheckForUpdatesAtStart(src.isSelected())
+				settings.setCheckForUpdatesAtStart(src.isSelected())
 				searchNow.setEnabled(!src.isSelected())
 			}
 		] as ChangeListener)

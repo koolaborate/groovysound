@@ -29,15 +29,8 @@ import com.koolaborate.service.db.Database;
  ***********************************************************************************/
 public class Album{
 	String title, artist, folderPath;
-	int id, year;
+	int id = -1, year;
 	BufferedImage preview;
-
-	/**
-	 * Constructor.
-	 */
-	public Album(){
-		id = -1;
-	}
 
 	/**
 	 * Method to save the album into the database.

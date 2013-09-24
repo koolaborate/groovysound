@@ -31,8 +31,8 @@ import com.koolaborate.model.CurrentSongInfo
 import com.koolaborate.model.Settings
 import com.koolaborate.mvc.view.decorations.Decorator
 import com.koolaborate.mvc.view.dialogs.VistaDialog
-import com.koolaborate.mvc.view.mainwindow.CenterPanel
 import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
 import com.koolaborate.mvc.view.playercontrols.NextButton
 import com.koolaborate.mvc.view.playercontrols.PlayButton
 import com.koolaborate.mvc.view.playercontrols.PreviousButton
@@ -98,7 +98,7 @@ public class PlaybackController implements BasicPlayerListener{
 	CurrentSongInfo songInfo
 	MainWindow mainWindow
 	PlaylistPanel playListPanel
-	CenterPanel centerPanel
+	WindowCenterPanel centerPanel
 
 	/**
 	 * Constructor.
@@ -110,12 +110,12 @@ public class PlaybackController implements BasicPlayerListener{
 	 * @param window
 	 *            the reference to the main window
 	 */
-	public PlaybackController(CenterPanel cPanel, PlaylistPanel playlist, MainWindow window){
+	public PlaybackController(WindowCenterPanel cPanel, PlaylistPanel playlist, MainWindow window){
 		this.centerPanel = cPanel
 		this.playListPanel = playlist
 		this.mainWindow = window
-		this.songInfo = window.getSongInfo()
-		this.settings = window.getSettings()
+		this.songInfo = window.songInfo
+		this.settings = window.settings
 
 		Decorator d = window.getDecorator()
 		// load the GUI elements from the decorator
@@ -409,11 +409,11 @@ public class PlaybackController implements BasicPlayerListener{
 	private void handleSongNoLongerAvailable(){
 		// check if the album folder is available
 		log.debug("File " + filename + " not found!")
-		log.debug("Current folder: " + mainWindow.getCurrentFolderPath())
+		log.debug("Current folder: " + mainWindow.currentFolder)
 
 		mainWindow.getPlaylist().getPlaylist().setCurrentEntryUnplayable()
 
-		String path = mainWindow.getCurrentFolderPath()
+		String path = mainWindow.currentFolder
 		if(StringUtils.isNotEmpty(path)) {
 			File folder = new File(path)
 			if(!folder.exists()) {
@@ -449,11 +449,11 @@ public class PlaybackController implements BasicPlayerListener{
 					CurrentSongInfo info = new CurrentSongInfo()
 
 					// then clear the playlist and update the view
-					mainWindow.setCurrentSongInfo(info)
-					centerPanel.updateCover(mainWindow.getSongInfo())
+					mainWindow.songInfo = info
+					centerPanel.updateCover(mainWindow.songInfo)
 					centerPanel.getCoverPanel().refreshCover()
 					mainWindow.updateArtist(info)
-					mainWindow.setCurrentFolder(null)
+					mainWindow.currentFolder = null
 				}
 			}
 			// if the folder exists, only the song is missing

@@ -143,7 +143,7 @@ public class BigCoverFrame extends JDialog
 		// add the cover
 		coverPanel = new CoverPanel(mainWindow)
 		coverPanel.setBigView(true)
-		coverPanel.setCoverPath(mainWindow.getCurrentFolderPath() + File.separator + "folder.jpg")
+		coverPanel.setCoverPath(mainWindow.currentFolder + File.separator + "folder.jpg")
 		coverPanel.refreshCover()
 		coverPanel.setCoverSize(startSize)
 		Dimension cSize = new Dimension(460, 400)

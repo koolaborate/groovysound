@@ -52,7 +52,7 @@ public class LocaleMessage
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e){
 			System.out.println("Ressource for key '" + key + "' is missing.");
-			return "MISSING: " + key;
+			return "MISSING: " + key; 
 		}
 	}
 }

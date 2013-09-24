@@ -53,9 +53,9 @@ import com.koolaborate.util.LocaleMessage;
 public class NewPluginPanel extends JPanel
 {
 	private static final long serialVersionUID = 822729186528974783L;
-	private JButton installPlugin;
-	private JLabel pluginName, description, iconLabel;
-	private String pluginPath;
+	JButton installPlugin;
+	JLabel pluginName, description, iconLabel;
+	String pluginPath;
 	
 	/**
 	 * Constructor.
@@ -100,19 +100,16 @@ public class NewPluginPanel extends JPanel
 		buttonPanel.setLayout(new FlowLayout());
 		
 		installPlugin = new JButton(LocaleMessage.getInstance().getString("plugins.install"));
-		installPlugin.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		installPlugin.addActionListener([
+			actionPerformed: { actionEvent ->
+				ActionEvent e = actionEvent
 				Pluggable plugin;
-				try
-				{
+				try{
 					URL url = new URL(pluginPath);
 					URI uri = url.toURI();
 					plugin = PlugEngine.getInstance().installOrUpdate(uri);
 					PlugEngine.getInstance().startPluggable(plugin);
-				}
-				catch (Exception e1)
-				{
+				} catch (Exception e1){
 					// show a message that the installation failed
 					VistaDialog.showDialog(LocaleMessage.getInstance().getString("error.1"), 
 							LocaleMessage.getInstance().getString("error.28"),
@@ -120,7 +117,7 @@ public class NewPluginPanel extends JPanel
 				}
 				parentWindow.dispose();
 			}
-		});
+		] as ActionListener);
 		buttonPanel.add(installPlugin);
 		
 		add(iconLabel, BorderLayout.WEST);
@@ -134,11 +131,9 @@ public class NewPluginPanel extends JPanel
 	 * 
 	 * @param installed whether or not the plugin is already installed
 	 */
-	public void setAlreadyInstalled(boolean installed)
-	{
+	public void setAlreadyInstalled(boolean installed){
 		installPlugin.setEnabled(!installed);
-		if(installed)
-		{
+		if(installed){
 			// grayscale image
 			Icon origIcon = iconLabel.getIcon();
 			int width = origIcon.getIconWidth();
@@ -148,8 +143,7 @@ public class NewPluginPanel extends JPanel
 			Graphics g = b.getGraphics();
 			origIcon.paintIcon(null, g, 0, 0);
 			
-			BufferedImage dest = new BufferedImage(b.getWidth(), b.getHeight(),
-					BufferedImage.TYPE_INT_ARGB);
+			BufferedImage dest = new BufferedImage(b.getWidth(), b.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			GrayFilter gray = new GrayFilter();
 			gray.filter(b, dest);
 			iconLabel.setIcon(new ImageIcon(dest));

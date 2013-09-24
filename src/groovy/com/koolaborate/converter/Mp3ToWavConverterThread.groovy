@@ -126,7 +126,7 @@ class Mp3ToWavConverterThread implements Runnable{
 	// TODO REFACTOR 
 	
 	def void runConversionInFolders(MP3ToWAVConverter mp3ToWavConverter, String dstFolderPath, List<String> errors){
-		for(File mp3 : mp3ToWavConverter.mp3s){
+		for(File mp3 : mp3ToWavConverter.mp3sList){
 			String mp3Path = mp3.getAbsolutePath()
 			final String mp3Name = mp3.getName()
 			String wavFileName = dstFolderPath + mp3Name.substring(0, mp3Name.length()-".mp3".length()) // cut the '.mp3' file extension

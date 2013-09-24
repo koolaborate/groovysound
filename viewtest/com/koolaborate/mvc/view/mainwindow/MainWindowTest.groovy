@@ -15,7 +15,9 @@ class MainWindowTest{
 		Settings settings = new Settings()
 		settings.loadSettings()
 		
-		mainWindow = new MainWindow(settings)
+		mainWindow = new MainWindow()
+		mainWindow.settings = settings
+		mainWindow.initializeGui(settings)
 	}
 	
 	@Test

@@ -120,7 +120,7 @@ public class SongInfoFrame extends JFrame{
 					LocaleMessage.getInstance().getString("error.14"), VistaDialog.ERROR_MESSAGE)
 							
 			//TODO confirmation dialog: do you want to update songlist/album
-			// if directory is missing: remove album
+			// if directory is missing: remove album 
 		}
 		
 		try {
@@ -559,7 +559,7 @@ public class SongInfoFrame extends JFrame{
 				List<String> song = new ArrayList<String>()
 				song.add(songFile.getName())
 				int albumId = mainWindow.getPlaylist().getCurrentlySelectedSongAlbumId()
-				String albumPath = mainWindow.getCurrentFolderPath()
+				String albumPath = mainWindow.currentFolder
 				new EditId3TagFrame(mainWindow, albumId, albumPath, song)
 				dispose()
 			}

@@ -1,4 +1,4 @@
-package com.koolaborate.mvc.view.mainwindow;
+package com.koolaborate.mvc.view.mainwindow.components;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -34,7 +34,7 @@ import javax.swing.SwingUtilities;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class GhostDragGlassPane extends JComponent 
+public class WindowGhostDragGlassPane extends JComponent
 {
 	private static final long serialVersionUID = 5509743453860849064L;
 	private BufferedImage image;
@@ -66,7 +66,7 @@ public class GhostDragGlassPane extends JComponent
     
     public void showIt(BufferedImage image, Point location) {
         this.image = image;
-        this.shadow = new ShadowRenderer(5, 0.3f, Color.BLACK).createShadow(image);
+        this.shadow = new WindowShadowRenderer(5, 0.3f, Color.BLACK).createShadow(image);
 
         SwingUtilities.convertPointFromScreen(location, this);
         this.location = location;

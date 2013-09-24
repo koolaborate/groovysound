@@ -70,7 +70,8 @@ public class MainPlugin extends Plugin{
 		
 		Settings s = (Settings)args[0]
 		s.setVersion(getVersion())
-		mainWindow = new MainWindow(s)
+		mainWindow = new MainWindow()
+		mainWindow.initializeGui(s)
 	}
 	
 	@Override

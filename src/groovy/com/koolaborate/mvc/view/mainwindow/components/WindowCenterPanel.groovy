@@ -1,4 +1,4 @@
-package com.koolaborate.mvc.view.mainwindow;
+package com.koolaborate.mvc.view.mainwindow.components;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,6 +12,7 @@ import com.koolaborate.model.CurrentSongInfo;
 import com.koolaborate.mvc.controller.PlaybackController;
 import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel;
 import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel.SORT_MODE;
+import com.koolaborate.mvc.view.mainwindow.MainWindow;
 import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
 import com.koolaborate.mvc.view.navigation.NavigationPanel;
 import com.koolaborate.mvc.view.optionscreen.OptionScreen;
@@ -48,7 +49,7 @@ import com.koolaborate.service.db.Database;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-class CenterPanel extends JPanel{
+class WindowCenterPanel extends JPanel{
 	private static final long serialVersionUID = -1865306352685281295L;
 	NavigationPanel navigationPanel;
 	PlaybackController playerControls;
@@ -131,24 +132,18 @@ class CenterPanel extends JPanel{
 		mainPanel.removeAll();
 		
 		// playlist view
-		if(nav == NAVIGATION.PLAYLIST)
-		{
+		if(nav == NAVIGATION.PLAYLIST){
 			mainPanel.add(coverAndInfoPanel, BorderLayout.WEST);
 			mainPanel.add(playlistPanel, BorderLayout.CENTER);
-		}
-		// settings view
-		else if(nav == NAVIGATION.SETTINGS)
-		{
+		} else if(nav == NAVIGATION.SETTINGS){
+			// settings view
 			mainPanel.add(new OptionScreen(mainWindow));
-		}
-		// otherwise: show albums view
-		else
-		{
+		} else{
+			// otherwise: show albums view
 			mainPanel.add(scroll);
 		}
 
-		if(repaintRequest)
-		{
+		if(repaintRequest){
 			mainPanel.repaint();
 			mainPanel.revalidate();
 		}
@@ -222,16 +217,6 @@ class CenterPanel extends JPanel{
 		] as Runnable);
 	}
 	
-	
-	/**
-	 * @return the player panel with the player controls
-	 */
-	public PlaybackController getPlayerPanel()
-	{
-		return this.playerControls;
-	}
-
-	
 	/**
 	 * Updates the cover image.
 	 * 
@@ -268,20 +253,4 @@ class CenterPanel extends JPanel{
 		}
 	}
 
-	/**
-	 * @return the albums overview panel
-	 */
-	public AlbumsOverviewPanel getAlbumsPanel()
-	{
-		return albumsPanel;
-	}
-	
-	
-	/**
-	 * @return the navigation panel
-	 */
-	public NavigationPanel getNavigationPanel() 
-	{
-		return navigationPanel;
-	}
 }

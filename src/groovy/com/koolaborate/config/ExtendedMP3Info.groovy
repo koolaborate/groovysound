@@ -1,4 +1,4 @@
-package mp3;
+package com.koolaborate.config
 
 import java.io.File;
 import java.io.IOException;

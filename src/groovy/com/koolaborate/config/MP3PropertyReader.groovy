@@ -1,4 +1,4 @@
-package mp3
+package com.koolaborate.config
 
 import java.io.File
 import java.io.FileInputStream
@@ -24,7 +24,7 @@ import org.tritonus.share.sampled.file.TAudioFileFormat
  * A class to read id3 tags from mp3 files such as duration and title of a song.   *
  ***********************************************************************************
  * (c) Impressive Artworx, 2k8                                                     * 
- * @author Manuel Kaess                                                            *
+ * @author Manuel Kaess                                                            * 
  * @version 1.0                                                                    *
  ***********************************************************************************
  * This file is part of VibrantPlayer.                                             *
@@ -181,10 +181,10 @@ public class MP3PropertyReader{
 				ret = (Long)properties.get("duration")
 			}
 		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace()
+			e.printStackTrace() 
 		} catch (IOException e) {
 			e.printStackTrace()
-		}
+		} 
 		
 		return ret
 	}

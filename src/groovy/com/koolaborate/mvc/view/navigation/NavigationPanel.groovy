@@ -20,9 +20,9 @@ import com.koolaborate.bo.search.SearchFrame
 import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel.SORT_MODE
 import com.koolaborate.mvc.view.decorations.Decorator
 import com.koolaborate.mvc.view.dialogs.AboutDialog
-import com.koolaborate.mvc.view.mainwindow.CenterPanel
 import com.koolaborate.mvc.view.mainwindow.MainWindow
 import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
 import com.koolaborate.mvc.view.newalbum.NewAlbumFrame
 import com.koolaborate.util.LocaleMessage
 
@@ -57,7 +57,7 @@ public class NavigationPanel extends JPanel
 	NavButton albumsButton, playlistButton, settingsButton
 	
 	MainWindow mainWindow
-	CenterPanel centerPanel 
+	WindowCenterPanel centerPanel 
 	
 	JPanel themedBgPanel
 	JPanel subNavPanel
@@ -72,7 +72,7 @@ public class NavigationPanel extends JPanel
 	 * @param panel reference to the center panel
 	 * @param window the main window 
 	 */
-	public NavigationPanel(CenterPanel panel, MainWindow window)
+	public NavigationPanel(WindowCenterPanel panel, MainWindow window)
 	{
 		this.centerPanel = panel
 		this.mainWindow = window

@@ -41,9 +41,9 @@ import com.koolaborate.mvc.view.albuminfo.AlbumInfoFrame
 import com.koolaborate.mvc.view.artistinfo.ArtistInfoFrame
 import com.koolaborate.mvc.view.dialogs.DeleteDialog
 import com.koolaborate.mvc.view.editid3tag.EditId3TagFrame
-import com.koolaborate.mvc.view.mainwindow.CenterPanel
 import com.koolaborate.mvc.view.mainwindow.MainWindow
 import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
 import com.koolaborate.mvc.view.navigation.SubNavButton
 import com.koolaborate.mvc.view.playlistview.CoverPanel
 import com.koolaborate.mvc.view.playlistview.PlaylistPanel
@@ -78,7 +78,7 @@ public class AlbumPreviewPanel extends JPanel{
 
 	BufferedImage preview
 	JLabel previewImgLabel, titleLabel, artistLabel
-	CenterPanel centerPanel
+	WindowCenterPanel centerPanel
 	CurrentSongInfo songInfo
 	MainWindow mainWindow
 
@@ -93,7 +93,7 @@ public class AlbumPreviewPanel extends JPanel{
 	/**
 	 * Constructor.
 	 */
-	public AlbumPreviewPanel(CenterPanel panel, CurrentSongInfo info){
+	public AlbumPreviewPanel(WindowCenterPanel panel, CurrentSongInfo info){
 		this.songInfo = info
 		this.centerPanel = panel
 		this.mainWindow = panel.mainWindow
@@ -236,11 +236,11 @@ public class AlbumPreviewPanel extends JPanel{
 						CurrentSongInfo info = new CurrentSongInfo()
 
 						// then clear the playlist and update the view
-						mainWindow.setCurrentSongInfo(info)
+						mainWindow.songInfo = info
 						centerPanel.updateCover(mainWindow.getSongInfo())
 						centerPanel.getCoverPanel().refreshCover()
 						mainWindow.updateArtist(info)
-						mainWindow.setCurrentFolder(null)
+						mainWindow.currentFolder = null
 					}
 				}
 			}

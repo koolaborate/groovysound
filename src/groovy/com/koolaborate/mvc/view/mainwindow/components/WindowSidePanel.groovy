@@ -1,4 +1,4 @@
-package com.koolaborate.mvc.view.mainwindow;
+package com.koolaborate.mvc.view.mainwindow.components;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -33,7 +33,7 @@ import javax.swing.border.Border;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Sidepanel extends JPanel
+public class WindowSidePanel extends JPanel
 {
 	private static final long serialVersionUID = -3089113951383589257L;
 	boolean leftBorder = true;
@@ -41,7 +41,7 @@ public class Sidepanel extends JPanel
 	/**
 	 * Constructor.
 	 */
-	public Sidepanel()
+	public WindowSidePanel()
 	{
 		setOpaque(true);
 		setPreferredSize(new Dimension(10, Integer.MAX_VALUE));

@@ -1,4 +1,4 @@
-package com.koolaborate.model
+package com.koolaborate.config
 
 import java.awt.Point
 import java.io.File

@@ -2,6 +2,7 @@ package com.koolaborate.mvc.view.mainwindow
 
 import java.awt.AWTEvent
 import java.awt.BorderLayout
+import java.awt.Color;
 import java.awt.Cursor
 import java.awt.Dimension
 import java.awt.EventQueue
@@ -59,6 +60,9 @@ import com.koolaborate.model.Settings
 import com.koolaborate.mvc.controller.PlaybackController
 import com.koolaborate.mvc.view.decorations.Decorator
 import com.koolaborate.mvc.view.dialogs.VistaDialog
+import com.koolaborate.mvc.view.mainwindow.components.WindowGhostDragGlassPane;
+import com.koolaborate.mvc.view.mainwindow.components.WindowRoundedBorder;
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
 import com.koolaborate.mvc.view.playlistview.CoverAndInfoPanel
 import com.koolaborate.mvc.view.playlistview.PlaylistPanel
 import com.koolaborate.mvc.view.themes.Theme
@@ -107,7 +111,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 
 	// GUI elements
 	JPanel mainPanel, header
-	CenterPanel centerPanel 
+	WindowCenterPanel centerPanel 
 	JButton maximize
 
 	// the tiny view
@@ -124,14 +128,10 @@ class MainWindow extends JFrame implements DropTargetListener{
 		ALBUMS, PLAYLIST, SETTINGS
 	}
 	
-	// get rid of these groovy getters
-	@Override
-	java.awt.Component getGlassPane(){return null}
-
 	NAVIGATION currentNavigation = NAVIGATION.ALBUMS
 
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	GhostDragGlassPane glassPane 
+	WindowGhostDragGlassPane ghostDragGlassPane 
 	File imgFile
 	BufferedImage image
 	int maxWidth = 80 // maximum width for the ghost image
@@ -155,17 +155,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	/** the log4j logger */
 	static Logger log = Logger.getLogger(MainWindow.class.getName())
 
-	/**
-	 * Construcor.
-	 * 
-	 * @param s
-	 *            the settings object
-	 */
-	public MainWindow(Settings s){
-		init(s)
-	}
-	
-	protected void init(Settings s){
+	def void initializeGui(Settings s){
 		// load the settings
 		this.settings = s
 
@@ -207,8 +197,8 @@ class MainWindow extends JFrame implements DropTargetListener{
 		// define a drop target for the entire frame
 		DropTarget dt = new DropTarget(this, this)
 		this.setDropTarget(dt)
-		glassPane = new GhostDragGlassPane()
-		this.setGlassPane(glassPane)
+		ghostDragGlassPane = new WindowGhostDragGlassPane()
+		this.setGhostDragGlassPane(ghostDragGlassPane)
 
 		// add the F1 key listerner to show help
 		initHelp()
@@ -285,13 +275,13 @@ class MainWindow extends JFrame implements DropTargetListener{
 	private void initGUI(){
 		mainPanel = new JPanel(new BorderLayout(), true)
 		mainPanel.setOpaque(false)
-		if(roundWindowSupported) mainPanel.setBorder(new RoundedBorder(20))
+		if(roundWindowSupported) mainPanel.setBorder(new WindowRoundedBorder(color: Color.BLACK, radius: 20)) 
 
 		// header panel
 		mainPanel.add(createHeaderPanel(), BorderLayout.NORTH)
 
 		// center panel
-		centerPanel = new CenterPanel()
+		centerPanel = new WindowCenterPanel()
 		centerPanel.initializeMainWindow(this)
 		mainPanel.add(centerPanel, BorderLayout.CENTER)
 
@@ -353,15 +343,15 @@ class MainWindow extends JFrame implements DropTargetListener{
 			}
 		] as ActionListener
 		
-		tinyButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		tinyButton.addActionListener([
+			actionPerformed: {
 				setVisible(false)
 				tinyWindow = new TinyView(getThisInstance(),
 						database.getAlbumById(songInfo.getAlbumId()),
-						songInfo.getSongID())
+						songInfo.songId)
 				tinyWindowShown = true
 			}
-		})
+		] as ActionListener)
 		tinyButton.setPreferredSize(new Dimension(25, 17))
 		decoration.add(tinyButton)
 
@@ -392,11 +382,11 @@ class MainWindow extends JFrame implements DropTargetListener{
 		close.setBorder(null)
 		close.setFocusPainted(false)
 		close.setContentAreaFilled(false)
-		close.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		close.addActionListener([
+			actionPerformed: {
 				exit()
 			}
-		})
+		] as ActionListener)
 		close.setPreferredSize(new Dimension(43, 17))
 		decoration.add(close)
 
@@ -464,6 +454,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 		return header
 	}
 
+	@Override
 	def ActionListener getMinimizeActionListener(){
 		ActionListener minimizeActionListener = [
 			setExtendedState(ICONIFIED)
@@ -499,7 +490,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 		if(roundCorners) {
 			roundWindowSupported = winShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20))
 			if(roundWindowSupported && mainPanel != null)
-				mainPanel.setBorder(new RoundedBorder(20))
+				mainPanel.setBorder(new WindowRoundedBorder(color: Color.BLACK, radius: 20)) 
 		} else {
 			winShaper.shapeWindow(this, new Rectangle2D.Double(0, 0,
 					getWidth(), getHeight()))
@@ -592,7 +583,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	 * @return the playlist panel where the playlist lies within
 	 */
 	public PlaylistPanel getPlaylist(){
-		return this.centerPanel.getPlaylist()
+		return this.centerPanel.playlistPanel
 	}
 
 	/**
@@ -618,7 +609,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 		centerPanel.getInfoPanel().updateSongInfo(songInfo)
 		// centerPanel.getTimeElapsedPanel().setTotalTimeLabelText(songInfo.getDuration());
 		centerPanel.getTimeElapsedPanel().setSongFileSize(
-				new File(songInfo.getSongFilePath()).length())
+				new File(songInfo.songPath).length())
 		repaintBackgroundPanel()
 
 		// also show a message at the tray icon
@@ -635,20 +626,8 @@ class MainWindow extends JFrame implements DropTargetListener{
 		})
 	}
 
-	public CurrentSongInfo getSongInfo(){
-		return this.songInfo
-	}
-
-	public void setCurrentSongInfo(CurrentSongInfo info){
-		this.songInfo = info
-	}
-
-	public CenterPanel getCenterPanel(){
-		return this.centerPanel
-	}
-
 	public PlaybackController getPlayerPanel(){
-		return this.centerPanel.getPlayerPanel()
+		return this.centerPanel.playerControls
 	}
 
 	/**
@@ -667,7 +646,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 				BufferedImage image = createImage(fileList)
 				if(image != null) {
 					Point p = MouseInfo.getPointerInfo().getLocation()
-					glassPane.showIt(image, p)
+					ghostDragGlassPane.showIt(image, p)
 				}
 			} catch(UnsupportedFlavorException e) {
 				log.debug(e.getMessage())
@@ -755,7 +734,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	 * Method is called when the dragged object leaves the application's frame.
 	 */
 	public void dragExit(DropTargetEvent dte){
-		glassPane.hideIt()
+		ghostDragGlassPane.hideIt()
 		image = null
 	}
 
@@ -767,7 +746,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 		if(!enableDnD) return
 
 		Point p = MouseInfo.getPointerInfo().getLocation()
-		glassPane.moveIt(p)
+		ghostDragGlassPane.moveIt(p)
 	}
 
 	/**
@@ -798,7 +777,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 		} else {
 			dtde.rejectDrop()
 		}
-		glassPane.hideIt()
+		ghostDragGlassPane.hideIt()
 		image = null
 	}
 
@@ -840,8 +819,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 				File oldCover = new File(destination)
 				// just for now: rename the old jpg
 				if(oldCover.exists())
-					oldCover.renameTo(new File(destFolder + File.separator
-							+ "folder_old.jpg"))
+					oldCover.renameTo(new File(destFolder + File.separator + "folder_old.jpg"))
 
 				ImageIO.write(newCover, "jpg", new File(destination))
 
@@ -870,14 +848,6 @@ class MainWindow extends JFrame implements DropTargetListener{
 					LocaleMessage.getInstance().getString("error.27") + ":\n"
 							+ e.getMessage(), VistaDialog.ERROR_MESSAGE)
 		}
-	}
-
-	public void setCurrentFolder(String folderPath){
-		this.currentFolder = folderPath
-	}
-
-	public String getCurrentFolderPath(){
-		return currentFolder
 	}
 
 	public NAVIGATION getCurrentNavigation(){
@@ -955,18 +925,6 @@ class MainWindow extends JFrame implements DropTargetListener{
 		if(!tinyWindowShown) return
 		tinyWindow.updateView(songInfo.songId)
 
-	}
-
-	public void setTinyWindowShown(boolean tinyWindowShown){
-		this.tinyWindowShown = tinyWindowShown
-	}
-
-
-	/**
-	 * @return the helper class for window shaping
-	 */
-	public WindowShaper getWindowShaper(){
-		return winShaper
 	}
 
 	/**

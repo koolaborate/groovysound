@@ -1,4 +1,4 @@
-package mp3;
+package com.koolaborate.config
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

@@ -43,9 +43,9 @@ import org.jdesktop.swingx.graphics.ReflectionRenderer
 import com.koolaborate.model.Album
 import com.koolaborate.mvc.view.common.VariableLineBorder
 import com.koolaborate.mvc.view.dialogs.VistaDialog
-import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane
 import com.koolaborate.mvc.view.mainwindow.MainWindow
 import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.mvc.view.mainwindow.components.WindowGhostDragGlassPane;
 import com.koolaborate.util.GraphicsUtilities
 import com.koolaborate.util.GraphicsUtilities2
 import com.koolaborate.util.ImageHelper
@@ -94,7 +94,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	BufferedImage coverPreviewImage, coverImageBig
 
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	GhostDragGlassPane glassPane
+	WindowGhostDragGlassPane glassPane
 	File imgFile
 	BufferedImage image
 	int maxWidth = 80 // maximum width for the ghost image
@@ -139,7 +139,7 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 		// define a drop target for the entire frame
 		DropTarget dt = new DropTarget(this, this)
 		this.setDropTarget(dt)
-		glassPane = new GhostDragGlassPane()
+		glassPane = new WindowGhostDragGlassPane()
 		this.setGlassPane(glassPane)
 
 		setLayout(new BorderLayout())
@@ -472,8 +472,8 @@ public class AlbumInfoFrame extends JFrame implements DropTargetListener{
 				}
 
 				// refresh the playlist view if it is the selected album
-				if(mainWindow.getCurrentFolderPath() != null && mainWindow.getCurrentFolderPath().equals(album.getFolderPath())) {
-					mainWindow.getCenterPanel().updateCoverInCase(mainWindow.getSongInfo(), true)
+				if(mainWindow.currentFolder != null && mainWindow.currentFolder.equals(album.getFolderPath())) {
+					mainWindow.getCenterPanel().updateCoverInCase(mainWindow.songInfo, true)
 				}
 
 				changesMade = false

@@ -49,8 +49,8 @@ import org.jdesktop.swingx.JXBusyLabel
 
 import com.koolaborate.model.Artist
 import com.koolaborate.mvc.view.dialogs.VistaDialog
-import com.koolaborate.mvc.view.mainwindow.GhostDragGlassPane
 import com.koolaborate.mvc.view.mainwindow.MainWindow
+import com.koolaborate.mvc.view.mainwindow.components.WindowGhostDragGlassPane;
 import com.koolaborate.util.GraphicsUtilities
 import com.koolaborate.util.GraphicsUtilities2
 import com.koolaborate.util.HtmlParser
@@ -101,7 +101,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener{
 	BufferedImage bigImage
 	
 	/** use the glass pane for the preview thumbnail of a new cover image */
-	GhostDragGlassPane glassPane
+	WindowGhostDragGlassPane glassPane
 	File imgFile
 	BufferedImage image
 	int maxWidth = 80  // maximum width for the ghost image
@@ -139,7 +139,7 @@ public class ArtistInfoFrame extends JFrame implements DropTargetListener{
 		// define a drop target for the entire frame
 		DropTarget dt = new DropTarget(this, this)
 		this.setDropTarget(dt)
-		glassPane = new GhostDragGlassPane()
+		glassPane = new WindowGhostDragGlassPane()
 		this.setGlassPane(glassPane)
 		
 		setLayout(new GridBagLayout())

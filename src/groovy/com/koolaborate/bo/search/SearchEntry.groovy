@@ -28,9 +28,9 @@ import com.koolaborate.model.CurrentSongInfo
 import com.koolaborate.mvc.view.albuminfo.AlbumInfoFrame
 import com.koolaborate.mvc.view.artistinfo.ArtistInfoFrame
 import com.koolaborate.mvc.view.editid3tag.EditId3TagFrame
-import com.koolaborate.mvc.view.mainwindow.CenterPanel
 import com.koolaborate.mvc.view.mainwindow.MainWindow
 import com.koolaborate.mvc.view.mainwindow.MainWindow.NAVIGATION
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
 import com.koolaborate.mvc.view.navigation.SubNavButton
 import com.koolaborate.mvc.view.playlistview.CoverPanel
 import com.koolaborate.mvc.view.playlistview.Playlist
@@ -98,7 +98,7 @@ public class SearchEntry extends JPanel{
 				searchFrame.dispose()
 				
 				final String artistName = searchResult.getArtist()
-				CenterPanel centerPanel = mainWindow.getCenterPanel()
+				WindowCenterPanel centerPanel = mainWindow.getCenterPanel()
 				centerPanel.setCurrentView(NAVIGATION.PLAYLIST, true)
 				PlaylistPanel playlist = centerPanel.playlistPanel
 				playlist.setAlbumFolder(new File(searchResult.albumPath))
