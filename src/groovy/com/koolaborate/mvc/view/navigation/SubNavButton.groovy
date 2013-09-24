@@ -32,7 +32,7 @@ import javax.swing.border.EmptyBorder
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SubNavButton extends JComponent
+class SubNavButton extends JComponent
 {
 	private static final long serialVersionUID = 2476824458682313176L
 	BufferedImage ico 
@@ -40,7 +40,7 @@ public class SubNavButton extends JComponent
 	boolean mouseOver = false
 	
 	// the mouse listener that performs an action when the button is clicked
-	private MouseAdapter listener
+	MouseAdapter listener
 	
 	/**
 	 * Constructor.

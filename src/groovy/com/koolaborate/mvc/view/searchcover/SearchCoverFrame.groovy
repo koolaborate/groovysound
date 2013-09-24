@@ -82,11 +82,11 @@ public class SearchCoverFrame extends JDialog{
 	String artist, album
 	JTextField pathText
 	
-	/**
+	/** 
 	 * Constructor.
 	 * 
 	 * @param window reference to the main window
-	 * @param artist the name of the artist
+	 * @param artist the name of the artist  
 	 * @param album the title of the album
 	 */
 	public SearchCoverFrame(MainWindow window, String artist, String album){

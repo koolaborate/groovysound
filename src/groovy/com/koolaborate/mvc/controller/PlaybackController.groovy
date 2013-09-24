@@ -21,14 +21,13 @@ import javazoom.jlgui.basicplayer.BasicPlayer
 import javazoom.jlgui.basicplayer.BasicPlayerEvent
 import javazoom.jlgui.basicplayer.BasicPlayerException
 import javazoom.jlgui.basicplayer.BasicPlayerListener
-import mp3.CoverHelper
 
 import org.apache.commons.lang3.StringUtils
 import org.apache.log4j.Logger
 
 import com.koolaborate.model.Album
 import com.koolaborate.model.CurrentSongInfo
-import com.koolaborate.model.Settings
+import com.koolaborate.config.Settings
 import com.koolaborate.mvc.view.decorations.Decorator
 import com.koolaborate.mvc.view.dialogs.VistaDialog
 import com.koolaborate.mvc.view.mainwindow.MainWindow
@@ -67,7 +66,7 @@ import com.koolaborate.util.LocaleMessage
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
 // public class PlaybackController extends JPanel implements BasicPlayerListener
-public class PlaybackController implements BasicPlayerListener{
+class PlaybackController implements BasicPlayerListener{
 	/** the log4j logger */
 	static Logger log = Logger.getLogger(PlaybackController.class.getName())
 

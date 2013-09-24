@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  ***********************************************************************************/
 public class LocaleMessage 
 {
-	private LocaleMessage(){}
+	public LocaleMessage(){}
 	private static LocaleMessage messageInstance
 	
 	public static synchronized LocaleMessage getInstance(){

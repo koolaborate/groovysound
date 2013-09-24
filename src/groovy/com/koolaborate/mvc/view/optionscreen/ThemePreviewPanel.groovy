@@ -36,7 +36,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ThemePreviewPanel extends JPanel{
+class ThemePreviewPanel extends JPanel{
 	private static final long serialVersionUID = -3091117485725551187L
 	JLabel imageLabel
 	

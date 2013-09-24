@@ -30,7 +30,7 @@ import javax.swing.JComponent;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class NavButton extends JComponent
+class NavButton extends JComponent
 {
 	private static final long serialVersionUID = -3709284104725338580L;
 	BufferedImage activeImg;

@@ -56,30 +56,30 @@ import org.apache.log4j.Logger
 
 import com.koolaborate.model.Album
 import com.koolaborate.model.CurrentSongInfo
-import com.koolaborate.model.Settings
+import com.koolaborate.config.Settings
 import com.koolaborate.mvc.controller.PlaybackController
 import com.koolaborate.mvc.view.decorations.Decorator
 import com.koolaborate.mvc.view.dialogs.VistaDialog
 import com.koolaborate.mvc.view.mainwindow.components.WindowGhostDragGlassPane;
 import com.koolaborate.mvc.view.mainwindow.components.WindowRoundedBorder;
-import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel;
+import com.koolaborate.mvc.view.mainwindow.components.WindowCenterPanel; 
 import com.koolaborate.mvc.view.playlistview.CoverAndInfoPanel
 import com.koolaborate.mvc.view.playlistview.PlaylistPanel
 import com.koolaborate.mvc.view.themes.Theme
 import com.koolaborate.mvc.view.themes.ThemeHelper
 import com.koolaborate.mvc.view.tinyview.TinyView
 import com.koolaborate.mvc.view.trayicon.TrayIconHandler
-import com.koolaborate.service.db.Database
+import com.koolaborate.service.db.Database 
 import com.koolaborate.util.GraphicsUtilities
 import com.koolaborate.util.GraphicsUtilities2
 import com.koolaborate.util.ImageHelper
 import com.koolaborate.util.LocaleMessage
 import com.koolaborate.util.WindowShaper
 
-import ui.VistaHelp
+import ui.VistaHelp 
 
 /***********************************************************************************
- * MainWindow *
+ * MainWindow * 
  *********************************************************************************** 
  * The main window of the application. *
  *********************************************************************************** 
@@ -91,7 +91,7 @@ import ui.VistaHelp
  *          This file is part of VibrantPlayer. * * VibrantPlayer is free
  *          software: you can redistribute it and/or modify * it under the terms
  *          of the Lesser GNU General Public License as published by * the Free
- *          Software Foundation, either version 3 of the License, or * (at your
+ *          Software Foundation, either version 3 of the License, or * (at your 
  *          option) any later version. * * VibrantPlayer is distributed in the
  *          hope that it will be useful, * but WITHOUT ANY WARRANTY; without
  *          even the implied warranty of * MERCHANTABILITY or FITNESS FOR A
@@ -109,7 +109,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	static BufferedImage maximizeOverImg, maximize2Img, maximize2OverImg, tinyImg
 	static BufferedImage tinyOverImg
 
-	// GUI elements
+	// GUI elements 
 	JPanel mainPanel, header
 	WindowCenterPanel centerPanel 
 	JButton maximize
@@ -145,7 +145,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	Decorator decorator
 
 	// for the rounded window shape
-	WindowShaper winShaper = null
+	WindowShaper windowShaper = null
 	boolean roundWindowSupported = false
 	boolean enableWindowDrag = true
 
@@ -447,7 +447,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 		c.gridy = 1
 		header.add(helpPanel, c)
 
-		InnerListener innerListener = new InnerListener()
+		WindowsMouseMotionListenerAdapter innerListener = new WindowsMouseMotionListenerAdapter()
 		header.addMouseListener(innerListener)
 		header.addMouseMotionListener(innerListener)
 
@@ -458,7 +458,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	def ActionListener getMinimizeActionListener(){
 		ActionListener minimizeActionListener = [
 			setExtendedState(ICONIFIED)
-		]
+		] as ActionListener
 		
 		return minimizeActionListener
 	}
@@ -485,15 +485,14 @@ class MainWindow extends JFrame implements DropTargetListener{
 	 */
 	private void setWindowShape(boolean roundCorners){
 		// make sure the window shaper helper class is initialized
-		if(winShaper == null) winShaper = new WindowShaper()
+		if(windowShaper == null) windowShaper = new WindowShaper()
 
 		if(roundCorners) {
-			roundWindowSupported = winShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20))
+			roundWindowSupported = windowShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20))
 			if(roundWindowSupported && mainPanel != null)
 				mainPanel.setBorder(new WindowRoundedBorder(color: Color.BLACK, radius: 20)) 
 		} else {
-			winShaper.shapeWindow(this, new Rectangle2D.Double(0, 0,
-					getWidth(), getHeight()))
+			windowShaper.shapeWindow(this, new Rectangle2D.Double(0, 0, getWidth(), getHeight()))
 		}
 	}
 
@@ -518,65 +517,6 @@ class MainWindow extends JFrame implements DropTargetListener{
 		dispose()
 		database.shutDownConnection()
 		System.exit(0)
-	}
-
-	/**
-	 * A class to enable moving the window since the window decorations have
-	 * been removed.
-	 */
-	protected class InnerListener extends MouseAdapter implements MouseMotionListener{
-		private Point startDrag
-		JFrame jFrame
-		
-		InnerListener(JFrame jFrame){
-			this.jFrame = jFrame
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent e){
-			if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1
-					&& e.getComponent() == header) {
-				if(jFrame.getExtendedState() == MAXIMIZED_BOTH)
-					deMaximize()
-				else maximize()
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e){
-			if(e.getButton() == MouseEvent.BUTTON1)
-				startDrag = e.getPoint()
-			else startDrag = null
-		}
-
-		public void mouseDragged(MouseEvent e){
-			if(startDrag != null) {
-				if(e.getComponent() == header) {
-					jFrame.setLocation(e.getX() + jFrame.getLocation().x - startDrag.x,
-							e.getY() + jFrame.getLocation().y - startDrag.y)
-				} else {
-					int width = jFrame.getWidth() + e.getX() - startDrag.x
-					int height = jFrame.getHeight() + e.getY() - startDrag.y
-					if(width < jFrame.getMinimumSize().width)
-						width = jFrame.getMinimumSize().width
-					if(height < jFrame.getMinimumSize().height)
-						height = jFrame.getMinimumSize().height
-					jFrame.setSize(width, height)
-					jFrame.setVisible(true)
-				}
-			}
-		}
-
-		public void mouseMoved(MouseEvent e){
-			if(enableWindowDrag && e.getComponent() == header) {
-				header.setCursor(new Cursor(Cursor.MOVE_CURSOR))
-			}
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e){
-			header.setCursor(new Cursor(Cursor.DEFAULT_CURSOR))
-		}
 	}
 
 	/**
@@ -943,3 +883,62 @@ class MainWindow extends JFrame implements DropTargetListener{
 		tray.setIconToolTip(artist + " - " + title)
 	}
 }
+
+
+class WindowsMouseMotionListenerAdapter extends MouseAdapter implements MouseMotionListener{
+		private Point startDrag
+		JFrame jFrame 
+		JPanel header
+		MainWindow mainWindow
+		
+		WindowsMouseMotionListenerAdapter(JFrame jFrame){
+			this.jFrame = jFrame
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent e){
+			if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1
+					&& e.getComponent() == header) {
+				if(jFrame.getExtendedState() == mainWindow.MAXIMIZED_BOTH)
+					mainWindow.deMaximize()
+				else mainWindow.maximize()
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e){
+			if(e.getButton() == MouseEvent.BUTTON1)
+				startDrag = e.getPoint()
+			else startDrag = null
+		}
+
+		public void mouseDragged(MouseEvent e){
+			if(startDrag != null) {
+				if(e.getComponent() == header) {
+					jFrame.setLocation(e.getX() + jFrame.getLocation().x - startDrag.x,
+							e.getY() + jFrame.getLocation().y - startDrag.y)
+				} else {
+					int width = jFrame.getWidth() + e.getX() - startDrag.x
+					int height = jFrame.getHeight() + e.getY() - startDrag.y
+					if(width < jFrame.getMinimumSize().width)
+						width = jFrame.getMinimumSize().width
+					if(height < jFrame.getMinimumSize().height)
+						height = jFrame.getMinimumSize().height
+					jFrame.setSize(width, height)
+					jFrame.setVisible(true)
+				}
+			}
+		}
+
+		public void mouseMoved(MouseEvent e){
+			if(mainWindow.enableWindowDrag && e.getComponent() == header) {
+				header.setCursor(new Cursor(Cursor.MOVE_CURSOR))
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e){
+			header.setCursor(new Cursor(Cursor.DEFAULT_CURSOR))
+		}
+		
+	}

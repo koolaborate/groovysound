@@ -38,7 +38,7 @@ import com.koolaborate.util.StringUtils;
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class AlbumsOverviewPanel extends JPanel{
+class AlbumsOverviewPanel extends JPanel{
 	private static final long serialVersionUID = -806840065427231675L;
 	List<Album> albums;
 	int height;

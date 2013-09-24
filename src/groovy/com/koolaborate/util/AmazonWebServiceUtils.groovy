@@ -60,10 +60,10 @@ public class AmazonWebServiceUtils {
 	}
 
 	/**
-	 * Retrieves an image icon as an album cover for the given album.
+	 * Retrieves an image icon as an album cover for the given album. 
 	 * 
-	 * @param artist the artist of the album
-	 * @param album the name of the album
+	 * @param artist the artist of the album 
+	 * @param album the name of the album 
 	 * @return an ImageIcon containing the album cover image or <code>NULL</code>
 	 * @throws Exception in case no image could be retrieved or no connection could be established
 	 */

@@ -33,7 +33,7 @@ import javax.swing.border.Border;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class WindowSidePanel extends JPanel
+class WindowSidePanel extends JPanel
 {
 	private static final long serialVersionUID = -3089113951383589257L;
 	boolean leftBorder = true;

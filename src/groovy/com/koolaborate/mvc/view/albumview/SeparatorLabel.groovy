@@ -33,7 +33,7 @@ import javax.swing.JLabel;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SeparatorLabel extends JLabel
+class SeparatorLabel extends JLabel
 {
 	private static final long serialVersionUID = -360654062567845706L;
 	String letter;

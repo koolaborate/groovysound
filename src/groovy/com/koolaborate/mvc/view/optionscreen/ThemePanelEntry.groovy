@@ -39,7 +39,7 @@ import com.koolaborate.mvc.view.decorations.Decorator
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ThemePanelEntry extends JPanel
+class ThemePanelEntry extends JPanel
 {
 	private static final long serialVersionUID = -9111468339290769406L
 	String className

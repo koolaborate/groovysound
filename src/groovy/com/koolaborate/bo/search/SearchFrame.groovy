@@ -55,7 +55,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchFrame extends JFrame{
+class SearchFrame extends JFrame{
 	private static final long serialVersionUID = -6496420334431430661L
 	Database database
 	Color color1 = new Color(237, 242, 249)

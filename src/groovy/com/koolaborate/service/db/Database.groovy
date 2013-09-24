@@ -40,7 +40,7 @@ import com.koolaborate.mvc.view.albumview.AlbumsOverviewPanel.SORT_MODE
  * This class handles all activities that deal with the database. Whenever data    *
  * has to be inserted, deleted or retrieved, use this class.                       *
  ***********************************************************************************
- * (c) Impressive Artworx, 2k8                                                     * 
+ * (c) Impressive Artworx, 2k8                                                     *  
  * @author Manuel Kaess                                                            *
  * @version 1.0                                                                    *
  ***********************************************************************************

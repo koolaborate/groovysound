@@ -29,13 +29,11 @@ import javax.swing.JTextField
 import javax.swing.SwingUtilities
 import javax.swing.border.EmptyBorder
 
-import mp3.ExtendedMP3Info
-import mp3.MP3PropertyReader
-
 import org.apache.commons.lang3.StringUtils
 import org.farng.mp3.TagException
 import org.jdesktop.swingx.JXBusyLabel
 
+import com.koolaborate.config.MP3PropertyReader
 import com.koolaborate.model.Album
 import com.koolaborate.model.Song
 import com.koolaborate.mvc.view.dialogs.VistaDialog
@@ -66,7 +64,7 @@ import com.koolaborate.util.LocaleMessage
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class NewAlbumFrame extends JFrame{
+class NewAlbumFrame extends JFrame{
 	private static final long serialVersionUID = 3396798307868339914L
 	JButton okButt, cancelButt, searchButt
 	JTextField folderPath, albumTitle, albumArtist, albumYear

@@ -34,7 +34,7 @@ import javax.swing.SwingConstants
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class LinkLabel extends JLabel{
+class LinkLabel extends JLabel{
 	/** the action thread which is executed when being clicked */
 	Thread action
 	Color inactiveColor, activeColor

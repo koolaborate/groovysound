@@ -76,8 +76,7 @@ import java.util.List;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class VistaDialog extends JDialog implements ActionListener 
-{
+class VistaDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 6583717671869072058L;
 	/** constants for the various message types */
 	public final static int INFORMATION_MESSAGE  = 0;

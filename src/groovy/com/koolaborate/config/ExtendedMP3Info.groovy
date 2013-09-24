@@ -35,7 +35,7 @@ import org.farng.mp3.id3.ID3v1;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ExtendedMP3Info
+class ExtendedMP3Info
 {
 	/**
 	 * Test method to show some header fields of MP3 files.

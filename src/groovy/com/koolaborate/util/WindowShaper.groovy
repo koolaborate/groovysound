@@ -1,10 +1,10 @@
-package com.koolaborate.util;
+package com.koolaborate.util
 
-import java.awt.Shape;
-import java.awt.Window;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import org.apache.log4j.Logger;
+import java.awt.Shape
+import java.awt.Window
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
+import org.apache.log4j.Logger
 
 /***********************************************************************************
  * WindowShaper                                                                    *
@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  * (c) Impressive Artworx, 2k9                                                     * 
  * @author Manuel Kaess                                                            *
  * @version 1.2                                                                    *
- ***********************************************************************************
+ *********************************************************************************** 
  * This file is part of VibrantPlayer.                                             *
  *                                                                                 *
  *  VibrantPlayer is free software: you can redistribute it and/or modify          *
@@ -35,28 +35,24 @@ import org.apache.log4j.Logger;
  ***********************************************************************************/
 public class WindowShaper
 {
-	private static Logger log = Logger.getLogger(WindowShaper.class.getName());
+	private static Logger log = Logger.getLogger(WindowShaper.class.getName())
 	
-	Class<?> awtUtilities = null;
-	Method method = null;
+	Class<?> awtUtilities = null
+	Method method = null
 	
 	/**
 	 * Constructor.
 	 */
-	public WindowShaper()
-	{
+	public WindowShaper(){
 		// initialize methods for window shaping using reflection
-		try
-		{
-			awtUtilities = Class.forName("com.sun.awt.AWTUtilities");
+		try{
+			awtUtilities = Class.forName("com.sun.awt.AWTUtilities")
 			// in JDK7 the helper class methods got moved to java.awt.Window...
-			if(awtUtilities == null) awtUtilities = Class.forName("java.awt.Window");
-			method = awtUtilities.getMethod("setWindowShape", Window.class, Shape.class);
-		}
-		catch(Exception e)
-		{
+			if(awtUtilities == null) awtUtilities = Class.forName("java.awt.Window")
+			method = awtUtilities.getMethod("setWindowShape", Window.class, Shape.class)
+		} catch(Exception e){
 			log.debug("Round window support disabled. Please check JRE version: " + 
-					e.getMessage());
+					e.getMessage())
 		}
 	}
 	
@@ -71,27 +67,27 @@ public class WindowShaper
 	 */
 	public boolean shapeWindow(Window w, Shape s)
 	{
-		// set the window shape (if possible)
+		// set the window shape (if possible) 
 		if(method != null)
 		{
 			try
 			{
-				method.invoke(null, w, s);
-				return true;
+				method.invoke(null, w, s)
+				return true
 			}
 			catch(IllegalArgumentException e)
 			{
-				log.error(e.getMessage());
+				log.error(e.getMessage()) 
 			}
 			catch(IllegalAccessException e)
 			{
-				log.error(e.getMessage());
+				log.error(e.getMessage())
 			}
 			catch(InvocationTargetException e)
 			{
-				log.error(e.getMessage());
+				log.error(e.getMessage())
 			}
 		}
-		return false;
+		return false
 	}
 }

@@ -61,7 +61,7 @@ import com.koolaborate.mvc.view.themes.ThemeHelper
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class ThemesPanel extends JPanel{
+class ThemesPanel extends JPanel{
 	private static final long serialVersionUID = -6563398784358082301L
 
 	private static String themesFilePath = System.getProperty("user.dir") + File.separator + "themes.xml"

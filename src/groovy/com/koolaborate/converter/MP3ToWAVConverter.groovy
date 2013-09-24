@@ -43,7 +43,7 @@ import com.koolaborate.transaction.TransactionMessage;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class MP3ToWAVConverter implements Convertable{
+class MP3ToWAVConverter implements Convertable{
 	String language
 	File[] mp3s
 	File destinationFolder

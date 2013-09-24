@@ -49,7 +49,7 @@ import javax.imageio.ImageIO
 /**
  * GraphicsUtilities contains a set of tools to perform common graphics
  * operations easily. These operations are divided into several themes, listed
- * below.
+ * below. 
  * 
  * Compatible Images
  * 

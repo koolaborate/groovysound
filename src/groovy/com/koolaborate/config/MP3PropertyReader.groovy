@@ -42,7 +42,7 @@ import org.tritonus.share.sampled.file.TAudioFileFormat
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class MP3PropertyReader{
+class MP3PropertyReader{
 	public MP3PropertyReader() {
 		try {
 			LogManager.getLogManager().readConfiguration(new FileInputStream(new File(System.getProperty("user.dir") + File.separator + "log.properties")))

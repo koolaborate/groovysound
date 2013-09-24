@@ -34,7 +34,7 @@ import javax.swing.JComponent
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class NextButton extends JComponent{
+class NextButton extends JComponent{
 	private static final long serialVersionUID = 4484357219261875630L
 	BufferedImage activeImg
 	BufferedImage inActiveImg

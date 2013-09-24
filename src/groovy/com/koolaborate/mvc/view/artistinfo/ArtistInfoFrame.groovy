@@ -83,7 +83,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class ArtistInfoFrame extends JFrame implements DropTargetListener{
+class ArtistInfoFrame extends JFrame implements DropTargetListener{
 	private static final long serialVersionUID = 3351665800950796092L
 	String artistname
 	JScrollPane scroll

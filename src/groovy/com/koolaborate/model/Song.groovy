@@ -26,7 +26,7 @@ import com.koolaborate.service.db.Database;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Song
+class Song
 {
 	String title, artist, fileName, duration;
 	int id, albumId;

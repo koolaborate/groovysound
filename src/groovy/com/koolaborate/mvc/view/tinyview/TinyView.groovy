@@ -445,7 +445,7 @@ public class TinyView extends JWindow
 	 */
 	private void setWindowShape()
 	{
-		if(mainWindow.winShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, 
+		if(mainWindow.windowShaper.shapeWindow(this, new RoundRectangle2D.Double(0, 0, 
 				getWidth(), getHeight(), 10, 10)) && bg != null) 
 			bg.setBorder(new WindowRoundedBorder(color: Color.BLACK, radius: 10))
 	}

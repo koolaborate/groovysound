@@ -74,7 +74,7 @@ import com.koolaborate.util.LocaleMessage
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class AlbumInfoFrame extends JFrame implements DropTargetListener{
+class AlbumInfoFrame extends JFrame implements DropTargetListener{
 	private static final long serialVersionUID = -3655016129532421572L
 	
 	JPanel showPanel, editPanel

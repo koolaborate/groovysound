@@ -40,7 +40,7 @@ import com.koolaborate.mvc.view.dialogs.VistaDialog
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Settings {
+class Settings {
 	/** file path to the settings file */
 	public static String SETTINGS_PATH = System.getProperty("user.dir") +  File.separator + "settings.ini"
 	

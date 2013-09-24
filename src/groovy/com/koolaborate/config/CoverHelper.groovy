@@ -38,7 +38,7 @@ import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class CoverHelper
+class CoverHelper
 {
 	/**
 	 * Reads and saves the embedded cover image of a mp3 file. The cover is saved in case

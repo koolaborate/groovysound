@@ -73,7 +73,7 @@ import com.koolaborate.util.LocaleMessage
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class AlbumPreviewPanel extends JPanel{
+class AlbumPreviewPanel extends JPanel{
 	private static final long serialVersionUID = -1492349214353820515L
 
 	BufferedImage preview

@@ -54,7 +54,7 @@ import java.awt.event.ActionListener;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class DeleteDialog extends JDialog implements ActionListener 
+class DeleteDialog extends JDialog implements ActionListener 
 {
 	private static final long serialVersionUID = -6068666222344090944L;
 	public final static String YES_OPTION = "yes";
@@ -62,20 +62,20 @@ public class DeleteDialog extends JDialog implements ActionListener
 	public final static String NO_ACTION  = "dispose";
 	
 	/** the dialog instance */
-	private static DeleteDialog dialog;
+	static DeleteDialog dialog;
 	
 	/** the selected yes or no option of a confirmation dialog */
-	public boolean yesSelected = false;
+	boolean yesSelected = false;
 	
 	/** whether the files shall also be deleted from the hard disk */
-	public boolean delFilesSelected = false;
+	boolean delFilesSelected = false;
 	
 	/** a label that shows the appropriate icon image */
-	private JLabel iconLabel;
+	JLabel iconLabel;
 	/** a text area for the messages */
-	private JTextArea messages;
+	JTextArea messages;
 	/** a text area that shows the title description of the message(s) */
-	private JTextArea titleText;
+	JTextArea titleText;
 		
 	/** the different fonts */
 	private static Font titleTextFont   = new Font("Tahoma", Font.PLAIN, 16);
@@ -85,7 +85,7 @@ public class DeleteDialog extends JDialog implements ActionListener
 	private static Color background     = Color.WHITE;
 	private static Color titleTextColor = new Color(0, 90, 210);
 	
-	private Icon delIco = new ImageIcon(getClass().getResource("/images/trash.png"));
+	Icon delIco = new ImageIcon(getClass().getResource("/images/trash.png"));
 	
 	 /**
      * Constructor.

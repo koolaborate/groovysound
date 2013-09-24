@@ -57,7 +57,7 @@ import plug.engine.Pluggable
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class FindPluginBrowser extends JDialog
+class FindPluginBrowser extends JDialog
 {
 	private static final long serialVersionUID = 5480618581055245142L
 	private static String XML_FILE_PATH = "http://www.impressive-artworx.de/tools/vibrantplayer/plugins/pluginlist.xml"

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.koolaborate.service.db.Database;
 
 /***********************************************************************************
- * Album *
+ * Album * 
  *********************************************************************************** 
  * Class represents one album. *
  *********************************************************************************** 
@@ -27,7 +27,7 @@ import com.koolaborate.service.db.Database;
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class Album{
+class Album{
 	String title, artist, folderPath;
 	int id = -1, year;
 	BufferedImage preview;

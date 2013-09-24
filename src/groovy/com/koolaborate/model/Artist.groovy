@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Artist{
+class Artist{
 	String name, description;
 	BufferedImage pic;
 	int id;

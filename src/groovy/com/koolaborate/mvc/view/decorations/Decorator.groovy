@@ -43,7 +43,7 @@ import com.koolaborate.mvc.view.themes.DefaultTheme;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Decorator
+class Decorator
 {
 	private JPanel leftSidePanel, rightSidePanel, mainBackgroundPanel, 
 		navigationBackgroundPanel, headerPanel, bottomPanel, tinyViewBgPanel;

@@ -50,7 +50,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class NavigationPanel extends JPanel
+class NavigationPanel extends JPanel
 {
 	private static final long serialVersionUID = -152859065478817033L
 

@@ -53,7 +53,7 @@ import javax.imageio.ImageIO;
  * common graphics operations easily. These operations are divided into
  * several themes, listed below.</p>
  *
- * <h2>Compatible Images</h2>
+ * <h2>Compatible Images</h2> 
  *
  * <p>Compatible images can, and should, be used to increase drawing
  * performance. This class provides a number of methods to load compatible
@@ -83,7 +83,7 @@ import javax.imageio.ImageIO;
  */
 
 public class GraphicsUtilities2 {
-    private GraphicsUtilities2() {}
+    public GraphicsUtilities2() {}
 	private static GraphicsUtilities2 graphicsUtilities2Instance;
 	
 	public static synchronized GraphicsUtilities2 getInstance(){
@@ -101,7 +101,7 @@ public class GraphicsUtilities2 {
     }
 
     private static boolean isHeadless() {
-        return GraphicsEnvironment.isHeadless();
+        return GraphicsEnvironment.isHeadless(); 
     }
 
 

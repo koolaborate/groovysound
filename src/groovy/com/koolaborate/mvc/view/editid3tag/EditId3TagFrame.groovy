@@ -64,7 +64,7 @@ import com.koolaborate.util.LocaleMessage
  *          General Public License * along with VibrantPlayer. If not, see
  *          <http://www.gnu.org/licenses/>. *
  ***********************************************************************************/
-public class EditId3TagFrame extends JFrame{
+class EditId3TagFrame extends JFrame{
 	private static final long serialVersionUID = -6903485062891137484L
 
 	MainWindow window

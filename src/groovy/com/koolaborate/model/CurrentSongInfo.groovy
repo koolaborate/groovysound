@@ -40,7 +40,7 @@ import org.jaudiotagger.tag.Tag;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class CurrentSongInfo
+class CurrentSongInfo
 {
 	// TODO change this to groovy style after java / groovy conversion
 	String albumPath = "";

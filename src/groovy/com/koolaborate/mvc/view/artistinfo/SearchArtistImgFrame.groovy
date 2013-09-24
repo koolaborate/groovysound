@@ -67,7 +67,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchArtistImgFrame extends JDialog{
+class SearchArtistImgFrame extends JDialog{
 	private static final long serialVersionUID = -123343458456008535L
 	JButton cancelButt, searchButt
 	JPanel centerPanel, searchPanel1, searchPanel2, searchPanel3

@@ -64,7 +64,7 @@ import plug.engine.ui.swing.firefoxstyle.UpdateDialog
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class PluginAndThemeBrowser extends JDialog
+class PluginAndThemeBrowser extends JDialog
 {
 	private static final long serialVersionUID = 3020990619723531782L
 	final JTable table

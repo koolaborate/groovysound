@@ -28,7 +28,7 @@ import javax.swing.JLabel;
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class Separator extends JComponent implements Cloneable 
+class Separator extends JComponent implements Cloneable 
 {
 	private static final long serialVersionUID = -1799382510955618434L;
 	JLabel content;

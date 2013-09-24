@@ -62,7 +62,7 @@ import com.koolaborate.util.LocaleMessage
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-public class SearchEntry extends JPanel{
+class SearchEntry extends JPanel{
 	private static final long serialVersionUID = -3415668077276831303L
 	boolean mouseOver = false
 	Color border = new Color(216, 240, 250)
