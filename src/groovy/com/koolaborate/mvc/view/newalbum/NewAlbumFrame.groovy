@@ -33,6 +33,7 @@ import org.apache.commons.lang3.StringUtils
 import org.farng.mp3.TagException
 import org.jdesktop.swingx.JXBusyLabel
 
+import com.koolaborate.config.ExtendedMP3Info;
 import com.koolaborate.config.MP3PropertyReader
 import com.koolaborate.model.Album
 import com.koolaborate.model.Song
@@ -104,11 +105,8 @@ class NewAlbumFrame extends JFrame{
 
 		setLayout(new BorderLayout())
 
-		JPanel bgPanel = new JPanel(){
-			private static final long serialVersionUID = 8524251742666962990L
-
-			@Override
-			protected void paintComponent(Graphics g){
+		JPanel bgPanel = [
+			paintComponent: { g ->
 				Color color1 = new Color(237, 242, 249)
 				Color color2 = new Color(255, 255, 255)
 				Graphics2D g2d = (Graphics2D) g
@@ -122,7 +120,8 @@ class NewAlbumFrame extends JFrame{
 				g2d.setPaint(gp)
 				g2d.fillRect(0, 0, w, h)
 			}
-		}
+		] as JPanel
+	
 		bgPanel.setLayout(new BorderLayout())
 
 		// header panel
@@ -490,10 +489,10 @@ class NewAlbumFrame extends JFrame{
 		a.setPreview(preview)
 
 		int albumId = a.saveIntoDB(mainWindow.getDatabase())
-		for(Song s: songs) {
-			s.setAlbumId(albumId)
-			s.saveIntoDB(mainWindow.getDatabase())
-		} 
+		songs.each { song ->
+			song.setAlbumId(albumId)
+			song.saveIntoDB(mainWindow.getDatabase())
+		}
 
 		return true
 	}

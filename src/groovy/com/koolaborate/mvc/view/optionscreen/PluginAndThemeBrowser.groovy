@@ -355,26 +355,22 @@ class PluginAndThemeBrowser extends JDialog
 		Dimension buttonSize = new Dimension(80, 50)
 		b1 = new ToggleButton(LocaleMessage.getInstance().getString("options.plugin"), i1)
 		b1.setPreferredSize(buttonSize)
-		b1.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
+		b1.addMouseListener([
+			mouseClicked: { e ->
 				ToggleButton src = (ToggleButton) e.getSource()
 				setSelectedToggleButton(src)
 			}
-		})
+		] as MouseAdapter)
 		panel.add(b1)
 		
 		b2 = new ToggleButton(LocaleMessage.getInstance().getString("options.themes"), i2)
 		b2.setPreferredSize(buttonSize)
-		b2.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
+		b2.addMouseListener([
+			mouseClicked: { e ->
 				ToggleButton src = (ToggleButton) e.getSource()
 				setSelectedToggleButton(src)
 			}
-		})
+		] as MouseAdapter)
 		panel.add(b2)
 		
 		return panel

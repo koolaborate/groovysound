@@ -104,21 +104,20 @@ class EditId3TagFrame extends JFrame{
 
 		if(songFileNames.size() > 1) multipleSongs = true
 
-		setIconImage(new ImageIcon(getClass().getResource("/images/tag.png"))
-				.getImage())
+		setIconImage(new ImageIcon(getClass().getResource("/images/tag.png")).getImage())
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE)
 		setTitle(LocaleMessage.getInstance().getString("id3.edit_tags"))
 
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
+		SwingUtilities.invokeLater([
+			run: {
 				initGUI()
 				setSize(500, 320)
 				setLocationRelativeTo(null)
 				setVisible(true)
 				loadSongInfos()
 			}
-		})
+		] as Runnable)
 	}
 
 	/**
@@ -182,12 +181,13 @@ class EditId3TagFrame extends JFrame{
 		gbcCheckbox.gridx = 1
 		gbcCheckbox.gridy = 0
 		bgPanel.add(cTitle, gbcCheckbox)
-		cTitle.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		cTitle.addChangeListener([
+			stateChanged: { changeEvent ->
+				ChangeEvent e = changeEvent
 				JCheckBox s = (JCheckBox) e.getSource()
 				setComponentEnabled(titleText, s.isSelected())
 			}
-		})
+		] as ChangeListener)
 
 		titleText = new JTextField()
 		gbcTextField.gridx = 2
@@ -204,12 +204,13 @@ class EditId3TagFrame extends JFrame{
 		cArtist.setOpaque(false)
 		gbcCheckbox.gridy = 1
 		bgPanel.add(cArtist, gbcCheckbox)
-		cArtist.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		cArtist.addChangeListener([
+			stateChanged: { changeEvent ->
+				ChangeEvent e = changeEvent
 				JCheckBox s = (JCheckBox) e.getSource()
 				setComponentEnabled(artistText, s.isSelected())
 			}
-		})
+		] as ChangeListener)
 
 		artistText = new JTextField()
 		gbcTextField.gridy = 1
@@ -225,12 +226,13 @@ class EditId3TagFrame extends JFrame{
 		cAlbum.setOpaque(false)
 		gbcCheckbox.gridy = 2
 		bgPanel.add(cAlbum, gbcCheckbox)
-		cAlbum.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		cAlbum.addChangeListener([
+			stateChanged: { changeEvent ->
+				ChangeEvent e = changeEvent
 				JCheckBox s = (JCheckBox) e.getSource()
 				setComponentEnabled(albumText, s.isSelected())
 			}
-		})
+		] as ChangeListener)
 
 		albumText = new JTextField()
 		gbcTextField.gridy = 2
@@ -246,12 +248,13 @@ class EditId3TagFrame extends JFrame{
 		cTrackno.setOpaque(false)
 		gbcCheckbox.gridy = 3
 		bgPanel.add(cTrackno, gbcCheckbox)
-		cTrackno.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		cTrackno.addChangeListener([
+			stateChanged: { changeEvent ->
+				ChangeEvent e = changeEvent
 				JCheckBox s = (JCheckBox) e.getSource()
 				setComponentEnabled(tracknoText, s.isSelected())
 			}
-		})
+		] as ChangeListener)
 
 		tracknoText = new JTextField()
 		gbcTextField.gridy = 3
@@ -266,12 +269,13 @@ class EditId3TagFrame extends JFrame{
 		cYear.setOpaque(false)
 		gbcCheckbox.gridy = 4
 		bgPanel.add(cYear, gbcCheckbox)
-		cYear.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		cYear.addChangeListener([
+			stateChanged: { changeEvent ->
+				ChangeEvent e = changeEvent
 				JCheckBox s = (JCheckBox) e.getSource()
 				setComponentEnabled(yearText, s.isSelected())
 			}
-		})
+		] as ChangeListener)
 
 		yearText = new JTextField()
 		gbcTextField.gridy = 4
@@ -287,12 +291,13 @@ class EditId3TagFrame extends JFrame{
 		cGenre.setOpaque(false)
 		gbcCheckbox.gridy = 5
 		bgPanel.add(cGenre, gbcCheckbox)
-		cGenre.addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e){
+		cGenre.addChangeListener([
+			stateChanged: { changeEvent ->
+				ChangeEvent e = changeEvent
 				JCheckBox s = (JCheckBox) e.getSource()
 				setComponentEnabled(genreText, s.isSelected())
 			}
-		})
+		] as ChangeListener)
 
 		genreText = new JTextField()
 		gbcTextField.gridy = 5
@@ -334,20 +339,20 @@ class EditId3TagFrame extends JFrame{
 		JButton saveButt = new JButton(
 				UIManager.getString("FileChooser.saveButtonText"))
 		saveButt.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"))
-		saveButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+		saveButt.addActionListener([
+			actionPerformed: {
 				saveChanges()
 				dispose()
 			}
-		})
+		] as ActionListener)
 
 		JButton closeButt = new JButton(LocaleMessage.getInstance().getString("common.abort"))
 		closeButt.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"))
-		closeButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+		closeButt.addActionListener([
+			actionPerformed: {
 				dispose()
 			}
-		})
+		] as ActionListener)
 
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT))
 		p.add(saveButt)

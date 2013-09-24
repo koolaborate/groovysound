@@ -134,13 +134,13 @@ class MP3ToWAVConverter implements Convertable{
 	def File[] getMp3sList(File srcFolder){
 		def mp3s
 		
-		mp3s = srcFolder.listFiles(new FileFilter(){
-			public boolean accept(File pathname)
-			{
+		mp3s = srcFolder.listFiles([
+			accept: { p ->
+				File pathname = p
 				if(pathname.getName().toLowerCase().endsWith(".mp3")) return true
 				else return false
 			}
-		})
+		] as FileFilter)
 		
 		return mp3s
 	}
@@ -205,13 +205,13 @@ class MP3ToWAVConverter implements Convertable{
 		}
 		
 		// get all the mp3 files from the source folder
-		mp3s = srcFolder.listFiles(new FileFilter(){
-			public boolean accept(File pathname)
-			{
+		mp3s = srcFolder.listFiles([
+			accept: { p ->
+				File pathname = p
 				if(pathname.getName().toLowerCase().endsWith(".mp3")) return true
 				else return false
 			}
-		})
+		] as FileFilter)
 		amountFiles = mp3s.length
 		dialog = new JDialog()
 		dialog.setLayout(new BorderLayout())

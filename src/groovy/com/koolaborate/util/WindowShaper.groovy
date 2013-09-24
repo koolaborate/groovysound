@@ -30,7 +30,7 @@ import org.apache.log4j.Logger
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the Lesser            *
  *  GNU General Public License for more details.                                   *
  *                                                                                 *
- *  You should have received a copy of the Lesser GNU General Public License       *
+ *  You should have received a copy of the Lesser GNU General Public License       * 
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
 public class WindowShaper

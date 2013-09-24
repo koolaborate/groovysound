@@ -133,12 +133,12 @@ class Mp3ToWavConverterThread implements Runnable{
 			wavFileName += ".wav"
 			
 			// TODO REFACTOR push to the view layer
-			SwingUtilities.invokeLater(new Runnable(){
-				public void run(){
+			SwingUtilities.invokeLater([
+				run: {
 					mp3ToWavConverter.currentFile.setText(mp3Name)
 					mp3ToWavConverter.currentFile.repaint()
 				}
-			})
+			] as Runnable)
 
 			try{
 				System.out.println("--- Start converting " + mp3Path + " ---")
@@ -182,21 +182,19 @@ class Mp3ToWavConverterThread implements Runnable{
 
 			// TODO REFACTOR push to the view layer
 			mp3ToWavConverter.convertedFiles++
-			SwingUtilities.invokeLater(new Runnable(){
-				public void run()
-				{
+			SwingUtilities.invokeLater([
+				run: {
 					mp3ToWavConverter.progressBar.setValue(mp3ToWavConverter.convertedFiles)
 					mp3ToWavConverter.progressBar.repaint()
 				}
-			})
+			] as Runnable)
 		}
 	}
 	
 	def void showProgressBar(MP3ToWAVConverter mp3ToWavConverter){
 		// show a status bar dialog
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run()
-			{
+		SwingUtilities.invokeLater([
+			run: {
 				// TODO REMOVE
 				mp3ToWavConverter.currentFile = new JLabel("")
 				mp3ToWavConverter.currentFile.setBorder(new EmptyBorder(10, 10, 10, 10))
@@ -206,7 +204,7 @@ class Mp3ToWavConverterThread implements Runnable{
 				mp3ToWavConverter.dialog.add(mp3ToWavConverter.progressBar, BorderLayout.SOUTH)
 				mp3ToWavConverter.dialog.setVisible(true)
 			}
-		})
+		] as Runnable)
 	}
 	
 	def void handleErrors(MP3ToWAVConverter mp3ToWavConverter, List<String> errors){

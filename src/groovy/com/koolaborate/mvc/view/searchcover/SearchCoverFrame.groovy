@@ -352,14 +352,12 @@ public class SearchCoverFrame extends JDialog{
 		
 		JButton searchButt = new JButton("...")
 		searchButt.setToolTipText(LocaleMessage.getInstance().getString("common.searchfile"))
-		searchButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0)
-			{
+		searchButt.addActionListener([
+			actionPerformed: {
 				JFileChooser fc = new JFileChooser(new File(mainWindow.getSettings().getLastFolder())) 
-			    fc.setFileFilter(new FileFilter() 
-			    { 
-			      @Override public boolean accept(File f) 
-			      { 
+			    fc.setFileFilter([
+			      accept: { file ->
+					  File f = file 
 			    	  String fileName = f.getName().toLowerCase()
 			    	  
 			    	  // accept only images
@@ -369,12 +367,12 @@ public class SearchCoverFrame extends JDialog{
 			    	  fileName.endsWith(".gif") ||
 			    	  fileName.endsWith(".png") ||
 			    	  fileName.endsWith(".bmp") 
-			      } 
-			      @Override public String getDescription() 
-			      { 
+			      },
+			  
+			      getDescription: { 
 			    	  return LocaleMessage.getInstance().getString("common.imagefiles") 
 			      } 
-			    })
+			    ] as FileFilter)
 			    
 			    int state = fc.showOpenDialog(getThisInstance()) 
 			    if(state == JFileChooser.APPROVE_OPTION && fc.getSelectedFile() != null) 
@@ -404,7 +402,8 @@ public class SearchCoverFrame extends JDialog{
 					}
 			    } 
 			}
-		})
+		] as ActionListener)
+		
 		
 		gbc.anchor = GridBagConstraints.LINE_START
 		gbc.gridx = 2
@@ -427,12 +426,11 @@ public class SearchCoverFrame extends JDialog{
 		JPanel p = new JPanel()
 		cancelButt = new JButton(LocaleMessage.getInstance().getString("common.abort"))
 		cancelButt.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"))
-		cancelButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0)
-			{
+		cancelButt.addActionListener([
+			actionPerformed: {
 				dispose()
 			}
-		})
+		] as ActionListener)
 		
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT))
 		p.add(cancelButt)
@@ -467,14 +465,13 @@ public class SearchCoverFrame extends JDialog{
 					amazonCover.setBorder(b)
 					amazonCover.setToolTipText(tooltip + " (" + i1.getWidth() + "x" + i1.getHeight() + ")")
 					amazonCover.addMouseListener(searchCoverFrameMouseAdapter)
-					SwingUtilities.invokeLater(new Runnable(){
-						public void run()
-						{
+					SwingUtilities.invokeLater([
+						run: {
 							searchPanel1.removeAll()
 							searchPanel1.add(amazonCover)
 							searchPanel1.revalidate()
 						}
-					})
+					] as Runnable)
 				}
 			}
 		] as Runnable)
@@ -501,14 +498,13 @@ public class SearchCoverFrame extends JDialog{
 						googleCover.setBorder(b)
 						googleCover.setToolTipText(tooltip + " (" + i2.getWidth() + "x" + i2.getHeight() + ")")
 						googleCover.addMouseListener(searchCoverFrameMouseAdapter)
-						SwingUtilities.invokeLater(new Runnable(){
-							public void run()
-							{
+						SwingUtilities.invokeLater([
+							run: {
 								searchPanel2.removeAll()
 								searchPanel2.add(googleCover)
 								searchPanel2.revalidate()
 							}
-						})
+						] as Runnable)
 					}
 				}
 				if(urls[1] != null) {
@@ -526,14 +522,13 @@ public class SearchCoverFrame extends JDialog{
 						googleCover2.setBorder(b)
 						googleCover2.setToolTipText(tooltip + " (" + i3.getWidth() + "x" + i3.getHeight() + ")")
 						googleCover2.addMouseListener(searchCoverFrameMouseAdapter)
-						SwingUtilities.invokeLater(new Runnable(){
-							public void run()
-							{
+						SwingUtilities.invokeLater([
+							run: {
 								searchPanel3.removeAll()
 								searchPanel3.add(googleCover2)
 								searchPanel3.revalidate()
 							}
-						})
+						] as Runnable)
 					}
 				}
 			}

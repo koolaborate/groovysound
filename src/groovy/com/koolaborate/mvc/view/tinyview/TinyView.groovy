@@ -161,8 +161,8 @@ public class TinyView extends JWindow
 		closeButton.setFocusPainted(false)
 		closeButton.setContentAreaFilled(false)
 		closeButton.setPreferredSize(new Dimension(43, 17))
-		closeButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
+		closeButton.addActionListener([
+			actionPerformed: {
 				mainWindow.setVisible(true)
 				mainWindow.tinyWindowShown = false
 				setVisible(false)
@@ -170,7 +170,7 @@ public class TinyView extends JWindow
 				inTimer.stop()
 				dispose()
 			}
-		})
+		] as ActionListener)
 		closeButton.setBounds(getWidth() - 43 - 6, 0, 43, 17)
 		bg.add(closeButton)
 		
@@ -237,9 +237,8 @@ public class TinyView extends JWindow
 		controlPanel.setOpaque(false)
 		controlPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2))
 		
-		ActionListener l = new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		ActionListener l = [
+			actionPerformed: { e ->
 				String command = e.getActionCommand()
 				if(command.equals("prev"))
 				{
@@ -290,8 +289,8 @@ public class TinyView extends JWindow
 					playButton.setActionCommand("pause")
 				}
 			}
-		}
-		
+		] as ActionListener
+				
 		JButton prevButton = new JButton(prevIcon)
 		prevButton.setActionCommand("prev")
 		prevButton.addActionListener(l)
@@ -352,9 +351,8 @@ public class TinyView extends JWindow
 	 */
 	private void initPanelFadeTimers()
 	{
-		outTimer = new Timer(30, new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		outTimer = new Timer(30, [
+			actionPerformed: { e ->
 				long currentTime = System.nanoTime() / 1000000
 				long totalTime = currentTime - animStartTime
 				if(totalTime > animationDuration)
@@ -371,11 +369,10 @@ public class TinyView extends JWindow
 					panelIsVisible = false
 				}
 			}
-		})
+		] as ActionListener)
 		
-		inTimer = new Timer(30, new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		inTimer = new Timer(30, [
+			actionPerformed: { e ->
 				long currentTime = System.nanoTime() / 1000000
 				long totalTime = currentTime - fadeInStartTime
 				if(totalTime > animationDuration)
@@ -393,7 +390,7 @@ public class TinyView extends JWindow
 					panelIsVisible = true
 				}
 			}
-		})
+		] as ActionListener)
 	}
 	
 	/**

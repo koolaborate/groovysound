@@ -232,37 +232,7 @@ public class SongInfoFrame extends JFrame{
 	 */
 	private JPanel createFileInfoPanel()
 	{
-		JPanel p = new JPanel(new GridBagLayout()){
-			private static final long serialVersionUID = -7042471450383036909L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
-				Graphics2D g2d = (Graphics2D) g
-				
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-				
-				int w = getWidth()
-				int h = getHeight()
-				
-				Color c1 = Color.WHITE
-				Color c2 = Color.GRAY
-				int arc = 20
-				
-				Paint p = g2d.getPaint()
-				
-				// Paint a gradient from top to bottom
-				GradientPaint gp = new GradientPaint(
-						0, 0, c1,
-						0, h, c2)
-				
-				g2d.setPaint(gp)
-				g2d.fillRoundRect(0, 0, w, h, arc, arc)
-				g2d.setPaint(p)
-				g2d.setColor(c2.darker())
-				g2d.drawRoundRect(0, 0, w-1, h-1, arc, arc)
-			}
-		}
+		JPanel p = new FileInputPanel(new GridBagLayout())
 		
 		GridBagConstraints gbc1 = new GridBagConstraints()
 		GridBagConstraints gbc2 = new GridBagConstraints()
@@ -329,38 +299,7 @@ public class SongInfoFrame extends JFrame{
 	 */
 	private JPanel createHeaderInfoPanel()
 	{
-		JPanel p = new JPanel(new GridBagLayout()){
-			private static final long serialVersionUID = -4878739647942395043L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
-				Graphics2D g2d = (Graphics2D) g
-				
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-						RenderingHints.VALUE_ANTIALIAS_ON)
-				
-				int w = getWidth()
-				int h = getHeight()
-				
-				Color c1 = Color.WHITE
-				Color c2 = Color.GRAY
-				int arc = 20
-				
-				Paint p = g2d.getPaint()
-				
-				// Paint a gradient from top to bottom
-				GradientPaint gp = new GradientPaint(
-						0, 0, c1,
-						0, h, c2)
-				
-				g2d.setPaint(gp)
-				g2d.fillRoundRect(0, 0, w, h, arc, arc)
-				g2d.setPaint(p)
-				g2d.setColor(c2.darker())
-				g2d.drawRoundRect(0, 0, w-1, h-1, arc, arc)
-			}
-		}
+		JPanel p = new HeaderInfoPanel(new GridBagLayout())
 		
 		GridBagConstraints gbc1 = new GridBagConstraints()
 		GridBagConstraints gbc2 = new GridBagConstraints()
@@ -443,38 +382,7 @@ public class SongInfoFrame extends JFrame{
 	 */
 	private JPanel createID3InfoPanel()
 	{
-		JPanel p = new JPanel(new GridBagLayout()){
-			private static final long serialVersionUID = 1131728110538127378L
-
-			@Override
-			protected void paintComponent(Graphics g)
-			{
-				Graphics2D g2d = (Graphics2D) g
-				
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-						RenderingHints.VALUE_ANTIALIAS_ON)
-				
-				int w = getWidth()
-				int h = getHeight()
-				
-				Color c1 = Color.WHITE
-				Color c2 = Color.GRAY
-				int arc = 20
-				
-				Paint p = g2d.getPaint()
-				
-				// Paint a gradient from top to bottom
-				GradientPaint gp = new GradientPaint(
-						0, 0, c1,
-						0, h, c2)
-				
-				g2d.setPaint(gp)
-				g2d.fillRoundRect(0, 0, w, h, arc, arc)
-				g2d.setPaint(p)
-				g2d.setColor(c2.darker())
-				g2d.drawRoundRect(0, 0, w-1, h-1, arc, arc)
-			}
-		}
+		JPanel p = new Id3InputPanel(new GridBagLayout())
 		
 		GridBagConstraints gbc1 = new GridBagConstraints()
 		GridBagConstraints gbc2 = new GridBagConstraints()
@@ -553,9 +461,8 @@ public class SongInfoFrame extends JFrame{
 		gbc1.gridwidth = 2
 		JButton editButton = new JButton(LocaleMessage.getInstance().getString("common.edit"))
 		editButton.setToolTipText(LocaleMessage.getInstance().getString("common.edit_tooltip"))
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+		editButton.addActionListener([
+			actionPerformed: { e ->
 				List<String> song = new ArrayList<String>()
 				song.add(songFile.getName())
 				int albumId = mainWindow.getPlaylist().getCurrentlySelectedSongAlbumId()
@@ -563,7 +470,7 @@ public class SongInfoFrame extends JFrame{
 				new EditId3TagFrame(mainWindow, albumId, albumPath, song)
 				dispose()
 			}
-		})
+		] as ActionListener)
 		p.add(editButton, gbc1)
 		
 		return p
@@ -578,12 +485,11 @@ public class SongInfoFrame extends JFrame{
 		
 		JButton closeButt = new JButton(UIManager.getString("InternalFrameTitlePane.closeButtonText"))
 		closeButt.setToolTipText(LocaleMessage.getInstance().getString("common.close_tooltip"))
-		closeButt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0)
-			{
+		closeButt.addActionListener([
+			actionPerformed: {
 				dispose()
 			}
-		})
+		] as ActionListener)
 		
 		p.setLayout(new FlowLayout(FlowLayout.RIGHT))
 		p.add(closeButt)
@@ -659,3 +565,99 @@ public class SongInfoFrame extends JFrame{
 		this.genreLabel.setText(this.genre)
 	}
 }
+
+
+class FileInputPanel extends JPanel{
+	@Override
+	protected void paintComponent(Graphics g){
+		Graphics2D g2d = (Graphics2D) g
+		
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+		
+		int w = getWidth()
+		int h = getHeight()
+		
+		Color c1 = Color.WHITE
+		Color c2 = Color.GRAY
+		int arc = 20
+		
+		Paint p = g2d.getPaint()
+		
+		// Paint a gradient from top to bottom
+		GradientPaint gp = new GradientPaint(
+				0, 0, c1,
+				0, h, c2)
+		
+		g2d.setPaint(gp)
+		g2d.fillRoundRect(0, 0, w, h, arc, arc)
+		g2d.setPaint(p)
+		g2d.setColor(c2.darker())
+		g2d.drawRoundRect(0, 0, w-1, h-1, arc, arc)
+	}
+}
+
+
+class HeaderInfoPanel extends JPanel{
+	@Override
+	protected void paintComponent(Graphics g)
+	{
+		Graphics2D g2d = (Graphics2D) g
+		
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON)
+		
+		int w = getWidth()
+		int h = getHeight()
+		
+		Color c1 = Color.WHITE
+		Color c2 = Color.GRAY
+		int arc = 20
+		
+		Paint p = g2d.getPaint()
+		
+		// Paint a gradient from top to bottom
+		GradientPaint gp = new GradientPaint(
+				0, 0, c1,
+				0, h, c2)
+		
+		g2d.setPaint(gp)
+		g2d.fillRoundRect(0, 0, w, h, arc, arc)
+		g2d.setPaint(p)
+		g2d.setColor(c2.darker())
+		g2d.drawRoundRect(0, 0, w-1, h-1, arc, arc)
+	}
+}
+
+
+class Id3InputPanel extends JPanel{
+	@Override
+	protected void paintComponent(Graphics g)
+	{
+		Graphics2D g2d = (Graphics2D) g
+		
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON)
+		
+		int w = getWidth()
+		int h = getHeight()
+		
+		Color c1 = Color.WHITE
+		Color c2 = Color.GRAY
+		int arc = 20
+		
+		Paint p = g2d.getPaint()
+		
+		// Paint a gradient from top to bottom
+		GradientPaint gp = new GradientPaint(
+				0, 0, c1,
+				0, h, c2)
+		
+		g2d.setPaint(gp)
+		g2d.fillRoundRect(0, 0, w, h, arc, arc)
+		g2d.setPaint(p)
+		g2d.setColor(c2.darker())
+		g2d.drawRoundRect(0, 0, w-1, h-1, arc, arc)
+	}
+}
+
+

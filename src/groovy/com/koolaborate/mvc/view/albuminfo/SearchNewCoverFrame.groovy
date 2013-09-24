@@ -471,14 +471,13 @@ class SearchNewCoverFrame extends JDialog
 					amazonCover.setBorder(b)
 					amazonCover.setToolTipText(tooltip + " (" + i1.getWidth() + "x" + i1.getHeight() + ")")
 					amazonCover.addMouseListener(ml)
-					SwingUtilities.invokeLater(new Runnable(){
-						public void run()
-						{
+					SwingUtilities.invokeLater([
+						run: {
 							searchPanel1.removeAll()
 							searchPanel1.add(amazonCover)
 							searchPanel1.revalidate()
 						}
-					})
+					] as Runnable)
 				}
 			}
 		] as Runnable)
@@ -509,14 +508,13 @@ class SearchNewCoverFrame extends JDialog
 						googleCover.setBorder(b)
 						googleCover.setToolTipText(tooltip + " (" + i2.getWidth() + "x" + i2.getHeight() + ")")
 						googleCover.addMouseListener(ml)
-						SwingUtilities.invokeLater(new Runnable(){
-							public void run()
-							{
+						SwingUtilities.invokeLater([
+							run: {
 								searchPanel2.removeAll()
 								searchPanel2.add(googleCover)
 								searchPanel2.revalidate()
 							}
-						})
+						] as Runnable)
 					}
 				}
 				if(urls[1] != null)

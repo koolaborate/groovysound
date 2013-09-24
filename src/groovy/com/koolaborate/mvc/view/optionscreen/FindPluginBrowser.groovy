@@ -7,7 +7,6 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
-import java.io.InputStream
 import java.net.URL
 import java.util.ArrayList
 import java.util.List
@@ -33,7 +32,7 @@ import plug.engine.PlugEngine
 import plug.engine.Pluggable
 
 /***********************************************************************************
- * FindPluginBrowser                                                               *
+ * FindPluginBrowser                                                               * 
  ***********************************************************************************
  * A dialog window that shows all available plugins on the Impressive Artworx      *
  * homepage. The user can install one of the plugins by choosing it.               *

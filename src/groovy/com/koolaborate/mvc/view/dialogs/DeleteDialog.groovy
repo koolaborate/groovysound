@@ -210,12 +210,11 @@ class DeleteDialog extends JDialog implements ActionListener
 			delFilesAlso.setFont(messageTextFont);
 			delFilesAlso.setBorder(BorderFactory.createEmptyBorder(0, 50, 10, 10));
 			delFilesAlso.setSelected(false);
-			delFilesAlso.addChangeListener(new ChangeListener(){
-				public void stateChanged(ChangeEvent e)
-				{
+			delFilesAlso.addChangeListener([
+				stateChanged: { e -> // changeEvent
 					delFilesSelected = !delFilesSelected;
 				}
-			});
+			] as ChangeListener);
 			main.add(delFilesAlso, BorderLayout.SOUTH);
 			
 			// button panel

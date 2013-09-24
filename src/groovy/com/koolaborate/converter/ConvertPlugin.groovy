@@ -98,11 +98,8 @@ class ConvertPlugin extends Plugin {
 				final MainPlugin mainPlugin = (MainPlugin) plugin
 			
 				// create a sub navigation button for the playlist view which enables the user to convert the album to WAV
-				SubNavButton convertButton = new SubNavButton(){
-					private static final long serialVersionUID = 7801726647815258817L
-
-					@Override
-					protected void paintComponent(Graphics g){
+				SubNavButton convertButton = [
+					paintComponent: { g ->
 						Graphics2D g2d = (Graphics2D) g
 						g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 						
@@ -135,8 +132,8 @@ class ConvertPlugin extends Plugin {
 							g2d.setPaint(paint)
 						}
 						
-						// draw the icon (if not null)
 						if(getIcon() != null){
+							// draw the icon (if not null)
 							BufferedImage ico = getIcon()
 							int icoH = ico.getHeight()
 							int icoW = ico.getWidth()
@@ -144,7 +141,9 @@ class ConvertPlugin extends Plugin {
 							g2d.drawImage(ico, (int)(w - icoW) / 2, (int)(h - icoH) / 2, null)
 						}
 					}
-				}
+				] as SubNavButton
+				
+				
 				convertButton.setText("mp3towav")
 				convertButton.icon = getIcon()
 				

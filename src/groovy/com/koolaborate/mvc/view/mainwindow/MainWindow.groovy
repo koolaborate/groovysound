@@ -520,7 +520,7 @@ class MainWindow extends JFrame implements DropTargetListener{
 	}
 
 	/**
-	 * @return the playlist panel where the playlist lies within
+	 * @return the playlist panel where the playlist lies within 
 	 */
 	public PlaylistPanel getPlaylist(){
 		return this.centerPanel.playlistPanel
@@ -558,12 +558,12 @@ class MainWindow extends JFrame implements DropTargetListener{
 	}
 
 	public void repaintBackgroundPanel(){
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
+		SwingUtilities.invokeLater([
+			run: {
 				centerPanel.repaint()
 				centerPanel.revalidate()
 			}
-		})
+		] as Runnable)
 	}
 
 	public PlaybackController getPlayerPanel(){
