@@ -73,7 +73,7 @@ class NewAlbumFrame extends JFrame{
 	JXBusyLabel busyLabel
 	JPanel albumInfoPanel, centerPanel
 	MainWindow mainWindow
-	BufferedImage searchImg
+	BufferedImage bufferedSearchImage
 
 	File albumFolder
 	Album a
@@ -94,9 +94,9 @@ class NewAlbumFrame extends JFrame{
 	 */
 	private void initGUI(){
 		try {
-			searchImg = ImageIO.read(getClass().getResource(
+			bufferedSearchImage = ImageIO.read(getClass().getResource(
 					"/images/searchfolder.png"))
-			setIconImage(searchImg)
+			setIconImage(bufferedSearchImage)
 		} catch(IOException e) {
 			e.printStackTrace()
 		}
@@ -144,175 +144,31 @@ class NewAlbumFrame extends JFrame{
 	/**
 	 * @return creates and returns the header JPanel
 	 */
-	private JPanel createHeaderPanel(){
-		JPanel p = new JPanel()
-		p.setOpaque(false)
-		p.setLayout(new GridBagLayout())
-
-		GridBagConstraints c = new GridBagConstraints()
-
-		// search folder image
-		JLabel imgLabel = new JLabel()
-		imgLabel.setOpaque(false)
-		imgLabel.setIcon(new ImageIcon(searchImg))
-		c.fill = GridBagConstraints.HORIZONTAL
-		c.gridx = 0
-		c.gridy = 0
-		c.gridheight = 2
-		c.insets = new Insets(10, 0, 0, 0) // top padding
-		p.add(imgLabel, c)
-
-		// search folder text
-		JLabel folderText = new JLabel(
-				LocaleMessage.getInstance().getString("newalbum.select_path"))
-		folderText.setOpaque(false)
-		c.gridx = 1
-		c.gridy = 0
-		c.gridheight = 1
-		c.gridwidth = 2
-		c.insets = new Insets(26, 0, 0, 0) // top padding
-		p.add(folderText, c)
-
-		// folder path text field
-		folderPath = new JTextField()
-		folderPath.setEditable(false)
-		c.gridx = 1
-		c.gridy = 1
-		c.gridwidth = 1
-		c.weightx = 1.0 // stretch the text field
-		c.insets = new Insets(0, 0, 0, 0)
-		p.add(folderPath, c)
-
-		// folder search button
-		searchButt = new JButton("...")
-		searchButt.setToolTipText(LocaleMessage.getInstance().getString("common.searchfolder"))
-		searchButt.addActionListener([
-			actionPerformed: {
-				final JFileChooser chooser = new JFileChooser(mainWindow.getSettings().getLastFolder())
-				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
-				int state = chooser.showOpenDialog(getThisInstance())
-				if(state == JFileChooser.APPROVE_OPTION) {
-					if(chooser.getSelectedFile() != null) {
-						mainWindow.getSettings().setLastFolder(chooser.getSelectedFile().getParent())
-						
-						new Thread([
-							run: {
-								albumFolder = chooser.getSelectedFile()
-								SwingUtilities.invokeLater([
-									run: {
-										folderPath.setText(albumFolder.getAbsolutePath())
-										busyLabel.setVisible(true)
-										busyLabel.setBusy(true)
-									}
-								] as Runnable)
-								loadAlbumInfo()
-							}
-						] as Runnable).start()
-					}
-				}
-			}
-		]as ActionListener)
-		c.fill = GridBagConstraints.NONE
-		c.gridx = 2
-		c.gridy = 1
-		c.weightx = 0.0 // do not stretch the button
-		c.gridwidth = 1
-		c.insets = new Insets(0, 4, 0, 10) // right and left padding
-		p.add(searchButt, c)
-
-		return p
+	protected JPanel createHeaderPanel(){
+		NewAlbumHeaderPanel newAlbumHeaderPanel = new NewAlbumHeaderPanel()
+		newAlbumHeaderPanel.setBufferedSearchImage(bufferedSearchImage)
+		newAlbumHeaderPanel.setFolderPath(folderPath)
+		newAlbumHeaderPanel.setSearchButton(searchButt)
+		newAlbumHeaderPanel.setMainWindow(mainWindow)
+		newAlbumHeaderPanel.setAlbumFolder(albumFolder)
+		newAlbumHeaderPanel.setBusyLabel(busyLabel)
+		newAlbumHeaderPanel.setNewAlbumFrame(this)
+		
+		return newAlbumHeaderPanel
 	}
 
 	/**
 	 * @return creates and returns the center JPanel
 	 */
 	private JPanel createCenterPanel(){
-		JPanel p = new JPanel()
-		p.setLayout(new BorderLayout())
-		p.setOpaque(false)
-
-		// init the busy panel
-		busyLabel = new JXBusyLabel()
-		busyLabel.setBorder(new EmptyBorder(6, 10, 0, 10))
-		busyLabel.setOpaque(false)
-		busyLabel.setText(LocaleMessage.getInstance().getString("newalbum.searching"))
-		busyLabel.setToolTipText(LocaleMessage.getInstance().getString("newalbum.searching_tooltip"))
-		busyLabel.setBusy(false)
-		busyLabel.setVisible(false)
-
-		// init the album info panel
-		albumInfoPanel = new JPanel()
-		albumInfoPanel.setOpaque(false)
-		albumInfoPanel.setLayout(new GridBagLayout())
-
-		GridBagConstraints cLabel = new GridBagConstraints()
-		GridBagConstraints cTextfield = new GridBagConstraints()
-
-		cLabel.fill = GridBagConstraints.NONE
-		cLabel.weightx = 0.0 // do not stretch the labels
-		cLabel.gridwidth = 1
-		cLabel.anchor = GridBagConstraints.LINE_START
-		cLabel.insets = new Insets(0, 10, 0, 0)
-		cTextfield.fill = GridBagConstraints.HORIZONTAL
-		cTextfield.weightx = 1.0 // stretch the textfields
-		cTextfield.gridwidth = 1
-		cTextfield.insets = new Insets(0, 4, 0, 10)
-
-		// title label
-		JLabel titleLabel = new JLabel(LocaleMessage.getInstance().getString("newalbum.album_title"))
-		titleLabel.setOpaque(false)
-		cLabel.gridx = 0
-		cLabel.gridy = 0
-		albumInfoPanel.add(titleLabel, cLabel)
-
-		// title text
-		albumTitle = new JTextField()
-		cTextfield.gridx = 1
-		cTextfield.gridy = 0
-		albumInfoPanel.add(albumTitle, cTextfield)
-
-		// artist label
-		JLabel artistLabel = new JLabel(LocaleMessage.getInstance().getString("newalbum.artist"))
-		artistLabel.setOpaque(false)
-		cLabel.gridx = 0
-		cLabel.gridy = 1
-		albumInfoPanel.add(artistLabel, cLabel)
-
-		// artist text
-		albumArtist = new JTextField()
-		cTextfield.gridx = 1
-		cTextfield.gridy = 1
-		albumInfoPanel.add(albumArtist, cTextfield)
-
-		// year label
-		JLabel yearLabel = new JLabel(LocaleMessage.getInstance().getString("newalbum.year"))
-		yearLabel.setOpaque(false)
-		cLabel.gridx = 0
-		cLabel.gridy = 2
-		albumInfoPanel.add(yearLabel, cLabel)
-
-		// year text
-		albumYear = new JTextField()
-		cTextfield.gridx = 1
-		cTextfield.gridy = 2
-		albumInfoPanel.add(albumYear, cTextfield)
-
-		// song list label
-		JLabel songlistLabel = new JLabel(LocaleMessage.getInstance().getString("newalbum.songlist"))
-		songlistLabel.setOpaque(false)
-		cLabel.gridx = 0
-		cLabel.gridy = 3
-		albumInfoPanel.add(songlistLabel, cLabel)
-
-		// song list combo box
-		songList = new JComboBox<String>()
-		cTextfield.gridx = 1
-		cTextfield.gridy = 3
-		albumInfoPanel.add(songList, cTextfield)
-
-		p.add(busyLabel, BorderLayout.NORTH)
-
-		return p
+		NewAlbumCenterPanel newAlbumCenterPanel = new NewAlbumCenterPanel(busyLabel: busyLabel)
+		newAlbumCenterPanel.setAlbumInfoPanel(albumInfoPanel)
+		newAlbumCenterPanel.setAlbumTitle(albumTitle)
+		newAlbumCenterPanel.setAlbumArtist(albumArtist)
+		newAlbumCenterPanel.setAlbumYear(albumYear)
+		newAlbumCenterPanel.setSongList(songList)
+		
+		return newAlbumCenterPanel
 	}
 
 	/**
@@ -490,7 +346,7 @@ class NewAlbumFrame extends JFrame{
 
 		int albumId = a.saveIntoDB(mainWindow.getDatabase())
 		songs.each { song ->
-			song.setAlbumId(albumId)
+			song.albumId = albumId
 			song.saveIntoDB(mainWindow.getDatabase())
 		}
 
