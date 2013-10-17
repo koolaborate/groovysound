@@ -6,34 +6,23 @@ import java.awt.FlowLayout
 import java.awt.GradientPaint
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
 import java.awt.Insets
-import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
-import java.io.File
-import java.io.IOException
-import java.util.ArrayList
-import java.util.List
 
 import javax.imageio.ImageIO
-import javax.swing.ImageIcon
 import javax.swing.JButton
 import javax.swing.JComboBox
-import javax.swing.JFileChooser
 import javax.swing.JFrame
-import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JTextField
 import javax.swing.SwingUtilities
-import javax.swing.border.EmptyBorder
 
 import org.apache.commons.lang3.StringUtils
 import org.farng.mp3.TagException
 import org.jdesktop.swingx.JXBusyLabel
 
-import com.koolaborate.config.ExtendedMP3Info;
+import com.koolaborate.config.ExtendedMP3Info
 import com.koolaborate.config.MP3PropertyReader
 import com.koolaborate.model.Album
 import com.koolaborate.model.Song
@@ -161,8 +150,9 @@ class NewAlbumFrame extends JFrame{
 	 * @return creates and returns the center JPanel
 	 */
 	private JPanel createCenterPanel(){
-		NewAlbumCenterPanel newAlbumCenterPanel = new NewAlbumCenterPanel(busyLabel: busyLabel)
-		newAlbumCenterPanel.setAlbumInfoPanel(albumInfoPanel)
+		NewAlbumCenterPanel newAlbumCenterPanel = 
+			new NewAlbumCenterPanel(busyLabel: busyLabel, albumInfoPanel: albumInfoPanel)
+			
 		newAlbumCenterPanel.setAlbumTitle(albumTitle)
 		newAlbumCenterPanel.setAlbumArtist(albumArtist)
 		newAlbumCenterPanel.setAlbumYear(albumYear)
