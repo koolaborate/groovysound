@@ -54,14 +54,15 @@ class OptionScreen extends JPanel{
 	private static final long serialVersionUID = 5938891358222523024L
 	Settings settings
 	JButton searchNow
+	MainWindow mainWindow
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @param window reference to the main window
 	 */
-	public OptionScreen(final MainWindow window) {
-		this.settings = window.getSettings()
+	public OptionScreen() {
+		this.settings = mainWindow.getSettings()
 		
 		setOpaque(false)
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
@@ -70,7 +71,7 @@ class OptionScreen extends JPanel{
 		add(title1)
 		
 		JCheckBox useGraphixAcc = new JCheckBox(LocaleMessage.getInstance().getString("options.enable_d3d"))
-		useGraphixAcc.setSelected(settings.isHardwareAccellerated())
+		useGraphixAcc.setSelected(true) // is hardware accelerated?
 		useGraphixAcc.setOpaque(false)
 		useGraphixAcc.setBorder(new EmptyBorder(0, 68, 0, 0))
 		useGraphixAcc.setAlignmentX(Component.LEFT_ALIGNMENT)
@@ -78,7 +79,7 @@ class OptionScreen extends JPanel{
 		useGraphixAcc.addChangeListener([
 			stateChanged:{ e ->
 				JCheckBox source = (JCheckBox) e.getSource()
-				window.getSettings().setHardwareAccellerated(source.isSelected())
+				mainWindow.getSettings().setHardwareAccellerated(source.isSelected())
 			}
 		] as ChangeListener)
 		add(useGraphixAcc)
@@ -117,7 +118,7 @@ class OptionScreen extends JPanel{
 			stateChanged:{ e ->
 				JSlider source = (JSlider) e.getSource()
 				float newVol = source.getValue() / 10.0f
-				window.getPlayerPanel().setVolumeAndUpdateSlider(newVol)
+				mainWindow.getPlayerPanel().setVolumeAndUpdateSlider(newVol)
 			}
 		] as ChangeListener)
 	
@@ -157,10 +158,10 @@ class OptionScreen extends JPanel{
 				ChangeEvent e = changeEvent
 				JSlider source = (JSlider) e.getSource()
 				float newPan = source.getValue() / 10.0f
-				window.getPlayerPanel().setPlayerBalance(newPan)
+				mainWindow.getPlayerPanel().setPlayerBalance(newPan)
 			}
 		] as ChangeListener)
-		balanceSlider.setValue((int)(settings.getBalance() * 10))
+		balanceSlider.setValue((int)(settings.getBalance() * 10)) 
 		sound.add(balanceSlider, gbc)
 		
 		gbc.weightx = 1.0f
@@ -195,7 +196,7 @@ class OptionScreen extends JPanel{
 		LinkLabel showPlugins = new LinkLabel(LocaleMessage.getInstance().getString("options.show_plugins"))
 		
 		def showPluginsActionThread = [
-			run: {PluginAndThemeBrowser.showDialog(window)}
+			run: {PluginAndThemeBrowser.showDialog(mainWindow)}
 		] as Runnable
 		
 		Thread showPluginsThread = new Thread(showPluginsActionThread)

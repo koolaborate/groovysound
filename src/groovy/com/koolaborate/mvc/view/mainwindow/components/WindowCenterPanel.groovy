@@ -137,7 +137,7 @@ class WindowCenterPanel extends JPanel{
 			mainPanel.add(playlistPanel, BorderLayout.CENTER);
 		} else if(nav == NAVIGATION.SETTINGS){
 			// settings view
-			mainPanel.add(new OptionScreen(mainWindow));
+			mainPanel.add(new OptionScreen(mainWindow: mainWindow));
 		} else{
 			// otherwise: show albums view
 			mainPanel.add(scroll);

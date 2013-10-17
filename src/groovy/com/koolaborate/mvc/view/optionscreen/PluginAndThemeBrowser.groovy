@@ -87,10 +87,10 @@ class PluginAndThemeBrowser extends JDialog
 	 * 
 	 * @param window reference to the main window
 	 */
-	public PluginAndThemeBrowser(MainWindow window)
+	public PluginAndThemeBrowser()
 	{
 		super()
-		this.mainWindow = window
+		this.mainWindow = mainWindow
 		setTitle(LocaleMessage.getInstance().getString("options.plugins"))
 		setModal(true)
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE)
@@ -220,7 +220,7 @@ class PluginAndThemeBrowser extends JDialog
 	 */
 	public static void showDialog(MainWindow w) 
 	{
-		PluginAndThemeBrowser d = new PluginAndThemeBrowser(w)
+		PluginAndThemeBrowser d = new PluginAndThemeBrowser(mainWindow: w)
 		d.setVisible(true)
 	}
 	

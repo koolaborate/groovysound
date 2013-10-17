@@ -56,7 +56,7 @@ import com.koolaborate.util.LocaleMessage
  ***********************************************************************************/
 class NewAlbumFrame extends JFrame{
 	private static final long serialVersionUID = 3396798307868339914L
-	JButton okButt, cancelButt, searchButt
+	JButton okButton, cancelButton, searchButt
 	JTextField folderPath, albumTitle, albumArtist, albumYear
 	JComboBox<String> songList
 	JXBusyLabel busyLabel
@@ -165,38 +165,13 @@ class NewAlbumFrame extends JFrame{
 	 * @return creates and returns the button JPanel
 	 */
 	private JPanel createButtonPanel(){
-		JPanel p = new JPanel()
-
-		okButt = new JButton(LocaleMessage.getInstance().getString("newalbum.okbutton"))
-		okButt.setToolTipText(LocaleMessage.getInstance().getString("newalbum.okbutton_tooltip"))
-		okButt.addActionListener([
-			actionPerformed: {
-				if(saveAlbumAndSongsIntoDB()) {
-					dispose()
-					mainWindow.getCenterPanel().refreshAlbumsView(
-							mainWindow.getCenterPanel().getAlbumsPanel().getSortMode())
-					SwingUtilities.invokeLater([
-						run: {
-							centerPanel.revalidate()
-						}
-					] as Runnable)
-				}
-			}
-		] as ActionListener)
-		okButt.setEnabled(false)
-
-		cancelButt = new JButton(LocaleMessage.getInstance().getString("common.abort"))
-		cancelButt.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"))
-		cancelButt.addActionListener([
-			actionPerformed: {
-				dispose()
-			}
-		] as ActionListener)
-
-		p.setLayout(new FlowLayout(FlowLayout.RIGHT))
-		p.add(okButt)
-		p.add(cancelButt)
-		return p
+		CreateButtonPanel createButtonPanel = new CreateButtonPanel(
+			centerPanel: centerPanel, okButton: okButton, cancelButton: cancelButton,
+			mainWindow: mainWindow, newAlbumFrame: this
+		)
+		createButtonPanel.initialize()
+		
+		return createButtonPanel
 	}
 
 	/**
@@ -264,7 +239,7 @@ class NewAlbumFrame extends JFrame{
 				busyLabel.setToolTipText(LocaleMessage.getInstance().getString("newalbum.searching_done_tooltip"))
 				centerPanel.add(albumInfoPanel, BorderLayout.CENTER)
 				if(songs.size() > 0)
-					okButt.setEnabled(true)
+					okButton.setEnabled(true)
 				// if no songs were fond in the directory
 				else {
 					VistaDialog.showDialog(
