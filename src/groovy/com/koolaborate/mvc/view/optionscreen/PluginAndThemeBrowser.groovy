@@ -87,8 +87,7 @@ class PluginAndThemeBrowser extends JDialog
 	 * 
 	 * @param window reference to the main window
 	 */
-	public PluginAndThemeBrowser()
-	{
+	def initialize() {
 		super()
 		this.mainWindow = mainWindow
 		setTitle(LocaleMessage.getInstance().getString("options.plugins"))
@@ -143,33 +142,11 @@ class PluginAndThemeBrowser extends JDialog
 	/**
 	 * @return the button panel for the plugin tab
 	 */
-	private JPanel getButtonPanel()
-	{
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT))
-		buttonPanel.setOpaque(false)
-		buttonPanel.setBorder(new VariableLineBorder(0, 10, 10, 10, Color.GRAY, 0, false, 
-				false, false, false))
-		
-		JButton updateButton = new JButton(LocaleMessage.getInstance().getString("options.updatenow_tooltip"))
-		updateButton.setToolTipText(LocaleMessage.getInstance().getString("options.updatenow_tooltip"))
-		updateButton.setOpaque(false)
-		updateButton.addActionListener([
-			actionPerformed: {
-				UpdateDialog.showDialog()
-			}			
-		] as ActionListener)
-		buttonPanel.add(updateButton)
-		
-		final JButton addButton = new JButton(LocaleMessage.getInstance().getString("options.search_plugins"))
-		addButton.setToolTipText(LocaleMessage.getInstance().getString("options.search_plugins"))
-		addButton.setOpaque(false)
-		addButton.addActionListener([
-			actionPerformed: {
-				FindPluginBrowser.showDialog()
-				dispose()
-			}		
-		] as ActionListener)
-		buttonPanel.add(addButton)
+	private JPanel getButtonPanel() {
+		PluginAndThemeBrowserButtonPanel buttonPanel = new PluginAndThemeBrowserButtonPanel(
+			pluginAndThemBrowser: this
+		)
+		buttonPanel.initialize()
 		
 		return buttonPanel
 	}
@@ -179,38 +156,7 @@ class PluginAndThemeBrowser extends JDialog
 	 */
 	private JPanel getBottomPanel()
 	{
-		JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT))
-		bottomPanel.setOpaque(false)
-		bottomPanel.setBorder(new VariableLineBorder(5, 5, 5, 5, Color.GRAY, 1, true,
-				false, false, false))
-		
-		JButton commitButton = new JButton(UIManager.getString("FileChooser.saveButtonText")) 
-		commitButton.setToolTipText(LocaleMessage.getInstance().getString("common.save_tooltip"))
-		commitButton.setOpaque(false)
-		commitButton.addActionListener([
-			actionPerformed: {
-				dispose()
-				if(changedTheme){
-					themesPanel.applyChangesToXMLFile()
-					// restart of the application necessary
-					VistaDialog.showDialog(LocaleMessage.getInstance().getString("common.restart_title"), 
-							LocaleMessage.getInstance().getString("common.restart_necessary"), 
-							LocaleMessage.getInstance().getString("common.restart_text"), 
-							VistaDialog.INFORMATION_MESSAGE)
-				}
-			}			
-		] as ActionListener)
-		bottomPanel.add(commitButton)
-		
-		final JButton abortButton = new JButton(LocaleMessage.getInstance().getString("common.abort"))
-		abortButton.setToolTipText(LocaleMessage.getInstance().getString("common.abort_tooltip"))
-		abortButton.setOpaque(false)
-		abortButton.addActionListener([
-			actionPerformed: {
-				dispose()
-			}		
-		] as ActionListener)
-		bottomPanel.add(abortButton)
+		PluginAndThemeBrowserBottomPanel bottomPanel = new PluginAndThemeBrowserBottomPanel(new FlowLayout(FlowLayout.RIGHT))
 		
 		return bottomPanel
 	}
@@ -218,9 +164,10 @@ class PluginAndThemeBrowser extends JDialog
 	/**
 	 * open a PluginDialog
 	 */
-	public static void showDialog(MainWindow w) 
+	public static void showDialog(MainWindow mainWindow) 
 	{
-		PluginAndThemeBrowser d = new PluginAndThemeBrowser(mainWindow: w)
+		PluginAndThemeBrowser d = new PluginAndThemeBrowser(mainWindow: mainWindow)
+		d.inialized()
 		d.setVisible(true)
 	}
 	
@@ -273,26 +220,11 @@ class PluginAndThemeBrowser extends JDialog
 	 */
 	private JPanel buildMainPanel()
 	{
-		JPanel mainPanel = new JPanel()
-		mainPanel.setLayout(new CardLayout())
-		mainPanel.setBackground(Color.WHITE)
-		mainPanel.setBorder(new VariableLineBorder(5, 5, 5, 5, Color.GRAY, 1, true, false, 
-				false, false))
+		PluginAndThemeBrowserMainPanel mainPanel = new PluginAndThemeBrowserMainPanel(
+			panel: panel, themesPanel: themesPanel, mainWindow: mainWindow,
+			table: table, step1: step1, step2: step2, pluginAndThemeBrowser: this
+		)
 		
-		JScrollPane scrollPane = new JScrollPane(table)
-		scrollPane.getViewport().setOpaque(false)
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER)
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS)
-		scrollPane.setPreferredSize(new Dimension(500, 300))
-		
-		panel = new JPanel(new BorderLayout(), true)
-		panel.setBackground(Color.WHITE)
-		panel.add(scrollPane, BorderLayout.CENTER)
-		panel.add(getButtonPanel(), BorderLayout.SOUTH)
-		
-		themesPanel = new ThemesPanel(this, mainWindow.getDecorator())
-		mainPanel.add(panel, step1)
-		mainPanel.add(themesPanel, step2)
 		return mainPanel
 	}
 	
@@ -303,36 +235,7 @@ class PluginAndThemeBrowser extends JDialog
 	 */
 	private JPanel buildHeaderPanel()
 	{
-		JPanel panel = new JPanel(){
-			private static final long serialVersionUID = 2411793553668898755L
-			@Override
-			public void paintComponent(Graphics g)
-			{
-				Graphics2D g2 = (Graphics2D)g
-				Paint oldPaint = g2.getPaint()
-
-				def coords = [0.0f, 0.34f, 0.341f, 1.0f]
-				def colors = [new Color(0x516b9b),
-						new Color(0x435d8d),
-						new Color(0x365080),
-						new Color(0x2b4575)]
-				LinearGradientPaint p = new LinearGradientPaint(0.0f, 0.0f, 0.0f, 50.0f,
-						coords,
-						colors)
-		        
-		        g2.setPaint(p)
-		        g2.fillRect(0, 0, getWidth(), getHeight())
-		        
-		        g2.setPaint(oldPaint)
-		        super.paintComponents(g)
-		        g2.dispose()
-			}
-			@Override
-			public Insets getInsets() 
-			{
-			    return new Insets(0, 0, 0, 0)
-			}
-		}
+		PluginAndThemeBrowserHeaderPanel panel = new PluginAndThemeBrowserHeaderPanel();
 		panel.setPreferredSize(new Dimension(200, 50))
 		panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
 		FlowLayout myLayout = new FlowLayout(FlowLayout.LEFT)
@@ -342,13 +245,10 @@ class PluginAndThemeBrowser extends JDialog
 		
 		// built the toggle buttons
 		BufferedImage i1 = null, i2 = null
-		try
-		{
+		try {
 			i1 = ImageIO.read(getClass().getResource("/images/plugins.png"))
 			i2 = ImageIO.read(getClass().getResource("/images/colorize.png"))
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace()
 		}
 		
