@@ -67,7 +67,8 @@ class OptionScreen extends JPanel{
 		setOpaque(false)
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
 		
-		TitlePanel title1 = new TitlePanel(LocaleMessage.getInstance().getString("options.graphics"), new ImageIcon(getClass().getResource("/images/settings_graphics.png")))
+		TitlePanel title1 = new TitlePanel()
+		title1.initialize(LocaleMessage.getInstance().getString("options.graphics"), new ImageIcon(getClass().getResource("/images/settings_graphics.png")))
 		add(title1)
 		
 		JCheckBox useGraphixAcc = new JCheckBox(LocaleMessage.getInstance().getString("options.enable_d3d"))

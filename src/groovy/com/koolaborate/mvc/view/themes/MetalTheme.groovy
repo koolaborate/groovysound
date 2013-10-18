@@ -540,7 +540,7 @@ public class MetalTheme implements Theme
 		try
 		{
 			BufferedImage dummy = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB)
-			final PlayButton playButt = new PlayButton(dummy, dummy, dummy){
+			final PlayButton playButt = new PlayButton(activeImg: dummy, inActiveImg: dummy, pauseImg: dummy){
 				/**
 				 * 
 				 */
@@ -732,7 +732,7 @@ public class MetalTheme implements Theme
 
 		try {
 			BufferedImage dummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB)
-			final NextButton nextButt = new NextButton(dummy, dummy){
+			final NextButton nextButt = new NextButton(activeImg: dummy, inActiveImg: dummy){
 				/**
 				 * 
 				 */
@@ -924,7 +924,7 @@ public class MetalTheme implements Theme
 		try
 		{
 			BufferedImage dummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB)
-			final PreviousButton prevButt = new PreviousButton(dummy, dummy){
+			final PreviousButton prevButt = new PreviousButton(activeImg: dummy, inActiveImg: dummy){
 				/**
 				 * 
 				 */
@@ -1116,7 +1116,7 @@ public class MetalTheme implements Theme
 		try
 		{
 			BufferedImage dummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB)
-			final StopButton stopButt = new StopButton(dummy, dummy){
+			final StopButton stopButt = new StopButton(activeImg: dummy, inActiveImg: dummy){
 				/**
 				 * 
 				 */

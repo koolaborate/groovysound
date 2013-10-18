@@ -638,7 +638,7 @@ public class LiveTheme implements Theme
 		try {
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB)
 			
-			final PlayButton playButt = new PlayButton(fakeButton, fakeButton, fakeButton){
+			final PlayButton playButt = new PlayButton(activeImg: fakeButton, inActiveImg: fakeButton, pauseImg: fakeButton){
 				private static final long serialVersionUID = -7391841123059754329L
 
 				@Override
@@ -832,7 +832,7 @@ public class LiveTheme implements Theme
 		try
 		{
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB)
-			final NextButton nextButt = new NextButton(fakeButton, fakeButton){
+			final NextButton nextButt = new NextButton(activeImg: fakeButton, inActiveImg: fakeButton){
 				private static final long serialVersionUID = -7785850754354299703L
 
 				@Override
@@ -1025,7 +1025,7 @@ public class LiveTheme implements Theme
 		try
 		{
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB)
-			final PreviousButton prevButt = new PreviousButton(fakeButton, fakeButton){
+			final PreviousButton prevButt = new PreviousButton(activeImg: fakeButton, inActiveImg: fakeButton){
 				private static final long serialVersionUID = -7427078555078319365L
 
 				@Override
@@ -1218,7 +1218,7 @@ public class LiveTheme implements Theme
 		try
 		{
 			BufferedImage fakeButton = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB)
-			final StopButton stopButt = new StopButton(fakeButton, fakeButton){
+			final StopButton stopButt = new StopButton(activeImg: fakeButton, inActiveImg: fakeButton){
 			private static final long serialVersionUID = 7330627770679161196L
 
 				@Override

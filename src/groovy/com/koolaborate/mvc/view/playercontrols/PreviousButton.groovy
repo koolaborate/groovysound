@@ -42,10 +42,7 @@ class PreviousButton extends JComponent{
 	boolean pressed = false
 	Shape shape, base
 	
-	public PreviousButton(BufferedImage activeImg, BufferedImage inActiveImg){
-		this.activeImg = activeImg
-		this.inActiveImg = inActiveImg
-		
+	public PreviousButton(){
         Dimension dim = new Dimension(activeImg.getWidth(), activeImg.getHeight())
         setPreferredSize(dim)
         setMaximumSize(dim)

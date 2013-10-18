@@ -45,10 +45,7 @@ class NextButton extends JComponent{
 	/**
 	 * Constructor.
 	 */
-	public NextButton(BufferedImage activeImg, BufferedImage inActiveImg){
-		this.activeImg = activeImg
-		this.inActiveImg = inActiveImg
-		
+	public NextButton(){  // this isn't showing in intellisense... find out why and test
         Dimension dim = new Dimension(activeImg.getWidth(), activeImg.getHeight())
         setPreferredSize(dim)
         setMaximumSize(dim)

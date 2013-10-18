@@ -518,7 +518,8 @@ public class DefaultTheme {
 			def activePlayButton = ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_active.png"))
 			def inactivePlayButton = ImageIO.read(DefaultTheme.class.getResource("/images/playbutton_inactive.png"))
 			def pauseButton = ImageIO.read(DefaultTheme.class.getResource("/images/pausebutton.png"))
-			final PlayButton playButton = new PlayButton(activePlayButton, inactivePlayButton, pauseButton){
+			// check intellisense
+			final PlayButton playButton = new PlayButton(activeImg: activePlayButton, inActiveImg: inactivePlayButton, pauseImg: pauseButton){
 				private static final long serialVersionUID = 7523674211790241350L
 
 				@Override
@@ -576,8 +577,8 @@ public class DefaultTheme {
 		// next song button
 		try
 		{
-			final NextButton nextButt = new NextButton(ImageIO.read(DefaultTheme.class.getResource("/images/nextbutton_active.png")),
-					ImageIO.read(DefaultTheme.class.getResource("/images/nextbutton_inactive.png"))){
+			final NextButton nextButt = new NextButton(activeImg: ImageIO.read(DefaultTheme.class.getResource("/images/nextbutton_active.png")),
+					inActiveImg: ImageIO.read(DefaultTheme.class.getResource("/images/nextbutton_inactive.png"))){
 						private static final long serialVersionUID = 2471068278887035929L
 
 				@Override
@@ -660,8 +661,8 @@ public class DefaultTheme {
 		// previous song button
 		try
 		{
-			final PreviousButton prevButt = new PreviousButton(ImageIO.read(DefaultTheme.class.getResource("/images/prevbutton_active.png")),
-					ImageIO.read(DefaultTheme.class.getResource("/images/prevbutton_inactive.png"))){
+			final PreviousButton prevButt = new PreviousButton(activeImg: ImageIO.read(DefaultTheme.class.getResource("/images/prevbutton_active.png")),
+					inActiveImg: ImageIO.read(DefaultTheme.class.getResource("/images/prevbutton_inactive.png"))){
 						private static final long serialVersionUID = -6491422973648419664L
 
 				@Override

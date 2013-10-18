@@ -45,12 +45,7 @@ class PlayButton extends JComponent{
 	/**
 	 * Constructor.
 	 */
-	public PlayButton(BufferedImage activeImg, BufferedImage inActiveImg, BufferedImage pauseImg)
-	{
-		this.activeImg = activeImg
-		this.inActiveImg = inActiveImg
-		this.pauseImg = pauseImg
-		
+	public PlayButton() {
         int iw = Math.max(activeImg.getWidth(), activeImg.getHeight())
         Dimension dim = new Dimension(iw, iw)
         setPreferredSize(dim)

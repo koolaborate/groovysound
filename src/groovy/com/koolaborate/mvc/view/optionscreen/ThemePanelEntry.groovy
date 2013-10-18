@@ -39,8 +39,7 @@ import com.koolaborate.mvc.view.decorations.Decorator
  *  You should have received a copy of the Lesser GNU General Public License       *
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
-class ThemePanelEntry extends JPanel
-{
+class ThemePanelEntry extends JPanel {
 	private static final long serialVersionUID = -9111468339290769406L
 	String className
 	boolean selected = false
@@ -57,7 +56,7 @@ class ThemePanelEntry extends JPanel
 	 * @param className the class name for the theme to be loaded
 	 * @param decorator the decorator for highlight colors
 	 */
-	public ThemePanelEntry(String name, String description, String className, Decorator decorator){
+	def initialize(String name, String description, String className, Decorator decorator){
 		setOpaque(false)
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS))
 		setPreferredSize(new Dimension(230, 50))

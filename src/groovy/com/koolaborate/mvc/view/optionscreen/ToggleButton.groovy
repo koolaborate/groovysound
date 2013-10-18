@@ -53,7 +53,7 @@ class ToggleButton extends JComponent{
 	 * @param text the text of the toggle button
 	 * @param icon the icon image of the button
 	 */
-	public ToggleButton(String text, BufferedImage icon){
+	public initialize(String text, BufferedImage icon){
 		this.text = text
 		this.icon = icon
 		textcolor = Color.WHITE

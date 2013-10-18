@@ -37,12 +37,11 @@ public class TitlePanel extends JPanel{
 	private static final long serialVersionUID = -3361496455045512196L
 
 	/**
-	 * Constructor.
 	 * 
 	 * @param title the title
 	 * @param ico the icon for the category
 	 */
-	public TitlePanel(String title, ImageIcon imageIcon){
+	public void initialize(String title, ImageIcon imageIcon){
 		setOpaque(false)
 		setLayout(new BorderLayout())
 		

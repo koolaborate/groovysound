@@ -82,13 +82,16 @@ class PluginAndThemeBrowser extends JDialog
 	MainWindow mainWindow
 	ThemesPanel themesPanel
 	
+	public PluginAndThemeBrowser(){
+		super()
+	}
+	
 	/**
 	 * Constructor.
 	 * 
 	 * @param window reference to the main window
 	 */
 	def initialize() {
-		super()
 		this.mainWindow = mainWindow
 		setTitle(LocaleMessage.getInstance().getString("options.plugins"))
 		setModal(true)

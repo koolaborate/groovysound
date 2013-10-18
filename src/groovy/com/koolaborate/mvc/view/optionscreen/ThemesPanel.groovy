@@ -115,7 +115,8 @@ class ThemesPanel extends JPanel{
 			defaultDesc = "Standardm‰ﬂig erscheint der VibrantPlayer im Media Player&reg;-Look."
 		}
 		
-		ThemePanelEntry defaultEntry = new ThemePanelEntry(defaultName, defaultDesc, "DefaultTheme", decorator)
+		ThemePanelEntry defaultEntry = new ThemePanelEntry()
+		defaultEntry.initialize(defaultName, defaultDesc, "DefaultTheme", decorator)
 		themeEntries.add(defaultEntry)
 		themePreviews.add(defaultPreview)
 

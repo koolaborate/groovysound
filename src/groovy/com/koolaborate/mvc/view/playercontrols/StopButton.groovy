@@ -45,7 +45,7 @@ class StopButton extends JComponent{
 	/**
 	 * Constructor.
 	 */
-	public StopButton(BufferedImage activeImg, BufferedImage inActiveImg){
+	public StopButton(){
 		this.activeImg = activeImg
 		this.inActiveImg = inActiveImg
 		

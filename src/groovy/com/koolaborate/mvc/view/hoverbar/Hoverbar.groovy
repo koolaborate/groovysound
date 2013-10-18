@@ -37,7 +37,6 @@ import javax.swing.border.EmptyBorder;
  *  along with VibrantPlayer. If not, see <http://www.gnu.org/licenses/>.          *
  ***********************************************************************************/
 class Hoverbar extends JComponent{
-	private static final long serialVersionUID = 3300560477607711488L;
 
 	float alpha = 0.9f;
 	
